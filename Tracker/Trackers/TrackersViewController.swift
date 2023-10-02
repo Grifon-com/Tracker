@@ -8,107 +8,147 @@
 import UIKit
 
 private enum Constants {
-    static let adButtonImageName = "Addtracker"
+    static let adButtonImageName = "Add"
     static let imageViewImageName = "Star"
     
     static let labelHeaderText = "Трекеры"
     static let labelStabText = "Что будем отслеживать?"
     
     static let labelTextSize = CGFloat(34)
+    static let datePickerCornerRadius = CGFloat(8)
 }
 
 final class TrackersViewController: UIViewController {
+    private let params = GeometricParams(cellCount: 2,
+                                         leftInset: 16,
+                                         rightInset: 16,
+                                         cellSpacing: 16)
+    
     private lazy var horisontalStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
+        let horisontalStack = UIStackView()
+        horisontalStack.axis = .horizontal
+        horisontalStack.distribution = .equalSpacing
         
-        return stack
+        return horisontalStack
+    }()
+    
+    private lazy var averageStack: UIStackView = {
+        let averageStack = UIStackView()
+        averageStack.backgroundColor = .clear
+        averageStack.axis = .vertical
+        averageStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return averageStack
+    }()
+    
+    private lazy var verticalStack: UIStackView = {
+        let verticalStack = UIStackView()
+        verticalStack.axis = .vertical
+        verticalStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return verticalStack
     }()
     
     private lazy var addButton: UIButton = {
-        let button = UIButton()
-        button.addTarget(nil, action: #selector(addHabitorEvent), for: .allTouchEvents)
-        button.backgroundColor = .clear
+        let addButton = UIButton()
+        addButton.addTarget(nil, action: #selector(addHabitorEvent), for: .allTouchEvents)
+        addButton.backgroundColor = .clear
         let image = UIImage(named: Constants.adButtonImageName)
-        button.setImage(image, for: .normal)
+        addButton.setImage(image, for: .normal)
         
-        return button
+        return addButton
     }()
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
-        datePicker.backgroundColor = UIColor(named: "Gray Lite")
-        datePicker.layer.cornerRadius = 8
+        datePicker.layer.cornerRadius = Constants.datePickerCornerRadius
         datePicker.layer.masksToBounds = true
         
         return datePicker
     }()
     
     private lazy var lableHeader: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .clear
-        label.text = Constants.labelHeaderText
-        label.font = UIFont.boldSystemFont(ofSize: Constants.labelTextSize)
-        label.textColor = UIColor(named: "Black [day]")
+        let lableHeader = UILabel()
+        lableHeader.text = Constants.labelHeaderText
+        lableHeader.font = UIFont.boldSystemFont(ofSize: Constants.labelTextSize)
+        lableHeader.textColor = .blackDay
         
-        return label
+        return lableHeader
     }()
     
-    private lazy var seerchText: UISearchTextField = {
+    private lazy var seerchTextField: UISearchTextField = {
         let seerchText = UISearchTextField()
-        seerchText.backgroundColor = .clear
+        seerchText.delegate = self
         
         return seerchText
     }()
     
-    private lazy var collectinView: UICollectionView = {
+    private lazy var trackerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let contentView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let trackerCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        trackerCollectionView.backgroundColor = .clear
+        registerCellAndHeader(collectionView: trackerCollectionView)
         
-        return contentView
+        return trackerCollectionView
     }()
     
     private lazy var imageViewStab: UIImageView = {
-        let imageView = UIImageView()
+        let imageViewStab = UIImageView()
         let image = UIImage(named: Constants.imageViewImageName)
-        imageView.image = image
+        imageViewStab.image = image
+        imageViewStab.isHidden = true
         
-        return imageView
+        return imageViewStab
     }()
     
     private lazy var lableTextStab: UILabel = {
-        let lable = UILabel()
-        lable.text = Constants.labelStabText
-        lable.font = UIFont.systemFont(ofSize: 12)
+        let lableTextStab = UILabel()
+        lableTextStab.text = Constants.labelStabText
+        lableTextStab.font = UIFont.systemFont(ofSize: 12)
+        lableTextStab.isHidden = true
         
-        return lable
+        return lableTextStab
     }()
     
-    private lazy var conteinerView: UIView = {
-        let conteiner = UIView()
-        conteiner.translatesAutoresizingMaskIntoConstraints = false
-        conteiner.backgroundColor = .clear
+    private lazy var contentView: UIView = {
+        let contentView = UIView()
+        contentView.backgroundColor = .clear
         
-        return conteiner
+        return contentView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupElementView()
+        setupVerticalSteck()
         setupHorisontalStack()
-        setupConteinerView()
+        setupContentView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupStabView(flag: true)
     }
 }
 
-extension TrackersViewController: UITextFieldDelegate {
-    
-}
-
 private extension TrackersViewController {
+    func endingWordDay(number: Int) -> String {
+        switch (number % 10) {
+        case 1: return "\(number) день"
+        case 2: return "\(number) дня"
+        case 3: return "\(number) дня"
+        case 4: return "\(number) дня"
+        default: return "\(number) дней"
+        }
+    }
+    
+    func registerCellAndHeader(collectionView: UICollectionView) {
+        collectionView.register(TrackersCollectionViewCell.self, forCellWithReuseIdentifier: "\(TrackersCollectionViewCell.self)")
+        collectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
+    }
+    
     @objc
     func addHabitorEvent() {
         let greateVC = GreateTrackersViewController()
@@ -118,67 +158,100 @@ private extension TrackersViewController {
     }
     
     func setupHorisontalStack() {
-        view.addSubview(horisontalStack)
         [addButton, datePicker].forEach {
-            horisontalStack.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
+            horisontalStack.addArrangedSubview($0)
         }
         
-        NSLayoutConstraint.activate([
-            horisontalStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            horisontalStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            horisontalStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            horisontalStack.heightAnchor.constraint(equalToConstant: 44),
-//
-            addButton.leadingAnchor.constraint(equalTo: horisontalStack.leadingAnchor),
-            addButton.widthAnchor.constraint(equalToConstant: 44),
-            addButton.topAnchor.constraint(equalTo: horisontalStack.topAnchor),
-            addButton.bottomAnchor.constraint(equalTo: horisontalStack.bottomAnchor),
-
-            datePicker.trailingAnchor.constraint(equalTo: horisontalStack.trailingAnchor),
-            datePicker.centerYAnchor.constraint(equalTo: horisontalStack.centerYAnchor),
-            datePicker.heightAnchor.constraint(equalToConstant: 34)
-        ])
+        addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6).isActive = true
+        datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
     }
     
-    func setupElementView() {
-        seerchText.delegate = self
-        [horisontalStack, lableHeader, seerchText, collectinView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview($0)
-        }
+    func setupContentView() {
+        trackerCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(trackerCollectionView)
         
         NSLayoutConstraint.activate([
-            lableHeader.topAnchor.constraint(equalTo: horisontalStack.bottomAnchor),
-            lableHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            
-            seerchText.topAnchor.constraint(equalTo: lableHeader.bottomAnchor, constant: 10),
-            seerchText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            seerchText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            seerchText.heightAnchor.constraint(equalToConstant: 36)
+            trackerCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            trackerCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            trackerCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            trackerCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
+        
+        trackerCollectionView.delegate = self
+        trackerCollectionView.dataSource = self
     }
     
-    func setupConteinerView() {
-        view.addSubview(conteinerView)
-        [imageViewStab, lableTextStab].forEach {
+    func setupVerticalSteck() {
+        view.addSubview(verticalStack)
+        [horisontalStack, lableHeader, seerchTextField, contentView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            conteinerView.addSubview($0)
             $0.backgroundColor = .clear
+            verticalStack.addArrangedSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            conteinerView.topAnchor.constraint(equalTo: seerchText.bottomAnchor, constant: 10),
-            conteinerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            conteinerView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
-            conteinerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            verticalStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            verticalStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            verticalStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            verticalStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            imageViewStab.centerYAnchor.constraint(equalTo: conteinerView.centerYAnchor),
-            imageViewStab.centerXAnchor.constraint(equalTo: conteinerView.centerXAnchor),
-            
-            lableTextStab.centerXAnchor.constraint(equalTo: conteinerView.centerXAnchor),
+            lableHeader.bottomAnchor.constraint(equalTo: seerchTextField.topAnchor, constant: -6),
+            lableHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            seerchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            seerchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
+    
+    func setupStabView(flag: Bool) {
+        [imageViewStab, lableTextStab].forEach {
+            contentView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.backgroundColor = .clear
+            $0.isHidden = flag
+        }
+
+        NSLayoutConstraint.activate([
+            imageViewStab.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            imageViewStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+
+            lableTextStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
         ])
     }
 }
 
+extension TrackersViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(TrackersCollectionViewCell.self)", for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell() }
+        cell.colorView.backgroundColor = .colorSelection12
+        
+        return cell
+    }
+}
 
+extension TrackersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.frame.width - params.paddingWidth
+        let cellWidth = availableWidth / CGFloat(params.cellCount)
+        let sizeCell = CGSize(width: cellWidth, height: 148)
+        
+        return sizeCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 16, left: params.leftInset, bottom: 16, right: params.rightInset)
+    }
+}
+
+extension TrackersViewController: UICollectionViewDelegate {
+    
+}
+
+extension TrackersViewController: UITextFieldDelegate {
+    
+}
