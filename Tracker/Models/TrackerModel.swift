@@ -8,8 +8,15 @@
 import UIKit
 
 struct Tracker {
-    let id: UUID
-    let name: NameEvent
+    var id: UInt = UInt(0.0)
+    let name: String
     let color: UIColor
     let emoji: String
+    
+    init(name: String, color: UIColor, emoji: String) {
+        self.id += UInt(0.1)
+        self.name = name
+        self.color = color
+        self.emoji = emoji
+    }
 }

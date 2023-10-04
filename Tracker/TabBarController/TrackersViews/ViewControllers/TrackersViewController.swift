@@ -7,27 +7,30 @@
 
 import UIKit
 
-private enum Constants {
+private enum ConstantsTrackerVC {
     static let adButtonImageName = "Add"
     static let imageViewImageName = "Star"
     
     static let labelHeaderText = "Трекеры"
     static let labelStabText = "Что будем отслеживать?"
     
-    static let labelTextSize = CGFloat(34)
     static let datePickerCornerRadius = CGFloat(8)
+    static let heightCollectionView = CGFloat(148)
+    
+    static let fontLableTextStab = UIFont.systemFont(ofSize: 12)
+    static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
 }
 
 final class TrackersViewController: UIViewController {
-    private let params = GeometricParams(cellCount: 2,
-                                         leftInset: 16,
-                                         rightInset: 16,
-                                         cellSpacing: 16)
+    private var categories: [TrackerCategory] = [TrackerCategory(header: "Еда", arrayCategory: [Tracker(name: "Приготовить еду ", color: .colorSelection11, emoji: "🍏"),
+                                                                                                Tracker(name: "Одежда", color: .colorSelection15, emoji: "🍏")])]
+    private var completedTrackers: Set<TrackerRecord> = []
+    private var currentDate: Date = Date()
     
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
         horisontalStack.axis = .horizontal
-        horisontalStack.distribution = .equalSpacing
+        horisontalStack.alignment = .center
         
         return horisontalStack
     }()
@@ -52,8 +55,7 @@ final class TrackersViewController: UIViewController {
     private lazy var addButton: UIButton = {
         let addButton = UIButton()
         addButton.addTarget(nil, action: #selector(addHabitorEvent), for: .allTouchEvents)
-        addButton.backgroundColor = .clear
-        let image = UIImage(named: Constants.adButtonImageName)
+        let image = UIImage(named: ConstantsTrackerVC.adButtonImageName)
         addButton.setImage(image, for: .normal)
         
         return addButton
@@ -63,16 +65,17 @@ final class TrackersViewController: UIViewController {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .compact
-        datePicker.layer.cornerRadius = Constants.datePickerCornerRadius
+        datePicker.layer.cornerRadius = ConstantsTrackerVC.datePickerCornerRadius
         datePicker.layer.masksToBounds = true
+        datePicker.addTarget(self, action: #selector(actionForTapDatePicker), for: .allEvents)
         
         return datePicker
     }()
     
     private lazy var lableHeader: UILabel = {
         let lableHeader = UILabel()
-        lableHeader.text = Constants.labelHeaderText
-        lableHeader.font = UIFont.boldSystemFont(ofSize: Constants.labelTextSize)
+        lableHeader.text = ConstantsTrackerVC.labelHeaderText
+        lableHeader.font = ConstantsTrackerVC.fontLabelHeader
         lableHeader.textColor = .blackDay
         
         return lableHeader
@@ -85,9 +88,8 @@ final class TrackersViewController: UIViewController {
         return seerchText
     }()
     
-    private lazy var trackerCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let trackerCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    private lazy var trackerCollectionView: TrackerCollectionView = {
+        let trackerCollectionView = greateTrackerCollectionView()
         trackerCollectionView.backgroundColor = .clear
         registerCellAndHeader(collectionView: trackerCollectionView)
         
@@ -96,7 +98,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
-        let image = UIImage(named: Constants.imageViewImageName)
+        let image = UIImage(named: ConstantsTrackerVC.imageViewImageName)
         imageViewStab.image = image
         imageViewStab.isHidden = true
         
@@ -105,8 +107,8 @@ final class TrackersViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = Constants.labelStabText
-        lableTextStab.font = UIFont.systemFont(ofSize: 12)
+        lableTextStab.text = ConstantsTrackerVC.labelStabText
+        lableTextStab.font = ConstantsTrackerVC.fontLableTextStab
         lableTextStab.isHidden = true
         
         return lableTextStab
@@ -125,46 +127,63 @@ final class TrackersViewController: UIViewController {
         setupVerticalSteck()
         setupHorisontalStack()
         setupContentView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupStabView(flag: true)
+        setupStabView()
     }
 }
 
 private extension TrackersViewController {
-    func endingWordDay(number: Int) -> String {
-        switch (number % 10) {
-        case 1: return "\(number) день"
-        case 2: return "\(number) дня"
-        case 3: return "\(number) дня"
-        case 4: return "\(number) дня"
-        default: return "\(number) дней"
+    @objc
+    func actionForTapDatePicker(sender: UIDatePicker) {
+        let flag = Calendar.current.compare(currentDate, to: sender.date, toGranularity: .day)
+        switch flag {
+        case .orderedAscending:
+            return
+        case .orderedSame:
+            print(sender.date)
+        case .orderedDescending:
+            return
         }
     }
     
+    func showStabView(flag: Bool) {
+        [imageViewStab, lableTextStab].forEach { $0.isHidden = flag }
+    }
+    
     func registerCellAndHeader(collectionView: UICollectionView) {
-        collectionView.register(TrackersCollectionViewCell.self, forCellWithReuseIdentifier: "\(TrackersCollectionViewCell.self)")
-        collectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
+        collectionView.register(TrackersCollectionViewCell.self,
+                                forCellWithReuseIdentifier: "\(TrackersCollectionViewCell.self)")
+        collectionView.register(HeaderReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: "\(HeaderReusableView.self)")
     }
     
     @objc
     func addHabitorEvent() {
-        let greateVC = GreateTrackersViewController()
+        let greateVC = EventSelectionViewController()
         greateVC.modalPresentationStyle = .formSheet
         tabBarController?.tabBar.barTintColor = .black
         present(greateVC, animated: true)
+    }
+    
+    func greateTrackerCollectionView() -> TrackerCollectionView {
+        let params = GeometricParams(cellCount: 2,
+                                     leftInset: 0,
+                                     rightInset: 0,
+                                     cellSpacing: 12)
+        let layout = UICollectionViewFlowLayout()
+        let trackerCollectionView = TrackerCollectionView(frame: .zero,
+                                                          collectionViewLayout: layout,
+                                                          params: params)
+        return trackerCollectionView
     }
     
     func setupHorisontalStack() {
         [addButton, datePicker].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             horisontalStack.addArrangedSubview($0)
+            $0.backgroundColor = .clear
         }
-        
-        addButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 6).isActive = true
-        datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        addButton.leadingAnchor.constraint(equalTo: horisontalStack.leadingAnchor, constant: -10).isActive = true
     }
     
     func setupContentView() {
@@ -193,22 +212,18 @@ private extension TrackersViewController {
         NSLayoutConstraint.activate([
             verticalStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             verticalStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            verticalStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            verticalStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            lableHeader.bottomAnchor.constraint(equalTo: seerchTextField.topAnchor, constant: -6),
-            lableHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            seerchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            seerchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            verticalStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            verticalStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
+        
+        verticalStack.setCustomSpacing(6, after: lableHeader)
     }
     
-    func setupStabView(flag: Bool) {
+    func setupStabView() {
         [imageViewStab, lableTextStab].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
-            $0.isHidden = flag
         }
 
         NSLayoutConstraint.activate([
@@ -223,12 +238,20 @@ private extension TrackersViewController {
 
 extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        categories[section].arrayCategory.count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        categories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(TrackersCollectionViewCell.self)", for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell() }
-        cell.colorView.backgroundColor = .colorSelection12
+        let tracker = categories[indexPath.section].arrayCategory[indexPath.row]
+        cell.colorView.backgroundColor = tracker.color
+        cell.lableEmoji.text = tracker.emoji
+        cell.addButton.backgroundColor = tracker.color
+        cell.nameTrackerLabel.text = tracker.name
         
         return cell
     }
@@ -236,15 +259,35 @@ extension TrackersViewController: UICollectionViewDataSource {
 
 extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let availableWidth = collectionView.frame.width - params.paddingWidth
-        let cellWidth = availableWidth / CGFloat(params.cellCount)
-        let sizeCell = CGSize(width: cellWidth, height: 148)
+        let availableWidth = collectionView.frame.width - trackerCollectionView.params.paddingWidth
+        let cellWidth = availableWidth / CGFloat(trackerCollectionView.params.cellCount)
+        let sizeCell = CGSize(width: cellWidth, height: ConstantsTrackerVC.heightCollectionView)
         
         return sizeCell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 16, left: params.leftInset, bottom: 16, right: params.rightInset)
+        UIEdgeInsets(top: 16, left: trackerCollectionView.params.leftInset,
+                     bottom: 16, right: trackerCollectionView.params.rightInset)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
+            supplementary.label.text = categories[indexPath.section].header
+            print(categories[indexPath.section].header)
+            return supplementary
+        default:
+           return UICollectionReusableView()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let indexPath = IndexPath(row: categories.count, section: section)
+        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        
+        return headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
     }
 }
 

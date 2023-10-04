@@ -42,30 +42,25 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         lableEmoji.layer.masksToBounds = true
         lableEmoji.backgroundColor = .backgroundNight
         lableEmoji.textAlignment = .center
-        //MARK: - Delete
-        lableEmoji.text = "R"
         
         return lableEmoji
     }()
     
-    var textLabel: UILabel = {
-        let textLabel = UILabel()
-        textLabel.numberOfLines = 2
-        textLabel.font = ConstantsTrackerCell.fontTextLable
-        textLabel.textColor = .white
-        textLabel.textAlignment = .justified
+    var nameTrackerLabel: UILabel = {
+        let nameTrackerLabel = UILabel()
+        nameTrackerLabel.numberOfLines = 2
+        nameTrackerLabel.font = ConstantsTrackerCell.fontTextLable
+        nameTrackerLabel.textColor = .white
+        nameTrackerLabel.textAlignment = .justified
         
-        //MARK: - Delete
-        textLabel.text = "Поливать растения"
-        
-        return textLabel
+        return nameTrackerLabel
     }()
     
     lazy var lableDayCounter: UILabel = {
         let lableDayCounter = UILabel()
         lableDayCounter.textColor = .blackDay
         lableDayCounter.font = ConstantsTrackerCell.fontLableDayCounter
-        lableDayCounter.text =  "1 день"
+        lableDayCounter.text = "\(0) дней"
         
         return lableDayCounter
     }()
@@ -113,6 +108,18 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     }
 }
 
+extension TrackersCollectionViewCell {
+    func endingWordDay(number: Int) -> String {
+        switch (number % 10) {
+        case 1: return "\(number) день"
+        case 2: return "\(number) дня"
+        case 3: return "\(number) дня"
+        case 4: return "\(number) дня"
+        default: return "\(number) дней"
+        }
+    }
+}
+
 private extension TrackersCollectionViewCell {
     func setupVerticallStack() {
         contentView.addSubview(verticalStack)
@@ -147,7 +154,7 @@ private extension TrackersCollectionViewCell {
     }
     
     func setupColorView() {
-        [lableEmoji, textLabel].forEach {
+        [lableEmoji, nameTrackerLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             colorView.addSubview($0)
         }
@@ -159,9 +166,9 @@ private extension TrackersCollectionViewCell {
             lableEmoji.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
             lableEmoji.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
             
-            textLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
-            textLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
-            textLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -12)
+            nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
+            nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
+            nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -12)
         ])
     }
 }

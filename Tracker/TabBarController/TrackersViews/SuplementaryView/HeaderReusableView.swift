@@ -2,13 +2,13 @@
 //  HeaderReusableView.swift
 //  Tracker
 //
-//  Created by Марина Машук on 1.10.23.
+//  Created by Григорий Машук on 1.10.23.
 //
 
 import UIKit
 
 private enum ConstantsReusebleView {
-    static let fontLableSize = CGFloat(19)
+    static let fontLable = UIFont.boldSystemFont(ofSize: 19)
     static let numberOfLinesLable = 1
 }
 
@@ -16,9 +16,8 @@ final class HeaderReusableView: UICollectionReusableView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = UIFont.boldSystemFont(ofSize: ConstantsReusebleView.fontLableSize)
+        label.font = ConstantsReusebleView.fontLable
         label.textColor = .blackDay
-        label.textAlignment = .left
         label.numberOfLines = ConstantsReusebleView.numberOfLinesLable
         
         return label
@@ -26,6 +25,7 @@ final class HeaderReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLable()
     }
     
     required init?(coder: NSCoder) {
@@ -39,7 +39,9 @@ private extension HeaderReusableView {
         label.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12)
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
+            label.topAnchor.constraint(equalTo: topAnchor),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }

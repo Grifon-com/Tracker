@@ -2,13 +2,15 @@
 //  ExtentionUIColor.swift
 //  Tracker
 //
-//  Created by Марина Машук on 30.09.23.
+//  Created by Григорий Машук on 30.09.23.
 //
 
 import UIKit
 
 extension UIColor {
     static var blackDay: UIColor {UIColor(named: "blackDay") ?? .black}
+    static var grayDay: UIColor {UIColor(named: "grayDay") ?? .gray}
+    static var blueDay: UIColor {UIColor(named: "blueDay") ?? .blue}
     static var whiteDay: UIColor {UIColor(named: "whiteDay") ?? .white}
     static var redDay: UIColor {UIColor(named: "redDay") ?? .red}
     static var backgroundDay: UIColor {UIColor(named: "backgroundDay") ?? .gray}
