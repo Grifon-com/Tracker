@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - EmojiCollectionViewCell
 final class EmojiCollectionViewCell: UICollectionViewCell {
     var emojiLable: UILabel = {
         let emojiLable = UILabel()
@@ -27,6 +28,7 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
     }
 }
 
+//MARK: - SetupUI
 extension EmojiCollectionViewCell {
     private func setupEmojiLable() {
         addSubview(emojiLable)

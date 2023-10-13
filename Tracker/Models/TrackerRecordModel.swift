@@ -7,7 +7,18 @@
 
 import Foundation
 
-struct TrackerRecord: Hashable {
+struct TrackerRecord {
     let id: UUID
     let date: Date
+
+}
+
+extension TrackerRecord: Hashable {
+    static func == (lhs: TrackerRecord, rhs: TrackerRecord) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }

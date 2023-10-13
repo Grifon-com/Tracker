@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - ColorCollectionViewCell
 final class ColorCollectionViewCell: UICollectionViewCell {
     var colorView: UIView = {
         let colorView = UIView()
@@ -19,6 +20,7 @@ final class ColorCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupColorView()
     }
     
     required init?(coder: NSCoder) {
@@ -26,6 +28,7 @@ final class ColorCollectionViewCell: UICollectionViewCell {
     }
 }
 
+//MARK: - SetupUI
 extension ColorCollectionViewCell {
     private func setupColorView() {
         addSubview(colorView)

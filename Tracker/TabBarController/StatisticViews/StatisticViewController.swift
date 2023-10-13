@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - StatisticViewController
 class StatisticViewController: UIViewController {
 
     override func viewDidLoad() {

@@ -7,18 +7,17 @@
 
 import UIKit
 
-private enum ConstantsReusebleView {
-    static let fontLable = UIFont.boldSystemFont(ofSize: 19)
-    static let numberOfLinesLable = 1
-}
+fileprivate let fontLable = UIFont.boldSystemFont(ofSize: 19)
+fileprivate let numberOfLinesLable = 1
 
+//MARK: - HeaderReusableView
 final class HeaderReusableView: UICollectionReusableView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = ConstantsReusebleView.fontLable
+        label.font = fontLable
         label.textColor = .blackDay
-        label.numberOfLines = ConstantsReusebleView.numberOfLinesLable
+        label.numberOfLines = numberOfLinesLable
         
         return label
     }()
@@ -33,6 +32,7 @@ final class HeaderReusableView: UICollectionReusableView {
     }
 }
 
+//MARK: - SetupUI
 private extension HeaderReusableView {
     func setupLable() {
         addSubview(label)

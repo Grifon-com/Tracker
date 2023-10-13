@@ -2,36 +2,59 @@
 //  WeekDay.swift
 //  Tracker
 //
-//  Created by Марина Машук on 2.10.23.
+//  Created by Григорий Машук on 2.10.23.
 //
 
 import Foundation
 
-enum WeekDay {
+enum WeekDay: Int {
+    case sunday
     case monday
     case tuesday
     case wednesday
     case thursday
     case friday
     case saturday
-    case sunday
     
     var day: String {
+        var day: String
         switch self {
         case .monday:
-            return "Понедельник"
+            day = "Понедельник"
         case .tuesday:
-            return  "Вторник"
+            day = "Вторник"
         case .wednesday:
-            return "Среда"
+            day = "Среда"
         case .thursday:
-            return "Четверг"
+            day = "Четверг"
         case .friday:
-            return  "Пятница"
+            day = "Пятница"
         case .saturday:
-            return  "Суббота"
+            day = "Суббота"
         case .sunday:
-            return  "Воскресенье"
+            day = "Воскресенье"
         }
+        return day
+    }
+    
+    var briefWordDay: String {
+        var briefWordDay: String
+        switch self {
+        case .monday:
+            briefWordDay = "Пн"
+        case .tuesday:
+            briefWordDay = "Вт"
+        case .wednesday:
+            briefWordDay = "Ср"
+        case .thursday:
+            briefWordDay = "Чт"
+        case .friday:
+            briefWordDay = "Пт"
+        case .saturday:
+            briefWordDay = "Сб"
+        case .sunday:
+            briefWordDay = "Вс"
+        }
+        return briefWordDay
     }
 }

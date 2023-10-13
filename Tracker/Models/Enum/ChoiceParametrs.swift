@@ -12,11 +12,13 @@ enum ChoiceParametrs {
     case schedule
     
     var name: String {
+        var name: String
         switch self {
         case .category:
-            return "Категория"
+            name = "Категория"
         case .schedule:
-            return "Расписание"
+            name = "Расписание"
         }
+        return name
     }
 }

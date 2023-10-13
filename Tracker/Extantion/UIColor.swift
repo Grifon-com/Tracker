@@ -16,6 +16,7 @@ extension UIColor {
     static var backgroundDay: UIColor {UIColor(named: "backgroundDay") ?? .gray}
     static var lightGray: UIColor {UIColor(named: "lightGray") ?? .gray}
     static var backgroundNight: UIColor {UIColor(named: "backgroundNight") ?? .gray}
+    static var grayOpacity30: UIColor {UIColor(named: "grayOpacity30") ?? .gray}
     
     static var colorSelection1: UIColor {UIColor(named: "colorSelection1") ?? .red}
     static var colorSelection2: UIColor {UIColor(named: "colorSelection2") ?? .orange}

@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - TrackerCollectionView
 final class TrackerCollectionView: UICollectionView {
     var params: GeometricParams
     

@@ -7,33 +7,27 @@
 
 import UIKit
 
-private enum Constants {
-    static let texGreatetLabelName = "Создание трекера"    
-    static let labeFontlSize = CGFloat(16)
-    static let labelCornerRadius = CGFloat(16)
-    
-    enum NameEvent {
-        case habit
-        case irregularEvent
-        
-        var name: String {
-            switch self {
-            case .habit:
-                return "Привычка"
-            case .irregularEvent:
-                return "Нерегулярное событие"
-            }
-        }
-    }
+fileprivate let texGreatetLabelName = "Создание трекера"
+fileprivate let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+fileprivate let cornerRadius = CGFloat(16)
+fileprivate let lableGreateImage = UIColor(named: "blackDay")
+
+//MARK: - EventSelectionViewControllerDelegate
+protocol EventSelectionViewControllerDelegate: AnyObject {
+    func eventSelectionViewController(vc: UIViewController, categories: [TrackerCategory])
+    func eventSelectionViewControllerDidCancel(_ vc: EventSelectionViewController)
 }
 
+//MARK: - EventSelectionViewController
 final class EventSelectionViewController: UIViewController {
+    weak var delegate: EventSelectionViewControllerDelegate?
+    
     private lazy var labelGreate: UILabel = {
         let label = UILabel()
-        label.text = Constants.texGreatetLabelName
-        label.font = UIFont.systemFont(ofSize: Constants.labeFontlSize, weight: .medium)
+        label.text = texGreatetLabelName
+        label.font = textFont
         label.backgroundColor = .clear
-        label.textColor = UIColor(named: "Black [day]")
+        label.textColor = lableGreateImage
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -49,14 +43,17 @@ final class EventSelectionViewController: UIViewController {
     }()
     
     private lazy var habitButton: UIButton = {
-        let habitButton = setupLable(text: .habit, fontSize: Constants.labeFontlSize, cornerRadius: Constants.labelCornerRadius)
+        let habitButton = setupButton(text: .habit, font: textFont, cornerRadius: cornerRadius)
         habitButton.addTarget(self, action: #selector(didTapHabitButton), for: .allTouchEvents)
         
         return habitButton
     }()
     
     private lazy var irregularEventButton: UIButton = {
-        setupLable(text: .irregularEvent, fontSize: Constants.labeFontlSize, cornerRadius: Constants.labelCornerRadius)
+        let irregularEventButton = setupButton(text: .irregularEvent, font: textFont, cornerRadius: cornerRadius)
+        irregularEventButton.addTarget(self, action: #selector(didTapIrregularEventButton), for: .allTouchEvents)
+        
+        return irregularEventButton
     }()
     
     override func viewDidLoad() {
@@ -68,19 +65,34 @@ final class EventSelectionViewController: UIViewController {
 }
 
 private extension EventSelectionViewController {
+    //MARK: - Обработка событий
     @objc
     func didTapHabitButton() {
-        let greateVC = GreateTrackerViewController()
-        greateVC.modalPresentationStyle = .formSheet
+        let greateVC = greateTrackerVC()
+        greateVC.reverseIsSchedul()
         present(greateVC, animated: true)
     }
     
-    func setupLable(text: Constants.NameEvent, fontSize: CGFloat, cornerRadius: CGFloat? = nil) -> UIButton {
+    @objc
+    func didTapIrregularEventButton() {
+        let greateVC = greateTrackerVC()
+        present(greateVC, animated: true)
+    }
+    
+    func greateTrackerVC() -> GreateTrackerViewController {
+        let greateVC = GreateTrackerViewController()
+        greateVC.delegate = self
+        greateVC.modalPresentationStyle = .formSheet
+        return greateVC
+    }
+    
+    //MARK: - SetupUI
+    func setupButton(text: NameEvent, font: UIFont, cornerRadius: CGFloat? = nil) -> UIButton {
         let button = UIButton()
         button.setTitle(text.name, for: .normal)
         button.titleLabel?.textColor = UIColor.whiteDay
         button.backgroundColor = UIColor.blackDay
-        button.titleLabel?.font = UIFont.systemFont(ofSize: fontSize)
+        button.titleLabel?.font = font
         button.layer.cornerRadius = cornerRadius ?? CGFloat(0)
         button.layer.masksToBounds = cornerRadius == nil ? false : true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -114,7 +126,16 @@ private extension EventSelectionViewController {
             
         ])
     }
-    
-    
 }
 
+//MARK: - GreateTrackerViewControllerDelegate
+extension EventSelectionViewController: GreateTrackerViewControllerDelegate {
+    func greateTrackerViewController(vc: UIViewController, categories: [TrackerCategory]) {
+        delegate?.eventSelectionViewController(vc: self, categories: categories)
+    }
+    
+    func greateTrackerViewControllerDidCancel(_ vc: GreateTrackerViewController) {
+        vc.dismiss(animated: false)
+        delegate?.eventSelectionViewControllerDidCancel(self)
+    }
+}
