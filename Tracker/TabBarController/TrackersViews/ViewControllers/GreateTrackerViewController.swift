@@ -18,13 +18,13 @@ fileprivate let emptyString = ""
 
 fileprivate let restrictionsTextField = 38
 fileprivate let numberOfLinesRestrictionsTextField = 1
-    
+
 fileprivate let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
 fileprivate let greateNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
 fileprivate let stackSpacing = CGFloat(10)
 fileprivate let spacingVerticalStack = CGFloat(24)
 fileprivate let leftIndentTextField = CGFloat(12)
-    
+
 fileprivate let cornerRadius = CGFloat(16)
 fileprivate let borderWidthButton = CGFloat(1)
 
@@ -47,7 +47,7 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         didSet { checkingForEmptiness() }
     }
     private let color: [UIColor] = [.colorSelection14]
-    private var nameNewCategori: String = "Как сдать 14 спринт"
+    private var nameNewCategori: String = "Важное"
     //TODO: -
     private var nameTracker: String = ""
     
@@ -77,17 +77,17 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         return greateNameTextField
     }()
     
-    private lazy var restrictionsView: UILabel = {
-        let restrictionsView = UILabel()
-        restrictionsView.backgroundColor = .clear
-        restrictionsView.font = greateNameTextFieldFont
-        restrictionsView.text = characterLimit
-        restrictionsView.textColor = .redDay
-        restrictionsView.numberOfLines = numberOfLinesRestrictionsTextField
-        restrictionsView.textAlignment = .center
-        restrictionsView.isHidden = true
+    private lazy var characterRestrictionsView: UILabel = {
+        let characterRestrictionsView = UILabel()
+        characterRestrictionsView.backgroundColor = .clear
+        characterRestrictionsView.font = greateNameTextFieldFont
+        characterRestrictionsView.text = characterLimit
+        characterRestrictionsView.textColor = .redDay
+        characterRestrictionsView.numberOfLines = numberOfLinesRestrictionsTextField
+        characterRestrictionsView.textAlignment = .center
+        characterRestrictionsView.isHidden = true
         
-        return restrictionsView
+        return characterRestrictionsView
     }()
     
     private lazy var stackView: UIStackView = {
@@ -198,7 +198,7 @@ extension GreateTrackerViewController {
     private func didTapCancelButton() {
         dismiss(animated: true)
     }
-
+    
     @objc
     private func didTapGreateButton() {
         let categories = greateNewCategori(categories: recordManager.categories, nameCategori: nameNewCategori)
@@ -210,7 +210,7 @@ extension GreateTrackerViewController {
     private func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
         if text.count > restrictionsTextField {
-            restrictionsView.isHidden = false
+            characterRestrictionsView.isHidden = false
             textField.text = nameTracker
             return
         }
@@ -311,7 +311,7 @@ extension GreateTrackerViewController {
             buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
-
+    
     func setupSelectionTableView() {
         NSLayoutConstraint.activate([
             selectionTableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 34),
@@ -335,7 +335,7 @@ extension GreateTrackerViewController {
     }
     
     func setupStackView() {
-        [greateNameTextField, restrictionsView].forEach {
+        [greateNameTextField, characterRestrictionsView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             stackView.addArrangedSubview($0)
         }
@@ -373,14 +373,15 @@ extension GreateTrackerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GreateTrackerTableViewCell.self)") as? GreateTrackerTableViewCell else { return UITableViewCell() }
-        let secondaryText = jonedSchedule(schedule: schedule)
+        let secondarySchedulText = jonedSchedule(schedule: schedule)
         cell.delegate = self
         switch listSettings[indexPath.row] {
         case .category:
             cell.configCell(choice: listSettings[indexPath.row])
+            cell.configSecondaryLableShedule(secondaryText: nameNewCategori)
         case .schedule:
             cell.configCell(choice: listSettings[indexPath.row])
-            cell.configSecondaryLableShedule(secondaryText: secondaryText)
+            cell.configSecondaryLableShedule(secondaryText: secondarySchedulText)
         }
         return cell
     }
@@ -401,7 +402,7 @@ extension GreateTrackerViewController: GreateTrackerTableViewCellDelegate {
         else { return }
         switch listSettings[indexPath.row] {
         case .category:
-        let greateCategoriViewController = GreateCategoriesViewController()
+            let greateCategoriViewController = GreateCategoriesViewController()
             greateCategoriViewController.modalPresentationStyle = .formSheet
             greateCategoriViewController.delegate = self
             present(greateCategoriViewController, animated: true)

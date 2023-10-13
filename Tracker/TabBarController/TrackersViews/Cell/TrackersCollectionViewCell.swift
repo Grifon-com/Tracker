@@ -31,7 +31,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     private var flag: Bool = false
     
     weak var delegate: TrackersCollectionViewCellDelegate?
-
+    
     lazy var colorView: UIView = {
         let colorView = UIView()
         colorView.layer.masksToBounds = true
@@ -223,7 +223,7 @@ extension TrackersCollectionViewCell {
     
     private func setupBackgroundAddButtonView() {
         addButton.addSubview(backgroundAddButtonView)
-       
+        
         NSLayoutConstraint.activate([
             backgroundAddButtonView.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
             backgroundAddButtonView.centerYAnchor.constraint(equalTo: addButton.centerYAnchor),

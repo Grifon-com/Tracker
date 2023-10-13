@@ -38,7 +38,7 @@ final class EventSelectionViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 10
-
+        
         return stackView
     }()
     

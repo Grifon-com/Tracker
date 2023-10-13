@@ -6,7 +6,7 @@
 //
 
 import UIKit
- 
+
 //MARK: - RecordManagerProtocol
 protocol RecordManagerProtocol {
     var categories: [TrackerCategory] { get }
@@ -28,7 +28,7 @@ final class RecordManagerStab: RecordManagerProtocol {
     let weekDay: [WeekDay] = [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]
     
     private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶", "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
-
+    
     private var visibleCategories: [TrackerCategory]?
     
     //TODO: Sprint_15

@@ -60,7 +60,7 @@ extension GreateCategoriesTableViewCell {
     private func setupLable() {
         nameCategoriLableView.translatesAutoresizingMaskIntoConstraints = false
         nameCategoriLableView.backgroundColor = .clear
-            contentView.addSubview(nameCategoriLableView)
+        contentView.addSubview(nameCategoriLableView)
         
         NSLayoutConstraint.activate([
             nameCategoriLableView.centerYAnchor.constraint(equalTo: centerYAnchor),

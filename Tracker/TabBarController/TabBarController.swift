@@ -13,7 +13,7 @@ final class TabBarController: UITabBarController {
         static let tabBarImageTrecker =  "tabBarTracker"
         static let tabBarImageStatistic = "tabBarStatistic"
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()

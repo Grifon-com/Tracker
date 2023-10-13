@@ -30,19 +30,19 @@ class GreateTrackerTableViewCell: UITableViewCell {
     }()
     
     private lazy var secondaryTextLable: UILabel = {
-        let secondaryText = UILabel()
-        secondaryText.font = lableFont
-        secondaryText.textColor = .grayDay
-        secondaryText.isHidden = true
-
-        return secondaryText
+        let secondaryTextLable = UILabel()
+        secondaryTextLable.font = lableFont
+        secondaryTextLable.textColor = .grayDay
+        secondaryTextLable.isHidden = true
+        
+        return secondaryTextLable
     }()
     
     private lazy var lableStackView: UIStackView = {
         let lableStackView = UIStackView()
         lableStackView.translatesAutoresizingMaskIntoConstraints = false
         lableStackView.axis = .vertical
-
+        
         return lableStackView
     }()
     
@@ -59,12 +59,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        setupsteckView()
-        setupCell()
-        backgroundColor = .backgroundNight
-        layer.cornerRadius = cornerRadiusViewCell
-        layer.masksToBounds = true
+        setupUIElement()
     }
     
     required init?(coder: NSCoder) {
@@ -74,10 +69,18 @@ class GreateTrackerTableViewCell: UITableViewCell {
 
 extension GreateTrackerTableViewCell {
     //MARK: - SetupUI
-    private func setupCell() {
-            choiceButton.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview(choiceButton)
-            choiceButton.backgroundColor = .clear
+    private func setupUIElement() {
+        setupSelf()
+        setupSteckView()
+    }
+    
+    private func setupSelf() {
+        backgroundColor = .backgroundNight
+        layer.cornerRadius = cornerRadiusViewCell
+        layer.masksToBounds = true
+        choiceButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(choiceButton)
+        choiceButton.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
             choiceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -2),
@@ -88,31 +91,14 @@ extension GreateTrackerTableViewCell {
         ])
     }
     
-    private func setupLable() {
-        [lableView, secondaryTextLable].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.backgroundColor = .clear
-            contentView.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            lableView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            lableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            
-            secondaryTextLable.topAnchor.constraint(equalTo: lableView.bottomAnchor),
-            secondaryTextLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12)
-        
-        ])
-    }
-    
-    func setupsteckView() {
+    func setupSteckView() {
         contentView.addSubview(lableStackView)
         [lableView, secondaryTextLable].forEach {
             $0.backgroundColor = .clear
             $0.translatesAutoresizingMaskIntoConstraints = false
             lableStackView.addArrangedSubview($0)
         }
-
+        
         NSLayoutConstraint.activate([
             lableStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             lableStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)

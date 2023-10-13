@@ -9,17 +9,17 @@ import UIKit
 
 fileprivate let adButtonImageName = "Add"
 fileprivate let imageViewImageStab = "Star"
-    
+
 fileprivate let headerText = "Трекеры"
 fileprivate let labelStabText = "Что будем отслеживать?"
 fileprivate let placeholderSearch = "Поиск"
 fileprivate let textCancel = "Отменить"
 fileprivate let forKeyTextCancel = "cancelButtonText"
 fileprivate let rusLocale = "ru_Ru"
-    
+
 fileprivate let datePickerCornerRadius = CGFloat(8)
 fileprivate let heightCollectionView = CGFloat(148)
-    
+
 fileprivate let fontLableTextStab = UIFont.systemFont(ofSize: 12)
 fileprivate let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
 
@@ -236,7 +236,7 @@ extension TrackersViewController {
     private func showStabView(flag: Bool) {
         [imageViewStab, lableTextStab].forEach { $0.isHidden = flag }
     }
-        
+    
     //метод создания кастомной CollectionView
     private func greateTrackerCollectionView() -> TrackerCollectionView {
         let params = GeometricParams(cellCount: 2,
@@ -301,11 +301,11 @@ extension TrackersViewController {
     
     private func setupNavBarItem() {
         guard let navBar = navigationController?.navigationBar,
-        let topItem = navBar.topItem
+              let topItem = navBar.topItem
         else { return }
         topItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: adButtonImageName),
-                                                            style: .plain, target: self,
-                                                            action: #selector(didLeftNavBarItem))
+                                                    style: .plain, target: self,
+                                                    action: #selector(didLeftNavBarItem))
         
         topItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         topItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
@@ -344,9 +344,9 @@ extension TrackersViewController {
     
     private func setupVerticalSteck() {
         view.addSubview(verticalStack)
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.backgroundColor = .clear
-            verticalStack.addArrangedSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.backgroundColor = .clear
+        verticalStack.addArrangedSubview(contentView)
         
         NSLayoutConstraint.activate([
             verticalStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -385,7 +385,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(TrackersCollectionViewCell.self)",
-            for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell() }
+                                                            for: indexPath) as? TrackersCollectionViewCell else { return UICollectionViewCell() }
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
         cell.delegate = self
         blurButtonBackground(cell: cell)

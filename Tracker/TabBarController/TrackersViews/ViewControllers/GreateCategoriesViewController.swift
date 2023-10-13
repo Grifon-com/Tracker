@@ -103,7 +103,7 @@ private extension GreateCategoriesViewController {
         //TODO: - Sprint_15
     }
     
-// метод показа/скрытия заглушки
+    // метод показа/скрытия заглушки
     func showStabView(flag: Bool) {
         conteinerStabView.isHidden = flag
     }

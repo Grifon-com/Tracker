@@ -208,6 +208,9 @@
 				1A3477CB2AD18D2100EDEAED /* Helpers */,
 				1A2980BB2AC86499007FE528 /* Extantion */,
 				1AF783BD2ACD9D6C0002BB54 /* Application */,
+				1A8A7FEE2AC55D980038CB42 /* Assets.xcassets */,
+				1A8A7FF02AC55D980038CB42 /* LaunchScreen.storyboard */,
+				1A8A7FF32AC55D980038CB42 /* Info.plist */,
 			);
 			path = Tracker;
 			sourceTree = "<group>";
@@ -248,9 +251,6 @@
 			children = (
 				1A8A7FE52AC55D970038CB42 /* AppDelegate.swift */,
 				1A8A7FE72AC55D970038CB42 /* SceneDelegate.swift */,
-				1A8A7FEE2AC55D980038CB42 /* Assets.xcassets */,
-				1A8A7FF02AC55D980038CB42 /* LaunchScreen.storyboard */,
-				1A8A7FF32AC55D980038CB42 /* Info.plist */,
 			);
 			path = Application;
 			sourceTree = "<group>";

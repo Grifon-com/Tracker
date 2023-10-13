@@ -35,7 +35,7 @@ final class ScheduleViewController: UIViewController {
         
         return scheduleLable
     }()
-
+    
     private lazy var weekDayTableView: UITableView = {
         let weekDayTableView = UITableView()
         weekDayTableView.dataSource = self
@@ -122,7 +122,7 @@ private extension ScheduleViewController {
         ])
     }
 }
- 
+
 //MARK: - UITableViewDataSource
 extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,7 +133,7 @@ extension ScheduleViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WeekDayTableViewCell.self)") as? WeekDayTableViewCell else { return UITableViewCell() }
         cell.delegate = self
         cell.config(nameDay: weekDay[indexPath.row])
-       
+        
         if weekDay[indexPath.row] == weekDay.first {
             cell.setupCornerRadius(cornerRadius: cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
@@ -159,7 +159,7 @@ extension ScheduleViewController: UITableViewDelegate {
 extension ScheduleViewController: WeekDayTableViewCellDelegate {
     func addDayInListkDay(cell: UITableViewCell, flag: Bool) {
         guard let cell = cell as? WeekDayTableViewCell,
-        let indexPath = weekDayTableView.indexPath(for: cell)
+              let indexPath = weekDayTableView.indexPath(for: cell)
         else { return }
         let day = weekDay[indexPath.row]
         updateListWeekDay(flag: flag, day: day)
