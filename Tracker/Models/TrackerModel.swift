@@ -25,7 +25,7 @@ struct Tracker {
 
 extension Tracker: Equatable {
     static func == (lhs: Tracker, rhs: Tracker) -> Bool {
-            lhs.name == rhs.name
+            lhs.id == rhs.id
     }
 }
 

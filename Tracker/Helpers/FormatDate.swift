@@ -17,7 +17,6 @@ final class FormatDate {
         return dateFormatter
     }()
     
-    
     func greateWeekDayInt(date: Date) -> Int {
         let weekDayString = dateFormatter.string(from: date)
         let deyWeek = NSString(string: weekDayString).intValue - 1

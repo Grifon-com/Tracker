@@ -7,8 +7,6 @@
 
 import UIKit
 
-fileprivate let dayLableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-
 //MARK: - WeekDayTableViewCellDelegate
 protocol WeekDayTableViewCellDelegate: AnyObject {
     func addDayInListkDay(cell: UITableViewCell, flag: Bool)
@@ -16,10 +14,13 @@ protocol WeekDayTableViewCellDelegate: AnyObject {
 
 //MARK: -
 final class WeekDayTableViewCell: UITableViewCell {
+    private static let dayLableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+    
     weak var delegate: WeekDayTableViewCellDelegate?
     
     private lazy var dayLable: UILabel = {
         let dayLable = UILabel()
+        dayLable.font = WeekDayTableViewCell.dayLableFont
         
         return dayLable
     }()
@@ -27,7 +28,7 @@ final class WeekDayTableViewCell: UITableViewCell {
     private lazy var choiceDaySwitch: UISwitch = {
         let choiceDaySwitch = UISwitch()
         choiceDaySwitch.onTintColor = .blueDay
-        choiceDaySwitch.addTarget(self, action: #selector(switching), for: .allTouchEvents)
+        choiceDaySwitch.addTarget(self, action: #selector(switching), for: .touchUpInside)
         
         return choiceDaySwitch
     }()

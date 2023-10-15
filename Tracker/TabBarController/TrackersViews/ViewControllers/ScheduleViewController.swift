@@ -7,28 +7,30 @@
 
 import UIKit
 
-fileprivate let scheduleLableText = "Расписание"
-fileprivate let doneButtonText = "Готово"
-fileprivate let spacingVerticalStack = CGFloat(20)
-fileprivate let cornerRadiusUIElement = CGFloat(16)
-fileprivate let heightCell = CGFloat(75)
-fileprivate let separatorInsetTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-fileprivate let scheduleLableFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-
 protocol ScheduleViewControllerDelegate: AnyObject {
     func daysOfWeek(viewController: UIViewController, listDays:[WeekDay])
 }
 
 //MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
+    private struct ConstantsShedulVc {
+        static let scheduleLableText = "Расписание"
+        static let doneButtonText = "Готово"
+        static let spacingVerticalStack = CGFloat(20)
+        static let cornerRadiusUIElement = CGFloat(16)
+        static let heightCell = CGFloat(75)
+        static let separatorInsetTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        static let scheduleLableFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+    }
+    
     private let weekDay: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
     weak var delegate: ScheduleViewControllerDelegate?
     private var listWeekDay: [WeekDay] = []
     
     private lazy var scheduleLable: UILabel = {
         let scheduleLable = UILabel()
-        scheduleLable.text = scheduleLableText
-        scheduleLable.font = scheduleLableFont
+        scheduleLable.text = ConstantsShedulVc.scheduleLableText
+        scheduleLable.font = ConstantsShedulVc.scheduleLableFont
         scheduleLable.textColor = .blackDay
         scheduleLable.backgroundColor = .clear
         scheduleLable.textAlignment = .center
@@ -40,8 +42,9 @@ final class ScheduleViewController: UIViewController {
         let weekDayTableView = UITableView()
         weekDayTableView.dataSource = self
         weekDayTableView.delegate = self
+        weekDayTableView.allowsSelection = false
         weekDayTableView.backgroundColor = .clear
-        weekDayTableView.separatorInset = separatorInsetTableView
+        weekDayTableView.separatorInset = ConstantsShedulVc.separatorInsetTableView
         weekDayTableView.register(WeekDayTableViewCell.self, forCellReuseIdentifier: "\(WeekDayTableViewCell.self)")
         
         return weekDayTableView
@@ -49,11 +52,11 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var doneButton: UIButton = {
         let doneButton = UIButton()
-        doneButton.addTarget(self, action: #selector(didTapDoneButton), for: .allTouchEvents)
-        doneButton.layer.cornerRadius = cornerRadiusUIElement
+        doneButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        doneButton.layer.cornerRadius = ConstantsShedulVc.cornerRadiusUIElement
         doneButton.layer.masksToBounds = true
         doneButton.backgroundColor = .blackDay
-        doneButton.setTitle(doneButtonText, for: .normal)
+        doneButton.setTitle(ConstantsShedulVc.doneButtonText, for: .normal)
         doneButton.titleLabel?.textColor = .whiteDay
         
         return doneButton
@@ -135,12 +138,12 @@ extension ScheduleViewController: UITableViewDataSource {
         cell.config(nameDay: weekDay[indexPath.row])
         
         if weekDay[indexPath.row] == weekDay.first {
-            cell.setupCornerRadius(cornerRadius: cornerRadiusUIElement,
+            cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
             
         }
         if weekDay[indexPath.row] == weekDay.last {
-            cell.setupCornerRadius(cornerRadius: cornerRadiusUIElement,
+            cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         }
@@ -151,7 +154,7 @@ extension ScheduleViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        heightCell
+        ConstantsShedulVc.heightCell
     }
 }
 

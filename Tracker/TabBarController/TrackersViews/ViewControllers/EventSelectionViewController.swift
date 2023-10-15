@@ -7,10 +7,7 @@
 
 import UIKit
 
-fileprivate let texGreatetLabelName = "Создание трекера"
-fileprivate let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-fileprivate let cornerRadius = CGFloat(16)
-fileprivate let lableGreateImage = UIColor(named: "blackDay")
+
 
 //MARK: - EventSelectionViewControllerDelegate
 protocol EventSelectionViewControllerDelegate: AnyObject {
@@ -20,14 +17,21 @@ protocol EventSelectionViewControllerDelegate: AnyObject {
 
 //MARK: - EventSelectionViewController
 final class EventSelectionViewController: UIViewController {
+    private struct ConstantsEventVc {
+        static let texGreatetLabelName = "Создание трекера"
+        static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let cornerRadius = CGFloat(16)
+        static let lableGreateImage = UIColor(named: "blackDay")
+    }
+    
     weak var delegate: EventSelectionViewControllerDelegate?
     
     private lazy var labelGreate: UILabel = {
         let label = UILabel()
-        label.text = texGreatetLabelName
-        label.font = textFont
+        label.text = ConstantsEventVc.texGreatetLabelName
+        label.font = ConstantsEventVc.textFont
         label.backgroundColor = .clear
-        label.textColor = lableGreateImage
+        label.textColor = ConstantsEventVc.lableGreateImage
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -43,15 +47,15 @@ final class EventSelectionViewController: UIViewController {
     }()
     
     private lazy var habitButton: UIButton = {
-        let habitButton = setupButton(text: .habit, font: textFont, cornerRadius: cornerRadius)
-        habitButton.addTarget(self, action: #selector(didTapHabitButton), for: .allTouchEvents)
+        let habitButton = setupButton(text: .habit, font: ConstantsEventVc.textFont, cornerRadius: ConstantsEventVc.cornerRadius)
+        habitButton.addTarget(self, action: #selector(didTapHabitButton), for: .touchUpInside)
         
         return habitButton
     }()
     
     private lazy var irregularEventButton: UIButton = {
-        let irregularEventButton = setupButton(text: .irregularEvent, font: textFont, cornerRadius: cornerRadius)
-        irregularEventButton.addTarget(self, action: #selector(didTapIrregularEventButton), for: .allTouchEvents)
+        let irregularEventButton = setupButton(text: .irregularEvent, font: ConstantsEventVc.textFont, cornerRadius: ConstantsEventVc.cornerRadius)
+        irregularEventButton.addTarget(self, action: #selector(didTapIrregularEventButton), for: .touchUpInside)
         
         return irregularEventButton
     }()

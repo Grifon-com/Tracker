@@ -7,25 +7,26 @@
 
 import UIKit
 
-fileprivate let newcategoriLabelText = "Новая категория"
-fileprivate let buttonName = "Готово"
-fileprivate let placeholderTextField = "Введите название категории"
-
-
-fileprivate let cornerRadius = CGFloat(16)
-fileprivate let leftIndentTextField = CGFloat(12)
-fileprivate let newCategoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-fileprivate let textFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-
 //MARK: - NewCategoriViewController
 class NewCategoriViewController: UIViewController {
+    private struct ConstantsNewCatVc {
+        static let newcategoriLabelText = "Новая категория"
+        static let buttonName = "Готово"
+        static let placeholderTextField = "Введите название категории"
+        
+        static let cornerRadius = CGFloat(16)
+        static let leftIndentTextField = CGFloat(12)
+        static let newCategoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let textFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+    }
+    
     private var nameCategori: String = ""
     
     private lazy var newCategoriLabel: UILabel = {
         let newCategoriLabel = UILabel()
-        newCategoriLabel.text = newcategoriLabelText
+        newCategoriLabel.text = ConstantsNewCatVc.newcategoriLabelText
         newCategoriLabel.textColor = .blackDay
-        newCategoriLabel.font = newCategoriLabelFont
+        newCategoriLabel.font = ConstantsNewCatVc.newCategoriLabelFont
         newCategoriLabel.textAlignment = .center
         newCategoriLabel.backgroundColor = .clear
         
@@ -33,19 +34,19 @@ class NewCategoriViewController: UIViewController {
     }()
     
     private lazy var readyButton: UIButton = {
-        let readyButton = setupButton(text: newcategoriLabelText, font: newCategoriLabelFont, cornerRadius: cornerRadius)
-        readyButton.addTarget(self, action: #selector(didTapNewСategoriButton), for: .allTouchEvents)
+        let readyButton = setupButton(text: ConstantsNewCatVc.newcategoriLabelText, font: ConstantsNewCatVc.newCategoriLabelFont, cornerRadius: ConstantsNewCatVc.cornerRadius)
+        readyButton.addTarget(self, action: #selector(didTapNewСategoriButton), for: .touchUpInside)
         
         return readyButton
     }()
     
     private lazy var greateNameTextField: UITextField = {
         let greateNameTextField = UITextField()
-        greateNameTextField.placeholder = placeholderTextField
-        greateNameTextField.font = textFieldFont
-        greateNameTextField.indent(size: leftIndentTextField)
+        greateNameTextField.placeholder = ConstantsNewCatVc.placeholderTextField
+        greateNameTextField.font = ConstantsNewCatVc.textFieldFont
+        greateNameTextField.indent(size: ConstantsNewCatVc.leftIndentTextField)
         greateNameTextField.backgroundColor = .backgroundNight
-        greateNameTextField.layer.cornerRadius = cornerRadius
+        greateNameTextField.layer.cornerRadius = ConstantsNewCatVc.cornerRadius
         greateNameTextField.layer.masksToBounds = true
         greateNameTextField.clearButtonMode = .whileEditing
         greateNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)

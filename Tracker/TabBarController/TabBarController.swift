@@ -9,10 +9,8 @@ import UIKit
 
 //MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    private enum Constants {
-        static let tabBarImageTrecker =  "tabBarTracker"
-        static let tabBarImageStatistic = "tabBarStatistic"
-    }
+    private let tabBarImageTrecker =  "tabBarTracker"
+    private let tabBarImageStatistic = "tabBarStatistic"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +21,8 @@ final class TabBarController: UITabBarController {
         let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
         
         viewControllers = [
-            generateViewController(vc: trackerNavigationController, imageName: Constants.tabBarImageTrecker),
-            generateViewController(vc: statisticNavigationController, imageName: Constants.tabBarImageStatistic)
+            generateViewController(vc: trackerNavigationController, imageName: tabBarImageTrecker),
+            generateViewController(vc: statisticNavigationController, imageName: tabBarImageStatistic)
         ]
     }
 }

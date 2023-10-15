@@ -7,16 +7,18 @@
 
 import UIKit
 
-fileprivate let iconButton = "IconButtonCell"
-fileprivate let nameImageSelected = "selected"
-fileprivate let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-fileprivate let cornerRadiusViewCell = CGFloat(16)
-
 //MARK: - GreateCategoriesTableViewCell
 final class GreateCategoriesTableViewCell: UITableViewCell {
+    private struct ConstantsGreateCell {
+        static let iconButton = "IconButtonCell"
+        static let nameImageSelected = "selected"
+        static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let cornerRadiusViewCell = CGFloat(16)
+    }
+    
     private lazy var nameCategoriLableView: UILabel = {
         let nameCategoriLableView = UILabel()
-        nameCategoriLableView.font = lableFont
+        nameCategoriLableView.font = ConstantsGreateCell.lableFont
         nameCategoriLableView.textColor = .blackDay
         
         return nameCategoriLableView
@@ -24,7 +26,7 @@ final class GreateCategoriesTableViewCell: UITableViewCell {
     
     private lazy var selectedImage: UIImageView = {
         let selectedImage = UIImageView()
-        let image = UIImage(named: nameImageSelected)
+        let image = UIImage(named: ConstantsGreateCell.nameImageSelected)
         selectedImage.image = image
         selectedImage.backgroundColor = .clear
         selectedImage.isHidden = false
@@ -35,7 +37,7 @@ final class GreateCategoriesTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .backgroundNight
-        layer.cornerRadius = cornerRadiusViewCell
+        layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
         layer.masksToBounds = true
         setupLable()
         setupSelectedImage()

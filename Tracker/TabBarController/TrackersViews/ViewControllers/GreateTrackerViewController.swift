@@ -7,27 +7,6 @@
 
 import UIKit
 
-fileprivate let newHabit = "Новая привычка"
-fileprivate let newIrregular = "Новое нерегулярное событие"
-fileprivate let placeholderTextField = "Введите название трекера"
-fileprivate let textCancelButton = "Отменить"
-fileprivate let textGreateButton = "Создать"
-fileprivate let characterLimit = "Ограничение 38 символов"
-fileprivate let everyDay = "Каждый день"
-fileprivate let emptyString = ""
-
-fileprivate let restrictionsTextField = 38
-fileprivate let numberOfLinesRestrictionsTextField = 1
-
-fileprivate let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-fileprivate let greateNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-fileprivate let stackSpacing = CGFloat(10)
-fileprivate let spacingVerticalStack = CGFloat(24)
-fileprivate let leftIndentTextField = CGFloat(12)
-
-fileprivate let cornerRadius = CGFloat(16)
-fileprivate let borderWidthButton = CGFloat(1)
-
 //MARK: - GreateTrackerViewControllerDelegate
 protocol GreateTrackerViewControllerDelegate: AnyObject {
     func greateTrackerViewController(vc: UIViewController, categories: [TrackerCategory])
@@ -36,7 +15,30 @@ protocol GreateTrackerViewControllerDelegate: AnyObject {
 
 //MARK: - GreateTrackerViewController
 final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
-    private let recordManager: RecordManagerProtocol = RecordManagerStab()
+    private struct ConstantsGreateVc {
+        static let newHabit = "Новая привычка"
+        static let newIrregular = "Новое нерегулярное событие"
+        static let placeholderTextField = "Введите название трекера"
+        static let textCancelButton = "Отменить"
+        static let textGreateButton = "Создать"
+        static let characterLimit = "Ограничение 38 символов"
+        static let everyDay = "Каждый день"
+        static let emptyString = ""
+        
+        static let restrictionsTextField = 38
+        static let numberOfLinesRestrictionsTextField = 1
+        
+        static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let greateNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let stackSpacing = CGFloat(10)
+        static let spacingVerticalStack = CGFloat(24)
+        static let leftIndentTextField = CGFloat(12)
+        
+        static let cornerRadius = CGFloat(16)
+        static let borderWidthButton = CGFloat(1)
+    }
+    
+    private let recordManager: RecordManagerProtocol = RecordManagerStab.shared
     weak var delegate: GreateTrackerViewControllerDelegate?
     
     private var isSchedul: Bool = true
@@ -53,9 +55,9 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     
     private lazy var newHabitLabel: UILabel = {
         let newHabitLabel = UILabel()
-        newHabitLabel.text = isSchedul ? newIrregular : newHabit
+        newHabitLabel.text = isSchedul ? ConstantsGreateVc.newIrregular : ConstantsGreateVc.newHabit
         newHabitLabel.textColor = .blackDay
-        newHabitLabel.font = textFont
+        newHabitLabel.font = ConstantsGreateVc.textFont
         newHabitLabel.textAlignment = .center
         newHabitLabel.backgroundColor = .clear
         
@@ -64,11 +66,11 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     
     private lazy var greateNameTextField: UITextField = {
         let greateNameTextField = UITextField()
-        greateNameTextField.placeholder = placeholderTextField
-        greateNameTextField.font = greateNameTextFieldFont
-        greateNameTextField.indent(size: leftIndentTextField)
+        greateNameTextField.placeholder = ConstantsGreateVc.placeholderTextField
+        greateNameTextField.font = ConstantsGreateVc.greateNameTextFieldFont
+        greateNameTextField.indent(size: ConstantsGreateVc.leftIndentTextField)
         greateNameTextField.backgroundColor = .backgroundNight
-        greateNameTextField.layer.cornerRadius = cornerRadius
+        greateNameTextField.layer.cornerRadius = ConstantsGreateVc.cornerRadius
         greateNameTextField.layer.masksToBounds = true
         greateNameTextField.clearButtonMode = .whileEditing
         greateNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -80,10 +82,10 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     private lazy var characterRestrictionsView: UILabel = {
         let characterRestrictionsView = UILabel()
         characterRestrictionsView.backgroundColor = .clear
-        characterRestrictionsView.font = greateNameTextFieldFont
-        characterRestrictionsView.text = characterLimit
+        characterRestrictionsView.font = ConstantsGreateVc.greateNameTextFieldFont
+        characterRestrictionsView.text = ConstantsGreateVc.characterLimit
         characterRestrictionsView.textColor = .redDay
-        characterRestrictionsView.numberOfLines = numberOfLinesRestrictionsTextField
+        characterRestrictionsView.numberOfLines = ConstantsGreateVc.numberOfLinesRestrictionsTextField
         characterRestrictionsView.textAlignment = .center
         characterRestrictionsView.isHidden = true
         
@@ -95,7 +97,7 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         stackView.backgroundColor = .clear
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = stackSpacing
+        stackView.spacing = ConstantsGreateVc.stackSpacing
         
         return stackView
     }()
@@ -134,29 +136,29 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     
     private lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.layer.cornerRadius = cornerRadius
-        cancelButton.layer.borderWidth = borderWidthButton
+        cancelButton.layer.cornerRadius = ConstantsGreateVc.cornerRadius
+        cancelButton.layer.borderWidth = ConstantsGreateVc.borderWidthButton
         cancelButton.layer.borderColor = UIColor.redDay.cgColor
         cancelButton.layer.masksToBounds = true
         cancelButton.backgroundColor = .clear
-        cancelButton.setTitle(textCancelButton , for: .normal)
+        cancelButton.setTitle(ConstantsGreateVc.textCancelButton , for: .normal)
         cancelButton.setTitleColor(.redDay, for: .normal)
-        cancelButton.titleLabel?.font = textFont
-        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .allTouchEvents)
+        cancelButton.titleLabel?.font = ConstantsGreateVc.textFont
+        cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         
         return cancelButton
     }()
     
     private lazy var greateButton: UIButton = {
         let greateButton = UIButton()
-        greateButton.layer.cornerRadius = cornerRadius
+        greateButton.layer.cornerRadius = ConstantsGreateVc.cornerRadius
         greateButton.layer.masksToBounds = true
         greateButton.backgroundColor = .grayDay
-        greateButton.setTitle(textGreateButton, for: .normal)
+        greateButton.setTitle(ConstantsGreateVc.textGreateButton, for: .normal)
         greateButton.titleLabel?.textColor = .redDay
-        greateButton.titleLabel?.font = textFont
+        greateButton.titleLabel?.font = ConstantsGreateVc.textFont
         greateButton.isEnabled = false
-        greateButton.addTarget(self, action: #selector(didTapGreateButton) , for: .allTouchEvents)
+        greateButton.addTarget(self, action: #selector(didTapGreateButton) , for: .touchUpInside)
         
         return greateButton
     }()
@@ -165,7 +167,7 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         let buttonStack = UIStackView()
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.axis = .horizontal
-        buttonStack.spacing = stackSpacing
+        buttonStack.spacing = ConstantsGreateVc.stackSpacing
         buttonStack.distribution = .fillEqually
         
         return buttonStack
@@ -187,13 +189,18 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         setupUIElement()
-        schedule = isSchedul ? recordManager.weekDay : []
+        schedule = isSchedul ? recordManager.getWeekDay() : []
     }
 }
 
 extension GreateTrackerViewController {
-    //MARK: - Обработка событий    
+    //MARK: - Обработка событий
     @objc
     private func didTapCancelButton() {
         dismiss(animated: true)
@@ -201,7 +208,8 @@ extension GreateTrackerViewController {
     
     @objc
     private func didTapGreateButton() {
-        let categories = greateNewCategori(categories: recordManager.categories, nameCategori: nameNewCategori)
+        let oldCategories = recordManager.getCategories()
+        let categories = greateNewCategori(categories: oldCategories)
         delegate?.greateTrackerViewController(vc: self, categories: categories)
         delegate?.greateTrackerViewControllerDidCancel(self)
     }
@@ -209,13 +217,18 @@ extension GreateTrackerViewController {
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        if text.count > restrictionsTextField {
+        if text.count > ConstantsGreateVc.restrictionsTextField {
             characterRestrictionsView.isHidden = false
-            textField.text = nameTracker
+            textField.text = nameTracker.firstUppercased
             return
         }
-        nameTracker = text
+        nameTracker = text.firstUppercased
         checkingForEmptiness()
+    }
+    
+    @objc
+    private func hideKeyboard() {
+        view.endEditing(true)
     }
     
     //MARK: - Логика
@@ -229,7 +242,7 @@ extension GreateTrackerViewController {
     private func jonedSchedule(schedule: [WeekDay]) -> String {
         var stringListDay: String
         if schedule.count == 7 {
-            stringListDay = everyDay
+            stringListDay = ConstantsGreateVc.everyDay
             return stringListDay
         }
         let listDay = schedule.map { $0.briefWordDay }
@@ -245,22 +258,18 @@ extension GreateTrackerViewController {
     }
     
     //медод создания нового массива категорий c новым созданным трекером
-    private func greateNewCategori(categories: [TrackerCategory], nameCategori: String) -> [TrackerCategory] {
+    private func greateNewCategori(categories: [TrackerCategory]) -> [TrackerCategory] {
         var newCategories: [TrackerCategory] = []
         let tracker = greateNewTracker()
         var trackers: [Tracker] = []
         categories.forEach { oldCategori in
-            oldCategori.arrayTrackers.forEach { tracker in
-                trackers.append(tracker)
+            oldCategori.arrayTrackers.forEach { oldTracker in
+                trackers.append(oldTracker)
             }
-            if nameCategori == oldCategori.nameCategori {
-                trackers.append(tracker)
-                let ctegori = TrackerCategory(nameCategori: oldCategori.nameCategori, arrayTrackers: trackers)
-                newCategories.append(ctegori)
-            } else {
-                let newCategori = TrackerCategory(nameCategori: nameCategori, arrayTrackers: [tracker])
-                newCategories.append(newCategori)
-            }
+            trackers.append(tracker)
+            let categori = TrackerCategory(nameCategori: oldCategori.nameCategori, arrayTrackers: trackers)
+            newCategories.append(categori)
+            
         }
         return newCategories
     }
@@ -389,7 +398,8 @@ extension GreateTrackerViewController: UITableViewDataSource {
 
 //MARK: - UITextFieldDelegate
 extension GreateTrackerViewController: UITextFieldDelegate {
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        greateNameTextField.resignFirstResponder()
         return true
     }
 }
@@ -403,15 +413,18 @@ extension GreateTrackerViewController: GreateTrackerTableViewCellDelegate {
         switch listSettings[indexPath.row] {
         case .category:
             let greateCategoriViewController = GreateCategoriesViewController()
-            greateCategoriViewController.modalPresentationStyle = .formSheet
             greateCategoriViewController.delegate = self
-            present(greateCategoriViewController, animated: true)
+            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
             let scheduleViewController = ScheduleViewController()
-            scheduleViewController.modalPresentationStyle = .formSheet
             scheduleViewController.delegate = self
-            present(scheduleViewController, animated: true)
+            presentViewController(vc: scheduleViewController, modalStyle: .formSheet)
         }
+    }
+    
+    func presentViewController(vc: UIViewController, modalStyle: UIModalPresentationStyle) {
+        vc.modalPresentationStyle = modalStyle
+        present(vc, animated: true)
     }
 }
 

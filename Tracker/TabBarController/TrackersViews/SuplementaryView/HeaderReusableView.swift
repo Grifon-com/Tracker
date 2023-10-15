@@ -7,17 +7,19 @@
 
 import UIKit
 
-fileprivate let fontLable = UIFont.boldSystemFont(ofSize: 19)
-fileprivate let numberOfLinesLable = 1
-
 //MARK: - HeaderReusableView
 final class HeaderReusableView: UICollectionReusableView {
+    private struct ConstantsHeader {
+        static let fontLable = UIFont.boldSystemFont(ofSize: 19)
+        static let numberOfLinesLable = 1
+    }
+    
     lazy var label: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
-        label.font = fontLable
+        label.font = ConstantsHeader.fontLable
         label.textColor = .blackDay
-        label.numberOfLines = numberOfLinesLable
+        label.numberOfLines = ConstantsHeader.numberOfLinesLable
         
         return label
     }()

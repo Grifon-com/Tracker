@@ -7,15 +7,7 @@
 
 import UIKit
 
-fileprivate let categoriLabelText = "Категория"
-fileprivate let categoriAddButtonText = "Добавить категорию"
-fileprivate let imageViewImageStab = "Star"
-fileprivate let labelStabText = "Привычки и события можно обЪединить по смыслу"
 
-fileprivate let cornerRadius = CGFloat(16)
-fileprivate let categoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-fileprivate let labelStabTextFont = UIFont.systemFont(ofSize: 12, weight: .medium)
-fileprivate let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
 
 //MARK: - GreateCategoriesViewControllerDelegate
 protocol GreateCategoriesViewControllerDelegate: AnyObject {
@@ -25,15 +17,27 @@ protocol GreateCategoriesViewControllerDelegate: AnyObject {
 
 //MARK: - GreateCategoriesViewController
 final class GreateCategoriesViewController: UIViewController {
+    private struct ConstantsGreateCatVc {
+        static let categoriLabelText = "Категория"
+        static let categoriAddButtonText = "Добавить категорию"
+        static let imageViewImageStab = "Star"
+        static let labelStabText = "Привычки и события можно обЪединить по смыслу"
+
+        static let cornerRadius = CGFloat(16)
+        static let categoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let labelStabTextFont = UIFont.systemFont(ofSize: 12, weight: .medium)
+        static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+    }
+    
     weak var delegate: GreateCategoriesViewControllerDelegate?
     
     private var categories: [String] = ["Важное"]
     private var selectedCategoriName: String = ""
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
-        categoriLabel.text = categoriLabelText
+        categoriLabel.text = ConstantsGreateCatVc.categoriLabelText
         categoriLabel.textColor = .blackDay
-        categoriLabel.font = categoriLabelFont
+        categoriLabel.font = ConstantsGreateCatVc.categoriLabelFont
         categoriLabel.textAlignment = .center
         categoriLabel.backgroundColor = .clear
         
@@ -42,7 +46,7 @@ final class GreateCategoriesViewController: UIViewController {
     
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
-        let image = UIImage(named: imageViewImageStab)
+        let image = UIImage(named: ConstantsGreateCatVc.imageViewImageStab)
         imageViewStab.image = image
         
         return imageViewStab
@@ -50,8 +54,8 @@ final class GreateCategoriesViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = labelStabText
-        lableTextStab.font = labelStabTextFont
+        lableTextStab.text = ConstantsGreateCatVc.labelStabText
+        lableTextStab.font = ConstantsGreateCatVc.labelStabTextFont
         lableTextStab.numberOfLines = 2
         lableTextStab.textAlignment = .center
         
@@ -80,8 +84,8 @@ final class GreateCategoriesViewController: UIViewController {
     }()
     
     private lazy var greateCategoriButton: UIButton = {
-        let greateCategoriButton = setupButton(text: categoriAddButtonText, font: categoriLabelFont, cornerRadius: cornerRadius)
-        greateCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .allTouchEvents)
+        let greateCategoriButton = setupButton(text: ConstantsGreateCatVc.categoriAddButtonText, font: ConstantsGreateCatVc.categoriLabelFont, cornerRadius: ConstantsGreateCatVc.cornerRadius)
+        greateCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .touchUpInside)
         
         return greateCategoriButton
     }()

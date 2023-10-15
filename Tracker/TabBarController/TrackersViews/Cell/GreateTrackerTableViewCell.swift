@@ -7,10 +7,6 @@
 
 import UIKit
 
-fileprivate let iconButton = "IconButtonCell"
-fileprivate let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-fileprivate let choiceButtonSize = CGSize(width: 44, height: 44)
-fileprivate let cornerRadiusViewCell = CGFloat(16)
 
 //MARK: - GreateTrackerTableViewCellDelegate
 protocol GreateTrackerTableViewCellDelegate: AnyObject {
@@ -19,11 +15,18 @@ protocol GreateTrackerTableViewCellDelegate: AnyObject {
 
 //MARK: - GreateTrackerTableViewCell
 class GreateTrackerTableViewCell: UITableViewCell {
+    private struct ConstantsGreateCell {
+        static let iconButton = "IconButtonCell"
+        static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let choiceButtonSize = CGSize(width: 44, height: 44)
+        static let cornerRadiusViewCell = CGFloat(16)
+    }
+    
     weak var delegate: GreateTrackerTableViewCellDelegate?
     
     private lazy var lableView: UILabel = {
         let lableView = UILabel()
-        lableView.font = lableFont
+        lableView.font = ConstantsGreateCell.lableFont
         lableView.textColor = .blackDay
         
         return lableView
@@ -31,7 +34,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     
     private lazy var secondaryTextLable: UILabel = {
         let secondaryTextLable = UILabel()
-        secondaryTextLable.font = lableFont
+        secondaryTextLable.font =  ConstantsGreateCell.lableFont
         secondaryTextLable.textColor = .grayDay
         secondaryTextLable.isHidden = true
         
@@ -47,9 +50,9 @@ class GreateTrackerTableViewCell: UITableViewCell {
     }()
     
     private lazy var choiceButton: UIButton = {
-        let frame = CGRect(origin: .zero, size: choiceButtonSize)
+        let frame = CGRect(origin: .zero, size:  ConstantsGreateCell.choiceButtonSize)
         let choiceButton = UIButton(frame: frame)
-        let image = UIImage(named: iconButton)
+        let image = UIImage(named:  ConstantsGreateCell.iconButton)
         choiceButton.setImage(image, for: .normal)
         choiceButton.imageView?.tintColor = .blueDay
         choiceButton.addTarget(self, action: #selector(didTapChoiceButton), for: .touchUpInside)
@@ -76,7 +79,7 @@ extension GreateTrackerTableViewCell {
     
     private func setupSelf() {
         backgroundColor = .backgroundNight
-        layer.cornerRadius = cornerRadiusViewCell
+        layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
         layer.masksToBounds = true
         choiceButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(choiceButton)

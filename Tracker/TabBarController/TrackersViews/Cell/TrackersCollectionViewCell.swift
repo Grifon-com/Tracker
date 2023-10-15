@@ -7,36 +7,38 @@
 
 import UIKit
 
-fileprivate let adButtonImageAdd = UIImage(named: "Add")
-fileprivate let adButttonImageDone = UIImage(named: "Done")
-
-fileprivate let cornerRadiusColorView = CGFloat(16)
-fileprivate let borderWidthColorView = CGFloat(1)
-
-fileprivate let fontLabelEmoji = UIFont.systemFont(ofSize: 16, weight: .medium)
-fileprivate let fontTextLable = UIFont.systemFont(ofSize: 12, weight: .medium)
-fileprivate let fontLableDayCounter = UIFont.systemFont(ofSize: 12, weight: .medium)
-
-fileprivate let sizeLableView = CGSize(width: 34, height: 34)
-fileprivate let sizeAddButton = CGSize(width: 34, height: 34)
-
 //MARK: - TrackersCollectionViewCellDelegate
 protocol TrackersCollectionViewCellDelegate: AnyObject {
-    func didTrackerCompleted(_ cell: UICollectionViewCell, count: Int, flag: Bool)
+    func didTrackerCompleted(_ cell: UICollectionViewCell)
 }
 
 //MARK: - TrackersCollectionViewCell
 final class TrackersCollectionViewCell: UICollectionViewCell {
+    private struct ConstantsTrackerCell {
+        static let adButtonImageAdd = "Add"
+        static let adButttonImageDone = "Done"
+
+        static let cornerRadiusColorView = CGFloat(16)
+        static let borderWidthColorView = CGFloat(1)
+
+        static let fontLabelEmoji = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let fontTextLable = UIFont.systemFont(ofSize: 12, weight: .medium)
+        static let fontLableDayCounter = UIFont.systemFont(ofSize: 12, weight: .medium)
+
+        static let sizeLableView = CGSize(width: 34, height: 34)
+        static let sizeAddButton = CGSize(width: 34, height: 34)
+    }
+    
     private var count: Int = 0
-    private var flag: Bool = false
+    private var isSelectedAddButton: Bool = false
     
     weak var delegate: TrackersCollectionViewCellDelegate?
     
     lazy var colorView: UIView = {
         let colorView = UIView()
         colorView.layer.masksToBounds = true
-        colorView.layer.cornerRadius = cornerRadiusColorView
-        colorView.layer.borderWidth = borderWidthColorView
+        colorView.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
+        colorView.layer.borderWidth = ConstantsTrackerCell.borderWidthColorView
         colorView.layer.borderColor = (UIColor.backgroundNight).cgColor
         
         return colorView
@@ -44,8 +46,8 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     lazy var lableEmoji: UILabel = {
         let lableEmoji = UILabel()
-        lableEmoji.font = fontLabelEmoji
-        lableEmoji.layer.cornerRadius = cornerRadiusColorView
+        lableEmoji.font = ConstantsTrackerCell.fontLabelEmoji
+        lableEmoji.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
         lableEmoji.layer.masksToBounds = true
         lableEmoji.backgroundColor = .backgroundNight
         lableEmoji.textAlignment = .center
@@ -56,7 +58,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     lazy var nameTrackerLabel: UILabel = {
         let nameTrackerLabel = UILabel()
         nameTrackerLabel.numberOfLines = 2
-        nameTrackerLabel.font = fontTextLable
+        nameTrackerLabel.font = ConstantsTrackerCell.fontTextLable
         nameTrackerLabel.textColor = .white
         nameTrackerLabel.textAlignment = .justified
         
@@ -66,7 +68,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     lazy var lableDayCounter: UILabel = {
         let lableDayCounter = UILabel()
         lableDayCounter.textColor = .blackDay
-        lableDayCounter.font = fontLableDayCounter
+        lableDayCounter.font = ConstantsTrackerCell.fontLableDayCounter
         lableDayCounter.text = "\(count) дней"
         
         return lableDayCounter
@@ -74,13 +76,13 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     lazy var addButton: UIButton = {
         let addButton = UIButton(type: .custom)
-        let image = adButtonImageAdd?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: ConstantsTrackerCell.adButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
         addButton.setImage(image, for: .normal)
         addButton.tintColor = .whiteDay
         addButton.backgroundColor = .lightGray
-        addButton.layer.cornerRadius = sizeAddButton.width / 2
+        addButton.layer.cornerRadius = ConstantsTrackerCell.sizeAddButton.width / 2
         addButton.layer.masksToBounds = true
-        addButton.addTarget(self, action: #selector(didTapAddButton), for: .allEvents)
+        addButton.addTarget(self, action: #selector(didTapAddButton), for: .touchUpInside)
         
         return addButton
     }()
@@ -89,7 +91,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         let backgroundAddButtonView = UIView()
         backgroundAddButtonView.isHidden = true
         backgroundAddButtonView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundAddButtonView.layer.cornerRadius = sizeAddButton.width / 2
+        backgroundAddButtonView.layer.cornerRadius = ConstantsTrackerCell.sizeAddButton.width / 2
         backgroundAddButtonView.layer.masksToBounds = true
         backgroundAddButtonView.backgroundColor = .grayOpacity30
         
@@ -128,7 +130,8 @@ extension TrackersCollectionViewCell {
     //MARK: - Обработка событий
     @objc
     private func didTapAddButton() {
-        delegate?.didTrackerCompleted(self, count: count, flag: flag)
+        guard let delegate else { return }
+            delegate.didTrackerCompleted(self)
     }
     
     //MARK: - Configuration
@@ -146,39 +149,39 @@ extension TrackersCollectionViewCell {
     }
     
     //метод обновления счетчика выполнения трекера и imageButton
-    func updateLableCountAndImageAddButton(textLable: String, flag: Bool) {
+    func updateLableCountAndImageAddButton(count: Int, flag: Bool) {
         switch flag {
         case true:
-            let image = adButttonImageDone?.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(named: ConstantsTrackerCell.adButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
+            self.count = count
+            let textLable = endingWordDay(count: count)
             lableDayCounter.text = textLable
-            self.flag = flag
-            backgroundAddButtonView.isHidden = true
         case false:
-            let image = adButtonImageAdd?.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(named: ConstantsTrackerCell.adButttonImageDone)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
+            self.count = count
+            let textLable = endingWordDay(count: count)
             lableDayCounter.text = textLable
-            self.flag = flag
-            backgroundAddButtonView.isHidden = true
         }
     }
     
-    //метод добавляет фон на кнопку addButton
-    func addBackgraundAddButton() {
-        backgroundAddButtonView.isHidden = false
+    //метод удаляет фон на кнопку addButton
+    func updateBackgraundAddButton(isHidden: Bool) {
+        backgroundAddButtonView.isHidden = isHidden
     }
     
-    //метод удаляет фон на кнопку addButton
-    func deleteBackgraundAddButton() {
-        backgroundAddButtonView.isHidden = true
+    func isEnableAddButton(flag: Bool) {
+        addButton.isEnabled = flag
     }
     
     //метод конфигурации ячейки
-    func config(tracker: Tracker) {
+    func config(tracker: Tracker, count: Int, isComplited: Bool) {
         colorView.backgroundColor = tracker.color
         lableEmoji.text = tracker.emoji
         addButton.backgroundColor = tracker.color
         nameTrackerLabel.text = tracker.name
+        updateLableCountAndImageAddButton(count: count, flag: isComplited)
     }
     
     //MARK: - SetupUI
@@ -214,8 +217,8 @@ extension TrackersCollectionViewCell {
             lableDayCounter.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             lableDayCounter.topAnchor.constraint(equalTo: colorView.bottomAnchor, constant: 16),
             
-            addButton.heightAnchor.constraint(equalToConstant: sizeAddButton.height),
-            addButton.widthAnchor.constraint(equalToConstant: sizeAddButton.width),
+            addButton.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.height),
+            addButton.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.width),
             addButton.topAnchor.constraint(equalTo: colorView.bottomAnchor, constant: 8),
             addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12)
         ])
@@ -227,8 +230,8 @@ extension TrackersCollectionViewCell {
         NSLayoutConstraint.activate([
             backgroundAddButtonView.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
             backgroundAddButtonView.centerYAnchor.constraint(equalTo: addButton.centerYAnchor),
-            backgroundAddButtonView.heightAnchor.constraint(equalToConstant: sizeAddButton.height),
-            backgroundAddButtonView.widthAnchor.constraint(equalToConstant: sizeAddButton.width)
+            backgroundAddButtonView.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.height),
+            backgroundAddButtonView.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.width)
         ])
     }
     
@@ -242,8 +245,8 @@ extension TrackersCollectionViewCell {
             
             lableEmoji.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
             lableEmoji.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
-            lableEmoji.heightAnchor.constraint(equalToConstant: sizeLableView.height),
-            lableEmoji.widthAnchor.constraint(equalToConstant: sizeLableView.width),
+            lableEmoji.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
+            lableEmoji.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
             
             nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
