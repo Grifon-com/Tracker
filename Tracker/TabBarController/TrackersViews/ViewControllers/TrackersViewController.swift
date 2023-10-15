@@ -24,7 +24,7 @@ final class TrackersViewController: UIViewController {
         static let datePickerCornerRadius = CGFloat(8)
         static let heightCollectionView = CGFloat(148)
         
-        static let fontLableTextStab = UIFont.systemFont(ofSize: 12)
+        static let fontLableTextStab = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
     }
     

@@ -23,12 +23,7 @@ final class RecordManagerStab: RecordManagerProtocol {
         Tracker(name: "Вечна", color: .colorSelection3, emoji: "😡", schedule: [ .monday, .wednesday,  .sunday, .saturday]),
         Tracker(name: "Зубр", color: .colorSelection4, emoji: "🍏", schedule: [ .monday, .saturday,]),
         Tracker(name: "Жыве", color: .colorSelection5, emoji: "🏓", schedule: [ .monday,  .thursday, .wednesday]),
-        Tracker(name: "Беларусь", color: .colorSelection6, emoji: "😱", schedule: [  .thursday,]),
-        Tracker(name: "Учиться", color: .colorSelection7, emoji: "🍔", schedule: [ .monday, .tuesday, .wednesday]),
-        Tracker(name: "Учиться", color: .colorSelection7, emoji: "🍔", schedule: [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]),
-        Tracker(name: "Работать", color: .colorSelection7, emoji: "🍔", schedule: [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]),
-        Tracker(name: "Отдыхать", color: .colorSelection7, emoji: "🍔", schedule: [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]),
-        Tracker(name: "Строить планы", color: .colorSelection7, emoji: "🍔", schedule: [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday])
+        Tracker(name: "Беларусь", color: .colorSelection6, emoji: "😱", schedule: [  .thursday,])
     ])]
     
     private let weekDay: [WeekDay] = [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]
