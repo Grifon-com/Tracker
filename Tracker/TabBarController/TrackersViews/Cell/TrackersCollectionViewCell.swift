@@ -15,7 +15,7 @@ protocol TrackersCollectionViewCellDelegate: AnyObject {
 //MARK: - TrackersCollectionViewCell
 final class TrackersCollectionViewCell: UICollectionViewCell {
     private struct ConstantsTrackerCell {
-        static let adButtonImageAdd = "Add"
+        static let addButtonImageAdd = "Add"
         static let adButttonImageDone = "Done"
 
         static let cornerRadiusColorView = CGFloat(16)
@@ -76,7 +76,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     lazy var addButton: UIButton = {
         let addButton = UIButton(type: .custom)
-        let image = UIImage(named: ConstantsTrackerCell.adButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
         addButton.setImage(image, for: .normal)
         addButton.tintColor = .whiteDay
         addButton.backgroundColor = .lightGray
@@ -152,13 +152,13 @@ extension TrackersCollectionViewCell {
     func updateLableCountAndImageAddButton(count: Int, flag: Bool) {
         switch flag {
         case true:
-            let image = UIImage(named: ConstantsTrackerCell.adButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(named: ConstantsTrackerCell.adButttonImageDone)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
             self.count = count
             let textLable = endingWordDay(count: count)
             lableDayCounter.text = textLable
         case false:
-            let image = UIImage(named: ConstantsTrackerCell.adButttonImageDone)?.withRenderingMode(.alwaysTemplate)
+            let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
             self.count = count
             let textLable = endingWordDay(count: count)
@@ -173,6 +173,9 @@ extension TrackersCollectionViewCell {
     
     func isEnableAddButton(flag: Bool) {
         addButton.isEnabled = flag
+    }
+    func setIsSelectedAddButton(flag: Bool) {
+        isSelectedAddButton = flag
     }
     
     //метод конфигурации ячейки

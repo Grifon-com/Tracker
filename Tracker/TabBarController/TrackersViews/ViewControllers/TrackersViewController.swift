@@ -365,9 +365,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         
         let count = getCountIdForCompletedTrackers(id: tracker.id)
-        let trackerRecord = TrackerRecord(id: tracker.id, date: currentDate)
-        let isComplited = completedTrackers.contains(trackerRecord)
-        cell.config(tracker: tracker, count: count, isComplited: !isComplited)
+        let recordTracker = completedTrackers.first(where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
+        cell.config(tracker: tracker, count: count, isComplited: recordTracker != nil)
         
         return cell
     }
@@ -415,36 +414,26 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
         else { return }
         /* делаем проверку. Сравниваем свойство currentDate с текущей датой, если currentDate
          больше чем текучая дата,отмечать трекер выполненным нельзя, выходим из функции */
-        let dateComparison = Calendar.current.compare(date , to: currentDate, toGranularity: .day)
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
-        let recordTracker = TrackerRecord(id: tracker.id, date: currentDate)
-        let flag = completedTrackers.contains(recordTracker)
-        switch dateComparison {
-        case .orderedAscending:
-            //текущая дата меньше выбранной
-            return
-        case .orderedSame:
-            //даты равны
-            updateCompleted(recordTracker: recordTracker, cell: trackerCell, flag: flag, tracker: tracker)
-        case .orderedDescending:
-            //текущая дата больше выбранной
-            updateCompleted(recordTracker: recordTracker, cell: trackerCell, flag: flag, tracker: tracker)
-        }
+        let recordTracker = completedTrackers.first(where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
+        updateCompleted(recordTracker: recordTracker, cell: trackerCell, flag: recordTracker != nil, tracker: tracker)
     }
     
-    private func updateCompleted(recordTracker: TrackerRecord,
+    private func updateCompleted(recordTracker: TrackerRecord?,
                                  cell: TrackersCollectionViewCell,
                                  flag: Bool,
                                  tracker: Tracker) {
-        if flag {
+        if let recordTracker,
+           flag {
             completedTrackers.remove(recordTracker)
             let newCount = getCountIdForCompletedTrackers(id: tracker.id)
-            cell.updateLableCountAndImageAddButton(count: newCount, flag: flag)
+            cell.updateLableCountAndImageAddButton(count: newCount, flag: !flag)
             return
         }
-        completedTrackers.insert(recordTracker)
+        let newTracker = TrackerRecord(id: tracker.id, date: currentDate)
+        completedTrackers.insert(newTracker)
         let newCount = getCountIdForCompletedTrackers(id: tracker.id)
-        cell.updateLableCountAndImageAddButton(count: newCount, flag: flag)
+        cell.updateLableCountAndImageAddButton(count: newCount, flag: !flag)
     }
     
     private func getCountIdForCompletedTrackers(id: UUID) -> Int {
@@ -452,6 +441,16 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
         let count = countTrackerRecord.count
         
         return count
+    }
+    
+    func equalityDates(lDate: Date, rDate: Date?) -> Bool {
+        guard let dateY = lDate.ignoringTime, let rDate ,let current = rDate.ignoringTime
+        else { return false }
+        let dateComparison = Calendar.current.compare(dateY , to: current, toGranularity: .day)
+        if case .orderedSame = dateComparison {
+            return true
+        }
+        return false
     }
 }
 

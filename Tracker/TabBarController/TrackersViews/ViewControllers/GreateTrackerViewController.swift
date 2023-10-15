@@ -14,7 +14,7 @@ protocol GreateTrackerViewControllerDelegate: AnyObject {
 }
 
 //MARK: - GreateTrackerViewController
-final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
+final class GreateTrackerViewController: UIViewController{
     private struct ConstantsGreateVc {
         static let newHabit = "Новая привычка"
         static let newIrregular = "Новое нерегулярное событие"
@@ -34,6 +34,7 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         static let spacingVerticalStack = CGFloat(24)
         static let leftIndentTextField = CGFloat(12)
         
+        static let insertSeparatorTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         static let cornerRadius = CGFloat(16)
         static let borderWidthButton = CGFloat(1)
     }
@@ -43,12 +44,13 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
     
     private var isSchedul: Bool = true
     private var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
+    private let dataSection: [String] = ["Emoji", "Цвет"]
     
     //данные для создания трекера
     private var schedule: [WeekDay] = [] {
         didSet { checkingForEmptiness() }
     }
-    private let color: [UIColor] = [.colorSelection14]
+    private var color: [UIColor] = [.colorSelection4]
     private var nameNewCategori: String = "Важное"
     //TODO: -
     private var nameTracker: String = ""
@@ -109,6 +111,7 @@ final class GreateTrackerViewController: UIViewController, UITableViewDelegate {
         selectionTableView.backgroundColor = .clear
         selectionTableView.isScrollEnabled = false
         selectionTableView.separatorStyle = isSchedul ? .none : .singleLine
+        selectionTableView.separatorInset = ConstantsGreateVc.insertSeparatorTableView
         selectionTableView.register(GreateTrackerTableViewCell.self, forCellReuseIdentifier: "\(GreateTrackerTableViewCell.self)")
         
         return selectionTableView

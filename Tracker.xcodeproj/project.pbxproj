@@ -17,6 +17,7 @@
 		1A3ED44C2ACDDE4A0006EBBB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3ED44B2ACDDE4A0006EBBB /* ScheduleViewController.swift */; };
 		1A3ED4522ACDEA3E0006EBBB /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A3ED4512ACDEA3E0006EBBB /* WeekDayTableViewCell.swift */; };
 		1A46558A2AD3D2B8006DE343 /* FormatDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4655892AD3D2B8006DE343 /* FormatDate.swift */; };
+		1A52EFAF2ADC194C0002BD4B /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A52EFAE2ADC194C0002BD4B /* Date.swift */; };
 		1A598BB62AC6F352009B166D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A598BB52AC6F352009B166D /* TabBarController.swift */; };
 		1A598BB82AC6FAC5009B166D /* TrackersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A598BB72AC6FAC5009B166D /* TrackersViewController.swift */; };
 		1A84F3792AC87F4E001DD42F /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A84F3782AC87F4E001DD42F /* GeometricParams.swift */; };
@@ -54,6 +55,7 @@
 		1A3ED44B2ACDDE4A0006EBBB /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		1A3ED4512ACDEA3E0006EBBB /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
 		1A4655892AD3D2B8006DE343 /* FormatDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatDate.swift; sourceTree = "<group>"; };
+		1A52EFAE2ADC194C0002BD4B /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		1A598BB52AC6F352009B166D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1A598BB72AC6FAC5009B166D /* TrackersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackersViewController.swift; sourceTree = "<group>"; };
 		1A84F3782AC87F4E001DD42F /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				1AD277702ACD4B1800F92219 /* UITextField.swift */,
 				1A9E5C952AD2FF6100010C30 /* String.swift */,
 				1A27E6B82AD9871400ED3DF3 /* StringProtocol.swift */,
+				1A52EFAE2ADC194C0002BD4B /* Date.swift */,
 			);
 			path = Extantion;
 			sourceTree = "<group>";
@@ -132,8 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				1A598BB72AC6FAC5009B166D /* TrackersViewController.swift */,
-				1A3ED44B2ACDDE4A0006EBBB /* ScheduleViewController.swift */,
 				1AAC05C22ACC595800AA4B6B /* GreateTrackerViewController.swift */,
+				1A3ED44B2ACDDE4A0006EBBB /* ScheduleViewController.swift */,
 				1A2F9B642AC82FBF00914B60 /* EventSelectionViewController.swift */,
 				1AA5B2362AD91D1800CB38A2 /* GreateCategoriesViewController.swift */,
 				1AA5B2382AD9424C00CB38A2 /* NewCategoriViewController.swift */,
@@ -344,6 +347,7 @@
 				1A9E5C962AD2FF6100010C30 /* String.swift in Sources */,
 				1AD277712ACD4B1800F92219 /* UITextField.swift in Sources */,
 				1A46558A2AD3D2B8006DE343 /* FormatDate.swift in Sources */,
+				1A52EFAF2ADC194C0002BD4B /* Date.swift in Sources */,
 				1AE9892D2ACAE76E00392315 /* WeekDay.swift in Sources */,
 				1A3ED4522ACDEA3E0006EBBB /* WeekDayTableViewCell.swift in Sources */,
 				1AB78AA32AC750A900904AB2 /* TrackersCollectionViewCell.swift in Sources */,
