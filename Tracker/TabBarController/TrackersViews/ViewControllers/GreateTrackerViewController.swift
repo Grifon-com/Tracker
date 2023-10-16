@@ -27,11 +27,12 @@ final class GreateTrackerViewController: UIViewController{
         
         static let restrictionsTextField = 38
         static let numberOfLinesRestrictionsTextField = 1
+        static let heightCollectionView = CGFloat(54)
         
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let greateNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-        static let stackSpacing = CGFloat(10)
-        static let spacingVerticalStack = CGFloat(24)
+        static let spacingButtonSpacing = CGFloat(10)
+        static let spacingContentStack = CGFloat(24)
         static let leftIndentTextField = CGFloat(12)
         
         static let insertSeparatorTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
@@ -44,13 +45,21 @@ final class GreateTrackerViewController: UIViewController{
     
     private var isSchedul: Bool = true
     private var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
-    private let dataSection: [String] = ["Emoji", "Цвет"]
+    private let dataSection: [Header] = [.emoji, .color]
+    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
+                                   "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+    
+    private let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
+                                     .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
+                                     .colorSelection9, .colorSelection10, .colorSelection11, .colorSelection12,
+                                     .colorSelection13, .colorSelection14, .colorSelection15, .colorSelection16,
+                                     .colorSelection17, .colorSelection18]
     
     //данные для создания трекера
     private var schedule: [WeekDay] = [] {
         didSet { checkingForEmptiness() }
     }
-    private var color: [UIColor] = [.colorSelection4]
+    private var color: [UIColor] = []
     private var nameNewCategori: String = "Важное"
     //TODO: -
     private var nameTracker: String = ""
@@ -94,20 +103,20 @@ final class GreateTrackerViewController: UIViewController{
         return characterRestrictionsView
     }()
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.backgroundColor = .clear
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical
-        stackView.spacing = ConstantsGreateVc.stackSpacing
+    private lazy var contentStackView: UIStackView = {
+        let contentStackView = UIStackView()
+        contentStackView.backgroundColor = .clear
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.axis = .vertical
+        contentStackView.spacing = ConstantsGreateVc.spacingContentStack
         
-        return stackView
+        return contentStackView
     }()
     
     private lazy var selectionTableView: UITableView = {
         let selectionTableView = UITableView()
         selectionTableView.dataSource = self
-        selectionTableView.allowsSelection = false
+        selectionTableView.delegate = self
         selectionTableView.backgroundColor = .clear
         selectionTableView.isScrollEnabled = false
         selectionTableView.separatorStyle = isSchedul ? .none : .singleLine
@@ -117,22 +126,34 @@ final class GreateTrackerViewController: UIViewController{
         return selectionTableView
     }()
     
-    private lazy var emojiCollectionView: UICollectionView = {
+    private lazy var emojiCollectionView: TrackerCollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let emojiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        emojiCollectionView.register(EmojiCollectionViewCell.self, forCellWithReuseIdentifier: "\(EmojiCollectionViewCell.self)")
+        let params = GeometricParams(cellCount: 7, leftInset: 6, rightInset: 6, cellSpacing: 2)
+        let emojiCollectionView = TrackerCollectionView(frame: .zero, collectionViewLayout: layout, params: params)
+        emojiCollectionView.dataSource = self
+        emojiCollectionView.delegate = self
+        emojiCollectionView.register(EmojiColorCollectionViewCell.self, forCellWithReuseIdentifier: "\(EmojiColorCollectionViewCell.self)")
         emojiCollectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
-        emojiCollectionView.backgroundColor = .blueDay
+        emojiCollectionView.allowsMultipleSelection = false
+        emojiCollectionView.backgroundColor = .clear
+        emojiCollectionView.isScrollEnabled = false
+        emojiCollectionView.scrollIndicatorInsets = .zero
         
         return emojiCollectionView
     }()
     
-    private lazy var colorCollectionView: UICollectionView = {
+    private lazy var colorCollectionView: TrackerCollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let colorCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        colorCollectionView.register(ColorCollectionViewCell.self, forCellWithReuseIdentifier: "\(ColorCollectionViewCell.self)")
-        emojiCollectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
-        colorCollectionView.backgroundColor = .blueDay
+        let params = GeometricParams(cellCount: 6, leftInset: 6, rightInset: 6, cellSpacing: 2)
+        let colorCollectionView = TrackerCollectionView(frame: .zero, collectionViewLayout: layout, params: params)
+        colorCollectionView.dataSource = self
+        colorCollectionView.delegate = self
+        colorCollectionView.register(EmojiColorCollectionViewCell.self, forCellWithReuseIdentifier: "\(EmojiColorCollectionViewCell.self)")
+        colorCollectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
+        colorCollectionView.allowsMultipleSelection = false
+        colorCollectionView.backgroundColor = .clear
+        colorCollectionView.isScrollEnabled = false
+        colorCollectionView.scrollIndicatorInsets = .zero
         
         return colorCollectionView
     }()
@@ -170,7 +191,7 @@ final class GreateTrackerViewController: UIViewController{
         let buttonStack = UIStackView()
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.axis = .horizontal
-        buttonStack.spacing = ConstantsGreateVc.stackSpacing
+        buttonStack.spacing = ConstantsGreateVc.spacingButtonSpacing
         buttonStack.distribution = .fillEqually
         
         return buttonStack
@@ -186,6 +207,8 @@ final class GreateTrackerViewController: UIViewController{
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
+        scrollView.showsVerticalScrollIndicator = false
+
         return scrollView
     }()
     
@@ -288,14 +311,16 @@ extension GreateTrackerViewController {
         isSchedul = isSchedul ? !isSchedul : isSchedul
     }
     
+    func presentViewController(vc: UIViewController, modalStyle: UIModalPresentationStyle) {
+        vc.modalPresentationStyle = modalStyle
+        present(vc, animated: true)
+    }
     //MARK: - SetupUI
     func setupUIElement() {
-        setupButtonStack()
-        setupContentView()
         setupNewHabitLabel()
+        setupButtonStack()
         setupScrollView()
         setupStackView()
-        setupSelectionTableView()
     }
     
     func setupNewHabitLabel() {
@@ -310,7 +335,6 @@ extension GreateTrackerViewController {
     
     func setupButtonStack() {
         view.addSubview(buttonStack)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         [cancelButton, greateButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             buttonStack.addArrangedSubview($0)
@@ -321,16 +345,6 @@ extension GreateTrackerViewController {
             buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             buttonStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
-    }
-    
-    func setupSelectionTableView() {
-        NSLayoutConstraint.activate([
-            selectionTableView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 34),
-            selectionTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            selectionTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            selectionTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            selectionTableView.heightAnchor.constraint(equalToConstant: 150)
         ])
     }
     
@@ -347,32 +361,22 @@ extension GreateTrackerViewController {
     }
     
     func setupStackView() {
-        [greateNameTextField, characterRestrictionsView].forEach {
+        scrollView.addSubview(contentStackView)
+        [greateNameTextField, characterRestrictionsView, selectionTableView, emojiCollectionView, colorCollectionView].forEach {
+            contentStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
-            stackView.addArrangedSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            greateNameTextField.heightAnchor.constraint(equalToConstant: 75)
-        ])
-    }
-    
-    func setupContentView() {
-        scrollView.addSubview(contentView)
-        [stackView, selectionTableView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            contentView.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            contentStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            greateNameTextField.heightAnchor.constraint(equalToConstant: 75),
+            emojiCollectionView.heightAnchor.constraint(equalToConstant: 222),
+            colorCollectionView.heightAnchor.constraint(equalToConstant: 222),
+            selectionTableView.heightAnchor.constraint(equalToConstant: isSchedul ? 75 : 150)
         ])
     }
 }
@@ -386,7 +390,6 @@ extension GreateTrackerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GreateTrackerTableViewCell.self)") as? GreateTrackerTableViewCell else { return UITableViewCell() }
         let secondarySchedulText = jonedSchedule(schedule: schedule)
-        cell.delegate = self
         switch listSettings[indexPath.row] {
         case .category:
             cell.configCell(choice: listSettings[indexPath.row])
@@ -399,20 +402,14 @@ extension GreateTrackerViewController: UITableViewDataSource {
     }
 }
 
-//MARK: - UITextFieldDelegate
-extension GreateTrackerViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        greateNameTextField.resignFirstResponder()
-        return true
+//MARK: - UITableViewDelegate
+extension GreateTrackerViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+       return CGFloat(75)
     }
-}
-
-//MARK: - GreateTrackerTableViewCellDelegate
-extension GreateTrackerViewController: GreateTrackerTableViewCellDelegate {
-    func trackerTableViewCellDidTapChoiceButton(cell: UITableViewCell) {
-        guard let greateTrackerTableViewCell = cell as? GreateTrackerTableViewCell,
-              let indexPath = selectionTableView.indexPath(for: greateTrackerTableViewCell)
-        else { return }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? GreateTrackerTableViewCell else { return }
         switch listSettings[indexPath.row] {
         case .category:
             let greateCategoriViewController = GreateCategoriesViewController()
@@ -424,10 +421,13 @@ extension GreateTrackerViewController: GreateTrackerTableViewCellDelegate {
             presentViewController(vc: scheduleViewController, modalStyle: .formSheet)
         }
     }
-    
-    func presentViewController(vc: UIViewController, modalStyle: UIModalPresentationStyle) {
-        vc.modalPresentationStyle = modalStyle
-        present(vc, animated: true)
+}
+
+//MARK: - UITextFieldDelegate
+extension GreateTrackerViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        greateNameTextField.resignFirstResponder()
+        return true
     }
 }
 
@@ -449,5 +449,102 @@ extension GreateTrackerViewController: GreateCategoriesViewControllerDelegate {
     
     func greateCategoriesViewControllerDidCancel(vc: GreateCategoriesViewController) {
         vc.dismiss(animated: true)
+    }
+}
+
+extension GreateTrackerViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var count: Int
+        switch dataSection[section] {
+        case .color:
+            count = colors.count
+        case .emoji:
+            count = emoji.count
+        }
+        return count
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        dataSection.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(EmojiColorCollectionViewCell.self)", for: indexPath) as? EmojiColorCollectionViewCell
+        else { return UICollectionViewCell() }
+        if collectionView == colorCollectionView {
+            let color = colors[indexPath.row]
+            cell.configColor(color: color)
+        }
+        if collectionView == emojiCollectionView {
+            let emoji = emoji[indexPath.row]
+            cell.configEmoji(emoji: emoji)
+        }
+        return cell
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+extension GreateTrackerViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiColorCollectionViewCell else { return }
+        if collectionView == colorCollectionView {
+            let color = colors[indexPath.row]
+            cell.colorSelection(color: color, flag: true)
+        }
+        if collectionView == emojiCollectionView {
+            cell.emojiSelection(isBackground: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiColorCollectionViewCell else { return }
+        if collectionView == colorCollectionView {
+            let color: UIColor = .clear
+            cell.colorSelection(color: color, flag: false)
+        }
+        if collectionView == emojiCollectionView {
+            cell.emojiSelection(isBackground: false)
+        }
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+extension GreateTrackerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.frame.width - emojiCollectionView.params.paddingWidth
+        let cellWidth = availableWidth / CGFloat(emojiCollectionView.params.cellCount)
+        let sizeCell = CGSize(width: cellWidth, height: ConstantsGreateVc.heightCollectionView)
+
+        return sizeCell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 10, left: emojiCollectionView.params.leftInset, bottom: 16, right: emojiCollectionView.params.rightInset)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        var systemLayoutSize: CGSize
+        switch dataSection[section] {
+        case .color:
+            let indexPath = IndexPath(row: 1, section: section)
+            let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+            systemLayoutSize = headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        case .emoji:
+            let indexPath = IndexPath(row: 0, section: section)
+            let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+            systemLayoutSize = headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        }
+        return systemLayoutSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
+            supplementary.label.text = dataSection[indexPath.section].name
+            return supplementary
+        default:
+            return UICollectionReusableView()
+        }
     }
 }

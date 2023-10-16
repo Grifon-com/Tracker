@@ -234,10 +234,7 @@ extension TrackersViewController {
     
     //метод создания кастомной CollectionView
     private func greateTrackerCollectionView() -> TrackerCollectionView {
-        let params = GeometricParams(cellCount: 2,
-                                     leftInset: 0,
-                                     rightInset: 0,
-                                     cellSpacing: 12)
+        let params = GeometricParams(cellCount: 2, leftInset: 0, rightInset: 0, cellSpacing: 12)
         let layout = UICollectionViewFlowLayout()
         let trackerCollectionView = TrackerCollectionView(frame: .zero,
                                                           collectionViewLayout: layout,
@@ -365,8 +362,8 @@ extension TrackersViewController: UICollectionViewDataSource {
         }
         
         let count = getCountIdForCompletedTrackers(id: tracker.id)
-        let recordTracker = completedTrackers.first(where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
-        cell.config(tracker: tracker, count: count, isComplited: recordTracker != nil)
+        let isComplited = completedTrackers.contains (where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
+        cell.config(tracker: tracker, count: count, isComplited: isComplited)
         
         return cell
     }
@@ -423,8 +420,7 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
                                  cell: TrackersCollectionViewCell,
                                  flag: Bool,
                                  tracker: Tracker) {
-        if let recordTracker,
-           flag {
+        if let recordTracker {
             completedTrackers.remove(recordTracker)
             let newCount = getCountIdForCompletedTrackers(id: tracker.id)
             cell.updateLableCountAndImageAddButton(count: newCount, flag: !flag)
