@@ -7,12 +7,6 @@
 
 import UIKit
 
-
-//MARK: - GreateTrackerTableViewCellDelegate
-protocol GreateTrackerTableViewCellDelegate: AnyObject {
-    func trackerTableViewCellDidTapChoiceButton(cell: UITableViewCell)
-}
-
 //MARK: - GreateTrackerTableViewCell
 class GreateTrackerTableViewCell: UITableViewCell {
     private struct ConstantsGreateCell {
@@ -21,8 +15,6 @@ class GreateTrackerTableViewCell: UITableViewCell {
         static let choiceButtonSize = CGSize(width: 44, height: 44)
         static let cornerRadiusViewCell = CGFloat(16)
     }
-    
-    weak var delegate: GreateTrackerTableViewCellDelegate?
     
     private lazy var lableView: UILabel = {
         let lableView = UILabel()
@@ -49,19 +41,17 @@ class GreateTrackerTableViewCell: UITableViewCell {
         return lableStackView
     }()
     
-    private lazy var choiceButton: UIButton = {
-        let frame = CGRect(origin: .zero, size:  ConstantsGreateCell.choiceButtonSize)
-        let choiceButton = UIButton(frame: frame)
+    private lazy var clickImage: UIImageView = {
+        let clickImage = UIImageView()
         let image = UIImage(named:  ConstantsGreateCell.iconButton)
-        choiceButton.setImage(image, for: .normal)
-        choiceButton.imageView?.tintColor = .blueDay
-        choiceButton.addTarget(self, action: #selector(didTapChoiceButton), for: .touchUpInside)
+        clickImage.image = image
         
-        return choiceButton
+        return clickImage
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         setupUIElement()
     }
     
@@ -81,16 +71,15 @@ extension GreateTrackerTableViewCell {
         backgroundColor = .backgroundNight
         layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
         layer.masksToBounds = true
-        choiceButton.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(choiceButton)
-        choiceButton.backgroundColor = .clear
+        clickImage.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(clickImage)
+        clickImage.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
-            choiceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -2),
-            choiceButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            choiceButton.heightAnchor.constraint(equalToConstant: 44),
-            choiceButton.widthAnchor.constraint(equalToConstant: 44),
-            contentView.heightAnchor.constraint(equalToConstant: 75)
+            clickImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            clickImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            clickImage.heightAnchor.constraint(equalToConstant: 24),
+            clickImage.widthAnchor.constraint(equalToConstant: 24)
         ])
     }
     
@@ -118,10 +107,5 @@ extension GreateTrackerTableViewCell {
             secondaryTextLable.text = secondaryText
             secondaryTextLable.isHidden = false
         }
-    }
-    
-    @objc
-    private func didTapChoiceButton() {
-        delegate?.trackerTableViewCellDidTapChoiceButton(cell: self)
     }
 }

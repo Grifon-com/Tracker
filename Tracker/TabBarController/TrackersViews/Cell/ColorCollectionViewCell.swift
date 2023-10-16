@@ -9,15 +9,7 @@ import UIKit
 
 //MARK: - ColorCollectionViewCell
 final class ColorCollectionViewCell: UICollectionViewCell {
-    var colorView: UIView = {
-        let colorView = UIView()
-        colorView.layer.cornerRadius = 8
-        colorView.layer.masksToBounds = true
-        colorView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return colorView
-    }()
-    
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupColorView()
@@ -28,14 +20,12 @@ final class ColorCollectionViewCell: UICollectionViewCell {
     }
 }
 
-//MARK: - SetupUI
 extension ColorCollectionViewCell {
+    //MARK: - Config
+    
+    
+    //MARK: - SetupUI
     private func setupColorView() {
-        addSubview(colorView)
-        
-        NSLayoutConstraint.activate([
-            colorView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            colorView.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
+       
     }
 }
