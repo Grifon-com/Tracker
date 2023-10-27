@@ -1,5 +1,5 @@
 //
-//  GreateTrackersViewController.swift
+//  EventSelectionViewController.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 30.09.23.
@@ -11,7 +11,7 @@ import UIKit
 
 //MARK: - EventSelectionViewControllerDelegate
 protocol EventSelectionViewControllerDelegate: AnyObject {
-    func eventSelectionViewController(vc: UIViewController, categories: [TrackerCategory])
+    func eventSelectionViewController(vc: UIViewController, nameCategories: String, tracker: Tracker)
     func eventSelectionViewControllerDidCancel(_ vc: EventSelectionViewController)
 }
 
@@ -26,15 +26,15 @@ final class EventSelectionViewController: UIViewController {
     
     weak var delegate: EventSelectionViewControllerDelegate?
     
-    private lazy var labelGreate: UILabel = {
-        let label = UILabel()
-        label.text = ConstantsEventVc.texGreatetLabelName
-        label.font = ConstantsEventVc.textFont
-        label.backgroundColor = .clear
-        label.textColor = ConstantsEventVc.lableGreateImage
-        label.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var labelCreate: UILabel = {
+        let labelCreate = UILabel()
+        labelCreate.text = ConstantsEventVc.texGreatetLabelName
+        labelCreate.font = ConstantsEventVc.textFont
+        labelCreate.backgroundColor = .clear
+        labelCreate.textColor = ConstantsEventVc.lableGreateImage
+        labelCreate.translatesAutoresizingMaskIntoConstraints = false
         
-        return label
+        return labelCreate
     }()
     
     private lazy var stackView: UIStackView = {
@@ -72,19 +72,19 @@ private extension EventSelectionViewController {
     //MARK: - Обработка событий
     @objc
     func didTapHabitButton() {
-        let greateVC = greateTrackerVC()
+        let greateVC = createTrackerVC()
         greateVC.reverseIsSchedul()
         present(greateVC, animated: true)
     }
     
     @objc
     func didTapIrregularEventButton() {
-        let greateVC = greateTrackerVC()
+        let greateVC = createTrackerVC()
         present(greateVC, animated: true)
     }
     
-    func greateTrackerVC() -> GreateTrackerViewController {
-        let greateVC = GreateTrackerViewController()
+    func createTrackerVC() -> CreateTrackerViewController {
+        let greateVC = CreateTrackerViewController()
         greateVC.delegate = self
         greateVC.modalPresentationStyle = .formSheet
         return greateVC
@@ -105,12 +105,12 @@ private extension EventSelectionViewController {
     }
     
     func setupLableGreate() {
-        view.addSubview(labelGreate)
+        view.addSubview(labelCreate)
         
         NSLayoutConstraint.activate([
-            labelGreate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            labelGreate.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            labelGreate.heightAnchor.constraint(equalToConstant: labelGreate.font.pointSize)
+            labelCreate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            labelCreate.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            labelCreate.heightAnchor.constraint(equalToConstant: labelCreate.font.pointSize)
         ])
     }
     
@@ -132,13 +132,13 @@ private extension EventSelectionViewController {
     }
 }
 
-//MARK: - GreateTrackerViewControllerDelegate
-extension EventSelectionViewController: GreateTrackerViewControllerDelegate {
-    func greateTrackerViewController(vc: UIViewController, categories: [TrackerCategory]) {
-        delegate?.eventSelectionViewController(vc: self, categories: categories)
+//MARK: - CreateTrackerViewControllerDelegate
+extension EventSelectionViewController: CreateTrackerViewControllerDelegate {
+    func createTrackerViewController(vc: UIViewController, nameCategories: String, tracker: Tracker) {
+        delegate?.eventSelectionViewController(vc: self, nameCategories: nameCategories, tracker: tracker)
     }
     
-    func greateTrackerViewControllerDidCancel(_ vc: GreateTrackerViewController) {
+    func createTrackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
         vc.dismiss(animated: false)
         delegate?.eventSelectionViewControllerDidCancel(self)
     }

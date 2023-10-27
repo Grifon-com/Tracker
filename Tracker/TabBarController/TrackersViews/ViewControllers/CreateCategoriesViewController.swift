@@ -1,5 +1,5 @@
 //
-//  GreateCategoriesViewController.swift
+//  CreateCategoriesViewController.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 13.10.23.
@@ -9,15 +9,15 @@ import UIKit
 
 
 
-//MARK: - GreateCategoriesViewControllerDelegate
-protocol GreateCategoriesViewControllerDelegate: AnyObject {
-    func greateCategoriesViewController(vc: UIViewController, nameCategori: String)
-    func greateCategoriesViewControllerDidCancel(vc: GreateCategoriesViewController)
+//MARK: - CreateCategoriesViewControllerDelegate
+protocol CreateCategoriesViewControllerDelegate: AnyObject {
+    func createCategoriesViewController(vc: UIViewController, nameCategori: String)
+    func createCategoriesViewControllerDidCancel(vc: CreateCategoriesViewController)
 }
 
-//MARK: - GreateCategoriesViewController
-final class GreateCategoriesViewController: UIViewController {
-    private struct ConstantsGreateCatVc {
+//MARK: - CreateCategoriesViewController
+final class CreateCategoriesViewController: UIViewController {
+    private struct ConstantsCreateCatVc {
         static let categoriLabelText = "Категория"
         static let categoriAddButtonText = "Добавить категорию"
         static let imageViewImageStab = "Star"
@@ -29,15 +29,15 @@ final class GreateCategoriesViewController: UIViewController {
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
     }
     
-    weak var delegate: GreateCategoriesViewControllerDelegate?
+    weak var delegate: CreateCategoriesViewControllerDelegate?
     
     private var categories: [String] = ["Важное"]
     private var selectedCategoriName: String = ""
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
-        categoriLabel.text = ConstantsGreateCatVc.categoriLabelText
+        categoriLabel.text = ConstantsCreateCatVc.categoriLabelText
         categoriLabel.textColor = .blackDay
-        categoriLabel.font = ConstantsGreateCatVc.categoriLabelFont
+        categoriLabel.font = ConstantsCreateCatVc.categoriLabelFont
         categoriLabel.textAlignment = .center
         categoriLabel.backgroundColor = .clear
         
@@ -46,7 +46,7 @@ final class GreateCategoriesViewController: UIViewController {
     
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
-        let image = UIImage(named: ConstantsGreateCatVc.imageViewImageStab)
+        let image = UIImage(named: ConstantsCreateCatVc.imageViewImageStab)
         imageViewStab.image = image
         
         return imageViewStab
@@ -54,8 +54,8 @@ final class GreateCategoriesViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = ConstantsGreateCatVc.labelStabText
-        lableTextStab.font = ConstantsGreateCatVc.labelStabTextFont
+        lableTextStab.text = ConstantsCreateCatVc.labelStabText
+        lableTextStab.font = ConstantsCreateCatVc.labelStabTextFont
         lableTextStab.numberOfLines = 2
         lableTextStab.textAlignment = .center
         
@@ -78,16 +78,16 @@ final class GreateCategoriesViewController: UIViewController {
         selectionCategoriTableView.backgroundColor = .clear
         selectionCategoriTableView.isScrollEnabled = false
         selectionCategoriTableView.separatorStyle = .none
-        selectionCategoriTableView.register(GreateCategoriesTableViewCell.self, forCellReuseIdentifier: "\(GreateCategoriesTableViewCell.self)")
+        selectionCategoriTableView.register(CreateCategoriesTableViewCell.self, forCellReuseIdentifier: "\(CreateCategoriesTableViewCell.self)")
         
         return selectionCategoriTableView
     }()
     
-    private lazy var greateCategoriButton: UIButton = {
-        let greateCategoriButton = setupButton(text: ConstantsGreateCatVc.categoriAddButtonText, font: ConstantsGreateCatVc.categoriLabelFont, cornerRadius: ConstantsGreateCatVc.cornerRadius)
-        greateCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .touchUpInside)
+    private lazy var createCategoriButton: UIButton = {
+        let createCategoriButton = setupButton(text: ConstantsCreateCatVc.categoriAddButtonText, font: ConstantsCreateCatVc.categoriLabelFont, cornerRadius: ConstantsCreateCatVc.cornerRadius)
+        createCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .touchUpInside)
         
-        return greateCategoriButton
+        return createCategoriButton
     }()
     
     override func viewDidLoad() {
@@ -99,11 +99,11 @@ final class GreateCategoriesViewController: UIViewController {
     }
 }
 
-private extension GreateCategoriesViewController {
+private extension CreateCategoriesViewController {
     //MARK: - обработка событий
     @objc
     func didTapСategoriButton() {
-        delegate?.greateCategoriesViewController(vc: self, nameCategori: selectedCategoriName)
+        delegate?.createCategoriesViewController(vc: self, nameCategori: selectedCategoriName)
         //TODO: - Sprint_15
     }
     
@@ -134,13 +134,13 @@ private extension GreateCategoriesViewController {
     }
     
     func setupCategoriButton() {
-        view.addSubview(greateCategoriButton)
+        view.addSubview(createCategoriButton)
         
         NSLayoutConstraint.activate([
-            greateCategoriButton.heightAnchor.constraint(equalToConstant: 60),
-            greateCategoriButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            greateCategoriButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            greateCategoriButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            createCategoriButton.heightAnchor.constraint(equalToConstant: 60),
+            createCategoriButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            createCategoriButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            createCategoriButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
@@ -162,7 +162,7 @@ private extension GreateCategoriesViewController {
             selectionCategoriTableView.topAnchor.constraint(equalTo: categoriLabel.bottomAnchor, constant: 24),
             selectionCategoriTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             selectionCategoriTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
-            selectionCategoriTableView.bottomAnchor.constraint(equalTo: greateCategoriButton.topAnchor)
+            selectionCategoriTableView.bottomAnchor.constraint(equalTo: createCategoriButton.topAnchor)
         ])
     }
     
@@ -189,13 +189,13 @@ private extension GreateCategoriesViewController {
 }
 
 //MARK: - UITableViewDataSource
-extension GreateCategoriesViewController: UITableViewDataSource {
+extension CreateCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GreateCategoriesTableViewCell.self)") as? GreateCategoriesTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell else { return UITableViewCell() }
         let text = categories[indexPath.row]
         cell.config(text: text)
         

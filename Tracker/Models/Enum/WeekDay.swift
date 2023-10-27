@@ -58,3 +58,5 @@ enum WeekDay: Int {
         return briefWordDay
     }
 }
+
+extension WeekDay: Codable { }
