@@ -402,9 +402,9 @@ extension CreateTrackerViewController: UITableViewDelegate {
         switch listSettings[indexPath.row] {
         case .category:
             return
-//            let greateCategoriViewController = CreateCategoriesViewController()
-//            greateCategoriViewController.delegate = self
-//            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
+            let greateCategoriViewController = CreateCategoriesViewController()
+            greateCategoriViewController.delegate = self
+            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
             let scheduleViewController = ScheduleViewController()
             scheduleViewController.delegate = self
