@@ -18,20 +18,11 @@ protocol TrackerRecordStoreProtocol {
     func addNewTrackerRecord(_ trackerRecord: TrackerRecord) throws
     func deleteTrackerRecord(_ trackerRecord: TrackerRecord) throws
     func loadTrackerRecord(id: UUID) throws -> Int
-    
-    
-    
     func treckersRecordsResult(trackerRecordsCoreData: [TrackerRecordCoreData]) throws -> Set<TrackerRecord>
-}
-
-protocol TrackerRecordStoreDelegate: AnyObject {
-    func store(_ trackerRecordStore: TrackerRecordStore)
 }
 
 final class TrackerRecordStore: NSObject {
     private let context: NSManagedObjectContext
-    
-    weak var delegate: TrackerRecordStoreDelegate?
     
     convenience override init() {
         let context = AppDelegate.container.viewContext
@@ -98,14 +89,5 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerRecordCoreData.trackerId), id as CVarArg)
         let countTrackers = try context.fetch(request).count
         return countTrackers
-    }
-    
-}
-
-//MARK: - NSFetchedResultsControllerDelegate
-extension TrackerRecordStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        guard let delegate else { return }
-        delegate.store(self)
     }
 }

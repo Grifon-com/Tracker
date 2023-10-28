@@ -289,23 +289,6 @@ extension CreateTrackerViewController {
         return tracker
     }
     
-    //медод создания нового массива категорий c новым созданным трекером
-//    private func createNewCategori(categories: [TrackerCategory]) -> [TrackerCategory] {
-//        var newCategories: [TrackerCategory] = []
-//        let tracker = createNewTracker()
-//        var trackers: [Tracker] = []
-//        categories.forEach { oldCategori in
-//            oldCategori.arrayTrackers.forEach { oldTracker in
-//                trackers.append(oldTracker)
-//            }
-//            trackers.append(tracker)
-//            let categori = TrackerCategory(nameCategory: oldCategori.nameCategory, arrayTrackers: trackers)
-//            newCategories.append(categori)
-//
-//        }
-//        return newCategories
-//    }
-    
     //метод проверки свойств на пустоту
     private func checkingForEmptiness() {
         let flag = !schedule.isEmpty && !nameTracker.isEmpty && color != nil && !emoji.isEmpty ? true : false
@@ -418,9 +401,10 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch listSettings[indexPath.row] {
         case .category:
-            let greateCategoriViewController = CreateCategoriesViewController()
-            greateCategoriViewController.delegate = self
-            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
+            return
+//            let greateCategoriViewController = CreateCategoriesViewController()
+//            greateCategoriViewController.delegate = self
+//            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
             let scheduleViewController = ScheduleViewController()
             scheduleViewController.delegate = self
@@ -457,6 +441,7 @@ extension CreateTrackerViewController: CreateCategoriesViewControllerDelegate {
     }
 }
 
+//MARK: - UICollectionViewDataSource
 extension CreateTrackerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count: Int

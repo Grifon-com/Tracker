@@ -104,15 +104,15 @@ final class TrackersViewController: UIViewController {
     
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
-        imageViewStab.isHidden = true
+        imageViewStab.image = UIImage(named: ConstantsTrackerVc.imageStar)
         
         return imageViewStab
     }()
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
+        lableTextStab.text = ConstantsTrackerVc.labelStabText
         lableTextStab.font = ConstantsTrackerVc.fontLableTextStab
-        lableTextStab.isHidden = true
         
         return lableTextStab
     }()
@@ -166,16 +166,16 @@ extension TrackersViewController {
     //метод показа трекеров после фильтрации по дням
     private func showListTrackersForDay(trackerCategory: [TrackerCategory]) {
         let listCategories = filterListTrackersWeekDay(trackerCategory: trackerCategory, date: currentDate)
+        guard let dataProvider else { return }
+        visibleCategories = dataProvider.trackerCategory
         updateTrackerCollectionView(trackerCategory: listCategories)
     }
     
     //метод обновления коллекции
     private func updateTrackerCollectionView(trackerCategory: [TrackerCategory]) {
-        guard let dataProvider else { return }
         visibleCategories = trackerCategory
         showStabView(flag: !trackerCategory.isEmpty)
         trackerCollectionView.reloadData()
-        visibleCategories = dataProvider.trackerCategory
     }
     
     //метод изменения заглушки
@@ -210,26 +210,20 @@ extension TrackersViewController {
                 listCategories.append(trackerCat)
             }
         }
+        
         return listCategories
     }
     
     //метод отфильтровывает трекеры по названию
     private func filterListTrackersName(trackerCategory: [TrackerCategory], word: String) -> [TrackerCategory] {
-        let listCategories: [TrackerCategory] = trackerCategory
-        var newCategories: [TrackerCategory] = []
-        let searchString = word.lowercased()
-        listCategories.forEach { categori in
-            var newTrackers: [Tracker] = []
-            categori.arrayTrackers.forEach { tracker in
-                if tracker.name.lowercased().hasPrefix(searchString) {
-                    newTrackers.append(tracker)
-                }}
-            if !newTrackers.isEmpty {
-                let newCategorie = TrackerCategory(nameCategory: categori.nameCategory, arrayTrackers: newTrackers)
-                newCategories.append(newCategorie)
+       var listCategories: [TrackerCategory] = []
+        categories.forEach { category in
+            let trackerList = category.arrayTrackers.filter { $0.name.lowercased().hasPrefix(word.lowercased()) }
+            if !trackerList.isEmpty {
+                listCategories.append( TrackerCategory(nameCategory: category.nameCategory, arrayTrackers: trackerList))
             }
         }
-        return newCategories
+        return listCategories
     }
     
     //функция для сравнения двух дат, вернет true, если дата больше или равна текущей
@@ -303,7 +297,6 @@ extension TrackersViewController {
         searcheController.searchBar.resignFirstResponder()
         searcheController.searchBar.returnKeyType = .search
         searcheController.searchBar.setValue(ConstantsTrackerVc.textCancel, forKey: ConstantsTrackerVc.forKeyTextCancel)
-        
     }
     
     private func setupContentView() {
@@ -337,16 +330,16 @@ extension TrackersViewController {
     
     private func setupStabView() {
         [imageViewStab, lableTextStab].forEach {
-            contentView.addSubview($0)
+            view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
         }
         
         NSLayoutConstraint.activate([
-            imageViewStab.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageViewStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageViewStab.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageViewStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            lableTextStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            lableTextStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
         ])
     }
@@ -439,8 +432,6 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
         /* делаем проверку. Сравниваем свойство currentDate с текущей датой, если currentDate
          больше чем текучая дата,отмечать трекер выполненным нельзя, выходим из функции */
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
-//        let tracker = trackerCategoryStore.treckerCategory[indexPath.section]
-//            .arrayTrackers[indexPath.row]
         let recordTracker = completedTrackers.first(where: { $0.id == tracker.id &&
             Calendar.current.isDate($0.date, inSameDayAs: currentDate) })
         updateCompleted(recordTracker: recordTracker,
@@ -482,17 +473,20 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
 extension TrackersViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let word = searchController.searchBar.text else { return }
-        print(word)
         if !word.isEmpty {
             let newCategories = filterListTrackersName(trackerCategory: categories, word: word)
-            
             updateTrackerCollectionView(trackerCategory: newCategories)
-            print(newCategories.count)
+            return
         }
-        chengeStab(text: ConstantsTrackerVc.labelNothingFoundText, nameImage: ConstantsTrackerVc.imageNothingFound)
+        
+        if  word.isEmpty {
+            showListTrackersForDay(trackerCategory: categories)
+            chengeStab(text: ConstantsTrackerVc.labelNothingFoundText, nameImage: ConstantsTrackerVc.imageNothingFound)
+        }
         
         if !searchController.isActive {
             showListTrackersForDay(trackerCategory: categories)
+            chengeStab(text: ConstantsTrackerVc.labelStabText, nameImage: ConstantsTrackerVc.imageStar)
         }
     }
 }
@@ -510,8 +504,8 @@ extension TrackersViewController: EventSelectionViewControllerDelegate {
                     let updateError = StoreError.failedToUpdateModel(error)
                     showMessageErrorAlert(message: "\(updateError)")
                 }
+                return
             }
-            return
         }
         do {
             try dataProvider.addNewCategory(nameCategories, tracker: tracker)
@@ -527,36 +521,20 @@ extension TrackersViewController: EventSelectionViewControllerDelegate {
 }
 
 //MARK: - TrackerCategoryStoreDelegate
-extension TrackersViewController: DataProviderDelegate {
-    func storeTracker(_ store: DataProvider, didUpdate update: TrackerCategoryStoreUpdate) {
-        guard let dataProvider else { return }
-        visibleCategories = dataProvider.trackerCategory
-        
-        trackerCollectionView.performBatchUpdates {
-            let insertedIndexPaths = zip(update.insertedIndexes.item,
-                                         update.insertedIndexes.section).map { IndexPath(item: $0.0, section: $0.1) }
-            let deletedIndexPaths = zip(update.deletedIndexes.item,
-                                        update.deletedIndexes.section).map { IndexPath(item: $0.0, section: $0.1) }
-            let updatedIndexPaths = zip(update.updatedIndexes.item,
-                                        update.updatedIndexes.section).map { IndexPath(item: $0.0, section: $0.1) }
-            trackerCollectionView.insertItems(at: insertedIndexPaths)
-            trackerCollectionView.reloadItems(at: insertedIndexPaths)
-            trackerCollectionView.insertItems(at: deletedIndexPaths)
-            trackerCollectionView.insertItems(at: updatedIndexPaths)
-            for move in update.movedIndexes {
-                trackerCollectionView.moveItem(
-                    at: IndexPath(item: move.oldIndex.item, section: move.oldIndex.section),
-                    to: IndexPath(item: move.newIndex.item, section: move.newIndex.section)
-                )
-            }
-            trackerCollectionView.reloadItems(at: insertedIndexPaths)
-        }
-    }
-    
+extension TrackersViewController: DataProviderDelegate {    
     func storeCategory(_ store: DataProvider, indexPath: IndexPath) {
         guard let dataProvider else { return }
+        let oldCount = visibleCategories.count
         visibleCategories = dataProvider.trackerCategory
+        categories = visibleCategories
+        let newCount = visibleCategories.count
         let indexSet = IndexSet(integer: indexPath.section)
-        trackerCollectionView.insertSections(indexSet)
+        if oldCount != newCount {
+            trackerCollectionView.insertSections(indexSet)
+            showStabView(flag: !categories.isEmpty)
+            return
+        }
+        trackerCollectionView.reloadSections(indexSet)
+        showStabView(flag: !categories.isEmpty)
     }
 }

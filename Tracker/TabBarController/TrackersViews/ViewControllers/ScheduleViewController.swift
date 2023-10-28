@@ -85,7 +85,8 @@ private extension ScheduleViewController {
     func didTapDoneButton() {
         guard let delegate else { return }
         //передаем список дней для поля "schedule" при создании трекера
-        delegate.daysOfWeek(viewController: self, listDays: listWeekDay)
+        let listDays = listWeekDay.sorted { $0.rawValue < $1.rawValue }
+        delegate.daysOfWeek(viewController: self, listDays: listDays)
         dismiss(animated: true)
     }
     
