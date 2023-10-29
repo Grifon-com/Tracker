@@ -395,13 +395,12 @@ extension CreateTrackerViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return CGFloat(75)
+       75
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch listSettings[indexPath.row] {
         case .category:
-            return
             let greateCategoriViewController = CreateCategoriesViewController()
             greateCategoriViewController.delegate = self
             presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
@@ -426,7 +425,7 @@ extension CreateTrackerViewController: ScheduleViewControllerDelegate {
     func daysOfWeek(viewController: UIViewController, listDays: [WeekDay]) {
         guard let _ = viewController as? ScheduleViewController else { return }
         schedule = listDays
-        selectionTableView.reloadData()
+        selectionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
     }
 }
 
