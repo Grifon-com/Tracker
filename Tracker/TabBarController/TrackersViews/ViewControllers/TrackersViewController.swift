@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum StoreError: Error {
+    case modelNotFound
+    case failedToLoadPersistentContainer(Error)
+    case failedToRecordModel(Error)
+    case failedToDeleteModel(Error)
+    case failedToUpdateModel(Error)
+}
+
 final class TrackersViewController: UIViewController {
     private struct ConstantsTrackerVc {
         static let adButtonImageName = "Add"
@@ -27,17 +35,15 @@ final class TrackersViewController: UIViewController {
         static let fontLableTextStab = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
     }
-    
-    private let recordManager: RecordManagerProtocol = RecordManagerStab.shared
-    
-    private var flafStab: Bool = false
+
+    private var flagStab: Bool = false
     private var categories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date { datePicker.date }
     private var visibleCategories: [TrackerCategory] = []
     
-    private let date = Date()
-    
+    private var dataProvider: DataProviderprotocol?
+        
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
         horisontalStack.axis = .horizontal
@@ -87,7 +93,7 @@ final class TrackersViewController: UIViewController {
         return lableHeader
     }()
     
-    lazy var trackerCollectionView: TrackerCollectionView = {
+    private lazy var trackerCollectionView: TrackerCollectionView = {
         let trackerCollectionView = greateTrackerCollectionView()
         trackerCollectionView.backgroundColor = .clear
         trackerCollectionView.showsVerticalScrollIndicator = false
@@ -98,15 +104,15 @@ final class TrackersViewController: UIViewController {
     
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
-        imageViewStab.isHidden = true
+        imageViewStab.image = UIImage(named: ConstantsTrackerVc.imageStar)
         
         return imageViewStab
     }()
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
+        lableTextStab.text = ConstantsTrackerVc.labelStabText
         lableTextStab.font = ConstantsTrackerVc.fontLableTextStab
-        lableTextStab.isHidden = true
         
         return lableTextStab
     }()
@@ -120,9 +126,13 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataProvider = try? DataProvider(self)
+        guard let dataProvider else { return }
+        completedTrackers = dataProvider.treckersRecords
+        categories = dataProvider.trackerCategory
+        visibleCategories = categories
         view.backgroundColor = .white
         setupUIElement()
-        categories = recordManager.getCategories()
         showListTrackersForDay(trackerCategory: categories)
     }
 }
@@ -143,11 +153,21 @@ extension TrackersViewController {
         present(greateVC, animated: true)
     }
     
+    private func showMessageErrorAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(action)
+    }
+    
     //MARK: - Логика
     
     //метод показа трекеров после фильтрации по дням
     private func showListTrackersForDay(trackerCategory: [TrackerCategory]) {
         let listCategories = filterListTrackersWeekDay(trackerCategory: trackerCategory, date: currentDate)
+        guard let dataProvider else { return }
+        visibleCategories = dataProvider.trackerCategory
         updateTrackerCollectionView(trackerCategory: listCategories)
     }
     
@@ -186,30 +206,24 @@ extension TrackersViewController {
                 }
             }
             if !trackers.isEmpty {
-                let trackerCat = TrackerCategory(nameCategori: currentCategori.nameCategori, arrayTrackers: trackers)
+                let trackerCat = TrackerCategory(nameCategory: currentCategori.nameCategory, arrayTrackers: trackers)
                 listCategories.append(trackerCat)
             }
         }
+        
         return listCategories
     }
     
     //метод отфильтровывает трекеры по названию
     private func filterListTrackersName(trackerCategory: [TrackerCategory], word: String) -> [TrackerCategory] {
-        let listCategories: [TrackerCategory] = trackerCategory
-        var newCategories: [TrackerCategory] = []
-        let searchString = word.lowercased()
-        listCategories.forEach { categori in
-            var newTrackers: [Tracker] = []
-            categori.arrayTrackers.forEach { tracker in
-                if tracker.name.lowercased().hasPrefix(searchString) {
-                    newTrackers.append(tracker)
-                }}
-            if !newTrackers.isEmpty {
-                let newCategorie = TrackerCategory(nameCategori: categori.nameCategori, arrayTrackers: newTrackers)
-                newCategories.append(newCategorie)
+       var listCategories: [TrackerCategory] = []
+        categories.forEach { category in
+            let trackerList = category.arrayTrackers.filter { $0.name.lowercased().hasPrefix(word.lowercased()) }
+            if !trackerList.isEmpty {
+                listCategories.append( TrackerCategory(nameCategory: category.nameCategory, arrayTrackers: trackerList))
             }
         }
-        return newCategories
+        return listCategories
     }
     
     //функция для сравнения двух дат, вернет true, если дата больше или равна текущей
@@ -283,7 +297,6 @@ extension TrackersViewController {
         searcheController.searchBar.resignFirstResponder()
         searcheController.searchBar.returnKeyType = .search
         searcheController.searchBar.setValue(ConstantsTrackerVc.textCancel, forKey: ConstantsTrackerVc.forKeyTextCancel)
-        
     }
     
     private func setupContentView() {
@@ -317,16 +330,16 @@ extension TrackersViewController {
     
     private func setupStabView() {
         [imageViewStab, lableTextStab].forEach {
-            contentView.addSubview($0)
+            view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
         }
         
         NSLayoutConstraint.activate([
-            imageViewStab.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageViewStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageViewStab.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageViewStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            lableTextStab.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            lableTextStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
         ])
     }
@@ -335,16 +348,17 @@ extension TrackersViewController {
 //MARK: - UICollectionViewDataSource
 extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return visibleCategories[section].arrayTrackers.count
+        visibleCategories[section].arrayTrackers.count
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return visibleCategories.count
+        visibleCategories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(TrackersCollectionViewCell.self)",
-                                                            for: indexPath) as? TrackersCollectionViewCell
+                                                            for: indexPath) as? TrackersCollectionViewCell,
+              let dataProvider
         else { return UICollectionViewCell() }
         cell.delegate = self
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
@@ -361,9 +375,15 @@ extension TrackersViewController: UICollectionViewDataSource {
             cell.updateBackgraundAddButton(isHidden: true)
         }
         
-        let count = getCountIdForCompletedTrackers(id: tracker.id)
-        let isComplited = completedTrackers.contains (where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
-        cell.config(tracker: tracker, count: count, isComplited: isComplited)
+        do {
+            let count = try dataProvider.loadTrackerRecord(id: tracker.id)
+            let isComplited = completedTrackers.contains (where: { $0.id == tracker.id && Calendar.current.isDate(currentDate, equalTo: $0.date, toGranularity: .day)})
+            cell.config(tracker: tracker, count: count, isComplited: isComplited)
+        }
+        catch {
+            let errorCount = TrackrerRecordStoreError.loadTrackerRecord
+            showMessageErrorAlert(message: "\(String(describing: errorCount))")
+        }
         
         return cell
     }
@@ -395,7 +415,7 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
-            supplementary.label.text = visibleCategories[indexPath.section].nameCategori
+            supplementary.label.text = visibleCategories[indexPath.section].nameCategory
             return supplementary
         default:
             return UICollectionReusableView()
@@ -412,41 +432,40 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
         /* делаем проверку. Сравниваем свойство currentDate с текущей датой, если currentDate
          больше чем текучая дата,отмечать трекер выполненным нельзя, выходим из функции */
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
-        let recordTracker = completedTrackers.first(where: { $0.id == tracker.id && equalityDates(lDate: currentDate, rDate: $0.date) })
-        updateCompleted(recordTracker: recordTracker, cell: trackerCell, flag: recordTracker != nil, tracker: tracker)
+        let recordTracker = completedTrackers.first(where: { $0.id == tracker.id &&
+            Calendar.current.isDate($0.date, inSameDayAs: currentDate) })
+        updateCompleted(recordTracker: recordTracker,
+                        cell: trackerCell,
+                        indexPath: indexPath,
+                        flag: recordTracker == nil,
+                        tracker: tracker)
     }
     
     private func updateCompleted(recordTracker: TrackerRecord?,
                                  cell: TrackersCollectionViewCell,
+                                 indexPath: IndexPath,
                                  flag: Bool,
                                  tracker: Tracker) {
         if let recordTracker {
+            do {
+                try dataProvider?.deleteTrackerRecord(recordTracker)
+            } catch {
+                let deleteError = StoreError.failedToRecordModel(error)
+                showMessageErrorAlert(message: "\(deleteError)")
+            }
             completedTrackers.remove(recordTracker)
-            let newCount = getCountIdForCompletedTrackers(id: tracker.id)
-            cell.updateLableCountAndImageAddButton(count: newCount, flag: !flag)
+            trackerCollectionView.reloadItems(at: [indexPath])
             return
         }
         let newTracker = TrackerRecord(id: tracker.id, date: currentDate)
-        completedTrackers.insert(newTracker)
-        let newCount = getCountIdForCompletedTrackers(id: tracker.id)
-        cell.updateLableCountAndImageAddButton(count: newCount, flag: !flag)
-    }
-    
-    private func getCountIdForCompletedTrackers(id: UUID) -> Int {
-        let countTrackerRecord = completedTrackers.filter { $0.id == id }
-        let count = countTrackerRecord.count
-        
-        return count
-    }
-    
-    func equalityDates(lDate: Date, rDate: Date?) -> Bool {
-        guard let dateY = lDate.ignoringTime, let rDate ,let current = rDate.ignoringTime
-        else { return false }
-        let dateComparison = Calendar.current.compare(dateY , to: current, toGranularity: .day)
-        if case .orderedSame = dateComparison {
-            return true
+        do {
+            try dataProvider?.addNewTrackerRecord(newTracker)
+        } catch {
+            let recordError = StoreError.failedToRecordModel(error)
+            showMessageErrorAlert(message: "\(recordError)")
         }
-        return false
+        completedTrackers.insert(newTracker)
+        trackerCollectionView.reloadItems(at: [indexPath])
     }
 }
 
@@ -457,21 +476,43 @@ extension TrackersViewController: UISearchResultsUpdating {
         if !word.isEmpty {
             let newCategories = filterListTrackersName(trackerCategory: categories, word: word)
             updateTrackerCollectionView(trackerCategory: newCategories)
+            return
         }
-        chengeStab(text: ConstantsTrackerVc.labelNothingFoundText, nameImage: ConstantsTrackerVc.imageNothingFound)
+        
+        if  word.isEmpty {
+            showListTrackersForDay(trackerCategory: categories)
+            chengeStab(text: ConstantsTrackerVc.labelNothingFoundText, nameImage: ConstantsTrackerVc.imageNothingFound)
+        }
         
         if !searchController.isActive {
             showListTrackersForDay(trackerCategory: categories)
+            chengeStab(text: ConstantsTrackerVc.labelStabText, nameImage: ConstantsTrackerVc.imageStar)
         }
     }
 }
 
 //MARK: - EventSelectionViewControllerDelegate
 extension TrackersViewController: EventSelectionViewControllerDelegate {
-    func eventSelectionViewController(vc: UIViewController, categories: [TrackerCategory]) {
-        self.categories = categories
-        recordManager.updateCategories(newCategories: categories)
-        showListTrackersForDay(trackerCategory: self.categories)
+    func eventSelectionViewController(vc: UIViewController, nameCategories: String, tracker: Tracker) {
+        guard let dataProvider else { return }
+        for (index, value) in visibleCategories.enumerated() {
+            if value.nameCategory.lowercased() == nameCategories.lowercased() {
+                let category = visibleCategories[index]
+                do {
+                    try dataProvider.addTracker(category, tracker: tracker)
+                } catch {
+                    let updateError = StoreError.failedToUpdateModel(error)
+                    showMessageErrorAlert(message: "\(updateError)")
+                }
+                return
+            }
+        }
+        do {
+            try dataProvider.addNewCategory(nameCategories, tracker: tracker)
+        } catch {
+            let addError = StoreError.failedToRecordModel(error)
+            showMessageErrorAlert(message: "\(addError)")
+        }
     }
     
     func eventSelectionViewControllerDidCancel(_ vc: EventSelectionViewController) {
@@ -479,3 +520,21 @@ extension TrackersViewController: EventSelectionViewControllerDelegate {
     }
 }
 
+//MARK: - TrackerCategoryStoreDelegate
+extension TrackersViewController: DataProviderDelegate {    
+    func storeCategory(_ store: DataProvider, indexPath: IndexPath) {
+        guard let dataProvider else { return }
+        let oldCount = visibleCategories.count
+        visibleCategories = dataProvider.trackerCategory
+        categories = visibleCategories
+        let newCount = visibleCategories.count
+        let indexSet = IndexSet(integer: indexPath.section)
+        if oldCount != newCount {
+            trackerCollectionView.insertSections(indexSet)
+            showStabView(flag: !categories.isEmpty)
+            return
+        }
+        trackerCollectionView.reloadSections(indexSet)
+        showStabView(flag: !categories.isEmpty)
+    }
+}

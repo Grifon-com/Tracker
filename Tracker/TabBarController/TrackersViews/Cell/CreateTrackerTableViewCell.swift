@@ -1,5 +1,5 @@
 //
-//  GreateTrackerTableViewCell.swift
+//  CreateTrackerTableViewCell.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 4.10.23.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-//MARK: - GreateTrackerTableViewCell
-class GreateTrackerTableViewCell: UITableViewCell {
-    private struct ConstantsGreateCell {
+//MARK: - CreateTrackerTableViewCell
+class CreateTrackerTableViewCell: UITableViewCell {
+    private struct ConstantsCreateCell {
         static let iconButton = "IconButtonCell"
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let choiceButtonSize = CGSize(width: 44, height: 44)
@@ -18,7 +18,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     
     private lazy var lableView: UILabel = {
         let lableView = UILabel()
-        lableView.font = ConstantsGreateCell.lableFont
+        lableView.font = ConstantsCreateCell.lableFont
         lableView.textColor = .blackDay
         
         return lableView
@@ -26,7 +26,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     
     private lazy var secondaryTextLable: UILabel = {
         let secondaryTextLable = UILabel()
-        secondaryTextLable.font =  ConstantsGreateCell.lableFont
+        secondaryTextLable.font =  ConstantsCreateCell.lableFont
         secondaryTextLable.textColor = .grayDay
         secondaryTextLable.isHidden = true
         
@@ -43,7 +43,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     
     private lazy var clickImage: UIImageView = {
         let clickImage = UIImageView()
-        let image = UIImage(named:  ConstantsGreateCell.iconButton)
+        let image = UIImage(named:  ConstantsCreateCell.iconButton)
         clickImage.image = image
         
         return clickImage
@@ -60,7 +60,7 @@ class GreateTrackerTableViewCell: UITableViewCell {
     }
 }
 
-extension GreateTrackerTableViewCell {
+extension CreateTrackerTableViewCell {
     //MARK: - SetupUI
     private func setupUIElement() {
         setupSelf()
@@ -69,7 +69,7 @@ extension GreateTrackerTableViewCell {
     
     private func setupSelf() {
         backgroundColor = .backgroundNight
-        layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
+        layer.cornerRadius = ConstantsCreateCell.cornerRadiusViewCell
         layer.masksToBounds = true
         clickImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(clickImage)

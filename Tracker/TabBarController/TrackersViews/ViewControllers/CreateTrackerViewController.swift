@@ -1,5 +1,5 @@
 //
-//  GreateTrackerViewController.swift
+//  CreateTrackerViewController.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 3.10.23.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-//MARK: - GreateTrackerViewControllerDelegate
-protocol GreateTrackerViewControllerDelegate: AnyObject {
-    func greateTrackerViewController(vc: UIViewController, categories: [TrackerCategory])
-    func greateTrackerViewControllerDidCancel(_ vc: GreateTrackerViewController)
+//MARK: - CreateTrackerViewControllerDelegate
+protocol CreateTrackerViewControllerDelegate: AnyObject {
+    func createTrackerViewController(vc: UIViewController, nameCategories: String, tracker: Tracker)
+    func createTrackerViewControllerDidCancel(_ vc: CreateTrackerViewController)
 }
 
-//MARK: - GreateTrackerViewController
-final class GreateTrackerViewController: UIViewController{
-    private struct ConstantsGreateVc {
+//MARK: - CreateTrackerViewController
+final class CreateTrackerViewController: UIViewController{
+    private struct ConstantsCreateVc {
         static let newHabit = "Новая привычка"
         static let newIrregular = "Новое нерегулярное событие"
         static let placeholderTextField = "Введите название трекера"
@@ -30,7 +30,7 @@ final class GreateTrackerViewController: UIViewController{
         static let heightCollectionView = CGFloat(54)
         
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
-        static let greateNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let createNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let spacingButtonSpacing = CGFloat(10)
         static let spacingContentStack = CGFloat(24)
         static let leftIndentTextField = CGFloat(12)
@@ -41,12 +41,13 @@ final class GreateTrackerViewController: UIViewController{
     }
     
     private let recordManager: RecordManagerProtocol = RecordManagerStab.shared
-    weak var delegate: GreateTrackerViewControllerDelegate?
+    
+    weak var delegate: CreateTrackerViewControllerDelegate?
     
     private var isSchedul: Bool = true
     private var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
     private let dataSection: [Header] = [.emoji, .color]
-    private let emoji: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
+    private let emojies: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
                                    "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     
     private let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
@@ -59,44 +60,49 @@ final class GreateTrackerViewController: UIViewController{
     private var schedule: [WeekDay] = [] {
         didSet { checkingForEmptiness() }
     }
-    private var color: [UIColor] = []
+    private var color: UIColor? {
+        didSet { checkingForEmptiness() }
+    }
     private var nameNewCategori: String = "Важное"
     //TODO: -
     private var nameTracker: String = ""
+    private var emoji: String = "" {
+        didSet { checkingForEmptiness() }
+    }
     
     private lazy var newHabitLabel: UILabel = {
         let newHabitLabel = UILabel()
-        newHabitLabel.text = isSchedul ? ConstantsGreateVc.newIrregular : ConstantsGreateVc.newHabit
+        newHabitLabel.text = isSchedul ? ConstantsCreateVc.newIrregular : ConstantsCreateVc.newHabit
         newHabitLabel.textColor = .blackDay
-        newHabitLabel.font = ConstantsGreateVc.textFont
+        newHabitLabel.font = ConstantsCreateVc.textFont
         newHabitLabel.textAlignment = .center
         newHabitLabel.backgroundColor = .clear
         
         return newHabitLabel
     }()
     
-    private lazy var greateNameTextField: UITextField = {
-        let greateNameTextField = UITextField()
-        greateNameTextField.placeholder = ConstantsGreateVc.placeholderTextField
-        greateNameTextField.font = ConstantsGreateVc.greateNameTextFieldFont
-        greateNameTextField.indent(size: ConstantsGreateVc.leftIndentTextField)
-        greateNameTextField.backgroundColor = .backgroundNight
-        greateNameTextField.layer.cornerRadius = ConstantsGreateVc.cornerRadius
-        greateNameTextField.layer.masksToBounds = true
-        greateNameTextField.clearButtonMode = .whileEditing
-        greateNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        greateNameTextField.delegate = self
+    private lazy var createNameTextField: UITextField = {
+        let createNameTextField = UITextField()
+        createNameTextField.placeholder = ConstantsCreateVc.placeholderTextField
+        createNameTextField.font = ConstantsCreateVc.createNameTextFieldFont
+        createNameTextField.indent(size: ConstantsCreateVc.leftIndentTextField)
+        createNameTextField.backgroundColor = .backgroundNight
+        createNameTextField.layer.cornerRadius = ConstantsCreateVc.cornerRadius
+        createNameTextField.layer.masksToBounds = true
+        createNameTextField.clearButtonMode = .whileEditing
+        createNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        createNameTextField.delegate = self
         
-        return greateNameTextField
+        return createNameTextField
     }()
     
     private lazy var characterRestrictionsView: UILabel = {
         let characterRestrictionsView = UILabel()
         characterRestrictionsView.backgroundColor = .clear
-        characterRestrictionsView.font = ConstantsGreateVc.greateNameTextFieldFont
-        characterRestrictionsView.text = ConstantsGreateVc.characterLimit
+        characterRestrictionsView.font = ConstantsCreateVc.createNameTextFieldFont
+        characterRestrictionsView.text = ConstantsCreateVc.characterLimit
         characterRestrictionsView.textColor = .redDay
-        characterRestrictionsView.numberOfLines = ConstantsGreateVc.numberOfLinesRestrictionsTextField
+        characterRestrictionsView.numberOfLines = ConstantsCreateVc.numberOfLinesRestrictionsTextField
         characterRestrictionsView.textAlignment = .center
         characterRestrictionsView.isHidden = true
         
@@ -108,7 +114,7 @@ final class GreateTrackerViewController: UIViewController{
         contentStackView.backgroundColor = .clear
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.axis = .vertical
-        contentStackView.spacing = ConstantsGreateVc.spacingContentStack
+        contentStackView.spacing = ConstantsCreateVc.spacingContentStack
         
         return contentStackView
     }()
@@ -120,8 +126,8 @@ final class GreateTrackerViewController: UIViewController{
         selectionTableView.backgroundColor = .clear
         selectionTableView.isScrollEnabled = false
         selectionTableView.separatorStyle = isSchedul ? .none : .singleLine
-        selectionTableView.separatorInset = ConstantsGreateVc.insertSeparatorTableView
-        selectionTableView.register(GreateTrackerTableViewCell.self, forCellReuseIdentifier: "\(GreateTrackerTableViewCell.self)")
+        selectionTableView.separatorInset = ConstantsCreateVc.insertSeparatorTableView
+        selectionTableView.register(CreateTrackerTableViewCell.self, forCellReuseIdentifier: "\(CreateTrackerTableViewCell.self)")
         
         return selectionTableView
     }()
@@ -160,38 +166,38 @@ final class GreateTrackerViewController: UIViewController{
     
     private lazy var cancelButton: UIButton = {
         let cancelButton = UIButton()
-        cancelButton.layer.cornerRadius = ConstantsGreateVc.cornerRadius
-        cancelButton.layer.borderWidth = ConstantsGreateVc.borderWidthButton
+        cancelButton.layer.cornerRadius = ConstantsCreateVc.cornerRadius
+        cancelButton.layer.borderWidth = ConstantsCreateVc.borderWidthButton
         cancelButton.layer.borderColor = UIColor.redDay.cgColor
         cancelButton.layer.masksToBounds = true
         cancelButton.backgroundColor = .clear
-        cancelButton.setTitle(ConstantsGreateVc.textCancelButton , for: .normal)
+        cancelButton.setTitle(ConstantsCreateVc.textCancelButton , for: .normal)
         cancelButton.setTitleColor(.redDay, for: .normal)
-        cancelButton.titleLabel?.font = ConstantsGreateVc.textFont
+        cancelButton.titleLabel?.font = ConstantsCreateVc.textFont
         cancelButton.addTarget(self, action: #selector(didTapCancelButton), for: .touchUpInside)
         
         return cancelButton
     }()
     
-    private lazy var greateButton: UIButton = {
-        let greateButton = UIButton()
-        greateButton.layer.cornerRadius = ConstantsGreateVc.cornerRadius
-        greateButton.layer.masksToBounds = true
-        greateButton.backgroundColor = .grayDay
-        greateButton.setTitle(ConstantsGreateVc.textGreateButton, for: .normal)
-        greateButton.titleLabel?.textColor = .redDay
-        greateButton.titleLabel?.font = ConstantsGreateVc.textFont
-        greateButton.isEnabled = false
-        greateButton.addTarget(self, action: #selector(didTapGreateButton) , for: .touchUpInside)
+    private lazy var createButton: UIButton = {
+        let createButton = UIButton()
+        createButton.layer.cornerRadius = ConstantsCreateVc.cornerRadius
+        createButton.layer.masksToBounds = true
+        createButton.backgroundColor = .grayDay
+        createButton.setTitle(ConstantsCreateVc.textGreateButton, for: .normal)
+        createButton.titleLabel?.textColor = .redDay
+        createButton.titleLabel?.font = ConstantsCreateVc.textFont
+        createButton.isEnabled = false
+        createButton.addTarget(self, action: #selector(didTapGreateButton) , for: .touchUpInside)
         
-        return greateButton
+        return createButton
     }()
     
     private lazy var buttonStack: UIStackView = {
         let buttonStack = UIStackView()
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         buttonStack.axis = .horizontal
-        buttonStack.spacing = ConstantsGreateVc.spacingButtonSpacing
+        buttonStack.spacing = ConstantsCreateVc.spacingButtonSpacing
         buttonStack.distribution = .fillEqually
         
         return buttonStack
@@ -225,7 +231,7 @@ final class GreateTrackerViewController: UIViewController{
     }
 }
 
-extension GreateTrackerViewController {
+extension CreateTrackerViewController {
     //MARK: - Обработка событий
     @objc
     private func didTapCancelButton() {
@@ -234,16 +240,16 @@ extension GreateTrackerViewController {
     
     @objc
     private func didTapGreateButton() {
-        let oldCategories = recordManager.getCategories()
-        let categories = greateNewCategori(categories: oldCategories)
-        delegate?.greateTrackerViewController(vc: self, categories: categories)
-        delegate?.greateTrackerViewControllerDidCancel(self)
+        guard let color, let delegate else { return }
+        let tracker = Tracker(name: nameTracker, color: color, emoji: emoji, schedule: schedule)
+        delegate.createTrackerViewController(vc: self, nameCategories: nameNewCategori, tracker: tracker)
+        delegate.createTrackerViewControllerDidCancel(self)
     }
     
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        if text.count > ConstantsGreateVc.restrictionsTextField {
+        if text.count > ConstantsCreateVc.restrictionsTextField {
             characterRestrictionsView.isHidden = false
             textField.text = nameTracker.firstUppercased
             return
@@ -259,16 +265,16 @@ extension GreateTrackerViewController {
     
     //MARK: - Логика
     //метод активации/деактивации greateButton
-    private func isActivGreateButton(flag: Bool) {
-        greateButton.isEnabled = flag
-        greateButton.backgroundColor = flag ? .blackDay : .grayDay
+    private func isActivCreateButton(flag: Bool) {
+        createButton.isEnabled = flag
+        createButton.backgroundColor = flag ? .blackDay : .grayDay
     }
     
     //метод ссоздания текста для вторичной строки в ячейке "shedul"
     private func jonedSchedule(schedule: [WeekDay]) -> String {
         var stringListDay: String
         if schedule.count == 7 {
-            stringListDay = ConstantsGreateVc.everyDay
+            stringListDay = ConstantsCreateVc.everyDay
             return stringListDay
         }
         let listDay = schedule.map { $0.briefWordDay }
@@ -278,32 +284,15 @@ extension GreateTrackerViewController {
     }
     
     //метод создания трекера
-    private func greateNewTracker() -> Tracker {
+    private func createNewTracker() -> Tracker {
         let tracker = Tracker(name: nameTracker, color: .colorSelection12, emoji: "🍏", schedule: schedule)
         return tracker
     }
     
-    //медод создания нового массива категорий c новым созданным трекером
-    private func greateNewCategori(categories: [TrackerCategory]) -> [TrackerCategory] {
-        var newCategories: [TrackerCategory] = []
-        let tracker = greateNewTracker()
-        var trackers: [Tracker] = []
-        categories.forEach { oldCategori in
-            oldCategori.arrayTrackers.forEach { oldTracker in
-                trackers.append(oldTracker)
-            }
-            trackers.append(tracker)
-            let categori = TrackerCategory(nameCategori: oldCategori.nameCategori, arrayTrackers: trackers)
-            newCategories.append(categori)
-            
-        }
-        return newCategories
-    }
-    
     //метод проверки свойств на пустоту
     private func checkingForEmptiness() {
-        let flag = !schedule.isEmpty && !nameTracker.isEmpty && !color.isEmpty ? true : false
-        isActivGreateButton(flag: flag)
+        let flag = !schedule.isEmpty && !nameTracker.isEmpty && color != nil && !emoji.isEmpty ? true : false
+        isActivCreateButton(flag: flag)
     }
     
     //метод изменения свойства isSchedul
@@ -335,7 +324,7 @@ extension GreateTrackerViewController {
     
     func setupButtonStack() {
         view.addSubview(buttonStack)
-        [cancelButton, greateButton].forEach {
+        [cancelButton, createButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             buttonStack.addArrangedSubview($0)
         }
@@ -362,7 +351,7 @@ extension GreateTrackerViewController {
     
     func setupStackView() {
         scrollView.addSubview(contentStackView)
-        [greateNameTextField, characterRestrictionsView, selectionTableView, emojiCollectionView, colorCollectionView].forEach {
+        [createNameTextField, characterRestrictionsView, selectionTableView, emojiCollectionView, colorCollectionView].forEach {
             contentStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -373,7 +362,7 @@ extension GreateTrackerViewController {
             contentStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            greateNameTextField.heightAnchor.constraint(equalToConstant: 75),
+            createNameTextField.heightAnchor.constraint(equalToConstant: 75),
             emojiCollectionView.heightAnchor.constraint(equalToConstant: 222),
             colorCollectionView.heightAnchor.constraint(equalToConstant: 222),
             selectionTableView.heightAnchor.constraint(equalToConstant: isSchedul ? 75 : 150)
@@ -382,13 +371,13 @@ extension GreateTrackerViewController {
 }
 
 //MARK: - UITableViewDataSource
-extension GreateTrackerViewController: UITableViewDataSource {
+extension CreateTrackerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         listSettings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(GreateTrackerTableViewCell.self)") as? GreateTrackerTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as? CreateTrackerTableViewCell else { return UITableViewCell() }
         let secondarySchedulText = jonedSchedule(schedule: schedule)
         switch listSettings[indexPath.row] {
         case .category:
@@ -397,22 +386,22 @@ extension GreateTrackerViewController: UITableViewDataSource {
         case .schedule:
             cell.configCell(choice: listSettings[indexPath.row])
             cell.configSecondaryLableShedule(secondaryText: secondarySchedulText)
+            tableView.separatorInset = UIEdgeInsets(top: 0, left: view.bounds.width, bottom: 0, right: 0)
         }
         return cell
     }
 }
 
 //MARK: - UITableViewDelegate
-extension GreateTrackerViewController: UITableViewDelegate {
+extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       return CGFloat(75)
+       75
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? GreateTrackerTableViewCell else { return }
         switch listSettings[indexPath.row] {
         case .category:
-            let greateCategoriViewController = GreateCategoriesViewController()
+            let greateCategoriViewController = CreateCategoriesViewController()
             greateCategoriViewController.delegate = self
             presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
@@ -424,42 +413,42 @@ extension GreateTrackerViewController: UITableViewDelegate {
 }
 
 //MARK: - UITextFieldDelegate
-extension GreateTrackerViewController: UITextFieldDelegate {
+extension CreateTrackerViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        greateNameTextField.resignFirstResponder()
+        createNameTextField.resignFirstResponder()
         return true
     }
 }
 
 //MARK: - ScheduleViewControllerDelegate
-extension GreateTrackerViewController: ScheduleViewControllerDelegate {
+extension CreateTrackerViewController: ScheduleViewControllerDelegate {
     func daysOfWeek(viewController: UIViewController, listDays: [WeekDay]) {
         guard let _ = viewController as? ScheduleViewController else { return }
         schedule = listDays
-        selectionTableView.reloadData()
+        selectionTableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
     }
 }
 
 //MARK: - GreateCategoriesViewControllerDelegate
-extension GreateTrackerViewController: GreateCategoriesViewControllerDelegate {
-    func greateCategoriesViewController(vc: UIViewController, nameCategori: String) {
-        //TODO: - Sprint_15
+extension CreateTrackerViewController: CreateCategoriesViewControllerDelegate {
+    func createCategoriesViewController(vc: UIViewController, nameCategori: String) {
         nameNewCategori = nameCategori
     }
     
-    func greateCategoriesViewControllerDidCancel(vc: GreateCategoriesViewController) {
+    func createCategoriesViewControllerDidCancel(vc: CreateCategoriesViewController) {
         vc.dismiss(animated: true)
     }
 }
 
-extension GreateTrackerViewController: UICollectionViewDataSource {
+//MARK: - UICollectionViewDataSource
+extension CreateTrackerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count: Int
         switch dataSection[section] {
         case .color:
             count = colors.count
         case .emoji:
-            count = emoji.count
+            count = emojies.count
         }
         return count
     }
@@ -476,7 +465,7 @@ extension GreateTrackerViewController: UICollectionViewDataSource {
             cell.configColor(color: color)
         }
         if collectionView == emojiCollectionView {
-            let emoji = emoji[indexPath.row]
+            let emoji = emojies[indexPath.row]
             cell.configEmoji(emoji: emoji)
         }
         return cell
@@ -484,15 +473,18 @@ extension GreateTrackerViewController: UICollectionViewDataSource {
 }
 
 //MARK: - UICollectionViewDelegate
-extension GreateTrackerViewController: UICollectionViewDelegate {
+extension CreateTrackerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? EmojiColorCollectionViewCell else { return }
         if collectionView == colorCollectionView {
             let color = colors[indexPath.row]
             cell.colorSelection(color: color, flag: true)
+            self.color = color
         }
         if collectionView == emojiCollectionView {
+            let emoji = emojies[indexPath.row]
             cell.emojiSelection(isBackground: true)
+            self.emoji = emoji
         }
     }
     
@@ -509,11 +501,11 @@ extension GreateTrackerViewController: UICollectionViewDelegate {
 }
 
 //MARK: - UICollectionViewDelegateFlowLayout
-extension GreateTrackerViewController: UICollectionViewDelegateFlowLayout {
+extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let availableWidth = collectionView.frame.width - emojiCollectionView.params.paddingWidth
         let cellWidth = availableWidth / CGFloat(emojiCollectionView.params.cellCount)
-        let sizeCell = CGSize(width: cellWidth, height: ConstantsGreateVc.heightCollectionView)
+        let sizeCell = CGSize(width: cellWidth, height: ConstantsCreateVc.heightCollectionView)
 
         return sizeCell
     }
@@ -524,27 +516,25 @@ extension GreateTrackerViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         var systemLayoutSize: CGSize
-        switch dataSection[section] {
-        case .color:
-            let indexPath = IndexPath(row: 1, section: section)
-            let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-            systemLayoutSize = headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        case .emoji:
-            let indexPath = IndexPath(row: 0, section: section)
-            let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
-            systemLayoutSize = headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
-        }
+        let indexPath = IndexPath(row: 0, section: section)
+        let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
+        systemLayoutSize = headerView.systemLayoutSizeFitting(CGSize(width: collectionView.frame.width, height: UIView.layoutFittingExpandedSize.height), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return systemLayoutSize
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
-            supplementary.label.text = dataSection[indexPath.section].name
-            return supplementary
+            if collectionView == colorCollectionView {
+                supplementary.label.text = Header.color.name
+            }
+            if collectionView == emojiCollectionView {
+                supplementary.label.text = Header.emoji.name
+            }
         default:
             return UICollectionReusableView()
         }
+        return supplementary
     }
 }

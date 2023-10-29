@@ -8,13 +8,13 @@
 import Foundation
 
 enum WeekDay: Int {
-    case sunday
     case monday
     case tuesday
     case wednesday
     case thursday
     case friday
     case saturday
+    case sunday
     
     var day: String {
         var day: String
@@ -58,3 +58,5 @@ enum WeekDay: Int {
         return briefWordDay
     }
 }
+
+extension WeekDay: Codable { }

@@ -17,13 +17,13 @@ protocol RecordManagerProtocol {
 //MARK: - RecordManagerStab
 final class RecordManagerStab: RecordManagerProtocol {
     static let shared = RecordManagerStab()
-    private var categories: [TrackerCategory] = [TrackerCategory(nameCategori: "Важное", arrayTrackers: [
+    private var categories: [TrackerCategory] = [TrackerCategory(nameCategory: "Важное", arrayTrackers: [
         Tracker(name: "Лес", color: .colorSelection1, emoji: "🏝️", schedule: [  .wednesday, .monday, .sunday]),
-        Tracker(name: "Жыве", color: .colorSelection2, emoji: "🙌", schedule: [  .wednesday]),
-        Tracker(name: "Вечна", color: .colorSelection3, emoji: "😡", schedule: [ .monday, .wednesday,  .sunday, .saturday]),
-        Tracker(name: "Зубр", color: .colorSelection4, emoji: "🍏", schedule: [ .monday, .saturday,]),
-        Tracker(name: "Жыве", color: .colorSelection5, emoji: "🏓", schedule: [ .monday,  .thursday, .wednesday]),
-        Tracker(name: "Беларусь", color: .colorSelection6, emoji: "😱", schedule: [  .thursday,])
+        Tracker(name: "Лес", color: .colorSelection2, emoji: "🙌", schedule: [  .wednesday]),
+        Tracker(name: "Лес", color: .colorSelection3, emoji: "😡", schedule: [ .monday, .wednesday,  .sunday, .saturday]),
+        Tracker(name: "Лес", color: .colorSelection4, emoji: "🍏", schedule: [ .monday, .saturday,]),
+        Tracker(name: "Лес", color: .colorSelection5, emoji: "🏓", schedule: [ .monday,  .thursday, .wednesday]),
+        Tracker(name: "Лес", color: .colorSelection6, emoji: "😱", schedule: [  .thursday,])
     ])]
     
     private let weekDay: [WeekDay] = [.friday, .monday, .saturday, .sunday, .thursday, .tuesday, .wednesday]

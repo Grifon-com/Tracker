@@ -8,7 +8,17 @@
 import Foundation
 
 struct TrackerCategory {
-    let nameCategori: String
+    let nameCategory: String
     let arrayTrackers: [Tracker]
+}
+
+extension TrackerCategory: Hashable {
+    static func == (lhs: TrackerCategory, rhs: TrackerCategory) -> Bool {
+            return lhs.nameCategory == rhs.nameCategory
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(nameCategory)
+        }
 }
 

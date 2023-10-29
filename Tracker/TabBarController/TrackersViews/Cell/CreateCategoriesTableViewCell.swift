@@ -1,5 +1,5 @@
 //
-//  CategoriesTableViewCell.swift
+//  CreateCategoriesTableViewCell.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 13.10.23.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-//MARK: - GreateCategoriesTableViewCell
-final class GreateCategoriesTableViewCell: UITableViewCell {
+//MARK: - CreateCategoriesTableViewCell
+final class CreateCategoriesTableViewCell: UITableViewCell {
     private struct ConstantsGreateCell {
         static let iconButton = "IconButtonCell"
         static let nameImageSelected = "selected"
@@ -48,7 +48,7 @@ final class GreateCategoriesTableViewCell: UITableViewCell {
     }
 }
 
-extension GreateCategoriesTableViewCell {
+extension CreateCategoriesTableViewCell {
     //MARK: - Configuration
     func config(text: String) {
         nameCategoriLableView.text = text

@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  StatisticViewController.swift
 //  Tracker
 //
-//  Created by Марина Машук on 28.09.23.
+//  Created by Григорий Машук on 28.09.23.
 //
 
 import UIKit

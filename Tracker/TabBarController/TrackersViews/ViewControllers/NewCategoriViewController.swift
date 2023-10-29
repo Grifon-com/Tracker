@@ -40,18 +40,18 @@ class NewCategoriViewController: UIViewController {
         return readyButton
     }()
     
-    private lazy var greateNameTextField: UITextField = {
-        let greateNameTextField = UITextField()
-        greateNameTextField.placeholder = ConstantsNewCatVc.placeholderTextField
-        greateNameTextField.font = ConstantsNewCatVc.textFieldFont
-        greateNameTextField.indent(size: ConstantsNewCatVc.leftIndentTextField)
-        greateNameTextField.backgroundColor = .backgroundNight
-        greateNameTextField.layer.cornerRadius = ConstantsNewCatVc.cornerRadius
-        greateNameTextField.layer.masksToBounds = true
-        greateNameTextField.clearButtonMode = .whileEditing
-        greateNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    private lazy var createNameTextField: UITextField = {
+        let createNameTextField = UITextField()
+        createNameTextField.placeholder = ConstantsNewCatVc.placeholderTextField
+        createNameTextField.font = ConstantsNewCatVc.textFieldFont
+        createNameTextField.indent(size: ConstantsNewCatVc.leftIndentTextField)
+        createNameTextField.backgroundColor = .backgroundNight
+        createNameTextField.layer.cornerRadius = ConstantsNewCatVc.cornerRadius
+        createNameTextField.layer.masksToBounds = true
+        createNameTextField.clearButtonMode = .whileEditing
+        createNameTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
-        return greateNameTextField
+        return createNameTextField
     }()
     
     override func viewDidLoad() {

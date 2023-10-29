@@ -29,4 +29,5 @@ extension Tracker: Equatable {
     }
 }
 
+extension Tracker: Hashable {}
 

@@ -44,15 +44,15 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return colorView
     }()
     
-    lazy var lableEmoji: UILabel = {
-        let lableEmoji = UILabel()
-        lableEmoji.font = ConstantsTrackerCell.fontLabelEmoji
-        lableEmoji.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
-        lableEmoji.layer.masksToBounds = true
-        lableEmoji.backgroundColor = .backgroundNight
-        lableEmoji.textAlignment = .center
+    lazy var emojiLable: UILabel = {
+        let emojiLable = UILabel()
+        emojiLable.font = ConstantsTrackerCell.fontLabelEmoji
+        emojiLable.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
+        emojiLable.layer.masksToBounds = true
+        emojiLable.backgroundColor = .backgroundNight
+        emojiLable.textAlignment = .center
         
-        return lableEmoji
+        return emojiLable
     }()
     
     lazy var nameTrackerLabel: UILabel = {
@@ -65,13 +65,13 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return nameTrackerLabel
     }()
     
-    lazy var lableDayCounter: UILabel = {
-        let lableDayCounter = UILabel()
-        lableDayCounter.textColor = .blackDay
-        lableDayCounter.font = ConstantsTrackerCell.fontLableDayCounter
-        lableDayCounter.text = "\(count) дней"
+    lazy var dayCounterLable: UILabel = {
+        let dayCounterLable = UILabel()
+        dayCounterLable.textColor = .blackDay
+        dayCounterLable.font = ConstantsTrackerCell.fontLableDayCounter
+        dayCounterLable.text = "\(count) дней"
         
-        return lableDayCounter
+        return dayCounterLable
     }()
     
     lazy var addButton: UIButton = {
@@ -156,13 +156,13 @@ extension TrackersCollectionViewCell {
             addButton.setImage(image, for: .normal)
             self.count = count
             let textLable = endingWordDay(count: count)
-            lableDayCounter.text = textLable
+            dayCounterLable.text = textLable
         case false:
             let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
             self.count = count
             let textLable = endingWordDay(count: count)
-            lableDayCounter.text = textLable
+            dayCounterLable.text = textLable
         }
     }
     
@@ -181,7 +181,7 @@ extension TrackersCollectionViewCell {
     //метод конфигурации ячейки
     func config(tracker: Tracker, count: Int, isComplited: Bool) {
         colorView.backgroundColor = tracker.color
-        lableEmoji.text = tracker.emoji
+        emojiLable.text = tracker.emoji
         addButton.backgroundColor = tracker.color
         nameTrackerLabel.text = tracker.name
         updateLableCountAndImageAddButton(count: count, flag: isComplited)
@@ -211,14 +211,14 @@ extension TrackersCollectionViewCell {
     }
     
     private func setupHorisontalStack() {
-        [lableDayCounter, addButton].forEach {
+        [dayCounterLable, addButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             horisontalStack.addArrangedSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            lableDayCounter.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            lableDayCounter.topAnchor.constraint(equalTo: colorView.bottomAnchor, constant: 16),
+            dayCounterLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            dayCounterLable.topAnchor.constraint(equalTo: colorView.bottomAnchor, constant: 16),
             
             addButton.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.height),
             addButton.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.width),
@@ -239,17 +239,17 @@ extension TrackersCollectionViewCell {
     }
     
     private func setupColorView() {
-        [lableEmoji, nameTrackerLabel].forEach {
+        [emojiLable, nameTrackerLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             colorView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
             
-            lableEmoji.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
-            lableEmoji.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
-            lableEmoji.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
-            lableEmoji.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
+            emojiLable.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
+            emojiLable.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
+            emojiLable.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
+            emojiLable.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
             
             nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
