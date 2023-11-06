@@ -9,21 +9,24 @@ import Foundation
 import CoreData
 
 protocol DataProviderDelegate: AnyObject {
-    func storeCategory(_ at: DataProvider, indexPath: IndexPath)
+    func storeCategory(dataProvider: DataProvider, indexPath: IndexPath)
 }
 
 protocol DataProviderprotocol {
     var trackerCategory: [TrackerCategory] { get }
     var treckersRecords: Set<TrackerRecord> { get }
     
-    func addTracker(_ category: TrackerCategory, tracker: Tracker) throws
+    func addTracker(_ nameCategory: String, tracker: Tracker) throws
     func addNewCategory(_ nameCategori: String, tracker: Tracker) throws
+    
+    func addCategory(nameCategory: String) throws
     
     func addNewTrackerRecord(_ trackerRecord: TrackerRecord) throws
     func deleteTrackerRecord(_ trackerRecord: TrackerRecord) throws
     func loadTrackerRecord(id: UUID) throws -> Int
 }
 
+//MARK: - DataProvider
 final class DataProvider: NSObject {
     weak var delegate: DataProviderDelegate?
     
@@ -34,10 +37,10 @@ final class DataProvider: NSObject {
     private let trackerRecordStore: TrackerRecordStore
     
     private var indexPathCategory: IndexPath?
-        
-    init(_ delegate: DataProviderDelegate) throws {
-        let context = AppDelegate.container.viewContext
+    
+    init(delegate: DataProviderDelegate) {
         self.delegate = delegate
+        let context = AppDelegate.container.viewContext
         self.context = context
         self.trackerStore = TrackerStore()
         self.trackerCategoryStore = TrackerCategoryStore()
@@ -102,16 +105,24 @@ extension DataProvider: DataProviderprotocol {
         return treckerCategory
     }
     
-    func addTracker(_ category: TrackerCategory, tracker: Tracker) throws {
+    func addCategory(nameCategory: String) throws {
+        try trackerCategoryStore.addCategory(nameCategory)
+    }
+    
+    func addTracker(_ nameCategory: String, tracker: Tracker) throws {
         fetchedCategoryResultController.delegate = nil
         let _ = fetchedTrackerResultController.fetchedObjects
-        try trackerStore.addNewTracker(tracker, category: category)
+        try trackerStore.addNewTracker(tracker, nameCategory: nameCategory)
     }
     
     func addNewCategory(_ nameCategori: String, tracker: Tracker) throws {
         let trackerCoreData = TrackerCoreData(context: context)
         try trackerStore.update(trackerCoreData, tracker: tracker)
         try trackerCategoryStore.addNewCategory(nameCategory: nameCategori, trackerCoreData: trackerCoreData)
+    }
+    
+    func updateCategory(nameCategory: String, tracker: Tracker) throws {
+        
     }
     
     func addNewTrackerRecord(_ trackerRecord: TrackerRecord) throws {
@@ -127,16 +138,16 @@ extension DataProvider: DataProviderprotocol {
     }
 }
 
-extension DataProvider {
+private extension DataProvider {
     func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
         guard let nameCategory = trackerCategoryCoreData.nameCategory else {
             throw TrackrerCategoryStoreError.decodingErrorInvalidNameCategori
         }
-
+        
         guard let arrayTrackersCoreData = trackerCategoryCoreData.trakers?.allObjects as? [TrackerCoreData] else { throw NSSetError.transformationErrorInvalid }
-
+        
         let arrayTrackers = try arrayTrackersCoreData.map ({ try self.trackerStore.tracker(from: $0) })
-
+        
         return TrackerCategory(nameCategory: nameCategory, arrayTrackers: arrayTrackers)
     }
     
@@ -158,7 +169,7 @@ extension DataProvider: NSFetchedResultsControllerDelegate {
         guard let delegate,
               let indexPathCategory
         else { return }
-        delegate.storeCategory(self, indexPath: indexPathCategory)
+        delegate.storeCategory(dataProvider: self, indexPath: indexPathCategory)
         self.indexPathCategory = nil
     }
     

@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - CreateCategoriesTableViewCell
-final class CreateCategoriesTableViewCell: UITableViewCell {
+final class CreateCategoriesTableViewCell: UITableViewCell {    
     private struct ConstantsGreateCell {
         static let iconButton = "IconButtonCell"
         static let nameImageSelected = "selected"
@@ -29,13 +29,14 @@ final class CreateCategoriesTableViewCell: UITableViewCell {
         let image = UIImage(named: ConstantsGreateCell.nameImageSelected)
         selectedImage.image = image
         selectedImage.backgroundColor = .clear
-        selectedImage.isHidden = false
+        selectedImage.isHidden = true
         
         return selectedImage
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        selectionStyle = .none
         backgroundColor = .backgroundNight
         layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
         layer.masksToBounds = true

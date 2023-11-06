@@ -7,12 +7,9 @@
 
 import UIKit
 
-
-
 //MARK: - CreateCategoriesViewControllerDelegate
 protocol CreateCategoriesViewControllerDelegate: AnyObject {
     func createCategoriesViewController(vc: UIViewController, nameCategori: String)
-    func createCategoriesViewControllerDidCancel(vc: CreateCategoriesViewController)
 }
 
 //MARK: - CreateCategoriesViewController
@@ -22,17 +19,18 @@ final class CreateCategoriesViewController: UIViewController {
         static let categoriAddButtonText = "Добавить категорию"
         static let imageViewImageStab = "Star"
         static let labelStabText = "Привычки и события можно обЪединить по смыслу"
-
+        
         static let cornerRadius = CGFloat(16)
         static let categoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let labelStabTextFont = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let insertSeparatorTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
     }
+    
+    private var viewModel: CategoriViewModel?
     
     weak var delegate: CreateCategoriesViewControllerDelegate?
     
-    private var categories: [String] = ["Важное"]
-    private var selectedCategoriName: String = ""
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
         categoriLabel.text = ConstantsCreateCatVc.categoriLabelText
@@ -74,17 +72,25 @@ final class CreateCategoriesViewController: UIViewController {
     private lazy var selectionCategoriTableView: UITableView = {
         let selectionCategoriTableView = UITableView()
         selectionCategoriTableView.dataSource = self
-        selectionCategoriTableView.allowsSelection = false
+        selectionCategoriTableView.delegate = self
         selectionCategoriTableView.backgroundColor = .clear
-        selectionCategoriTableView.isScrollEnabled = false
-        selectionCategoriTableView.separatorStyle = .none
+        selectionCategoriTableView.separatorStyle = .singleLine
         selectionCategoriTableView.register(CreateCategoriesTableViewCell.self, forCellReuseIdentifier: "\(CreateCategoriesTableViewCell.self)")
+        selectionCategoriTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         
         return selectionCategoriTableView
     }()
     
     private lazy var createCategoriButton: UIButton = {
-        let createCategoriButton = setupButton(text: ConstantsCreateCatVc.categoriAddButtonText, font: ConstantsCreateCatVc.categoriLabelFont, cornerRadius: ConstantsCreateCatVc.cornerRadius)
+        let createCategoriButton = UIButton()
+        createCategoriButton.setTitle(ConstantsCreateCatVc.categoriAddButtonText, for: .normal)
+        createCategoriButton.titleLabel?.textColor = .whiteDay
+        createCategoriButton.backgroundColor = .blackDay
+        createCategoriButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
+        createCategoriButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
+        createCategoriButton.layer.masksToBounds = true
+        createCategoriButton.translatesAutoresizingMaskIntoConstraints = false
+        
         createCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .touchUpInside)
         
         return createCategoriButton
@@ -92,10 +98,18 @@ final class CreateCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = CategoriViewModel()
+        guard let viewModel else { return }
+        viewModel.listNameCategory = viewModel.category.map { $0.nameCategory.firstUppercased }
+        bind()
         view.backgroundColor = .whiteDay
         setupUIElement()
-        showStabView(flag: !categories.isEmpty)
+        showStabView(flag: !viewModel.category.isEmpty)
         selectionCategoriTableView.rowHeight = 75
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
 }
 
@@ -103,13 +117,26 @@ private extension CreateCategoriesViewController {
     //MARK: - обработка событий
     @objc
     func didTapСategoriButton() {
-        delegate?.createCategoriesViewController(vc: self, nameCategori: selectedCategoriName)
-        //TODO: - Sprint_15
+        let newCategoryVC = NewCategoriViewController()
+        newCategoryVC.delegate = self
+        newCategoryVC.modalPresentationStyle = .formSheet
+        present(newCategoryVC, animated: true)
     }
     
     // метод показа/скрытия заглушки
     func showStabView(flag: Bool) {
         conteinerStabView.isHidden = flag
+    }
+    
+    func bind() {
+        viewModel?.$category.bind { [weak self] _ in
+            guard let self,
+                  let viewModel
+            else { return }
+            showStabView(flag: !viewModel.category.isEmpty)
+            viewModel.createListNameCategory()
+            selectionCategoriTableView.reloadData()
+        }
     }
     
     //MARK: - SetupUI
@@ -118,19 +145,6 @@ private extension CreateCategoriesViewController {
         setupCategoriLabel()
         setupTableView()
         setupStabView()
-    }
-    
-    func setupButton(text: String, font: UIFont, cornerRadius: CGFloat? = nil) -> UIButton {
-        let button = UIButton()
-        button.setTitle(text, for: .normal)
-        button.titleLabel?.textColor = UIColor.whiteDay
-        button.backgroundColor = UIColor.blackDay
-        button.titleLabel?.font = font
-        button.layer.cornerRadius = cornerRadius ?? CGFloat(0)
-        button.layer.masksToBounds = cornerRadius == nil ? false : true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
     }
     
     func setupCategoriButton() {
@@ -191,14 +205,56 @@ private extension CreateCategoriesViewController {
 //MARK: - UITableViewDataSource
 extension CreateCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
+        guard let viewModel else { return 0 }
+        return viewModel.category.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell else { return UITableViewCell() }
-        let text = categories[indexPath.row]
-        cell.config(text: text)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell,
+              let viewModel
+        else { return UITableViewCell() }
+        let text = viewModel.category[indexPath.row]
+        if viewModel.listNameCategory[indexPath.row] == viewModel.selectNameCategory {
+            cell.showSelectedImage(flag: false)
+        } else {
+            cell.showSelectedImage(flag: true)
+        }
+        cell.config(text: text.nameCategory)
+        
+        if viewModel.category.count > 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        }
+        
+        if indexPath.row == viewModel.category.count - 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: view.bounds.width, bottom: 0, right: 0)
+        }
         
         return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension CreateCategoriesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? CreateCategoriesTableViewCell,
+              let delegate,
+              let viewModel
+        else { return }
+        cell.showSelectedImage(flag: false)
+        viewModel.selectСategory(indexPath: indexPath)
+        let nameCategory = viewModel.createNameCategory(indexPath: indexPath)
+        delegate.createCategoriesViewController(vc: self, nameCategori: nameCategory)
+    }
+}
+
+//MARK: - NewCategoriViewControllerDelegate
+extension CreateCategoriesViewController: NewCategoriViewControllerDelegate {
+    func didNewCategoriName(_ vc: UIViewController, nameCategori: String) {
+        guard let viewModel else { return }
+        let nameFirstUppercased = nameCategori.lowercased().firstUppercased
+        if viewModel.listNameCategory.contains(nameFirstUppercased)  {
+            return
+        }
+        try? viewModel.addCategory(nameCategory: nameFirstUppercased)
     }
 }

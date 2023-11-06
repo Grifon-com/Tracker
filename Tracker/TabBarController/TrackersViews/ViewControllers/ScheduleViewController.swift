@@ -168,7 +168,6 @@ extension ScheduleViewController: WeekDayTableViewCellDelegate {
         else { return }
         let day = weekDay[indexPath.row]
         updateListWeekDay(flag: flag, day: day)
-        //TODO: - Sprin_15
     }
 }
 

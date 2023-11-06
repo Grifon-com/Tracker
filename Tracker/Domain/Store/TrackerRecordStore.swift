@@ -21,6 +21,7 @@ protocol TrackerRecordStoreProtocol {
     func treckersRecordsResult(trackerRecordsCoreData: [TrackerRecordCoreData]) throws -> Set<TrackerRecord>
 }
 
+//MARK: - TrackerRecordStore
 final class TrackerRecordStore: NSObject {
     private let context: NSManagedObjectContext
     
@@ -58,7 +59,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
     func treckersRecordsResult(trackerRecordsCoreData: [TrackerRecordCoreData]) -> Set<TrackerRecord> {
         guard let trackerRecord = try? trackerRecordsCoreData.map ({ try self.trackerRecord(from: $0) })
         else { return [] }
-
+        
         return Set(trackerRecord)
     }
     

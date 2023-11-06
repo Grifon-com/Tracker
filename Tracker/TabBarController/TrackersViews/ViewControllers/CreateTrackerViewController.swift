@@ -40,15 +40,13 @@ final class CreateTrackerViewController: UIViewController{
         static let borderWidthButton = CGFloat(1)
     }
     
-    private let recordManager: RecordManagerProtocol = RecordManagerStab.shared
-    
     weak var delegate: CreateTrackerViewControllerDelegate?
     
     private var isSchedul: Bool = true
     private var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
     private let dataSection: [Header] = [.emoji, .color]
     private let emojies: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
-                                   "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+                                     "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     
     private let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
                                      .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
@@ -58,16 +56,32 @@ final class CreateTrackerViewController: UIViewController{
     
     //данные для создания трекера
     private var schedule: [WeekDay] = [] {
-        didSet { checkingForEmptiness() }
+        didSet {
+            let flag = checkingForEmptiness()
+            isActivCreateButton(flag: flag)
+        }
     }
+    
+    let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
+    
     private var color: UIColor? {
-        didSet { checkingForEmptiness() }
+        didSet {
+            let flag = checkingForEmptiness()
+            isActivCreateButton(flag: flag)
+        }
     }
-    private var nameNewCategori: String = "Важное"
-    //TODO: -
+    private var nameNewCategori: String = "" {
+        didSet {
+            let flag = checkingForEmptiness()
+            isActivCreateButton(flag: flag)
+        }
+    }
     private var nameTracker: String = ""
     private var emoji: String = "" {
-        didSet { checkingForEmptiness() }
+        didSet {
+            let flag = checkingForEmptiness()
+            isActivCreateButton(flag: flag)
+        }
     }
     
     private lazy var newHabitLabel: UILabel = {
@@ -155,7 +169,9 @@ final class CreateTrackerViewController: UIViewController{
         colorCollectionView.dataSource = self
         colorCollectionView.delegate = self
         colorCollectionView.register(EmojiColorCollectionViewCell.self, forCellWithReuseIdentifier: "\(EmojiColorCollectionViewCell.self)")
-        colorCollectionView.register(HeaderReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "\(HeaderReusableView.self)")
+        colorCollectionView.register(HeaderReusableView.self,
+                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                     withReuseIdentifier: "\(HeaderReusableView.self)")
         colorCollectionView.allowsMultipleSelection = false
         colorCollectionView.backgroundColor = .clear
         colorCollectionView.isScrollEnabled = false
@@ -214,7 +230,7 @@ final class CreateTrackerViewController: UIViewController{
         let scrollView = UIScrollView()
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
-
+        
         return scrollView
     }()
     
@@ -227,7 +243,6 @@ final class CreateTrackerViewController: UIViewController{
         view.addGestureRecognizer(tapGesture)
         
         setupUIElement()
-        schedule = isSchedul ? recordManager.getWeekDay() : []
     }
 }
 
@@ -240,8 +255,13 @@ extension CreateTrackerViewController {
     
     @objc
     private func didTapGreateButton() {
-        guard let color, let delegate else { return }
-        let tracker = Tracker(name: nameTracker, color: color, emoji: emoji, schedule: schedule)
+        guard let color,
+              let delegate
+        else { return }
+        let tracker = Tracker(name: nameTracker,
+                              color: color,
+                              emoji: emoji,
+                              schedule: isSchedul ? regular : schedule)
         delegate.createTrackerViewController(vc: self, nameCategories: nameNewCategori, tracker: tracker)
         delegate.createTrackerViewControllerDidCancel(self)
     }
@@ -255,7 +275,8 @@ extension CreateTrackerViewController {
             return
         }
         nameTracker = text.firstUppercased
-        checkingForEmptiness()
+        let flag = checkingForEmptiness()
+        isActivCreateButton(flag: flag)
     }
     
     @objc
@@ -283,16 +304,24 @@ extension CreateTrackerViewController {
         return stringListDay
     }
     
-    //метод создания трекера
-    private func createNewTracker() -> Tracker {
-        let tracker = Tracker(name: nameTracker, color: .colorSelection12, emoji: "🍏", schedule: schedule)
-        return tracker
-    }
-    
     //метод проверки свойств на пустоту
-    private func checkingForEmptiness() {
-        let flag = !schedule.isEmpty && !nameTracker.isEmpty && color != nil && !emoji.isEmpty ? true : false
-        isActivCreateButton(flag: flag)
+    private func checkingForEmptiness() -> Bool {
+        var flag: Bool
+        if isSchedul {
+            flag = !nameTracker.isEmpty &&
+            color != nil &&
+            !emoji.isEmpty &&
+            !nameNewCategori.isEmpty ? true : false
+            
+            return flag
+        }
+        flag = !schedule.isEmpty &&
+        !nameTracker.isEmpty &&
+        color != nil &&
+        !emoji.isEmpty &&
+        !nameNewCategori.isEmpty ? true : false
+        
+        return flag
     }
     
     //метод изменения свойства isSchedul
@@ -395,7 +424,7 @@ extension CreateTrackerViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       75
+        75
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -433,9 +462,7 @@ extension CreateTrackerViewController: ScheduleViewControllerDelegate {
 extension CreateTrackerViewController: CreateCategoriesViewControllerDelegate {
     func createCategoriesViewController(vc: UIViewController, nameCategori: String) {
         nameNewCategori = nameCategori
-    }
-    
-    func createCategoriesViewControllerDidCancel(vc: CreateCategoriesViewController) {
+        selectionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         vc.dismiss(animated: true)
     }
 }
@@ -506,14 +533,14 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.frame.width - emojiCollectionView.params.paddingWidth
         let cellWidth = availableWidth / CGFloat(emojiCollectionView.params.cellCount)
         let sizeCell = CGSize(width: cellWidth, height: ConstantsCreateVc.heightCollectionView)
-
+        
         return sizeCell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 10, left: emojiCollectionView.params.leftInset, bottom: 16, right: emojiCollectionView.params.rightInset)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         var systemLayoutSize: CGSize
         let indexPath = IndexPath(row: 0, section: section)
