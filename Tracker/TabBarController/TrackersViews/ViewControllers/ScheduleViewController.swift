@@ -147,8 +147,12 @@ extension ScheduleViewController: UITableViewDataSource {
         if weekDay[indexPath.row] == weekDay.last {
             cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
-            cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+            cell.separatorInset = UIEdgeInsets(top: 0,
+                                               left: 0,
+                                               bottom: 0,
+                                               right: .greatestFiniteMagnitude)
         }
+        
         return cell
     }
 }
@@ -168,7 +172,6 @@ extension ScheduleViewController: WeekDayTableViewCellDelegate {
         else { return }
         let day = weekDay[indexPath.row]
         updateListWeekDay(flag: flag, day: day)
-        //TODO: - Sprin_15
     }
 }
 

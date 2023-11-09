@@ -8,12 +8,11 @@
 import UIKit
 
 //MARK: - CreateCategoriesTableViewCell
-final class CreateCategoriesTableViewCell: UITableViewCell {
+final class CreateCategoriesTableViewCell: UITableViewCell {    
     private struct ConstantsGreateCell {
         static let iconButton = "IconButtonCell"
         static let nameImageSelected = "selected"
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
-        static let cornerRadiusViewCell = CGFloat(16)
     }
     
     private lazy var nameCategoriLableView: UILabel = {
@@ -29,15 +28,14 @@ final class CreateCategoriesTableViewCell: UITableViewCell {
         let image = UIImage(named: ConstantsGreateCell.nameImageSelected)
         selectedImage.image = image
         selectedImage.backgroundColor = .clear
-        selectedImage.isHidden = false
+        selectedImage.isHidden = true
         
         return selectedImage
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .backgroundNight
-        layer.cornerRadius = ConstantsGreateCell.cornerRadiusViewCell
+        selectionStyle = .none
         layer.masksToBounds = true
         setupLable()
         setupSelectedImage()
@@ -46,16 +44,27 @@ final class CreateCategoriesTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layer.cornerRadius = 0
+    }
 }
 
 extension CreateCategoriesTableViewCell {
-    //MARK: - Configuration
-    func config(text: String) {
-        nameCategoriLableView.text = text
+    //MARK: - Config
+    func config(model: CreateCategoryCellModel) {
+        nameCategoriLableView.text = model.text
+        backgroundColor = model.color
     }
     
     func showSelectedImage(flag: Bool) {
         selectedImage.isHidden = flag
+    }
+    
+    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = maskedCorners
     }
     
     //MARK: - SetupUI

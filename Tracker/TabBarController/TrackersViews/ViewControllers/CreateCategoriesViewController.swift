@@ -7,12 +7,9 @@
 
 import UIKit
 
-
-
 //MARK: - CreateCategoriesViewControllerDelegate
 protocol CreateCategoriesViewControllerDelegate: AnyObject {
-    func createCategoriesViewController(vc: UIViewController, nameCategori: String)
-    func createCategoriesViewControllerDidCancel(vc: CreateCategoriesViewController)
+    func createCategoriesViewController(vc: UIViewController, nameCategory: String)
 }
 
 //MARK: - CreateCategoriesViewController
@@ -22,17 +19,20 @@ final class CreateCategoriesViewController: UIViewController {
         static let categoriAddButtonText = "Добавить категорию"
         static let imageViewImageStab = "Star"
         static let labelStabText = "Привычки и события можно обЪединить по смыслу"
-
+        
         static let cornerRadius = CGFloat(16)
         static let categoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let labelStabTextFont = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+        static let insertSeparatorTableView = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        
+        static let backgroundColorCell: UIColor = .backgroundNight
     }
     
     weak var delegate: CreateCategoriesViewControllerDelegate?
     
-    private var categories: [String] = ["Важное"]
-    private var selectedCategoriName: String = ""
+    private var viewModel: CategoriViewModel?
+    
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
         categoriLabel.text = ConstantsCreateCatVc.categoriLabelText
@@ -74,17 +74,25 @@ final class CreateCategoriesViewController: UIViewController {
     private lazy var selectionCategoriTableView: UITableView = {
         let selectionCategoriTableView = UITableView()
         selectionCategoriTableView.dataSource = self
-        selectionCategoriTableView.allowsSelection = false
+        selectionCategoriTableView.delegate = self
         selectionCategoriTableView.backgroundColor = .clear
-        selectionCategoriTableView.isScrollEnabled = false
-        selectionCategoriTableView.separatorStyle = .none
+        selectionCategoriTableView.separatorStyle = .singleLine
         selectionCategoriTableView.register(CreateCategoriesTableViewCell.self, forCellReuseIdentifier: "\(CreateCategoriesTableViewCell.self)")
+        selectionCategoriTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         
         return selectionCategoriTableView
     }()
     
     private lazy var createCategoriButton: UIButton = {
-        let createCategoriButton = setupButton(text: ConstantsCreateCatVc.categoriAddButtonText, font: ConstantsCreateCatVc.categoriLabelFont, cornerRadius: ConstantsCreateCatVc.cornerRadius)
+        let createCategoriButton = UIButton()
+        createCategoriButton.setTitle(ConstantsCreateCatVc.categoriAddButtonText, for: .normal)
+        createCategoriButton.titleLabel?.textColor = .whiteDay
+        createCategoriButton.backgroundColor = .blackDay
+        createCategoriButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
+        createCategoriButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
+        createCategoriButton.layer.masksToBounds = true
+        createCategoriButton.translatesAutoresizingMaskIntoConstraints = false
+        
         createCategoriButton.addTarget(self, action: #selector(didTapСategoriButton), for: .touchUpInside)
         
         return createCategoriButton
@@ -92,48 +100,57 @@ final class CreateCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let viewModel else { return }
+        bind()
         view.backgroundColor = .whiteDay
         setupUIElement()
-        showStabView(flag: !categories.isEmpty)
+        showStabView(flag: !viewModel.category.isEmpty)
         selectionCategoriTableView.rowHeight = 75
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
 }
 
-private extension CreateCategoriesViewController {
+extension CreateCategoriesViewController {
+    func config(viewModel: CategoriViewModel?) {
+        self.viewModel = viewModel
+    }
+    
     //MARK: - обработка событий
     @objc
-    func didTapСategoriButton() {
-        delegate?.createCategoriesViewController(vc: self, nameCategori: selectedCategoriName)
-        //TODO: - Sprint_15
+    private func didTapСategoriButton() {
+        let newCategoryVC = NewCategoriViewController()
+        newCategoryVC.delegate = self
+        newCategoryVC.modalPresentationStyle = .formSheet
+        present(newCategoryVC, animated: true)
     }
     
     // метод показа/скрытия заглушки
-    func showStabView(flag: Bool) {
+    private func showStabView(flag: Bool) {
         conteinerStabView.isHidden = flag
     }
     
+    private func bind() {
+        viewModel?.$category.bind { [weak self] _ in
+            guard let self,
+                  let viewModel
+            else { return }
+            showStabView(flag: !viewModel.category.isEmpty)
+            selectionCategoriTableView.reloadData()
+        }
+    }
+        
     //MARK: - SetupUI
-    func setupUIElement() {
+    private func setupUIElement() {
         setupCategoriButton()
         setupCategoriLabel()
         setupTableView()
         setupStabView()
     }
     
-    func setupButton(text: String, font: UIFont, cornerRadius: CGFloat? = nil) -> UIButton {
-        let button = UIButton()
-        button.setTitle(text, for: .normal)
-        button.titleLabel?.textColor = UIColor.whiteDay
-        button.backgroundColor = UIColor.blackDay
-        button.titleLabel?.font = font
-        button.layer.cornerRadius = cornerRadius ?? CGFloat(0)
-        button.layer.masksToBounds = cornerRadius == nil ? false : true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        return button
-    }
-    
-    func setupCategoriButton() {
+    private func setupCategoriButton() {
         view.addSubview(createCategoriButton)
         
         NSLayoutConstraint.activate([
@@ -144,7 +161,7 @@ private extension CreateCategoriesViewController {
         ])
     }
     
-    func setupCategoriLabel() {
+    private func setupCategoriLabel() {
         view.addSubview(categoriLabel)
         categoriLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -154,7 +171,7 @@ private extension CreateCategoriesViewController {
         ])
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         view.addSubview(selectionCategoriTableView)
         selectionCategoriTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -166,7 +183,7 @@ private extension CreateCategoriesViewController {
         ])
     }
     
-    func setupStabView() {
+    private func setupStabView() {
         view.addSubview(conteinerStabView)
         [imageViewStab, lableTextStab].forEach {
             conteinerStabView.addSubview($0)
@@ -191,14 +208,62 @@ private extension CreateCategoriesViewController {
 //MARK: - UITableViewDataSource
 extension CreateCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        categories.count
+        guard let viewModel else { return 0 }
+        return viewModel.category.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell else { return UITableViewCell() }
-        let text = categories[indexPath.row]
-        cell.config(text: text)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell,
+              let viewModel
+        else { return UITableViewCell() }
+        let isSelected = viewModel.isCategorySelected(at: indexPath.row)
+        let text = viewModel.createNameCategory(at: indexPath.row)
+        cell.showSelectedImage(flag: isSelected)
+        let model = CreateCategoryCellModel(text: text, color: ConstantsCreateCatVc.backgroundColorCell)
+        cell.config(model: model)
+        
+        if viewModel.category.count > 1 {
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+        }
+        
+        if indexPath.row == viewModel.category.count - 1 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
+                                   maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+            cell.separatorInset = UIEdgeInsets(top: 0, left: view.bounds.width, bottom: 0, right: 0)
+        }
+        
+        if indexPath.row == 0 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
+                                   maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        }
         
         return cell
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension CreateCategoriesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? CreateCategoriesTableViewCell,
+              let delegate,
+              let viewModel
+        else { return }
+        cell.showSelectedImage(flag: false)
+        viewModel.selectСategory(at: indexPath.row)
+        let nameCategory = viewModel.createNameCategory(at: indexPath.row)
+        delegate.createCategoriesViewController(vc: self, nameCategory: nameCategory)
+    }
+}
+
+//MARK: - NewCategoriViewControllerDelegate
+extension CreateCategoriesViewController: NewCategoriViewControllerDelegate {
+    func didNewCategoriName(_ vc: UIViewController, nameCategori: String) {
+        guard let viewModel else { return }
+        let nameFirstUppercased = nameCategori.lowercased().firstUppercased
+        if viewModel.category.filter({ $0.nameCategory == nameFirstUppercased }).count > 0 {
+            return
+        }
+        
+        try? viewModel.addCategory(nameCategory: nameFirstUppercased)
     }
 }

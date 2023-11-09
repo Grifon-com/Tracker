@@ -9,19 +9,26 @@ import UIKit
 
 //MARK: - ColorCollectionViewCell
 final class EmojiColorCollectionViewCell: UICollectionViewCell {
-    var emojiView: UILabel = {
+    private struct ConstantsCell {
+        static let cornerRadius = CGFloat(8)
+        static let borderWidth = CGFloat(3)
+        static let font = UIFont.systemFont(ofSize: 32, weight: .medium)
+        static let alfaComponent = CGFloat(0.3)
+    }
+    
+    private var emojiView: UILabel = {
         let emojiView = UILabel()
         emojiView.textAlignment = .center
-        emojiView.layer.cornerRadius = 8
+        emojiView.layer.cornerRadius = ConstantsCell.cornerRadius
         emojiView.layer.masksToBounds = true
         emojiView.backgroundColor = .clear
-        emojiView.font = UIFont.systemFont(ofSize: 32, weight: .medium)
+        emojiView.font = ConstantsCell.font
         emojiView.translatesAutoresizingMaskIntoConstraints = false
         
         return emojiView
     }()
     
-    var contentColorView: UIView = {
+    private var contentColorView: UIView = {
         let contentColorView = UIView()
         contentColorView.layer.masksToBounds = true
         contentColorView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,16 +36,15 @@ final class EmojiColorCollectionViewCell: UICollectionViewCell {
         return contentColorView
     }()
     
-    var colorView: UIView = {
+    private var colorView: UIView = {
         let colorView = UIView()
         colorView.backgroundColor = .clear
         colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.layer.cornerRadius = 8
+        colorView.layer.cornerRadius = ConstantsCell.cornerRadius
         
         return colorView
     }()
 
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupColorView()
@@ -64,10 +70,10 @@ extension EmojiColorCollectionViewCell {
     }
     
     func colorSelection(color: UIColor, flag: Bool) {
-        contentColorView.layer.cornerRadius = flag ? 8 : 0
-        contentColorView.layer.borderWidth = flag ? 3 : 0
+        contentColorView.layer.cornerRadius = flag ? ConstantsCell.cornerRadius : 0
+        contentColorView.layer.borderWidth = flag ? ConstantsCell.borderWidth : 0
         contentColorView.layer.masksToBounds = flag
-        contentColorView.layer.borderColor = color.withAlphaComponent(0.3).cgColor
+        contentColorView.layer.borderColor = color.withAlphaComponent(ConstantsCell.alfaComponent).cgColor
     }
     
     //MARK: - SetupUI

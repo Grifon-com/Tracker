@@ -13,7 +13,7 @@ class CreateTrackerTableViewCell: UITableViewCell {
         static let iconButton = "IconButtonCell"
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let choiceButtonSize = CGSize(width: 44, height: 44)
-        static let cornerRadiusViewCell = CGFloat(16)
+//        static let cornerRadiusViewCell = CGFloat(16)
     }
     
     private lazy var lableView: UILabel = {
@@ -69,7 +69,7 @@ extension CreateTrackerTableViewCell {
     
     private func setupSelf() {
         backgroundColor = .backgroundNight
-        layer.cornerRadius = ConstantsCreateCell.cornerRadiusViewCell
+//        layer.cornerRadius = ConstantsCreateCell.cornerRadiusViewCell
         layer.masksToBounds = true
         clickImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(clickImage)
@@ -83,7 +83,7 @@ extension CreateTrackerTableViewCell {
         ])
     }
     
-    func setupSteckView() {
+    private func setupSteckView() {
         contentView.addSubview(lableStackView)
         [lableView, secondaryTextLable].forEach {
             $0.backgroundColor = .clear
@@ -107,5 +107,10 @@ extension CreateTrackerTableViewCell {
             secondaryTextLable.text = secondaryText
             secondaryTextLable.isHidden = false
         }
+    }
+    
+    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+        layer.cornerRadius = cornerRadius
+        layer.maskedCorners = maskedCorners
     }
 }

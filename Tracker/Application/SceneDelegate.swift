@@ -10,13 +10,26 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    
+    @UserDefaultsBacked<Bool>(key: "is_onboarding") private var isOnboarding
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let rootViewController = TabBarController()
-        window?.rootViewController = rootViewController
+        let tabBarViewController = TabBarController()
+        var rootViewController: UIViewController = tabBarViewController
+        if isOnboarding == nil {
+            let onboardingVC = OnboardingPageViewController(transitionStyle: .scroll,
+                                                            navigationOrientation: .horizontal)
+            let oneWisibleVc = OnboardingViewController()
+            let model = Onboarding(imageName: "onePage", textLable: "Отслеживайте только то, что хотите")
+            oneWisibleVc.config(model: model)
+            onboardingVC.setViewControllers([oneWisibleVc], direction: .forward, animated: true)
+            rootViewController = onboardingVC
+        }
         window?.makeKeyAndVisible()
+        window?.rootViewController = rootViewController
+        isOnboarding = true
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -46,7 +59,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 

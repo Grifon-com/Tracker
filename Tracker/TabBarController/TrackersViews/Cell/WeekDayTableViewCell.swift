@@ -49,7 +49,7 @@ final class WeekDayTableViewCell: UITableViewCell {
 extension WeekDayTableViewCell {
     //MARK: - Обработка событий
     @objc
-    func switching(_ sender: UISwitch) {
+    private func switching(_ sender: UISwitch) {
         guard let delegate else { return }
         delegate.addDayInListkDay(cell: self, flag: choiceDaySwitch.isOn)
     }

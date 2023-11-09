@@ -13,9 +13,10 @@ protocol TrackerStoreProtocol {
     func trackers(_ objects: [TrackerCoreData]) throws -> [Tracker]
     func deleteTracker(_ trackerCoreData: TrackerCoreData) throws
     func update(_ trackerCoreData: TrackerCoreData, tracker: Tracker) throws
-    func addNewTracker(_ tracker: Tracker, category: TrackerCategory) throws
+    func addNewTracker(_ tracker: Tracker, nameCategory: String) throws
 }
 
+//MARK: - TrackerStore
 final class TrackerStore: NSObject {
     private let context: NSManagedObjectContext
     private let colorMarshalling = UIColorMarshalling()
@@ -64,13 +65,14 @@ extension TrackerStore {
     }
 }
 
+//MARK: - TrackerStore
 extension TrackerStore: TrackerStoreProtocol {        
-    func addNewTracker(_ tracker: Tracker, category: TrackerCategory) throws {
+    func addNewTracker(_ tracker: Tracker, nameCategory: String) throws {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "TrackerCategoryCoreData")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@",
                                         #keyPath(TrackerCategoryCoreData.nameCategory),
-                                        category.nameCategory as CVarArg)
+                                        nameCategory as CVarArg)
         let category = try context.fetch(request).first
         let trackerCoreData = TrackerCoreData(context: context)
         try updateExistingTrackerRecord(trackerCoreData: trackerCoreData, tracker: tracker)
@@ -89,10 +91,10 @@ extension TrackerStore: TrackerStoreProtocol {
     }
     
     func trackers(_ objects: [TrackerCoreData]) throws -> [Tracker] {
-            guard let trackers = try? objects.map({try tracker(from: $0) })
-            else { return [] }
-            
-            return trackers
-        }
+        guard let trackers = try? objects.map({try tracker(from: $0) })
+        else { return [] }
+        
+        return trackers
+    }
 }
 

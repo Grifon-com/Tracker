@@ -15,6 +15,7 @@ enum StoreError: Error {
     case failedToUpdateModel(Error)
 }
 
+//MARK: - TrackersViewController
 final class TrackersViewController: UIViewController {
     private struct ConstantsTrackerVc {
         static let adButtonImageName = "Add"
@@ -35,15 +36,15 @@ final class TrackersViewController: UIViewController {
         static let fontLableTextStab = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
     }
-
+    
     private var flagStab: Bool = false
     private var categories: [TrackerCategory] = []
     private var completedTrackers: Set<TrackerRecord> = []
     private var currentDate: Date { datePicker.date }
     private var visibleCategories: [TrackerCategory] = []
     
-    private var dataProvider: DataProviderprotocol?
-        
+    private var dataProvider: DataProvider?
+    
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
         horisontalStack.axis = .horizontal
@@ -126,7 +127,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataProvider = try? DataProvider(self)
+        dataProvider = DataProvider(delegate: self)
         guard let dataProvider else { return }
         completedTrackers = dataProvider.treckersRecords
         categories = dataProvider.trackerCategory
@@ -140,7 +141,7 @@ final class TrackersViewController: UIViewController {
 extension TrackersViewController {
     //MARK: - обработка событий
     @objc
-    private func actionForTapDatePicker(sender: UIDatePicker) {
+    private func actionForTapDatePicker() {
         chengeStab(text: ConstantsTrackerVc.labelStabText, nameImage: ConstantsTrackerVc.imageStar)
         showListTrackersForDay(trackerCategory: categories)
     }
@@ -216,7 +217,7 @@ extension TrackersViewController {
     
     //метод отфильтровывает трекеры по названию
     private func filterListTrackersName(trackerCategory: [TrackerCategory], word: String) -> [TrackerCategory] {
-       var listCategories: [TrackerCategory] = []
+        var listCategories: [TrackerCategory] = []
         categories.forEach { category in
             let trackerList = category.arrayTrackers.filter { $0.name.lowercased().hasPrefix(word.lowercased()) }
             if !trackerList.isEmpty {
@@ -495,20 +496,8 @@ extension TrackersViewController: UISearchResultsUpdating {
 extension TrackersViewController: EventSelectionViewControllerDelegate {
     func eventSelectionViewController(vc: UIViewController, nameCategories: String, tracker: Tracker) {
         guard let dataProvider else { return }
-        for (index, value) in visibleCategories.enumerated() {
-            if value.nameCategory.lowercased() == nameCategories.lowercased() {
-                let category = visibleCategories[index]
-                do {
-                    try dataProvider.addTracker(category, tracker: tracker)
-                } catch {
-                    let updateError = StoreError.failedToUpdateModel(error)
-                    showMessageErrorAlert(message: "\(updateError)")
-                }
-                return
-            }
-        }
         do {
-            try dataProvider.addNewCategory(nameCategories, tracker: tracker)
+            try dataProvider.addTracker(nameCategories, tracker: tracker)
         } catch {
             let addError = StoreError.failedToRecordModel(error)
             showMessageErrorAlert(message: "\(addError)")
@@ -522,19 +511,10 @@ extension TrackersViewController: EventSelectionViewControllerDelegate {
 
 //MARK: - TrackerCategoryStoreDelegate
 extension TrackersViewController: DataProviderDelegate {    
-    func storeCategory(_ store: DataProvider, indexPath: IndexPath) {
+    func storeCategory(dataProvider store: DataProvider, indexPath: IndexPath) {
         guard let dataProvider else { return }
-        let oldCount = visibleCategories.count
         visibleCategories = dataProvider.trackerCategory
         categories = visibleCategories
-        let newCount = visibleCategories.count
-        let indexSet = IndexSet(integer: indexPath.section)
-        if oldCount != newCount {
-            trackerCollectionView.insertSections(indexSet)
-            showStabView(flag: !categories.isEmpty)
-            return
-        }
-        trackerCollectionView.reloadSections(indexSet)
-        showStabView(flag: !categories.isEmpty)
+        showListTrackersForDay(trackerCategory: categories)
     }
 }
