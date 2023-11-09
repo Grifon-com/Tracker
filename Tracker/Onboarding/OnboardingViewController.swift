@@ -19,8 +19,6 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(named: "onePage")
-        imageView.image = image
         
         return imageView
     }()

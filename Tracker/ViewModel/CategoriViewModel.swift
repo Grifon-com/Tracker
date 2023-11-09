@@ -11,15 +11,13 @@ import UIKit
 final class CategoriViewModel {
     @Observable<[TrackerCategory]> private(set) var category = []
     @UserDefaultsBacked<String?>(key: "select_name_category") var selectNameCategory
-    
-    var listNameCategory: [String] = []
+    @Observable<IndexPath> private(set) var categoryIndexPath = IndexPath()
     
     private var model: DataProvider?
     
     init() {
         model = DataProvider(delegate: self)
         category = model?.trackerCategory ?? []
-        model?.delegate = self
     }
 }
 
@@ -29,16 +27,16 @@ extension CategoriViewModel {
         try model.addCategory(nameCategory: nameCategory)
     }
     
-    func selectСategory(indexPath: IndexPath) {
-        selectNameCategory = listNameCategory[indexPath.row]
+    func selectСategory(at index: Int) {
+        selectNameCategory = category[index].nameCategory
     }
     
-    func createNameCategory(indexPath: IndexPath) -> String {
-        category[indexPath.row].nameCategory
+    func createNameCategory(at index: Int) -> String {
+        category[index].nameCategory
     }
     
-    func createListNameCategory() {
-        listNameCategory = category.map { $0.nameCategory }
+    func isCategorySelected(at index: Int) -> Bool {
+        category[index].nameCategory != selectNameCategory
     }
 }
 
@@ -46,5 +44,6 @@ extension CategoriViewModel {
 extension CategoriViewModel: DataProviderDelegate {
     func storeCategory(dataProvider: DataProvider, indexPath: IndexPath) {
         category = dataProvider.trackerCategory
+        categoryIndexPath = indexPath
     }
 }

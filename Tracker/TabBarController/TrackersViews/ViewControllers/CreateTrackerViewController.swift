@@ -62,7 +62,7 @@ final class CreateTrackerViewController: UIViewController{
         }
     }
     
-    let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
+    private let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
     
     private var color: UIColor? {
         didSet {
@@ -70,7 +70,7 @@ final class CreateTrackerViewController: UIViewController{
             isActivCreateButton(flag: flag)
         }
     }
-    private var nameNewCategori: String = "" {
+    private var nameNewCategory: String = "" {
         didSet {
             let flag = checkingForEmptiness()
             isActivCreateButton(flag: flag)
@@ -262,7 +262,7 @@ extension CreateTrackerViewController {
                               color: color,
                               emoji: emoji,
                               schedule: isSchedul ? regular : schedule)
-        delegate.createTrackerViewController(vc: self, nameCategories: nameNewCategori, tracker: tracker)
+        delegate.createTrackerViewController(vc: self, nameCategories: nameNewCategory, tracker: tracker)
         delegate.createTrackerViewControllerDidCancel(self)
     }
     
@@ -311,7 +311,7 @@ extension CreateTrackerViewController {
             flag = !nameTracker.isEmpty &&
             color != nil &&
             !emoji.isEmpty &&
-            !nameNewCategori.isEmpty ? true : false
+            !nameNewCategory.isEmpty ? true : false
             
             return flag
         }
@@ -319,7 +319,7 @@ extension CreateTrackerViewController {
         !nameTracker.isEmpty &&
         color != nil &&
         !emoji.isEmpty &&
-        !nameNewCategori.isEmpty ? true : false
+        !nameNewCategory.isEmpty ? true : false
         
         return flag
     }
@@ -411,12 +411,27 @@ extension CreateTrackerViewController: UITableViewDataSource {
         switch listSettings[indexPath.row] {
         case .category:
             cell.configCell(choice: listSettings[indexPath.row])
-            cell.configSecondaryLableShedule(secondaryText: nameNewCategori)
+            cell.configSecondaryLableShedule(secondaryText: nameNewCategory)
         case .schedule:
             cell.configCell(choice: listSettings[indexPath.row])
             cell.configSecondaryLableShedule(secondaryText: secondarySchedulText)
             tableView.separatorInset = UIEdgeInsets(top: 0, left: view.bounds.width, bottom: 0, right: 0)
         }
+        
+        if isSchedul {
+            cell.layer.cornerRadius = ConstantsCreateVc.cornerRadius
+        }
+        
+        if !isSchedul && indexPath.row == 1 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
+                                   maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        }
+        
+        if !isSchedul && indexPath.row == 0 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
+                                   maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        }
+        
         return cell
     }
 }
@@ -431,6 +446,8 @@ extension CreateTrackerViewController: UITableViewDelegate {
         switch listSettings[indexPath.row] {
         case .category:
             let greateCategoriViewController = CreateCategoriesViewController()
+            let viewModel = CategoriViewModel()
+            greateCategoriViewController.config(viewModel: viewModel)
             greateCategoriViewController.delegate = self
             presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
@@ -460,8 +477,8 @@ extension CreateTrackerViewController: ScheduleViewControllerDelegate {
 
 //MARK: - GreateCategoriesViewControllerDelegate
 extension CreateTrackerViewController: CreateCategoriesViewControllerDelegate {
-    func createCategoriesViewController(vc: UIViewController, nameCategori: String) {
-        nameNewCategori = nameCategori
+    func createCategoriesViewController(vc: UIViewController, nameCategory: String) {
+        nameNewCategory = nameCategory
         selectionTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
         vc.dismiss(animated: true)
     }

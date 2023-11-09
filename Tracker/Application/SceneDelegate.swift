@@ -17,13 +17,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let tabBarViewController = TabBarController()
-        lazy var onboardingVC = OnboardingPageViewController(transitionStyle: .scroll,
-                                                             navigationOrientation: .horizontal)
         var rootViewController: UIViewController = tabBarViewController
-        window?.makeKeyAndVisible()
         if isOnboarding == nil {
+            let onboardingVC = OnboardingPageViewController(transitionStyle: .scroll,
+                                                            navigationOrientation: .horizontal)
+            let oneWisibleVc = OnboardingViewController()
+            let model = Onboarding(imageName: "onePage", textLable: "Отслеживайте только то, что хотите")
+            oneWisibleVc.config(model: model)
+            onboardingVC.setViewControllers([oneWisibleVc], direction: .forward, animated: true)
             rootViewController = onboardingVC
         }
+        window?.makeKeyAndVisible()
         window?.rootViewController = rootViewController
         isOnboarding = true
     }

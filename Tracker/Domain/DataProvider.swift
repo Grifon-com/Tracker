@@ -184,10 +184,6 @@ extension DataProvider: NSFetchedResultsControllerDelegate {
             guard let indexPath = newIndexPath else { fatalError() }
             indexPathCategory = indexPath
         }
-        
-        if case .delete = type {
-            //TODO: -
-        }
     }
 }
 
