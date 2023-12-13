@@ -18,7 +18,7 @@ protocol EventSelectionViewControllerDelegate: AnyObject {
 //MARK: - EventSelectionViewController
 final class EventSelectionViewController: UIViewController {
     private struct ConstantsEventVc {
-        static let texGreatetLabelName = "Создание трекера"
+        static let texGreatetLabelName = NSLocalizedString("texGreatetLabelName", comment: "")
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let cornerRadius = CGFloat(16)
         static let lableGreateImage = UIColor(named: "blackDay")

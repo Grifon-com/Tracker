@@ -20,19 +20,19 @@ enum WeekDay: Int {
         var day: String
         switch self {
         case .monday:
-            day = "Понедельник"
+            day = NSLocalizedString("monday.complete", comment: "")
         case .tuesday:
-            day = "Вторник"
+            day = NSLocalizedString("tuesday.complete", comment: "")
         case .wednesday:
-            day = "Среда"
+            day = NSLocalizedString("wednesday.complete", comment: "")
         case .thursday:
-            day = "Четверг"
+            day = NSLocalizedString("thursday.complete", comment: "")
         case .friday:
-            day = "Пятница"
+            day = NSLocalizedString("friday.complete", comment: "")
         case .saturday:
-            day = "Суббота"
+            day = NSLocalizedString("saturday.complete", comment: "")
         case .sunday:
-            day = "Воскресенье"
+            day = NSLocalizedString("sunday.complete", comment: "")
         }
         return day
     }
@@ -41,19 +41,19 @@ enum WeekDay: Int {
         var briefWordDay: String
         switch self {
         case .monday:
-            briefWordDay = "Пн"
+            briefWordDay = NSLocalizedString("monday", comment: "")
         case .tuesday:
-            briefWordDay = "Вт"
+            briefWordDay = NSLocalizedString("tuesday", comment: "")
         case .wednesday:
-            briefWordDay = "Ср"
+            briefWordDay = NSLocalizedString("wednesday", comment: "")
         case .thursday:
-            briefWordDay = "Чт"
+            briefWordDay = NSLocalizedString("thursday", comment: "")
         case .friday:
-            briefWordDay = "Пт"
+            briefWordDay = NSLocalizedString("friday", comment: "")
         case .saturday:
-            briefWordDay = "Сб"
+            briefWordDay = NSLocalizedString("saturday", comment: "")
         case .sunday:
-            briefWordDay = "Вс"
+            briefWordDay = NSLocalizedString("sunday", comment: "")
         }
         return briefWordDay
     }

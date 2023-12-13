@@ -14,9 +14,9 @@ protocol NewCategoriViewControllerDelegate: AnyObject {
 //MARK: - NewCategoriViewController
 class NewCategoriViewController: UIViewController {
     private struct ConstantsNewCatVc {
-        static let newcategoriLabelText = "Новая категория"
-        static let buttonName = "Готово"
-        static let placeholderTextField = "Введите название категории"
+        static let newcategoriLabelText = NSLocalizedString("newcategoriLabelText", comment: "")
+        static let buttonName = NSLocalizedString("buttonName", comment: "")
+        static let placeholderCategoryTextField = NSLocalizedString("placeholderCategoryTextField", comment: "")
         
         static let cornerRadius = CGFloat(16)
         static let leftIndentTextField = CGFloat(12)
@@ -61,7 +61,7 @@ class NewCategoriViewController: UIViewController {
     private lazy var createNameTextField: UITextField = {
         let createNameTextField = UITextField()
         createNameTextField.delegate = self
-        createNameTextField.placeholder = ConstantsNewCatVc.placeholderTextField
+        createNameTextField.placeholder = ConstantsNewCatVc.placeholderCategoryTextField
         createNameTextField.font = ConstantsNewCatVc.textFieldFont
         createNameTextField.indent(size: ConstantsNewCatVc.leftIndentTextField)
         createNameTextField.backgroundColor = .backgroundNight

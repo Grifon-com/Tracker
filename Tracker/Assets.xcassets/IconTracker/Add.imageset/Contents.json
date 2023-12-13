@@ -1,26 +1,27 @@
 {
   "images" : [
     {
-      "filename" : "ic 24x24@1x.png",
+      "filename" : "Add tracker@1x.png",
       "idiom" : "universal",
-      "language-direction" : "left-to-right",
       "scale" : "1x"
     },
     {
-      "filename" : "ic 24x24@2x.png",
+      "filename" : "Add tracker@2x.png",
       "idiom" : "universal",
-      "language-direction" : "left-to-right",
       "scale" : "2x"
     },
     {
-      "filename" : "ic 24x24@3x.png",
+      "filename" : "Add tracker@3x.png",
       "idiom" : "universal",
-      "language-direction" : "left-to-right",
       "scale" : "3x"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "localizable" : true,
+    "template-rendering-intent" : "template"
   }
 }

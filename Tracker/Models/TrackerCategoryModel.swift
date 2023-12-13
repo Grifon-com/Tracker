@@ -10,6 +10,7 @@ import Foundation
 struct TrackerCategory {
     let nameCategory: String
     let arrayTrackers: [Tracker]
+    let isPinned: Bool
 }
 
 extension TrackerCategory: Hashable {

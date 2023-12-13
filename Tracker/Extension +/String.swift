@@ -11,4 +11,8 @@ extension String {
     func firstCharOnly() -> String {
         return prefix(1).uppercased() + self.dropFirst()
     }
+    
+    var string: String {
+        NSExpression(forKeyPath: self).keyPath
+    }
 }

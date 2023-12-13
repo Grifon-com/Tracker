@@ -15,9 +15,9 @@ enum ChoiceParametrs {
         var name: String
         switch self {
         case .category:
-            name = "Категория"
+            name = NSLocalizedString("category", comment: "")
         case .schedule:
-            name = "Расписание"
+            name = NSLocalizedString("schedule", comment: "")
         }
         return name
     }

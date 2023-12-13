@@ -1,0 +1,82 @@
+/* 
+  Localizable.strings
+  Tracker
+
+  Created by Григорий Машук on 12.11.23.
+  
+*/
+
+//MARK: - Onboarding
+"textLableOneVC" = "Отслеживайте только то, что хотите";
+"textLableTwoVC" = "Даже если это не литры воды и йога";
+"textButton" = "Вот это технологии!";
+
+//MARK: - TabBarController
+"trackers" = "Трекеры";
+"statistics" = "Статистика";
+
+//MARK: - TrackersViewController
+"headerText" = "Трекеры";
+"labelStabText" = "Что будем отслеживать?";
+"labelNothingFoundText" = "Ничего не найдено";
+"placeholderSearch" = "Поиск";
+"textCancel" = "Отменить";
+"textFix" = "Закрепить";
+"textUnpin" = "Открепить";
+"textEdit" = "Редактировать";
+"textDelete" = "Удалить";
+"textFixed" = "Закрепленные";
+
+//MARK: - CreateTrackerViewController
+"placeholderTrackerTextField" = "Введите название трекера";
+"textCancelButton" = "Отменить";
+"textGreateButton" = "Создать";
+"characterLimit" = "Ограничение 38 символов";
+"everyDay" = "Каждый день";
+
+//MARK: - ScheduleViewController
+"scheduleLableText" = "Расписание";
+"doneButtonText" = "Готово";
+
+//MARK: - EventSelectionViewController
+"texGreatetLabelName" = "Создание трекера";
+"newHabit" = "Новая привычка";
+"newIrregular" = "Новое нерегулярное событие";
+
+//MARK: - CreateCategoriesViewController
+"categoriLabelText" = "Категория";
+"categoriAddButtonText" = "Добавить категорию";
+"labelStabText" = "Привычки и события можно обЪединить по смыслу";
+
+//MARK: - NewCategoriViewController
+"newcategoriLabelText" = "Новая категория";
+"buttonName" = "Готово";
+"placeholderCategoryTextField" = "Введите название категории";
+
+//MARK: - NameEvent
+"nameHabit" = "Привычка";
+"nameIrregularEvent" = "Нерегулярное событие";
+
+//MARK: - Header
+"stringColor" = "Цвет";
+
+//MARK: - ChoiceParametrs
+"category" = "Категория";
+"schedule" = "Расписание";
+
+//MARK: - WeekDay
+"monday.complete" = "Понедельник";
+"tuesday.complete" = "Вторник";
+"wednesday.complete" = "Среда";
+"thursday.complete" = "Четверг";
+"friday.complete" = "Пятница";
+"saturday.complete" = "Суббота";
+"sunday.complete" = "Воскресенье";
+
+"monday" = "Пн";
+"tuesday" = "Вт";
+"wednesday" = "Ср";
+"thursday" = "Чт";
+"friday" = "Пт";
+"saturday" = "Сб";
+"sunday" = "Вс";

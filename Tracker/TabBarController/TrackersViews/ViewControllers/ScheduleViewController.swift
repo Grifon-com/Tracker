@@ -14,8 +14,9 @@ protocol ScheduleViewControllerDelegate: AnyObject {
 //MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
     private struct ConstantsShedulVc {
-        static let scheduleLableText = "Расписание"
-        static let doneButtonText = "Готово"
+        static let scheduleLableText = NSLocalizedString("scheduleLableText", comment: "")
+        static let doneButtonText = NSLocalizedString("doneButtonText", comment: "")
+        
         static let spacingVerticalStack = CGFloat(20)
         static let cornerRadiusUIElement = CGFloat(16)
         static let heightCell = CGFloat(75)

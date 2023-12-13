@@ -10,7 +10,7 @@ import UIKit
 //MARK: - OnboardingPageViewController
 final class OnboardingPageViewController: UIPageViewController {
     private struct ConstantsOnboardingPageViewController {
-        static let textLableTwoVC = "Даже если это не литры воды и йога"
+        static let textLableTwoVC = NSLocalizedString("textLableTwoVC", comment: "")
         static let imageNameTwoVC = "twoPage"
         static let numberOfPages = 2
         static let currentPage = 0

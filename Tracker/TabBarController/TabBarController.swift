@@ -9,29 +9,49 @@ import UIKit
 
 //MARK: - TabBarController
 final class TabBarController: UITabBarController {
-    private let tabBarImageTrecker =  "tabBarTracker"
-    private let tabBarImageStatistic = "tabBarStatistic"
+    private struct ConstantsTabBar {
+        static let tabBarImageTrecker =  "tabBarTracker"
+        static let tabBarImageStatistic = "tabBarStatistic"
+        
+        static let tabBarTitleTrecker = NSLocalizedString("trackers", comment: "")
+        static let tabBarTitleStatistic = NSLocalizedString("statistics", comment: "")
+        
+        static let insertImage = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
         let trackerViewController = TrackersViewController()
         let statisticViewController = StatisticViewController()
+        
         let trackerNavigationController = UINavigationController(rootViewController: trackerViewController)
         let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
         
         viewControllers = [
-            generateViewController(vc: trackerNavigationController, imageName: tabBarImageTrecker),
-            generateViewController(vc: statisticNavigationController, imageName: tabBarImageStatistic)
+            generateViewController(vc: trackerNavigationController,
+                                   imageName: ConstantsTabBar.tabBarImageTrecker,
+                                   title: ConstantsTabBar.tabBarTitleTrecker,
+                                   insert: ConstantsTabBar.insertImage),
+            
+            generateViewController(vc: statisticNavigationController,
+                                   imageName: ConstantsTabBar.tabBarImageStatistic,
+                                   title: ConstantsTabBar.tabBarTitleStatistic,
+                                   insert: ConstantsTabBar.insertImage)
         ]
     }
 }
 
-//MARK: - TabBarController
+//MARK: - Setup
 private extension TabBarController {
-    func generateViewController(vc: UIViewController, imageName: String) -> UIViewController {
+    func generateViewController(vc: UIViewController,
+                                imageName: String,
+                                title: String,
+                                insert: UIEdgeInsets ) -> UIViewController
+    {
         vc.tabBarItem.image = UIImage(named: imageName)
-        vc.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
+        vc.tabBarItem.title = title
+        vc.tabBarItem.imageInsets = insert
         
         return vc
     }

@@ -14,7 +14,12 @@ struct Tracker {
     let emoji: String
     let schedule: [WeekDay]
     
-    init(id: UUID = UUID() , name: String, color: UIColor, emoji: String, schedule: [WeekDay]) {
+    init(id: UUID = UUID(),
+         name: String,
+         color: UIColor,
+         emoji: String,
+         schedule: [WeekDay])
+    {
         self.id = id
         self.name = name
         self.color = color

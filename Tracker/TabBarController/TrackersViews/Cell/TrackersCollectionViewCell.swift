@@ -17,24 +17,24 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     private struct ConstantsTrackerCell {
         static let addButtonImageAdd = "Add"
         static let adButttonImageDone = "Done"
-
+        static let isPinnedImage = "IsPinned"
+        
         static let cornerRadiusColorView = CGFloat(16)
         static let borderWidthColorView = CGFloat(1)
-
+        
         static let fontLabelEmoji = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let fontTextLable = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLableDayCounter = UIFont.systemFont(ofSize: 12, weight: .medium)
-
+        
         static let sizeLableView = CGSize(width: 34, height: 34)
         static let sizeAddButton = CGSize(width: 34, height: 34)
+        static let sizeIsPinnedImage = CGSize(width: 24, height: 24)
     }
     
-    private var count: Int = 0
+    weak var delegate: TrackersCollectionViewCellDelegate?
     private var isSelectedAddButton: Bool = false
     
-    weak var delegate: TrackersCollectionViewCellDelegate?
-    
-    lazy var colorView: UIView = {
+    private lazy var colorView: UIView = {
         let colorView = UIView()
         colorView.layer.masksToBounds = true
         colorView.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
@@ -44,7 +44,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return colorView
     }()
     
-    lazy var emojiLable: UILabel = {
+    private lazy var emojiLable: UILabel = {
         let emojiLable = UILabel()
         emojiLable.font = ConstantsTrackerCell.fontLabelEmoji
         emojiLable.layer.cornerRadius = ConstantsTrackerCell.cornerRadiusColorView
@@ -55,7 +55,15 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return emojiLable
     }()
     
-    lazy var nameTrackerLabel: UILabel = {
+    private lazy var isPinnedImageView: UIImageView = {
+        let isPinnedImageView = UIImageView()
+        isPinnedImageView.backgroundColor = .clear
+        isPinnedImageView.image = UIImage(named: ConstantsTrackerCell.isPinnedImage)
+        
+        return isPinnedImageView
+    }()
+    
+    private lazy var nameTrackerLabel: UILabel = {
         let nameTrackerLabel = UILabel()
         nameTrackerLabel.numberOfLines = 2
         nameTrackerLabel.font = ConstantsTrackerCell.fontTextLable
@@ -65,19 +73,16 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return nameTrackerLabel
     }()
     
-    lazy var dayCounterLable: UILabel = {
+    private lazy var dayCounterLable: UILabel = {
         let dayCounterLable = UILabel()
         dayCounterLable.textColor = .blackDay
         dayCounterLable.font = ConstantsTrackerCell.fontLableDayCounter
-        dayCounterLable.text = "\(count) дней"
         
         return dayCounterLable
     }()
     
-    lazy var addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let addButton = UIButton(type: .custom)
-        let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
-        addButton.setImage(image, for: .normal)
         addButton.tintColor = .whiteDay
         addButton.backgroundColor = .lightGray
         addButton.layer.cornerRadius = ConstantsTrackerCell.sizeAddButton.width / 2
@@ -122,7 +127,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
     }
 }
 
@@ -131,38 +136,25 @@ extension TrackersCollectionViewCell {
     @objc
     private func didTapAddButton() {
         guard let delegate else { return }
-            delegate.didTrackerCompleted(self)
+        delegate.didTrackerCompleted(self)
     }
     
     //MARK: - Configuration
-    //метод правильного окончания слова "день" в зависимости от значения count
-    func endingWordDay(count: Int) -> String {
-        var result: String
-        switch (count % 10) {
-        case 1: result = "\(count) день"
-        case 2: result = "\(count) дня"
-        case 3: result = "\(count) дня"
-        case 4: result = "\(count) дня"
-        default: result = "\(count) дней"
-        }
-        return result
-    }
     
     //метод обновления счетчика выполнения трекера и imageButton
-    func updateLableCountAndImageAddButton(count: Int, flag: Bool) {
-        switch flag {
+    func updateLableCountAndImageAddButton(_ updateModel: UpdateTracker) {
+        let textLable = String.localizedStringWithFormat(NSLocalizedString("numberOfDays",
+                                                                           tableName: "LocalizableDict",
+                                                                           comment: ""),
+                                                         updateModel.count)
+        dayCounterLable.text = textLable
+        switch updateModel.flag {
         case true:
             let image = UIImage(named: ConstantsTrackerCell.adButttonImageDone)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
-            self.count = count
-            let textLable = endingWordDay(count: count)
-            dayCounterLable.text = textLable
         case false:
             let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
-            self.count = count
-            let textLable = endingWordDay(count: count)
-            dayCounterLable.text = textLable
         }
     }
     
@@ -171,20 +163,27 @@ extension TrackersCollectionViewCell {
         backgroundAddButtonView.isHidden = isHidden
     }
     
+    func setPinned(flag: Bool) {
+        isPinnedImageView.isHidden = flag
+    }
+    
     func isEnableAddButton(flag: Bool) {
         addButton.isEnabled = flag
     }
-    func setIsSelectedAddButton(flag: Bool) {
+    
+    private func setIsSelectedAddButton(flag: Bool) {
         isSelectedAddButton = flag
     }
     
-    //метод конфигурации ячейки
-    func config(tracker: Tracker, count: Int, isComplited: Bool) {
+    func config(tracker: Tracker) {
         colorView.backgroundColor = tracker.color
         emojiLable.text = tracker.emoji
         addButton.backgroundColor = tracker.color
         nameTrackerLabel.text = tracker.name
-        updateLableCountAndImageAddButton(count: count, flag: isComplited)
+    }
+    
+    func getView() -> UIView {
+        colorView
     }
     
     //MARK: - SetupUI
@@ -239,13 +238,12 @@ extension TrackersCollectionViewCell {
     }
     
     private func setupColorView() {
-        [emojiLable, nameTrackerLabel].forEach {
+        [emojiLable, nameTrackerLabel, isPinnedImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             colorView.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
-            
             emojiLable.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
             emojiLable.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             emojiLable.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
@@ -253,7 +251,12 @@ extension TrackersCollectionViewCell {
             
             nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
             nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
-            nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -12)
+            nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -12),
+            
+            isPinnedImageView.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
+            isPinnedImageView.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
+            isPinnedImageView.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeIsPinnedImage.height),
+            isPinnedImageView.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeIsPinnedImage.width)
         ])
     }
 }

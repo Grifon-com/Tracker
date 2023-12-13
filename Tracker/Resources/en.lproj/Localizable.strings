@@ -1,0 +1,83 @@
+/* 
+/*
+  Localizable.strings
+  Tracker
+
+  Created by Григорий Машук on 12.11.23.
+ 
+ */
+
+//MARK: - OnboardingViewController
+"textLableOneVC" = "Track only what you want";
+"textLableTwoVC" = "Even if it's not liters of water and yoga";
+"textButton" = "These are technologies!";
+
+//MARK: - TabBarController
+"trackers" = "Trackers";
+"statistics" = "Statistics";
+ 
+//MARK: - TrackersViewController
+"headerText" = "Trackers";
+"labelStabText" = "What will we track?";
+"labelNothingFoundText" = "Nothing found";
+"placeholderSearch" = "Search";
+"textCancel" = "Cancel";
+"textFix" = "To fix";
+"textUnpin" = "Unpin";
+"textEdit" = "Edit";
+"textDelete" = "Delete";
+"textFixed" = "Fixed";
+
+//MARK: - CreateTrackerViewController
+"placeholderTrackerTextField" = "Enter the name of the tracker";
+"textCancelButton" = "Cancel";
+"textGreateButton" = "To create";
+"characterLimit" = "Limit of 38 characters";
+"everyDay" = "Every day";
+
+//MARK: - ScheduleViewController
+"scheduleLableText" = "Schedule";
+"doneButtonText" = "Done";
+
+//MARK: - EventSelectionViewController
+"texGreatetLabelName" = "Creating a tracker";
+"newHabit" = "A new habit";
+"newIrregular" = "New irregular event";
+
+//MARK: - CreateCategoriesViewController
+"categoriLabelText" = "Category";
+"categoriAddButtonText" = "Add a categorycategory";
+"labelStabText" = "Habits and events can be combined in meaning";
+
+//MARK: - NewCategoriViewController
+"newcategoriLabelText" = "New category";
+"buttonName" = "Done";
+"placeholderCategoryTextField" = "Enter the category name";
+
+//MARK: - NameEvent
+"nameHabit" = "Habit";
+"nameIrregularEvent" = "IrregularEvent";
+
+//MARK: - Header
+"stringColor" = "Color";
+
+//MARK: - ChoiceParametrs
+"category" = "Category";
+"schedule" = "Schedule";
+
+//MARK: - WeekDay
+"monday.complete" = "Monday";
+"tuesday.complete" = "Tuesday";
+"wednesday.complete" = "Wednesday";
+"thursday.complete" = "Thursday";
+"friday.complete" = "Friday";
+"saturday.complete" = "Saturday";
+"sunday.complete" = "Sunday";
+
+"monday" = "Mon";
+"tuesday" = "Tue";
+"wednesday" = "Wed";
+"thursday" = "Thur";
+"friday" = "Fri";
+"saturday" = "Sat";
+"sunday" = "Sun";

@@ -10,7 +10,7 @@ import UIKit
 //MARK: - OnboardingViewController
 final class OnboardingViewController: UIViewController {
     private struct ConstantsOnboardingViewController {
-        static let textButton = "Вот это технологии!"
+        static let textButton = NSLocalizedString("textButton", comment: "")
         static let cornerRadiusButton = CGFloat(16)
         static let fontTextLable = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let fontTextButton = UIFont.systemFont(ofSize: 16, weight: .medium)

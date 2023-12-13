@@ -15,7 +15,7 @@ enum Header {
         var name: String
         switch self {
         case .color:
-            name = "Цвет"
+            name = NSLocalizedString("stringColor", comment: "")
         case .emoji:
             name = "Emoji"
         }

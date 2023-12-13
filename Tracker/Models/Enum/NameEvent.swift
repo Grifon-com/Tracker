@@ -15,9 +15,9 @@ enum NameEvent {
         var name: String
         switch self {
         case .habit:
-            name = "Привычка"
+            name = NSLocalizedString("nameHabit", comment: "")
         case .irregularEvent:
-            name = "Нерегулярное событие"
+            name = NSLocalizedString("nameIrregularEvent", comment: "")
         }
         return name
     }

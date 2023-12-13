@@ -16,13 +16,13 @@ protocol CreateTrackerViewControllerDelegate: AnyObject {
 //MARK: - CreateTrackerViewController
 final class CreateTrackerViewController: UIViewController{
     private struct ConstantsCreateVc {
-        static let newHabit = "Новая привычка"
-        static let newIrregular = "Новое нерегулярное событие"
-        static let placeholderTextField = "Введите название трекера"
-        static let textCancelButton = "Отменить"
-        static let textGreateButton = "Создать"
-        static let characterLimit = "Ограничение 38 символов"
-        static let everyDay = "Каждый день"
+        static let newHabit = NSLocalizedString("newHabit", comment: "")
+        static let newIrregular = NSLocalizedString("newIrregular", comment: "")
+        static let placeholderTrackerTextField = NSLocalizedString("placeholderTrackerTextField", comment: "")
+        static let textCancelButton = NSLocalizedString("textCancelButton", comment: "")
+        static let textGreateButton = NSLocalizedString("textGreateButton", comment: "")
+        static let characterLimit = NSLocalizedString("characterLimit", comment: "")
+        static let everyDay = NSLocalizedString("everyDay", comment: "")
         static let emptyString = ""
         
         static let restrictionsTextField = 38
@@ -97,7 +97,7 @@ final class CreateTrackerViewController: UIViewController{
     
     private lazy var createNameTextField: UITextField = {
         let createNameTextField = UITextField()
-        createNameTextField.placeholder = ConstantsCreateVc.placeholderTextField
+        createNameTextField.placeholder = ConstantsCreateVc.placeholderTrackerTextField
         createNameTextField.font = ConstantsCreateVc.createNameTextFieldFont
         createNameTextField.indent(size: ConstantsCreateVc.leftIndentTextField)
         createNameTextField.backgroundColor = .backgroundNight
@@ -329,6 +329,10 @@ extension CreateTrackerViewController {
         isSchedul = isSchedul ? !isSchedul : isSchedul
     }
     
+    func flowEditing(traker: Tracker) {
+        
+    }
+    
     func presentViewController(vc: UIViewController, modalStyle: UIModalPresentationStyle) {
         vc.modalPresentationStyle = modalStyle
         present(vc, animated: true)
@@ -446,7 +450,7 @@ extension CreateTrackerViewController: UITableViewDelegate {
         switch listSettings[indexPath.row] {
         case .category:
             let greateCategoriViewController = CreateCategoriesViewController()
-            let viewModel = CategoriViewModel()
+            let viewModel = ViewModel()
             greateCategoriViewController.config(viewModel: viewModel)
             greateCategoriViewController.delegate = self
             presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
