@@ -26,6 +26,7 @@
 "textEdit" = "Редактировать";
 "textDelete" = "Удалить";
 "textFixed" = "Закрепленные";
+"sureDeleteTracker" = "Уверены что хотите удалить трекер?";
 
 //MARK: - CreateTrackerViewController
 "placeholderTrackerTextField" = "Введите название трекера";

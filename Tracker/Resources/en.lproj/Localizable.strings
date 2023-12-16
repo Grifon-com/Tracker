@@ -27,6 +27,7 @@
 "textEdit" = "Edit";
 "textDelete" = "Delete";
 "textFixed" = "Fixed";
+"sureDeleteTracker" = "are you sure you want to delete the tracker";
 
 //MARK: - CreateTrackerViewController
 "placeholderTrackerTextField" = "Enter the name of the tracker";

@@ -866,8 +866,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "466"
-            endingLineNumber = "466"
+            startingLineNumber = "508"
+            endingLineNumber = "508"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1064,8 +1064,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
+            startingLineNumber = "506"
+            endingLineNumber = "506"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1172,8 +1172,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "449"
-            endingLineNumber = "449"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "collectionView(_:layout:insetForSectionAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1188,8 +1188,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "442"
-            endingLineNumber = "442"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1204,8 +1204,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "463"
-            endingLineNumber = "463"
+            startingLineNumber = "505"
+            endingLineNumber = "505"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1312,8 +1312,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "registerCellAndHeader(collectionView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1328,8 +1328,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "458"
-            endingLineNumber = "458"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "collectionView(_:layout:referenceSizeForHeaderInSection:)"
             landmarkType = "7">
             <Locations>
@@ -1441,8 +1441,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
             endingLineNumber = "144"
-            landmarkName = "EventSelectionViewController"
-            landmarkType = "21">
+            landmarkName = "trackerViewControllerDidCancel(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1455,8 +1455,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
             landmarkName = "eventSelectionViewControllerDidCancel(_:)"
             landmarkType = "7">
             <Locations>
@@ -1519,8 +1519,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "484"
-            endingLineNumber = "484"
+            startingLineNumber = "526"
+            endingLineNumber = "526"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
             <Locations>
@@ -1803,8 +1803,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "491"
-            endingLineNumber = "491"
+            startingLineNumber = "533"
+            endingLineNumber = "533"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1851,8 +1851,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "445"
-            endingLineNumber = "445"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2876,8 +2876,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
             <Locations>
@@ -3052,8 +3052,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "287"
-            endingLineNumber = "287"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -3130,8 +3130,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3146,8 +3146,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "264"
-            endingLineNumber = "264"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3162,8 +3162,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3178,8 +3178,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3735,9 +3735,9 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
-            landmarkName = "didNewCategoriName(_:nameCategori:)"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "didNewCategoryName(_:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3863,8 +3863,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3879,8 +3879,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "385"
-            endingLineNumber = "385"
+            startingLineNumber = "463"
+            endingLineNumber = "463"
             landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3895,8 +3895,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
+            startingLineNumber = "452"
+            endingLineNumber = "452"
             landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4382,8 +4382,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "bind()"
             landmarkType = "7">
             <Locations>
@@ -4460,8 +4460,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4476,8 +4476,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "520"
-            endingLineNumber = "520"
+            startingLineNumber = "562"
+            endingLineNumber = "562"
             landmarkName = "eventSelectionViewController(vc:nameCategories:tracker:)"
             landmarkType = "7">
             <Locations>
@@ -4746,8 +4746,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "bind()"
             landmarkType = "7">
             <Locations>
@@ -4887,8 +4887,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4997,8 +4997,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5013,8 +5013,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "257"
-            endingLineNumber = "257"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
             <Locations>
@@ -5091,8 +5091,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5107,8 +5107,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateCategoriesViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
             <Locations>
@@ -5281,25 +5281,9 @@
             filePath = "Tracker/ViewModel/CategoryViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "checkingForEmptiness()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "664B3A7A-7099-4F53-8A54-5C754DD51E51"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/ViewModel/CategoryViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "checkingForEmptiness()"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "init(trackerCategoryStore:trackerStore:category:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5317,705 +5301,6 @@
             endingLineNumber = "99"
             landmarkName = "didTapDoneButton()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "32A7B347-D646-447F-A7F6-16D1501DE58B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "32A7B347-D646-447F-A7F6-16D1501DE58B - a46f454ae8c17189"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "441"
-                  endingLineNumber = "441"
-                  offsetFromSymbolStart = "3112">
-               </Location>
-               <Location
-                  uuid = "32A7B347-D646-447F-A7F6-16D1501DE58B - 28ad0ba7d06d57c1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #10 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "441"
-                  endingLineNumber = "441"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "32A7B347-D646-447F-A7F6-16D1501DE58B - a46f454ae8c17189"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "441"
-                  endingLineNumber = "441"
-                  offsetFromSymbolStart = "3072">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "400"
-            endingLineNumber = "400"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - a46f454ae8c17362"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "432"
-                  endingLineNumber = "432"
-                  offsetFromSymbolStart = "1456">
-               </Location>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - d0c1bd2830b7c8cf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #6 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "432"
-                  endingLineNumber = "432"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - a46f454ae8c17362"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "432"
-                  endingLineNumber = "432"
-                  offsetFromSymbolStart = "1452">
-               </Location>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - a46f454ae8c1722c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "438"
-                  endingLineNumber = "438"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - d0c1bd2830b7c981"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #6 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "438"
-                  endingLineNumber = "438"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "44CEFDC3-2EAC-4DC4-AC15-8E60AFAEA940 - a46f454ae8c17362"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "432"
-                  endingLineNumber = "432"
-                  offsetFromSymbolStart = "1468">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2A36F111-1951-405D-83F5-F8BB2B20EA32"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2A36F111-1951-405D-83F5-F8BB2B20EA32 - a46f454ae8c17305"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "429"
-                  endingLineNumber = "429"
-                  offsetFromSymbolStart = "1652">
-               </Location>
-               <Location
-                  uuid = "2A36F111-1951-405D-83F5-F8BB2B20EA32 - 241b89449c207ca6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #4 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "429"
-                  endingLineNumber = "429"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "2A36F111-1951-405D-83F5-F8BB2B20EA32 - a46f454ae8c17305"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "429"
-                  endingLineNumber = "429"
-                  offsetFromSymbolStart = "1648">
-               </Location>
-               <Location
-                  uuid = "2A36F111-1951-405D-83F5-F8BB2B20EA32 - a46f454ae8c17305"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "429"
-                  endingLineNumber = "429"
-                  offsetFromSymbolStart = "1748">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "34334EF4-41C8-4E88-8093-36433A62E363"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "34334EF4-41C8-4E88-8093-36433A62E363 - a46f454ae8c1722c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "438"
-                  endingLineNumber = "438"
-                  offsetFromSymbolStart = "2892">
-               </Location>
-               <Location
-                  uuid = "34334EF4-41C8-4E88-8093-36433A62E363 - 842adf0bcdcdcf84"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #9 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "438"
-                  endingLineNumber = "438"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "34334EF4-41C8-4E88-8093-36433A62E363 - a46f454ae8c1722c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "438"
-                  endingLineNumber = "438"
-                  offsetFromSymbolStart = "2852">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BE31F674-19F5-4704-BCC8-275849192ABF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BE31F674-19F5-4704-BCC8-275849192ABF - a46f454ae8c1720d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "1304">
-               </Location>
-               <Location
-                  uuid = "BE31F674-19F5-4704-BCC8-275849192ABF - 6ebeb75266ef27a1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #5 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "0">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "97FE7656-A17B-4ABF-8655-6212199D9457"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "97FE7656-A17B-4ABF-8655-6212199D9457 - a46f454ae8c17091"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "449"
-                  endingLineNumber = "449"
-                  offsetFromSymbolStart = "3004">
-               </Location>
-               <Location
-                  uuid = "97FE7656-A17B-4ABF-8655-6212199D9457 - a6b20b42b0061734"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #10 (Tracker.TrackerCategory) -&gt; Swift.Bool in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "449"
-                  endingLineNumber = "449"
-                  offsetFromSymbolStart = "56">
-               </Location>
-               <Location
-                  uuid = "97FE7656-A17B-4ABF-8655-6212199D9457 - a46f454ae8c1720d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "2268">
-               </Location>
-               <Location
-                  uuid = "97FE7656-A17B-4ABF-8655-6212199D9457 - ba7e5ae25b18be77"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #8 (Tracker.TrackerCategory) -&gt; Swift.Bool in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "437"
-                  endingLineNumber = "437"
-                  offsetFromSymbolStart = "56">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A16DC996-3360-410E-8DCE-62B8BF9A58DB"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A16DC996-3360-410E-8DCE-62B8BF9A58DB - 15cc2ad47afb360b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447"
-                  offsetFromSymbolStart = "1220">
-               </Location>
-               <Location
-                  uuid = "A16DC996-3360-410E-8DCE-62B8BF9A58DB - 7138b4f94343775a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447"
-                  offsetFromSymbolStart = "72">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "55D819D9-4528-4DB1-8528-A045899685A8"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c17172"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448"
-                  offsetFromSymbolStart = "4044">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff199845439"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "448"
-                  endingLineNumber = "448"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c17153"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447"
-                  offsetFromSymbolStart = "3992">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff199845418"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "447"
-                  endingLineNumber = "447"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c174fd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "421"
-                  endingLineNumber = "421"
-                  offsetFromSymbolStart = "4444">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff1998451b6"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "421"
-                  endingLineNumber = "421"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c174fd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "421"
-                  endingLineNumber = "421"
-                  offsetFromSymbolStart = "4424">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c17552"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "416"
-                  endingLineNumber = "416"
-                  offsetFromSymbolStart = "4424">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff199845019"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "416"
-                  endingLineNumber = "416"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c174de"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "420"
-                  endingLineNumber = "420"
-                  offsetFromSymbolStart = "4424">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff199845195"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "420"
-                  endingLineNumber = "420"
-                  offsetFromSymbolStart = "0">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - a46f454ae8c17533"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "415"
-                  endingLineNumber = "415"
-                  offsetFromSymbolStart = "4424">
-               </Location>
-               <Location
-                  uuid = "55D819D9-4528-4DB1-8528-A045899685A8 - 3a2d4ff199845078"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #13 () -&gt; () in closure #1 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "415"
-                  endingLineNumber = "415"
-                  offsetFromSymbolStart = "0">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6292,54 +5577,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0BCBFA06-6313-4CA9-8A33-E9E37F135EBC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/ViewModel/CategoryViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "getColorRow(color:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "0BCBFA06-6313-4CA9-8A33-E9E37F135EBC - 93b9f30fd5b86bfa"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.CategoryViewModel.getColorRow(color: __C.UIColor) -&gt; Swift.Int"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/ViewModel/CategoryViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "97"
-                  endingLineNumber = "97"
-                  offsetFromSymbolStart = "440">
-               </Location>
-               <Location
-                  uuid = "0BCBFA06-6313-4CA9-8A33-E9E37F135EBC - 93b9f30fd5b86bdb"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.CategoryViewModel.getColorRow(color: __C.UIColor) -&gt; Swift.Int"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/ViewModel/CategoryViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "96"
-                  endingLineNumber = "96"
-                  offsetFromSymbolStart = "440">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "0D3FCB3A-8927-4700-8AB3-4C91C4FADD12"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -6443,8 +5680,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6459,8 +5696,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
             landmarkName = "storeCategory(trackerCategoryStore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6475,8 +5712,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "531"
-            endingLineNumber = "531"
+            startingLineNumber = "574"
+            endingLineNumber = "574"
             landmarkName = "trackerViewController(vc:nameCategory:tracker:)"
             landmarkType = "7">
             <Locations>
@@ -6852,69 +6089,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BB81E96E-7C20-44AF-82ED-BF1FBC5BAEBE"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
-            landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BB81E96E-7C20-44AF-82ED-BF1FBC5BAEBE - 7138b4f9434372f4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "421"
-                  endingLineNumber = "421"
-                  offsetFromSymbolStart = "672">
-               </Location>
-               <Location
-                  uuid = "BB81E96E-7C20-44AF-82ED-BF1FBC5BAEBE - 7138b4f943437215"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "422"
-                  endingLineNumber = "422"
-                  offsetFromSymbolStart = "712">
-               </Location>
-               <Location
-                  uuid = "BB81E96E-7C20-44AF-82ED-BF1FBC5BAEBE - 7138b4f9434372f4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (__C.UIAction) -&gt; () in closure #1 (Swift.Array&lt;__C.UIMenuElement&gt;) -&gt; Swift.Optional&lt;__C.UIMenu&gt; in Tracker.TrackersViewController.collectionView(_: __C.UICollectionView, contextMenuConfigurationForItemsAt: Swift.Array&lt;Foundation.IndexPath&gt;, point: __C.CGPoint) -&gt; Swift.Optional&lt;__C.UIContextMenuConfiguration&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "421"
-                  endingLineNumber = "421"
-                  offsetFromSymbolStart = "716">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "90926462-66F7-4424-9229-7E3D34C4881C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -7111,8 +6285,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -27,7 +27,7 @@ final class HandlerResultType {
         }
     }
     
-    func showMessageErrorAlert(message: String) {
+    private func showMessageErrorAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
             alert.dismiss(animated: true)

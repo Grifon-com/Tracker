@@ -82,7 +82,7 @@ private extension EventSelectionViewController {
     }
     
     func createTrackerVC() -> CreateTrackerViewController {
-        let viewModel = CategoryViewModel()
+        let viewModel = EditTrackerViewModel()
         let createVC = CreateTrackerViewController(viewModel: viewModel,
                                                    updateTrackerDelegate: nil,
                                                    createTrackerDelegate: self)

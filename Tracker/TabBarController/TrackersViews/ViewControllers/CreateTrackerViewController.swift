@@ -49,7 +49,7 @@ final class CreateTrackerViewController: UIViewController {
     weak var updateTrackerDelegate: UpdateTrackerViewControllerDelegate?
     weak var createTrackerDelegate: CreateTrackerViewControllerDelegate?
     
-    private let viewModel: CategoryViewModelProtocol
+    private let viewModel: EditTrackerModelProtocol
     private let handlerResultType = HandlerResultType()
     
     private lazy var newHabitLabel: UILabel = {
@@ -202,7 +202,7 @@ final class CreateTrackerViewController: UIViewController {
         return scrollView
     }()
     
-    init(viewModel: CategoryViewModelProtocol,
+    init(viewModel: EditTrackerModelProtocol,
          updateTrackerDelegate: UpdateTrackerViewControllerDelegate? = nil,
          createTrackerDelegate: CreateTrackerViewControllerDelegate? = nil)
     {
@@ -229,7 +229,7 @@ final class CreateTrackerViewController: UIViewController {
 
 extension CreateTrackerViewController {
     func bind() {
-        guard let viewModel = viewModel as? CategoryViewModel else { return }
+        guard let viewModel = viewModel as? EditTrackerViewModel else { return }
         viewModel.$schedule.bind { [weak self] _ in
             guard let self else { return }
             self.chengeActivButton()
@@ -272,7 +272,7 @@ extension CreateTrackerViewController {
     
     @objc
     private func didTapGreateButton() {
-        guard let viewModel = viewModel as? CategoryViewModel,
+        guard let viewModel = viewModel as? EditTrackerViewModel,
               let color = viewModel.color
         else { return }
         if let updateTrackerDelegate = updateTrackerDelegate, let id = viewModel.id {
@@ -303,7 +303,7 @@ extension CreateTrackerViewController {
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
         guard let text = textField.text,
-              let viewModel = viewModel as? CategoryViewModel
+              let viewModel = viewModel as? EditTrackerViewModel
         else { return }
         if text.count > ConstantsCreateVc.restrictionsTextField {
             characterRestrictionsView.isHidden = false
@@ -408,7 +408,7 @@ extension CreateTrackerViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as? CreateTrackerTableViewCell,
-              let viewModel = viewModel as? CategoryViewModel
+              let viewModel = viewModel as? EditTrackerViewModel
         else { return UITableViewCell() }
         let secondarySchedulText = viewModel.jonedSchedule(schedule: viewModel.schedule,
                                                            stringArrayDay: ConstantsCreateVc.everyDay)
@@ -450,7 +450,7 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.listSettings[indexPath.row] {
         case .category:
-            let greateCategoriViewController = CreateCategoriesViewController(delegate: self, viewModel: TrackerViewModel())
+            let greateCategoriViewController = CreateCategoriesViewController(delegate: self, viewModel: CategoryViewModel())
             presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
         case .schedule:
             let viewModel = SheduleViewModel()

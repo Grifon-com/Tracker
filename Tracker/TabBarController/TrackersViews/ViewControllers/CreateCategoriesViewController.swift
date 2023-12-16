@@ -35,7 +35,9 @@ final class CreateCategoriesViewController: UIViewController {
     }
     
     weak var delegate: CreateCategoriesViewControllerDelegate?
-    private var viewModel: TrackerViewModelProtocol
+    private var viewModel: CategoryViewModelProtocol
+    
+    private let handler = HandlerResultType()
     
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
@@ -102,7 +104,7 @@ final class CreateCategoriesViewController: UIViewController {
         return createCategoriButton
     }()
     
-    init(delegate: CreateCategoriesViewControllerDelegate, viewModel: TrackerViewModelProtocol) {
+    init(delegate: CreateCategoriesViewControllerDelegate, viewModel: CategoryViewModelProtocol) {
         self.delegate = delegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -114,11 +116,11 @@ final class CreateCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let viewModel = viewModel as? TrackerViewModel else { return }
+        guard let viewModel = viewModel as? CategoryViewModel else { return }
         setupUIElement()
         bind()
         view.backgroundColor = .whiteDay
-        resultTypeHandler(viewModel.category) { [weak self] cat in
+        handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { [weak self] cat in
             guard let self else { return }
             self.showStabView(flag: !cat.isEmpty)
         }
@@ -139,47 +141,19 @@ extension CreateCategoriesViewController {
         present(newCategoryVC, animated: true)
     }
     
-    // метод показа/скрытия заглушки
     private func showStabView(flag: Bool) {
         conteinerStabView.isHidden = flag
     }
     
     private func bind() {
-        guard let viewModel = viewModel as? TrackerViewModel else { return }
+        guard let viewModel = viewModel as? CategoryViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
-            resultTypeHandler(viewModel.category) { cat in
+            handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { cat in
                 self.showStabView(flag: !cat.isEmpty)
             }
             selectionCategoryTableView.reloadData()
         }
-    }
-    
-    private func resultTypeHandler<Value>(_ value: Result<Value, Error>, handler: (Value) -> Void) {
-        switch value {
-        case .success(let newValue):
-            handler(newValue)
-        case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
-        }
-    }
-    
-    private func resultTypeHandlerGetValue<Value>(_ value: Result<Value, Error>) -> Value? {
-        switch value {
-        case .success(let newValue):
-            return newValue
-        case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
-            return nil
-        }
-    }
-    
-    private func showMessageErrorAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: ConstantsCreateCatVc.alertActionErrorTitle, style: .cancel) { _ in
-            alert.dismiss(animated: true)
-        }
-        alert.addAction(action)
     }
     
     //MARK: - SetupUI
@@ -248,26 +222,24 @@ extension CreateCategoriesViewController {
 //MARK: - UITableViewDataSource
 extension CreateCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let count = resultTypeHandlerGetValue(viewModel.getCategory())?.count
-        else { return .zero }
-        return count
+        handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell,
-              let isSelected = resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row)),
-              let text = resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row)),
-              let count = resultTypeHandlerGetValue(viewModel.getCategory())?.count
+              let isSelected = handler.resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row)),
+              let text = handler.resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row)),
+              let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())
         else { return UITableViewCell() }
         cell.showSelectedImage(flag: isSelected)
         let model = CreateCategoryCellModel(text: text, color: ConstantsCreateCatVc.backgroundColorCell)
         cell.config(model: model)
         
-        if count > 1 {
+        if category.count > 1 {
             cell.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         }
         
-        if indexPath.row == count - 1 {
+        if indexPath.row == category.count - 1 {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
@@ -288,8 +260,8 @@ extension CreateCategoriesViewController: UITableViewDelegate {
               let delegate
         else { return }
         cell.showSelectedImage(flag: false)
-        resultTypeHandler(viewModel.selectСategory(at: indexPath.row)) {}
-        resultTypeHandler(viewModel.createNameCategory(at: indexPath.row)) { [weak self] cat in
+        handler.resultTypeHandler(viewModel.selectСategory(at: indexPath.row)) {}
+        handler.resultTypeHandler(viewModel.createNameCategory(at: indexPath.row)) { [weak self] cat in
             guard let self else { return }
             delegate.createCategoriesViewController(vc: self, nameCategory: cat)
         }
@@ -298,13 +270,16 @@ extension CreateCategoriesViewController: UITableViewDelegate {
 
 //MARK: - NewCategoriViewControllerDelegate
 extension CreateCategoriesViewController: NewCategoriViewControllerDelegate {
-    func didNewCategoriName(_ vc: UIViewController, nameCategori: String) {
-        guard let category = resultTypeHandlerGetValue(viewModel.getCategory())
+    func didNewCategoryName(_ vc: UIViewController, nameCategory: String) {
+        guard let category = handler.resultTypeHandlerGetValue(viewModel.getCategory())
         else { return }
-        let nameFirstUppercased = nameCategori.lowercased().firstUppercased
+        let nameFirstUppercased = nameCategory.lowercased().firstUppercased
         if let _ = category.filter({ $0.nameCategory == nameFirstUppercased }).first {
             return
         }
-        resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased)) {}
+        if nameFirstUppercased == ConstantsCreateCatVc.textFixed {
+            return
+        }
+        handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased)) {}
     }
 }

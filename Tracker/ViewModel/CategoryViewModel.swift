@@ -1,157 +1,140 @@
 //
-//  CategoryViewModel.swift
+//  CategoriViewModel.swift
 //  Tracker
 //
-//  Created by Григорий Машук on 13.12.23.
+//  Created by Григорий Машук on 2.11.23.
 //
 
-import UIKit
+import Foundation
 
 protocol CategoryViewModelProtocol {
-    var isSchedul: Bool { get }
-    var listSettings: [ChoiceParametrs] { get }
-    var dataSection: [Header] { get }
-    var emojies: [String] { get }
-    var colors: [UIColor] { get }
-    
-    func reverseIsSchedul()
-    func checkingForEmptiness() -> Bool
-    func jonedSchedule(schedule: [WeekDay], stringArrayDay: String) -> String
-    func setListWeekDay(listWeekDay: [WeekDay])
-    func getColorRow(color: UIColor) -> Int
-    func getEmojiRow(emoji: String) -> Int
-    
-    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay])
-    func setColor(_ vc: CreateTrackerViewController, color: UIColor)
-    func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String)
-    func setNameTracker(_ vc: CreateTrackerViewController, nameTracker: String)
-    func setEmojiTracker(_ vc: CreateTrackerViewController, emoji: String)
-    func editTracker(vc: CreateTrackerViewController, editTracker: Tracker, nameCategory: String)
+    func isCategorySelected(at index: Int) -> Result<Bool, Error>
+    func getCategory() -> Result<[TrackerCategory], Error>
+    func сategoryExcludingFixed() -> Result<[TrackerCategory], Error>
+    func createNameCategory(at index: Int) -> Result<String, Error>
+    func selectСategory(at index: Int) -> Result<Void, Error>
+    func addCategory(nameCategory: String) -> Result<Void, Error>
 }
 
-//MARK: - CategoryViewModel
+//MARK: - ViewModel
 final class CategoryViewModel {
-    var isSchedul: Bool = true
-    var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
-    let dataSection: [Header] = [.emoji, .color]
-    let emojies: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
-                                     "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+    private let textFixed = NSLocalizedString("textFixed", comment: "")
     
-    let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
-                                     .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
-                                     .colorSelection9, .colorSelection10, .colorSelection11, .colorSelection12,
-                                     .colorSelection13, .colorSelection14, .colorSelection15, .colorSelection16,
-                                     .colorSelection17, .colorSelection18]
+    @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
+    @UserDefaultsBacked<String>(key: "select_name_category") private var selectNameCategory: String?
     
-    let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
-    
-    @Observable<[WeekDay]> private(set) var schedule: [WeekDay] = []
-    @Observable<UIColor?> private(set) var color: UIColor?
-    @Observable<String> private(set) var nameNewCategory: String = ""
-    @Observable<String> private(set) var nameTracker: String = ""
-    @Observable<String> private(set) var emoji: String = ""
-    private(set) var id: UUID?
-    
-    private var marshalling: UIColorMarshalling
+    private let trackerCategoryStore: TrackerCategoryStoreProtocol
+    private let trackerStore: TrackerStoreProtocol
     
     convenience init() {
-        let marshalling = UIColorMarshalling()
-        self.init(marshalling: marshalling)
+        let trackerCategoryStore = TrackerCategoryStore()
+        let trackerStore = TrackerStore()
+        self.init(trackerCategoryStore: trackerCategoryStore,
+                  trackerStore: trackerStore,
+                  category: .success([])
+                  )
+        trackerCategoryStore.delegate = self
+        trackerStore.delegate = self
+        category = getCategory()
     }
     
-    init(marshalling: UIColorMarshalling) {
-        self.marshalling = marshalling
+    init(trackerCategoryStore: TrackerCategoryStoreProtocol,
+         trackerStore: TrackerStoreProtocol,
+         category: Result<[TrackerCategory], Error>
+)
+    {
+        self.trackerCategoryStore = trackerCategoryStore
+        self.trackerStore = trackerStore
+        self.category = category
+    }
+}
+//MARK: - Extension
+private extension CategoryViewModel {
+    func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
+        guard let nameCategory = trackerCategoryCoreData.nameCategory else {
+            throw StoreErrors.TrackrerCategoryStoreError.decodingErrorInvalidNameCategori
+        }
+        guard let arrayTrackersCoreData = trackerCategoryCoreData.trakers?.allObjects as? [TrackerCoreData]
+        else { throw StoreErrors.NSSetError.transformationErrorInvalid }
+        let result = trackerStore.getTrackers(arrayTrackersCoreData)
+        switch result {
+        case .success(let trackers):
+            return TrackerCategory(nameCategory: nameCategory,
+                                   arrayTrackers: trackers,
+                                   isPinned: trackerCategoryCoreData.isPinned)
+        case .failure(let error):
+            throw error
+        }
     }
 }
 
-//MARK: - CategoryViewModelProtocol
+//MARK: - TrackerViewModelProtocol
 extension CategoryViewModel: CategoryViewModelProtocol {
-    func checkingForEmptiness() -> Bool {
-        var flag: Bool
-        if isSchedul {
-            flag = !nameTracker.isEmpty &&
-            color != nil &&
-            !emoji.isEmpty &&
-            !nameNewCategory.isEmpty ? true : false
-            
-            return flag
+    func addCategory(nameCategory: String) -> Result<Void, Error> {
+        trackerCategoryStore.addCategory(nameCategory)
+    }
+    
+    func isCategorySelected(at index: Int) -> Result<Bool, Error> {
+        switch category {
+        case .success(let category):
+            return .success(category[index].nameCategory != selectNameCategory)
+        case .failure(let error):
+            return .failure(error)
         }
-        flag = !schedule.isEmpty &&
-        !nameTracker.isEmpty &&
-        color != nil &&
-        !emoji.isEmpty &&
-        !nameNewCategory.isEmpty ? true : false
-        return flag
     }
     
-    func reverseIsSchedul() {
-        isSchedul = isSchedul ? !isSchedul : isSchedul
-    }
-    
-    func jonedSchedule(schedule: [WeekDay], stringArrayDay: String) -> String {
-        var stringListDay: String
-        if schedule.count == 7 {
-            stringListDay = stringArrayDay
-            return stringListDay
+    func getCategory() -> Result<[TrackerCategory], Error> {
+        let trackerCategoryCoreData = trackerCategoryStore.getListTrackerCategoryCoreData()
+        guard let trackerCategoryCoreData else { return .failure(StoreErrors.TrackrerStoreError.getTrackerError) }
+        do {
+            let listCategory = try trackerCategoryCoreData.map ({ try category(from: $0) })
+            return .success(listCategory)
+        } catch {
+            return .failure(error)
         }
-        let listDay = schedule.map { $0.briefWordDay }
-        stringListDay = listDay.joined(separator: ",")
-        
-        return stringListDay
     }
-    
-    func setListWeekDay(listWeekDay: [WeekDay]) {
-        schedule = listWeekDay
-    }
-    
-    func getColorRow(color: UIColor) -> Int {
-        var colorRow: Int = 0
-        for (index, value) in colors.enumerated() {
-            let colorMarshalling = marshalling.color(from: marshalling.hexString(from: value))
-            if colorMarshalling == color {
-                colorRow = index
-            }
+
+    func сategoryExcludingFixed() -> Result<[TrackerCategory], Error> {
+        switch category {
+        case .success(let category):
+            let filterCat = category.filter { $0.nameCategory != textFixed }
+            return .success(filterCat)
+        case .failure(let error):
+            return .failure(error)
         }
-        return colorRow
     }
     
-    func getEmojiRow(emoji: String) -> Int {
-        var emojiRow: Int = 0
-        for (index, value) in emojies.enumerated() {
-            if value == emoji {
-                emojiRow = index
-            }
+    func createNameCategory(at index: Int) -> Result<String, Error> {
+        switch сategoryExcludingFixed() {
+        case .success(let category):
+            let name = category[index].nameCategory
+            return .success(name)
+        case .failure(let error):
+            return .failure(error)
         }
-        return emojiRow
     }
     
-    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay]) {
-        self.schedule = schedule
-    }
-    
-    func setColor(_ vc: CreateTrackerViewController, color: UIColor) {
-        self.color = color
-    }
-    
-    func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String) {
-        self.nameNewCategory = nameCategory
-    }
-    
-    func setNameTracker(_ vc: CreateTrackerViewController, nameTracker: String) {
-        self.nameTracker = nameTracker
-    }
-    
-    func setEmojiTracker(_ vc: CreateTrackerViewController, emoji: String) {
-        self.emoji = emoji
-    }
-    
-    func editTracker(vc: CreateTrackerViewController, editTracker: Tracker, nameCategory: String) {
-        schedule = editTracker.schedule
-        color = editTracker.color
-        nameNewCategory = nameCategory
-        nameTracker = editTracker.name
-        emoji = editTracker.emoji
-        id = editTracker.id
+    func selectСategory(at index: Int) -> Result<Void, Error> {
+        switch category {
+        case .success(let category):
+            selectNameCategory = category[index].nameCategory
+            return .success(())
+        case .failure(let error):
+            return .failure(error)
+        }
     }
 }
 
+//MARK: - TrackerCategoryStoreDelegate
+extension CategoryViewModel: TrackerCategoryStoreDelegate {
+    func storeCategory(trackerCategoryStore: TrackerCategoryStoreProtocol) {
+        category = getCategory()
+    }
+}
+
+//MARK: - TrackerStoreDelegate
+extension CategoryViewModel: TrackerStoreDelegate {
+    func updateTracker(_ trackerCoreData: TrackerStoreProtocol) {
+        category = getCategory()
+    }
+}

@@ -30,6 +30,7 @@ final class TrackersViewController: UIViewController {
         static let textEdit = NSLocalizedString("textEdit", comment: "")
         static let textDelete = NSLocalizedString("textDelete", comment: "")
         static let textFixed = NSLocalizedString("textFixed", comment: "")
+        static let sureDeleteTracker = NSLocalizedString("sureDeleteTracker", comment: "") 
         
         static let datePickerCornerRadius = CGFloat(8)
         static let heightCollectionView = CGFloat(148)
@@ -233,6 +234,83 @@ private extension TrackersViewController {
                                 withReuseIdentifier: "\(HeaderReusableView.self)")
     }
     
+    //MARK: - Menu Action
+    
+    func pinnedAction(text: String, tracker: Tracker, category: TrackerCategory) -> UIAction {
+        UIAction(title: text) { [weak self] _ in
+            guard let self,
+                  let viewModel,
+                  let cat = self.handler.resultTypeHandlerGetValue(viewModel.getCategory())
+            else { return }
+            if category.isPinned {
+                handler.resultTypeHandler(viewModel.addPinnedCategory(id: tracker.id, nameCategory: category.nameCategory)) {}
+                self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                let filterNameCategory = cat.filter { $0.nameCategory == ConstantsTrackerVc.textFixed }
+                if let _ = filterNameCategory.first?.nameCategory {
+                    self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                } else {
+                    self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
+                    self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                }
+            } else {
+                if let nameCategory = handler.resultTypeHandlerGetValue(viewModel.deleteAndGetPinnedCategory(id: tracker.id)) {
+                    self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                    if let category = handler.resultTypeHandlerGetValue(viewModel.category)?.filter({ $0.nameCategory == nameCategory }).first {
+                        self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: category.nameCategory)) {}
+                    } else {
+                        guard let nameCategory else { return }
+                        self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {}
+                        self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategory)) {}
+                    }
+                }
+            }
+        }
+    }
+    
+    func editTrackerAction(text: String,
+                           tracker: Tracker,
+                           category: TrackerCategory,
+                           indexPath: IndexPath) -> UIAction
+    {
+        UIAction(title: text) { [weak self] _ in
+            guard let self else { return }
+            let viewModel = EditTrackerViewModel()
+            let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self, createTrackerDelegate: nil)
+            delegate = createTrackerVC
+            if tracker.schedule.count != viewModel.regular.count {
+                createTrackerVC.reverseIsSchedul()
+            }
+            createTrackerVC.modalPresentationStyle = .formSheet
+            present(createTrackerVC, animated: true) {
+                self.delegate?.editTracker(vc: self,
+                                           editTracker: tracker,
+                                           nameCategory: category.nameCategory,
+                                           indexPath: indexPath)
+            }
+        }
+    }
+    
+    func deleteAction(text: String, tracker: Tracker) -> UIAction {
+        UIAction(title: text, attributes: .destructive) { [weak self] _ in
+            guard let self, let viewModel else { return }
+            let alert = UIAlertController(title: nil,
+                                          message: ConstantsTrackerVc.sureDeleteTracker,
+                                          preferredStyle: .actionSheet)
+            let deleteAction = UIAlertAction(title: ConstantsTrackerVc.textDelete,
+                                             style: .destructive) { _ in
+                self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                alert.dismiss(animated: true)
+            }
+            let cancelAction = UIAlertAction(title: ConstantsTrackerVc.textCancel,
+                                             style: .cancel) { _ in
+                self.dismiss(animated: true)
+            }
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
+        }
+    }
+    
     //MARK: - SetupUI
     func setupUIElement() {
         setupVerticalSteck()
@@ -375,7 +453,7 @@ extension TrackersViewController: UICollectionViewDelegate {
                         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
                         point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first,
-              let viewModel = viewModel as? TrackerViewModel,
+              let viewModel,
               let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
         else { return nil }
         let selectorCategory = visibleCategories[indexPath.section]
@@ -383,53 +461,17 @@ extension TrackersViewController: UICollectionViewDelegate {
         let firstContextText = !selectorCategory.isPinned ? ConstantsTrackerVc.textUnpin : ConstantsTrackerVc.textFix
         let secondContentText = ConstantsTrackerVc.textEdit
         let thirdContentText = ConstantsTrackerVc.textDelete
-        return UIContextMenuConfiguration(actionProvider:  { _ in
+        return UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
+            guard let self else { return UIMenu() }
             return UIMenu(children: [
-                UIAction(title: firstContextText) { [weak self] _ in
-                    guard let self,
-                          let cat = self.handler.resultTypeHandlerGetValue(viewModel.getCategory())
-                    else { return }
-                    if selectorCategory.isPinned {
-                        handler.resultTypeHandler(viewModel.addPinnedCategory(id: selectedTracker.id, nameCategory: selectorCategory.nameCategory)) {}
-                        self.handler.resultTypeHandler(viewModel.deleteTracker(selectedTracker.id)) {}
-                        let filterNameCategory = cat.filter { $0.nameCategory == ConstantsTrackerVc.textFixed }
-                        if let _ = filterNameCategory.first?.nameCategory {
-                            self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
-                        } else {
-                            self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
-                            self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
-                        }
-                    } else {
-                        if let nameCategory = handler.resultTypeHandlerGetValue(viewModel.deleteAndGetPinnedCategory(id: selectedTracker.id)) {
-                            self.handler.resultTypeHandler(viewModel.deleteTracker(selectedTracker.id)) {}
-                            if let category = handler.resultTypeHandlerGetValue(viewModel.category)?.filter({ $0.nameCategory == nameCategory }).first {
-                                self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: category.nameCategory)) {}
-                            } else {
-                                guard let nameCategory else { return }
-                                self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {}
-                                self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: nameCategory)) {}
-                            }
-                        }
-                    }
-                    guard handler.resultTypeHandlerGetValue(viewModel.category)?.filter ({ $0.nameCategory == ConstantsTrackerVc.textFixed }).first?.arrayTrackers.count == 0 else { return }
-                    handler.resultTypeHandler(viewModel.deleteCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
-                },
-                UIAction(title: secondContentText) { [weak self] _ in
-                    guard let self else { return }
-                    let viewModel = CategoryViewModel()
-                    let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self, createTrackerDelegate: nil)
-                    delegate = createTrackerVC
-                    if selectedTracker.schedule.count != viewModel.regular.count {
-                        createTrackerVC.reverseIsSchedul()
-                    }
-                    createTrackerVC.modalPresentationStyle = .fullScreen
-                    present(createTrackerVC, animated: true) {
-                        self.delegate?.editTracker(vc: self,
-                                                   editTracker: selectedTracker,
-                                                   nameCategory: selectorCategory.nameCategory, indexPath: indexPath)
-                    }
-                },
-                UIAction(title: thirdContentText, attributes: .destructive) { _ in }
+                self.pinnedAction(text: firstContextText,
+                                  tracker: selectedTracker,
+                                  category: selectorCategory),
+                self.editTrackerAction(text: secondContentText,
+                                       tracker: selectedTracker,
+                                       category: selectorCategory,
+                                       indexPath: indexPath),
+                self.deleteAction(text: thirdContentText, tracker: selectedTracker)
             ])
         })
     }
@@ -525,6 +567,7 @@ extension TrackersViewController: EventSelectionViewControllerDelegate {
     }
 }
 
+//MARK: - UpdateTrackerViewControllerDelegate
 extension TrackersViewController: UpdateTrackerViewControllerDelegate {
     func trackerViewController(vc: UIViewController, nameCategory: String, tracker: Tracker) {
         guard let viewModel else { return }

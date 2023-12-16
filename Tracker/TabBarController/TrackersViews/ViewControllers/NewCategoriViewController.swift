@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NewCategoriViewControllerDelegate: AnyObject {
-    func didNewCategoriName(_ vc: UIViewController, nameCategori: String)
+    func didNewCategoryName(_ vc: UIViewController, nameCategory: String)
 }
 
 //MARK: - NewCategoriViewController
@@ -86,7 +86,7 @@ private extension NewCategoriViewController {
     //MARK: - Обработка событий
     @objc
     func didTapNewСategoriButton() {
-        delegate?.didNewCategoriName(self, nameCategori: nameCategori)
+        delegate?.didNewCategoryName(self, nameCategory: nameCategori)
         dismiss(animated: true)
     }
     
