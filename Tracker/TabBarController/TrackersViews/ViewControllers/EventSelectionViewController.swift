@@ -7,8 +7,6 @@
 
 import UIKit
 
-
-
 //MARK: - EventSelectionViewControllerDelegate
 protocol EventSelectionViewControllerDelegate: AnyObject {
     func eventSelectionViewController(vc: UIViewController, nameCategories: String, tracker: Tracker)
@@ -84,10 +82,12 @@ private extension EventSelectionViewController {
     }
     
     func createTrackerVC() -> CreateTrackerViewController {
-        let greateVC = CreateTrackerViewController()
-        greateVC.delegate = self
-        greateVC.modalPresentationStyle = .formSheet
-        return greateVC
+        let viewModel = CategoryViewModel()
+        let createVC = CreateTrackerViewController(viewModel: viewModel,
+                                                   updateTrackerDelegate: nil,
+                                                   createTrackerDelegate: self)
+        createVC.modalPresentationStyle = .formSheet
+        return createVC
     }
     
     //MARK: - SetupUI
@@ -134,11 +134,11 @@ private extension EventSelectionViewController {
 
 //MARK: - CreateTrackerViewControllerDelegate
 extension EventSelectionViewController: CreateTrackerViewControllerDelegate {
-    func createTrackerViewController(vc: UIViewController, nameCategories: String, tracker: Tracker) {
-        delegate?.eventSelectionViewController(vc: self, nameCategories: nameCategories, tracker: tracker)
+    func trackerViewController(vc: UIViewController, nameCategory: String, tracker: Tracker) {
+        delegate?.eventSelectionViewController(vc: self, nameCategories: nameCategory, tracker: tracker)
     }
     
-    func createTrackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
+    func trackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
         vc.dismiss(animated: false)
         delegate?.eventSelectionViewControllerDidCancel(self)
     }

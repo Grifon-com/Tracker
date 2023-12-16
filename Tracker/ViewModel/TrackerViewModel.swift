@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewModelProtocol {
+protocol TrackerViewModelProtocol {
     func isCategorySelected(at index: Int) -> Result<Bool, Error>
     func getCategory() -> Result<[TrackerCategory], Error>
     func deleteTracker(_ id: UUID) -> Result<Void, Error>
@@ -21,7 +21,7 @@ protocol ViewModelProtocol {
     func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error>
     
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
-    func updateTracker(tracker: Tracker) -> Result<Void, Error>
+    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     
     func getShowListTrackersForDay(date: Date)
     func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory])
@@ -34,7 +34,7 @@ protocol ViewModelProtocol {
 }
 
 //MARK: - ViewModel
-final class ViewModel {
+final class TrackerViewModel {
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
     @Observable<IndexPath> private(set) var indexPath: IndexPath
     @Observable<Result<[TrackerCategory], Error>> private(set) var visibleCategory: Result<[TrackerCategory], Error>
@@ -62,6 +62,7 @@ final class ViewModel {
                   indexPath: IndexPath())
         trackerCategoryStore.delegate = self
         trackerRecordStore.delegate = self
+        trackerStore.delegate = self
         category = getCategory()
         completedTrackers = treckersRecordsResult()
     }
@@ -86,7 +87,7 @@ final class ViewModel {
     }
 }
 //MARK: - Extension
-private extension ViewModel {
+private extension TrackerViewModel {
     func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
         guard let nameCategory = trackerCategoryCoreData.nameCategory else {
             throw StoreErrors.TrackrerCategoryStoreError.decodingErrorInvalidNameCategori
@@ -140,7 +141,7 @@ private extension ViewModel {
 }
 
 //MARK: - CategoriViewModelProtocol
-extension ViewModel: ViewModelProtocol {
+extension TrackerViewModel: TrackerViewModelProtocol {
     func deleteCategory(nameCategory: String) -> Result<Void, Error> {
         trackerCategoryStore.deleteCategory(nameCategory: nameCategory)
     }
@@ -206,8 +207,8 @@ extension ViewModel: ViewModelProtocol {
         return trackerCoreData
     }
     
-    func updateTracker(tracker: Tracker) -> Result<Void, Error> {
-        trackerStore.updateTracker(tracker: tracker)
+    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error> {
+        trackerStore.updateTracker(tracker: tracker, nameCategory: nameCategory)
     }
     
     func getShowListTrackersForDay(date: Date) {
@@ -284,16 +285,23 @@ extension ViewModel: ViewModelProtocol {
 }
 
 //MARK: - TrackerCategoryStoreDelegate
-extension ViewModel: TrackerCategoryStoreDelegate {
+extension TrackerViewModel: TrackerCategoryStoreDelegate {
     func storeCategory(trackerCategoryStore: TrackerCategoryStoreProtocol) {
         category = getCategory()
     }
 }
 
 //MARK: - TrackerRecordStoreDelegate
-extension ViewModel: TrackerRecordStoreDelegate {
+extension TrackerViewModel: TrackerRecordStoreDelegate {
     func trackerRecordStore(trackerRecordStore: TrackerRecordStoreProtocol) {
         completedTrackers = trackerRecordStore.treckersRecordsResult()
         self.indexPath = indexPath
+    }
+}
+
+//MARK: - TrackerStoreDelegate
+extension TrackerViewModel: TrackerStoreDelegate {
+    func updateTracker(_ trackerCoreData: TrackerStoreProtocol) {
+        category = getCategory()
     }
 }

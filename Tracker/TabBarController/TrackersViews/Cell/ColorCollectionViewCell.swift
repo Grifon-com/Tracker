@@ -1,5 +1,5 @@
 //
-//  EmojiColorCollectionViewCell.swift
+//  ColorCollectionViewCell.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 4.10.23.
@@ -8,26 +8,13 @@
 import UIKit
 
 //MARK: - ColorCollectionViewCell
-final class EmojiColorCollectionViewCell: UICollectionViewCell {
+final class ColorCollectionViewCell: UICollectionViewCell {
     private struct ConstantsCell {
         static let cornerRadius = CGFloat(8)
         static let borderWidth = CGFloat(3)
-        static let font = UIFont.systemFont(ofSize: 32, weight: .medium)
         static let alfaComponent = CGFloat(0.3)
     }
-    
-    private var emojiView: UILabel = {
-        let emojiView = UILabel()
-        emojiView.textAlignment = .center
-        emojiView.layer.cornerRadius = ConstantsCell.cornerRadius
-        emojiView.layer.masksToBounds = true
-        emojiView.backgroundColor = .clear
-        emojiView.font = ConstantsCell.font
-        emojiView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return emojiView
-    }()
-    
+
     private var contentColorView: UIView = {
         let contentColorView = UIView()
         contentColorView.layer.masksToBounds = true
@@ -51,22 +38,15 @@ final class EmojiColorCollectionViewCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        assertionFailure("init(coder:) has not been implemented")
     }
 }
 
-extension EmojiColorCollectionViewCell {
+extension ColorCollectionViewCell {
     //MARK: - Config
-    func configEmoji(emoji: String) {
-        emojiView.text = emoji
-    }
-    
     func configColor(color: UIColor) {
         colorView.backgroundColor = color
-    }
-    //MARK: - Selected
-    func emojiSelection(isBackground: Bool) {
-        emojiView.backgroundColor = isBackground ? .grayDay : .clear
     }
     
     func colorSelection(color: UIColor, flag: Bool) {
@@ -78,15 +58,10 @@ extension EmojiColorCollectionViewCell {
     
     //MARK: - SetupUI
     private func setupColorView() {
-        addSubview(emojiView)
         addSubview(contentColorView)
         contentColorView.addSubview(colorView)
         
         NSLayoutConstraint.activate([
-            emojiView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            emojiView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            emojiView.heightAnchor.constraint(equalToConstant: 52),
-            emojiView.widthAnchor.constraint(equalToConstant: 52),
             contentColorView.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentColorView.centerYAnchor.constraint(equalTo: centerYAnchor),
             contentColorView.heightAnchor.constraint(equalToConstant: 52),

@@ -15,13 +15,13 @@ protocol CreateCategoriesViewControllerDelegate: AnyObject {
 //MARK: - CreateCategoriesViewController
 final class CreateCategoriesViewController: UIViewController {
     private struct ConstantsCreateCatVc {
-        static let textFixed = NSLocalizedString("textFixed", comment: "")
         static let imageViewImageStab = "Star"
         static let alertActionErrorTitle = "Ok"
         
         static let categoriLabelText = NSLocalizedString("categoriLabelText", comment: "")
         static let categoriAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
         static let labelStabText = NSLocalizedString("labelStabText", comment: "")
+        static let textFixed = NSLocalizedString("textFixed", comment: "")
         
         static let lableTextStabNumberOfLines = 2
         static let selectionCategoryTableViewRowHeight = CGFloat(75)
@@ -35,8 +35,7 @@ final class CreateCategoriesViewController: UIViewController {
     }
     
     weak var delegate: CreateCategoriesViewControllerDelegate?
-    
-    private var viewModel: ViewModelProtocol?
+    private var viewModel: TrackerViewModelProtocol
     
     private lazy var categoriLabel: UILabel = {
         let categoriLabel = UILabel()
@@ -103,18 +102,27 @@ final class CreateCategoriesViewController: UIViewController {
         return createCategoriButton
     }()
     
+    init(delegate: CreateCategoriesViewControllerDelegate, viewModel: TrackerViewModelProtocol) {
+        self.delegate = delegate
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let viewModel = viewModel as? ViewModel else { return }
+        guard let viewModel = viewModel as? TrackerViewModel else { return }
+        setupUIElement()
         bind()
         view.backgroundColor = .whiteDay
-        setupUIElement()
         resultTypeHandler(viewModel.category) { [weak self] cat in
             guard let self else { return }
             self.showStabView(flag: !cat.isEmpty)
         }
         selectionCategoryTableView.rowHeight = ConstantsCreateCatVc.selectionCategoryTableViewRowHeight
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: nil)
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -122,10 +130,6 @@ final class CreateCategoriesViewController: UIViewController {
 }
 
 extension CreateCategoriesViewController {
-    func config(viewModel: ViewModel?) {
-        self.viewModel = viewModel
-    }
-    
     //MARK: - обработка событий
     @objc
     private func didTapСategoryButton() {
@@ -141,7 +145,7 @@ extension CreateCategoriesViewController {
     }
     
     private func bind() {
-        guard let viewModel = viewModel as? ViewModel else { return }
+        guard let viewModel = viewModel as? TrackerViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
             resultTypeHandler(viewModel.category) { cat in
@@ -244,15 +248,13 @@ extension CreateCategoriesViewController {
 //MARK: - UITableViewDataSource
 extension CreateCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let viewModel,
-              let count = resultTypeHandlerGetValue(viewModel.getCategory())?.count
+        guard let count = resultTypeHandlerGetValue(viewModel.getCategory())?.count
         else { return .zero }
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell,
-              let viewModel,
               let isSelected = resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row)),
               let text = resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row)),
               let count = resultTypeHandlerGetValue(viewModel.getCategory())?.count
@@ -283,8 +285,7 @@ extension CreateCategoriesViewController: UITableViewDataSource {
 extension CreateCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? CreateCategoriesTableViewCell,
-              let delegate,
-              let viewModel
+              let delegate
         else { return }
         cell.showSelectedImage(flag: false)
         resultTypeHandler(viewModel.selectСategory(at: indexPath.row)) {}
@@ -298,13 +299,8 @@ extension CreateCategoriesViewController: UITableViewDelegate {
 //MARK: - NewCategoriViewControllerDelegate
 extension CreateCategoriesViewController: NewCategoriViewControllerDelegate {
     func didNewCategoriName(_ vc: UIViewController, nameCategori: String) {
-        guard let viewModel,
-              let category = resultTypeHandlerGetValue(viewModel.getCategory())
+        guard let category = resultTypeHandlerGetValue(viewModel.getCategory())
         else { return }
-//        if category.contains(where: { $0.nameCategory == ConstantsCreateCatVc.textFixed}) {
-//        } else {
-//            resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsCreateCatVc.textFixed)) {}
-//        }
         let nameFirstUppercased = nameCategori.lowercased().firstUppercased
         if let _ = category.filter({ $0.nameCategory == nameFirstUppercased }).first {
             return

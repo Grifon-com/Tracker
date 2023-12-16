@@ -24,9 +24,8 @@ final class ScheduleViewController: UIViewController {
         static let scheduleLableFont = UIFont.systemFont(ofSize: 16, weight: .medium)
     }
     
-    private let weekDay: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
     weak var delegate: ScheduleViewControllerDelegate?
-    private var listWeekDay: [WeekDay] = []
+    private let viewModel: SheduleViewModelProtocol
     
     private lazy var scheduleLable: UILabel = {
         let scheduleLable = UILabel()
@@ -72,6 +71,15 @@ final class ScheduleViewController: UIViewController {
         return contentStackView
     }()
     
+    init(viewModel: SheduleViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .whiteDay
@@ -87,7 +95,7 @@ private extension ScheduleViewController {
         guard let delegate
         else { return }
         //передаем список дней для поля "schedule" при создании трекера
-        let listDays = listWeekDay.sorted { $0.rawValue < $1.rawValue }
+        let listDays = viewModel.listWeekDay.sorted { $0.rawValue < $1.rawValue }
         delegate.daysOfWeek(viewController: self, listDays: listDays)
         dismiss(animated: true)
     }
@@ -97,15 +105,15 @@ private extension ScheduleViewController {
     func updateListWeekDay(flag: Bool, day: WeekDay) {
         if flag {
             var listDay: [WeekDay] = []
-            listDay = listWeekDay
+            listDay = viewModel.listWeekDay
             listDay.append(day)
-            listWeekDay = listDay
+            viewModel.setListWeekDay(listWeekDay: listDay)
         } else {
             var listDay: [WeekDay] = []
-            listDay = listWeekDay
+            listDay = viewModel.listWeekDay
             guard let index = listDay.firstIndex(of: day) else { return }
             listDay.remove(at: index)
-            listWeekDay = listDay
+            viewModel.setListWeekDay(listWeekDay: listDay)
         }
     }
     
@@ -132,20 +140,19 @@ private extension ScheduleViewController {
 //MARK: - UITableViewDataSource
 extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        weekDay.count
+        viewModel.weekDay.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WeekDayTableViewCell.self)") as? WeekDayTableViewCell else { return UITableViewCell() }
         cell.delegate = self
-        cell.config(nameDay: weekDay[indexPath.row])
-        
-        if weekDay[indexPath.row] == weekDay.first {
+        cell.config(nameDay: viewModel.weekDay[indexPath.row])
+        if viewModel.weekDay[indexPath.row] == viewModel.weekDay.first {
             cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
             
         }
-        if weekDay[indexPath.row] == weekDay.last {
+        if viewModel.weekDay[indexPath.row] == viewModel.weekDay.last {
             cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: 0,
@@ -171,7 +178,7 @@ extension ScheduleViewController: WeekDayTableViewCellDelegate {
         guard let cell = cell as? WeekDayTableViewCell,
               let indexPath = weekDayTableView.indexPath(for: cell)
         else { return }
-        let day = weekDay[indexPath.row]
+        let day = viewModel.weekDay[indexPath.row]
         updateListWeekDay(flag: flag, day: day)
     }
 }

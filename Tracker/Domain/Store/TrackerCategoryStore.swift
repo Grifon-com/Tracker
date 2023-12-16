@@ -22,7 +22,7 @@ protocol TrackerCategoryStoreDelegate: AnyObject {
 final class TrackerCategoryStore: NSObject {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
     weak var delegate: TrackerCategoryStoreDelegate?
-        
+    
     private let context: NSManagedObjectContext
     
     private lazy var fetchedCategoryResultController: NSFetchedResultsController<TrackerCategoryCoreData> = {

@@ -18,6 +18,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         static let addButtonImageAdd = "Add"
         static let adButttonImageDone = "Done"
         static let isPinnedImage = "IsPinned"
+        static let numberOfDays = NSLocalizedString("numberOfDays", tableName: "LocalizableDict", comment: "")
         
         static let cornerRadiusColorView = CGFloat(16)
         static let borderWidthColorView = CGFloat(1)
@@ -143,9 +144,7 @@ extension TrackersCollectionViewCell {
     
     //метод обновления счетчика выполнения трекера и imageButton
     func updateLableCountAndImageAddButton(_ updateModel: UpdateTracker) {
-        let textLable = String.localizedStringWithFormat(NSLocalizedString("numberOfDays",
-                                                                           tableName: "LocalizableDict",
-                                                                           comment: ""),
+        let textLable = String.localizedStringWithFormat(ConstantsTrackerCell.numberOfDays,
                                                          updateModel.count)
         dayCounterLable.text = textLable
         switch updateModel.flag {

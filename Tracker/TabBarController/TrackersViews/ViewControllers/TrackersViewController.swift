@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TrackersViewControllerDelegate: AnyObject {
+    func editTracker(vc: TrackersViewController, editTracker: Tracker, nameCategory: String, indexPath: IndexPath)
+}
+
 //MARK: - TrackersViewController
 final class TrackersViewController: UIViewController {
     private struct ConstantsTrackerVc {
@@ -36,7 +40,9 @@ final class TrackersViewController: UIViewController {
         static let firstWeekday = 2
     }
     
-    private var viewModel: ViewModelProtocol?
+    weak var delegate: TrackersViewControllerDelegate?
+    private var viewModel: TrackerViewModelProtocol?
+    private let handler = HandlerResultType()
     
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
@@ -121,15 +127,24 @@ final class TrackersViewController: UIViewController {
         return contentView
     }()
     
+    init(viewModel: TrackerViewModelProtocol) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        assertionFailure("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupUIElement()
-        viewModel = ViewModel()
+        viewModel = TrackerViewModel()
         bind()
-        guard let viewModel = viewModel as? ViewModel else { return }
+        guard let viewModel = viewModel as? TrackerViewModel else { return }
         viewModel.getShowListTrackersForDay(date: datePicker.date)
-        guard let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
+        guard let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
         else { return }
         self.showStabView(flag: !visibleCategories.isEmpty)
     }
@@ -137,7 +152,7 @@ final class TrackersViewController: UIViewController {
 
 private extension TrackersViewController {
     func bind() {
-        guard let viewModel = viewModel as? ViewModel else { return }
+        guard let viewModel = viewModel as? TrackerViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
             viewModel.getShowListTrackersForDay(date: self.datePicker.date)
@@ -150,7 +165,7 @@ private extension TrackersViewController {
         
         viewModel.$visibleCategory.bind { [weak self] result in
             guard let self,
-                  let cat = resultTypeHandlerGetValue(result)
+                  let cat = handler.resultTypeHandlerGetValue(result)
             else { return }
             self.showStabView(flag: !cat.isEmpty)
             self.trackerCollectionView.reloadData()
@@ -172,14 +187,6 @@ private extension TrackersViewController {
         greateVC.delegate = self
         greateVC.modalPresentationStyle = .formSheet
         present(greateVC, animated: true)
-    }
-    
-    func showMessageErrorAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
-            alert.dismiss(animated: true)
-        }
-        alert.addAction(action)
     }
     
     //метод изменения заглушки
@@ -206,25 +213,6 @@ private extension TrackersViewController {
     //метод показа/скрытия заглушки
     func showStabView(flag: Bool) {
         [imageViewStab, lableTextStab].forEach { $0.isHidden = flag }
-    }
-        
-    func resultTypeHandler<Value>(_ listCategory: Result<Value, Error>, handler: (Value) -> Void) {
-        switch listCategory {
-        case .success(let newValue):
-            handler(newValue)
-        case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
-        }
-    }
-    
-    func resultTypeHandlerGetValue<Value>(_ value: Result<Value, Error>) -> Value? {
-        switch value {
-        case .success(let newValue):
-            return newValue
-        case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
-            return nil
-        }
     }
     
     //метод создания кастомной CollectionView
@@ -326,15 +314,15 @@ private extension TrackersViewController {
 //MARK: - UICollectionViewDataSource
 extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let viewModel = viewModel as? ViewModel,
-              let itemsCount = resultTypeHandlerGetValue(viewModel.visibleCategory)?[section].arrayTrackers.count
+        guard let viewModel = viewModel as? TrackerViewModel,
+              let itemsCount = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)?[section].arrayTrackers.count
         else { return .zero }
         return itemsCount
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let viewModel = viewModel as? ViewModel,
-              let sectionCount = resultTypeHandlerGetValue(viewModel.visibleCategory)?.count
+        guard let viewModel = viewModel as? TrackerViewModel,
+              let sectionCount = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)?.count
         else { return .zero }
         return sectionCount
     }
@@ -342,8 +330,8 @@ extension TrackersViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(TrackersCollectionViewCell.self)",
                                                             for: indexPath) as? TrackersCollectionViewCell,
-              let viewModel = viewModel as? ViewModel,
-              let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
+              let viewModel = viewModel as? TrackerViewModel,
+              let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
         else { return UICollectionViewCell() }
         cell.delegate = self
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
@@ -360,10 +348,10 @@ extension TrackersViewController: UICollectionViewDataSource {
             cell.updateBackgraundAddButton(isHidden: true)
         }
         cell.setPinned(flag: visibleCategories[indexPath.section].isPinned)
-        resultTypeHandler(viewModel.loadTrackerRecord(id: tracker.id)) { [weak self] count in
+        handler.resultTypeHandler(viewModel.loadTrackerRecord(id: tracker.id)) { [weak self] count in
             guard let self,
-                  let isComplited = self.resultTypeHandlerGetValue(viewModel.getIsComplited(tracker: tracker,
-                                                                                            date: self.datePicker.date))
+                  let isComplited = self.handler.resultTypeHandlerGetValue(viewModel.getIsComplited(tracker: tracker,
+                                                                                                    date: self.datePicker.date))
             else { return }
             let updateModel = UpdateTracker(count: count, flag: isComplited)
             cell.config(tracker: tracker)
@@ -387,8 +375,8 @@ extension TrackersViewController: UICollectionViewDelegate {
                         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
                         point: CGPoint) -> UIContextMenuConfiguration? {
         guard let indexPath = indexPaths.first,
-              let viewModel = viewModel as? ViewModel,
-              let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
+              let viewModel = viewModel as? TrackerViewModel,
+              let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
         else { return nil }
         let selectorCategory = visibleCategories[indexPath.section]
         let selectedTracker = selectorCategory.arrayTrackers[indexPath.row]
@@ -399,39 +387,47 @@ extension TrackersViewController: UICollectionViewDelegate {
             return UIMenu(children: [
                 UIAction(title: firstContextText) { [weak self] _ in
                     guard let self,
-                          let category = self.resultTypeHandlerGetValue(viewModel.getCategory())
+                          let cat = self.handler.resultTypeHandlerGetValue(viewModel.getCategory())
                     else { return }
-                    let tracker = Tracker( id: selectedTracker.id,
-                                          name: selectedTracker.name,
-                                          color: selectedTracker.color,
-                                          emoji: selectedTracker.emoji,
-                                          schedule: selectedTracker.schedule)
                     if selectorCategory.isPinned {
-                        resultTypeHandler(viewModel.addPinnedCategory(id: selectedTracker.id, nameCategory: selectorCategory.nameCategory)) {}
-                        self.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
-                        let filterNameCategory = category.filter { $0.nameCategory == ConstantsTrackerVc.textFixed }
+                        handler.resultTypeHandler(viewModel.addPinnedCategory(id: selectedTracker.id, nameCategory: selectorCategory.nameCategory)) {}
+                        self.handler.resultTypeHandler(viewModel.deleteTracker(selectedTracker.id)) {}
+                        let filterNameCategory = cat.filter { $0.nameCategory == ConstantsTrackerVc.textFixed }
                         if let _ = filterNameCategory.first?.nameCategory {
-                            self.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                            self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
                         } else {
-                            self.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
-                            self.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                            self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
+                            self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
                         }
                     } else {
-                        if let nameCategory = resultTypeHandlerGetValue(viewModel.deleteAndGetPinnedCategory(id: selectedTracker.id)) {
-                            if let category = resultTypeHandlerGetValue(viewModel.category)?.filter({ $0.nameCategory == nameCategory }).first {
-                                self.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: category.nameCategory)) {}
+                        if let nameCategory = handler.resultTypeHandlerGetValue(viewModel.deleteAndGetPinnedCategory(id: selectedTracker.id)) {
+                            self.handler.resultTypeHandler(viewModel.deleteTracker(selectedTracker.id)) {}
+                            if let category = handler.resultTypeHandlerGetValue(viewModel.category)?.filter({ $0.nameCategory == nameCategory }).first {
+                                self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: category.nameCategory)) {}
                             } else {
                                 guard let nameCategory else { return }
-                                self.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {}
-                                self.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategory)) {}
+                                self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {}
+                                self.handler.resultTypeHandler(viewModel.addNewTracker(selectedTracker, nameCategory: nameCategory)) {}
                             }
                         }
-                        self.resultTypeHandler(viewModel.deleteTracker(selectedTracker.id)) {}
                     }
+                    guard handler.resultTypeHandlerGetValue(viewModel.category)?.filter ({ $0.nameCategory == ConstantsTrackerVc.textFixed }).first?.arrayTrackers.count == 0 else { return }
+                    handler.resultTypeHandler(viewModel.deleteCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
                 },
                 UIAction(title: secondContentText) { [weak self] _ in
                     guard let self else { return }
-                    self.resultTypeHandler(viewModel.updateTracker(tracker: selectedTracker)) {}
+                    let viewModel = CategoryViewModel()
+                    let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self, createTrackerDelegate: nil)
+                    delegate = createTrackerVC
+                    if selectedTracker.schedule.count != viewModel.regular.count {
+                        createTrackerVC.reverseIsSchedul()
+                    }
+                    createTrackerVC.modalPresentationStyle = .fullScreen
+                    present(createTrackerVC, animated: true) {
+                        self.delegate?.editTracker(vc: self,
+                                                   editTracker: selectedTracker,
+                                                   nameCategory: selectorCategory.nameCategory, indexPath: indexPath)
+                    }
                 },
                 UIAction(title: thirdContentText, attributes: .destructive) { _ in }
             ])
@@ -455,8 +451,8 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let viewModel = viewModel as? ViewModel,
-              let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
+        guard let viewModel = viewModel as? TrackerViewModel,
+              let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
         else { return CGSize() }
         let indexPath = IndexPath(row: visibleCategories.count, section: section)
         let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
@@ -468,28 +464,14 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             guard let supplementary = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(HeaderReusableView.self)", for: indexPath) as? HeaderReusableView,
-                  let viewModel = viewModel as? ViewModel,
-                  let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
+                  let viewModel = viewModel as? TrackerViewModel,
+                  let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
             else { return UICollectionReusableView() }
             supplementary.label.text = visibleCategories[indexPath.section].nameCategory
             return supplementary
         default:
             return UICollectionReusableView()
         }
-    }
-}
-
-//MARK: - TrackersCollectionViewCellDelegate
-extension TrackersViewController: TrackersCollectionViewCellDelegate {
-    func didTrackerCompleted(_ cell: UICollectionViewCell) {
-        guard let trackerCell = cell as? TrackersCollectionViewCell,
-              let indexPath = trackerCollectionView.indexPath(for: trackerCell),
-              let viewModel = viewModel as? ViewModel,
-              let visibleCategories = resultTypeHandlerGetValue(viewModel.visibleCategory)
-        else { return }
-        let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
-        viewModel.setIndexPath(indexPath)
-        resultTypeHandler(viewModel.updateCompletedTrackers(tracker: tracker, date: datePicker.date)) {}
     }
 }
 
@@ -500,7 +482,7 @@ extension TrackersViewController: UISearchResultsUpdating {
               let viewModel
         else { return }
         if !word.isEmpty {
-            guard let seachCategory = resultTypeHandlerGetValue(viewModel.filterListTrackersName(word: word)) else { return }
+            guard let seachCategory = handler.resultTypeHandlerGetValue(viewModel.filterListTrackersName(word: word)) else { return }
             viewModel.getShowListTrackerSearchForName(seachCategory)
             return
         }
@@ -517,14 +499,39 @@ extension TrackersViewController: UISearchResultsUpdating {
     }
 }
 
+//MARK: - TrackersCollectionViewCellDelegate
+extension TrackersViewController: TrackersCollectionViewCellDelegate {
+    func didTrackerCompleted(_ cell: UICollectionViewCell) {
+        guard let trackerCell = cell as? TrackersCollectionViewCell,
+              let indexPath = trackerCollectionView.indexPath(for: trackerCell),
+              let viewModel = viewModel as? TrackerViewModel,
+              let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
+        else { return }
+        let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
+        viewModel.setIndexPath(indexPath)
+        handler.resultTypeHandler(viewModel.updateCompletedTrackers(tracker: tracker, date: datePicker.date)) {}
+    }
+}
+
 //MARK: - EventSelectionViewControllerDelegate
 extension TrackersViewController: EventSelectionViewControllerDelegate {
     func eventSelectionViewController(vc: UIViewController, nameCategories: String, tracker: Tracker) {
         guard let viewModel else { return }
-        resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategories)) {}
+        handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategories)) {}
     }
     
     func eventSelectionViewControllerDidCancel(_ vc: EventSelectionViewController) {
         vc.dismiss(animated: false)
+    }
+}
+
+extension TrackersViewController: UpdateTrackerViewControllerDelegate {
+    func trackerViewController(vc: UIViewController, nameCategory: String, tracker: Tracker) {
+        guard let viewModel else { return }
+        handler.resultTypeHandler(viewModel.updateTracker(tracker: tracker, nameCategory: nameCategory)) {}
+    }
+    
+    func trackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
+        vc.dismiss(animated: true)
     }
 }
