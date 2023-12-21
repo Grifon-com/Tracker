@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct CreateCategoryCellModel {
+struct CustomCellModel {
     let text: String
     let color: UIColor
 }

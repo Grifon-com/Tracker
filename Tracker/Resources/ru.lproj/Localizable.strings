@@ -15,6 +15,12 @@
 "trackers" = "Трекеры";
 "statistics" = "Статистика";
 
+//MARK: - Trackers
+"allTrackers" = "Все трекеры";
+"toDayTrackers" = "Трекеры на сегодня";
+"completed" = "Завершенные";
+"notCompleted" = "Не завершенные";
+
 //MARK: - TrackersViewController
 "headerText" = "Трекеры";
 "labelStabText" = "Что будем отслеживать?";
@@ -27,6 +33,7 @@
 "textDelete" = "Удалить";
 "textFixed" = "Закрепленные";
 "sureDeleteTracker" = "Уверены что хотите удалить трекер?";
+"filters" = "Фильтры";
 
 //MARK: - CreateTrackerViewController
 "placeholderTrackerTextField" = "Введите название трекера";

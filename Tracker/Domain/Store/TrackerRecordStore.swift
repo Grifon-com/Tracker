@@ -48,7 +48,7 @@ final class TrackerRecordStore: NSObject {
 }
 
 private extension TrackerRecordStore {
-    func save(context: NSManagedObjectContext) -> Result<Void, Error> {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
@@ -77,12 +77,32 @@ private extension TrackerRecordStore {
     func addNewTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error> {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         updateExistingTrackerRecord(trackerRecordCoreData, trackerRecord: trackerRecord)
-        return save(context: context)
+        return save()
     }
     
     func deleteTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData) -> Result<Void, Error> {
         context.delete(trackerRecordCoreData)
-        return save(context: context)
+        return save()
+    }
+    
+    func searchTrackerRecordForDate(trackerRecord: TrackerRecord) throws -> TrackerRecordCoreData? {
+        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
+                                        #keyPath(TrackerRecordCoreData.date),
+                                        trackerRecord.date as CVarArg,
+                                        #keyPath(TrackerRecordCoreData.trackerId),
+                                        trackerRecord.id as CVarArg)
+        return try context.fetch(request).first
+    }
+    
+    func getCountTrackersRecord(id: UUID) throws -> Int? {
+        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@",
+                                        #keyPath(TrackerRecordCoreData.trackerId),
+                                        id as CVarArg)
+        return try context.fetch(request).count
     }
 }
 
@@ -100,17 +120,9 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
     }
     
     func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error> {
-        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
-                                        #keyPath(TrackerRecordCoreData.date),
-                                        trackerRecord.date as CVarArg,
-                                        #keyPath(TrackerRecordCoreData.trackerId),
-                                        trackerRecord.id as CVarArg)
         do {
-            let trackers = try context.fetch(request)
-            if let tracker = trackers.first {
-                return deleteTrackerRecord(tracker)
+            if let trackerRecord = try searchTrackerRecordForDate(trackerRecord: trackerRecord) {
+                return deleteTrackerRecord(trackerRecord)
             } else {
                 return addNewTrackerRecord(trackerRecord)
             }
@@ -121,17 +133,14 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
     }
     
     func loadTrackerRecord(id: UUID) -> Result<Int, Error> {
-        let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "%K == %@",
-                                        #keyPath(TrackerRecordCoreData.trackerId),
-                                        id as CVarArg)
         do {
-            let countTrackers = try context.fetch(request).count
-            return .success(countTrackers)
+            if let countTrackers = try getCountTrackersRecord(id: id) {
+                return .success(countTrackers)
+            }
         } catch {
             return .failure(error)
         }
+        return .failure(StoreErrors.TrackrerRecordStoreError.loadTrackerRecord)
     }
 }
 

@@ -15,6 +15,12 @@
 //MARK: - TabBarController
 "trackers" = "Trackers";
 "statistics" = "Statistics";
+
+//MARK: - Trackers
+"allTrackers" = "All Trackers";
+"toDayTrackers" = "Trackers for today";
+"completed" = "Completed";
+"notCompleted" = "Not Completed";
  
 //MARK: - TrackersViewController
 "headerText" = "Trackers";
@@ -28,6 +34,7 @@
 "textDelete" = "Delete";
 "textFixed" = "Fixed";
 "sureDeleteTracker" = "are you sure you want to delete the tracker";
+"filters" = "filters";
 
 //MARK: - CreateTrackerViewController
 "placeholderTrackerTextField" = "Enter the name of the tracker";

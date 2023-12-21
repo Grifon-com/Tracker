@@ -10,6 +10,7 @@ import CoreData
 
 protocol TrackerStoreProtocol {
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
+    func getTracker(indexPath: IndexPath) -> TrackerCoreData
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error>
     func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func deleteTracker(_ id: UUID) -> Result<Void, Error>
@@ -120,6 +121,7 @@ extension TrackerStore: TrackerStoreProtocol {
         do {
             if let category = try searchCategory(name: nameCategory) {
                 let trackerCoreData = TrackerCoreData(context: context)
+//                trackerCoreData.addToRecord(<#T##value: TrackerRecordCoreData##TrackerRecordCoreData#>)
                 updateExistingTrackerRecord(trackerCoreData: trackerCoreData, tracker: tracker)
                 category.addToTrakers(trackerCoreData)
                 return save()
@@ -183,6 +185,10 @@ extension TrackerStore: TrackerStoreProtocol {
         }
     }
     
+    func getTracker(indexPath: IndexPath) -> TrackerCoreData {
+        fetchedTrackerResultController.object(at: indexPath)
+    }
+    
     func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error> {
         do {
             if let trackerCD = try searchTracker(id: id) {
@@ -196,6 +202,15 @@ extension TrackerStore: TrackerStoreProtocol {
         }
         return save()
     }
+    
+//    func getCompletedTrackers(id: UUID, date: Date) -> TrackerCoreData?  {
+//        let request = NSFetchRequest<TrackerCoreData>(entityName: "\(TrackerCoreData.self)")
+//        request.returnsObjectsAsFaults = false
+//        guard let keyPath = (\TrackerRecordCoreData.trackerId)._kvcKeyPathString
+//        else { return nil }
+//        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@", keyPath, id as CVarArg, #keyPath(TrackerRecordCoreData.date), date as CVarArg)
+//        return try? context.fetch(request).first
+//    }
 }
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {

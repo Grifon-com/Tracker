@@ -17,7 +17,7 @@ protocol TrackerViewModelProtocol {
     
     func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
     func loadTrackerRecord(id: UUID) -> Result<Int, Error>
-    func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error>
+    func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error> 
     
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
@@ -30,18 +30,30 @@ protocol TrackerViewModelProtocol {
     
     func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
+    
+    func allTrackers(date: Date)
+    func getToDayTrackers(date: Date)
+    func getNotCompleted(date: Date)
+    func getCompleted(date: Date)
+    
+    func setFilterState(state: FiltersState)
+    func getFilterState() -> FiltersState
 }
 
 //MARK: - ViewModel
 final class TrackerViewModel {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
+    private static let keySelectFilter = "select_filter"
+    private static let keySelectNameCategory = "select_name_category"
     
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
     @Observable<IndexPath> private(set) var indexPath: IndexPath
     @Observable<Result<[TrackerCategory], Error>> private(set) var visibleCategory: Result<[TrackerCategory], Error>
-    @UserDefaultsBacked<String>(key: "select_name_category") private var selectNameCategory: String?
+    @Observable<FiltersState>private(set) var filterState: FiltersState
+    @UserDefaultsBacked<String>(key: TrackerViewModel.keySelectNameCategory) private var selectNameCategory: String?
+    @UserDefaultsBacked<String>(key: TrackerViewModel.keySelectFilter) private var selectFilter: String?
     
-    private var completedTrackers: Result<Set<TrackerRecord>, Error>
+    private(set) var completedTrackers: Result<Set<TrackerRecord>, Error>
     
     private let trackerCategoryStore: TrackerCategoryStoreProtocol
     private let trackerRecordStore: TrackerRecordStoreProtocol
@@ -60,12 +72,18 @@ final class TrackerViewModel {
                   category: .success([]),
                   completedTrackers: .success(Set()),
                   visibleCategory: .success([]),
-                  indexPath: IndexPath())
+                  indexPath: IndexPath(),
+                  filterState: .allTrackers)
         trackerCategoryStore.delegate = self
         trackerRecordStore.delegate = self
         trackerStore.delegate = self
         category = getCategory()
         completedTrackers = treckersRecordsResult()
+        guard let state = selectFilter else {
+            filterState = .allTrackers
+            return
+        }
+        filterState = FiltersState(rawValue: state) ?? .allTrackers
     }
     
     init(trackerCategoryStore: TrackerCategoryStoreProtocol,
@@ -75,7 +93,7 @@ final class TrackerViewModel {
          category: Result<[TrackerCategory], Error>,
          completedTrackers: Result<Set<TrackerRecord>, Error>,
          visibleCategory: Result<[TrackerCategory], Error>,
-         indexPath: IndexPath)
+         indexPath: IndexPath, filterState: FiltersState)
     {
         self.trackerCategoryStore = trackerCategoryStore
         self.trackerRecordStore = trackerRecordStore
@@ -85,6 +103,7 @@ final class TrackerViewModel {
         self.completedTrackers = completedTrackers
         self.visibleCategory = visibleCategory
         self.indexPath = indexPath
+        self.filterState = filterState
     }
 }
 //MARK: - Extension
@@ -135,8 +154,63 @@ private extension TrackerViewModel {
         return listCategories
     }
     
+    func filterListTrackersCompleted(trackerCategory: [TrackerCategory], date: Date) {
+        var listCategories: [TrackerCategory] = []
+        for cat in .zero..<trackerCategory.count {
+            let currentCategori = trackerCategory[cat]
+            var trackers: [Tracker] = []
+            for tracker in .zero..<trackerCategory[cat].arrayTrackers.count {
+                let tracker = trackerCategory[cat].arrayTrackers[tracker]
+                switch completedTrackers {
+                case .success(let compl):
+                    if let _ = compl.first(where: { $0.id == tracker.id  &&
+                        Calendar.current.isDate($0.date, inSameDayAs: date) }) {
+                        trackers.append(tracker)
+                        break
+                    }
+                case .failure(let error):
+                    visibleCategory = .failure(error)
+                }
+            }
+            if !trackers.isEmpty {
+                let trackerCat = TrackerCategory(nameCategory: currentCategori.nameCategory,
+                                                 arrayTrackers: trackers,
+                                                 isPinned: trackerCategory[cat].isPinned)
+                listCategories.append(trackerCat)
+            }
+        }
+        visibleCategory = .success(listCategories)
+    }
+    
+    func filterListTrackersNotCompleted(trackerCategory: [TrackerCategory], date: Date) {
+        var listCategories: [TrackerCategory] = []
+        for cat in .zero..<trackerCategory.count {
+            let currentCategori = trackerCategory[cat]
+            var trackers: [Tracker] = []
+            for tracker in .zero..<trackerCategory[cat].arrayTrackers.count {
+                let tracker = trackerCategory[cat].arrayTrackers[tracker]
+                switch completedTrackers {
+                case .success(let compl):
+                    if !compl.contains(where: { $0.id == tracker.id  &&
+                        Calendar.current.isDate($0.date, inSameDayAs: date) }) {
+                        trackers.append(tracker)
+                    }
+                case .failure(let error):
+                    visibleCategory = .failure(error)
+                }
+            }
+            if !trackers.isEmpty {
+                let trackerCat = TrackerCategory(nameCategory: currentCategori.nameCategory,
+                                                 arrayTrackers: trackers,
+                                                 isPinned: trackerCategory[cat].isPinned)
+                listCategories.append(trackerCat)
+            }
+        }
+        visibleCategory = .success(listCategories)
+    }
+    
     func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error> {
-        trackerRecordStore.updateTrackerRecord(trackerRecord)
+        return trackerRecordStore.updateTrackerRecord(trackerRecord)
     }
 }
 
@@ -153,15 +227,6 @@ extension TrackerViewModel: TrackerViewModelProtocol {
     func addCategory(nameCategory: String) -> Result<Void, Error> {
         trackerCategoryStore.addCategory(nameCategory)
     }
-    
-//    func isCategorySelected(at index: Int) -> Result<Bool, Error> {
-//        switch category {
-//        case .success(let category):
-//            return .success(category[index].nameCategory != selectNameCategory)
-//        case .failure(let error):
-//            return .failure(error)
-//        }
-//    }
     
     func getCategory() -> Result<[TrackerCategory], Error> {
         let trackerCategoryCoreData = trackerCategoryStore.getListTrackerCategoryCoreData()
@@ -261,6 +326,44 @@ extension TrackerViewModel: TrackerViewModelProtocol {
     
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error> {
         pinnedCategoryStore.deleteAndGetPinnedCategory(id)
+    }
+    
+    func allTrackers(date: Date) {
+        getShowListTrackersForDay(date: date)
+    }
+    
+    func getToDayTrackers(date: Date) {
+        getShowListTrackersForDay(date: date)
+    }
+    
+    func getNotCompleted(date: Date) {
+        switch category {
+        case .success(let cat):
+            filterListTrackersNotCompleted(trackerCategory: cat, date: date)
+        case .failure(let error):
+            visibleCategory = .failure(error)
+        }
+    }
+    
+    func getCompleted(date: Date) {
+        switch category {
+        case .success(let cat):
+            filterListTrackersCompleted(trackerCategory: cat, date: date)
+        case .failure(let error):
+            visibleCategory = .failure(error)
+        }
+    }
+    
+    func setFilterState(state: FiltersState) {
+        filterState = state
+    }
+    
+    func getFilterState() -> FiltersState {
+        filterState
+    }
+    
+    func getSelectFilter() -> String? {
+        selectFilter
     }
 }
 

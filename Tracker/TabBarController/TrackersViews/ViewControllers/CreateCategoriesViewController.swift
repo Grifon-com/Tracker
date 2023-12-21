@@ -18,20 +18,18 @@ final class CreateCategoriesViewController: UIViewController {
         static let imageViewImageStab = "Star"
         static let alertActionErrorTitle = "Ok"
         
-        static let categoriLabelText = NSLocalizedString("categoriLabelText", comment: "")
-        static let categoriAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
+        static let categoryLabelText = NSLocalizedString("categoriLabelText", comment: "")
+        static let categoryAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
         static let labelStabText = NSLocalizedString("labelStabText", comment: "")
         static let textFixed = NSLocalizedString("textFixed", comment: "")
         
         static let lableTextStabNumberOfLines = 2
         static let selectionCategoryTableViewRowHeight = CGFloat(75)
         static let cornerRadius = CGFloat(16)
-        static let categoriLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let categoryLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let labelStabTextFont = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let insertSeparatorTableView = UIEdgeInsets(top: .zero, left: 12, bottom: .zero, right: 12)
-        
-        static let backgroundColorCell: UIColor = .backgroundNight
     }
     
     weak var delegate: CreateCategoriesViewControllerDelegate?
@@ -39,15 +37,15 @@ final class CreateCategoriesViewController: UIViewController {
     
     private let handler = HandlerResultType()
     
-    private lazy var categoriLabel: UILabel = {
-        let categoriLabel = UILabel()
-        categoriLabel.text = ConstantsCreateCatVc.categoriLabelText
-        categoriLabel.textColor = .blackDay
-        categoriLabel.font = ConstantsCreateCatVc.categoriLabelFont
-        categoriLabel.textAlignment = .center
-        categoriLabel.backgroundColor = .clear
+    private lazy var categoryLabel: UILabel = {
+        let categoryLabel = UILabel()
+        categoryLabel.text = ConstantsCreateCatVc.categoryLabelText
+        categoryLabel.textColor = .blackDay
+        categoryLabel.font = ConstantsCreateCatVc.categoryLabelFont
+        categoryLabel.textAlignment = .center
+        categoryLabel.backgroundColor = .clear
         
-        return categoriLabel
+        return categoryLabel
     }()
     
     private lazy var imageViewStab: UIImageView = {
@@ -78,30 +76,29 @@ final class CreateCategoriesViewController: UIViewController {
     }()
     
     private lazy var selectionCategoryTableView: UITableView = {
-        let selectionCategoriTableView = UITableView()
-        selectionCategoriTableView.dataSource = self
-        selectionCategoriTableView.delegate = self
-        selectionCategoriTableView.backgroundColor = .clear
-        selectionCategoriTableView.separatorStyle = .singleLine
-        selectionCategoriTableView.register(CreateCategoriesTableViewCell.self, forCellReuseIdentifier: "\(CreateCategoriesTableViewCell.self)")
-        selectionCategoriTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
+        let selectionCategoryTableView = UITableView()
+        selectionCategoryTableView.dataSource = self
+        selectionCategoryTableView.delegate = self
+        selectionCategoryTableView.backgroundColor = .clear
+        selectionCategoryTableView.separatorStyle = .singleLine
+        selectionCategoryTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "\(CustomTableViewCell.self)")
+        selectionCategoryTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         
-        return selectionCategoriTableView
+        return selectionCategoryTableView
     }()
     
-    private lazy var createCategoriButton: UIButton = {
-        let createCategoriButton = UIButton()
-        createCategoriButton.setTitle(ConstantsCreateCatVc.categoriAddButtonText, for: .normal)
-        createCategoriButton.titleLabel?.textColor = .whiteDay
-        createCategoriButton.backgroundColor = .blackDay
-        createCategoriButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
-        createCategoriButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
-        createCategoriButton.layer.masksToBounds = true
-        createCategoriButton.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var createCategoryButton: UIButton = {
+        let createCategoryButton = UIButton()
+        createCategoryButton.setTitle(ConstantsCreateCatVc.categoryAddButtonText, for: .normal)
+        createCategoryButton.titleLabel?.textColor = .whiteDay
+        createCategoryButton.backgroundColor = .blackDay
+        createCategoryButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
+        createCategoryButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
+        createCategoryButton.layer.masksToBounds = true
+        createCategoryButton.translatesAutoresizingMaskIntoConstraints = false
+        createCategoryButton.addTarget(self, action: #selector(didTapСategoryButton), for: .touchUpInside)
         
-        createCategoriButton.addTarget(self, action: #selector(didTapСategoryButton), for: .touchUpInside)
-        
-        return createCategoriButton
+        return createCategoryButton
     }()
     
     init(delegate: CreateCategoriesViewControllerDelegate, viewModel: CategoryViewModelProtocol) {
@@ -158,30 +155,30 @@ extension CreateCategoriesViewController {
     
     //MARK: - SetupUI
     private func setupUIElement() {
-        setupCategoriButton()
-        setupCategoriLabel()
+        setupCategoryButton()
+        setupCategoryLabel()
         setupTableView()
         setupStabView()
     }
     
-    private func setupCategoriButton() {
-        view.addSubview(createCategoriButton)
+    private func setupCategoryButton() {
+        view.addSubview(createCategoryButton)
         
         NSLayoutConstraint.activate([
-            createCategoriButton.heightAnchor.constraint(equalToConstant: 60),
-            createCategoriButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            createCategoriButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            createCategoriButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            createCategoryButton.heightAnchor.constraint(equalToConstant: 60),
+            createCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            createCategoryButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            createCategoryButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     
-    private func setupCategoriLabel() {
-        view.addSubview(categoriLabel)
-        categoriLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setupCategoryLabel() {
+        view.addSubview(categoryLabel)
+        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            categoriLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            categoriLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            categoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            categoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
@@ -190,10 +187,10 @@ extension CreateCategoriesViewController {
         selectionCategoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            selectionCategoryTableView.topAnchor.constraint(equalTo: categoriLabel.bottomAnchor, constant: 24),
+            selectionCategoryTableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 24),
             selectionCategoryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             selectionCategoryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
-            selectionCategoryTableView.bottomAnchor.constraint(equalTo: createCategoriButton.topAnchor)
+            selectionCategoryTableView.bottomAnchor.constraint(equalTo: createCategoryButton.topAnchor)
         ])
     }
     
@@ -226,29 +223,36 @@ extension CreateCategoriesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateCategoriesTableViewCell.self)") as? CreateCategoriesTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)") as? CustomTableViewCell,
               let isSelected = handler.resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row)),
               let text = handler.resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row)),
               let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())
         else { return UITableViewCell() }
         cell.showSelectedImage(flag: isSelected)
-        let model = CreateCategoryCellModel(text: text, color: ConstantsCreateCatVc.backgroundColorCell)
+        let model = CustomCellModel(text: text, color: .backgroundNight)
         cell.config(model: model)
         
         if category.count > 1 {
             cell.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         }
         
-        if indexPath.row == category.count - 1 {
+        if indexPath.row == .zero && category.count == 1 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
+                                   maskedCorners: nil)
+            cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
+        }
+        
+        if indexPath.row == .zero && category.count > 1 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
+                                   maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+        }
+        
+        if indexPath.row == category.count - 1 && category.count > 1 {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
         }
         
-        if indexPath.row == .zero {
-            cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
-                                   maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
-        }
         return cell
     }
 }
@@ -256,7 +260,7 @@ extension CreateCategoriesViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension CreateCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? CreateCategoriesTableViewCell,
+        guard let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell,
               let delegate
         else { return }
         cell.showSelectedImage(flag: false)

@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - CreateCategoriesTableViewCell
-final class CreateCategoriesTableViewCell: UITableViewCell {    
+final class CustomTableViewCell: UITableViewCell {    
     private struct ConstantsGreateCell {
         static let iconButton = "IconButtonCell"
         static let nameImageSelected = "selected"
@@ -51,9 +51,9 @@ final class CreateCategoriesTableViewCell: UITableViewCell {
     }
 }
 
-extension CreateCategoriesTableViewCell {
+extension CustomTableViewCell {
     //MARK: - Config
-    func config(model: CreateCategoryCellModel) {
+    func config(model: CustomCellModel) {
         nameCategoriLableView.text = model.text
         backgroundColor = model.color
     }
@@ -62,8 +62,9 @@ extension CreateCategoriesTableViewCell {
         selectedImage.isHidden = flag
     }
     
-    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask?) {
         layer.cornerRadius = cornerRadius
+        guard let maskedCorners else { return }
         layer.maskedCorners = maskedCorners
     }
     

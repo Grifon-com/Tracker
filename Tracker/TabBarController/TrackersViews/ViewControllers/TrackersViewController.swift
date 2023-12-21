@@ -30,13 +30,16 @@ final class TrackersViewController: UIViewController {
         static let textEdit = NSLocalizedString("textEdit", comment: "")
         static let textDelete = NSLocalizedString("textDelete", comment: "")
         static let textFixed = NSLocalizedString("textFixed", comment: "")
-        static let sureDeleteTracker = NSLocalizedString("sureDeleteTracker", comment: "") 
+        static let sureDeleteTracker = NSLocalizedString("sureDeleteTracker", comment: "")
+        static let filters = NSLocalizedString("filters", comment: "")
         
         static let datePickerCornerRadius = CGFloat(8)
+        static let buttonFilterCornerRadius = CGFloat(16)
         static let heightCollectionView = CGFloat(148)
         
         static let fontLableTextStab = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
+        static let fontButtonFilter = UIFont.systemFont(ofSize: 17, weight: .medium)
         
         static let firstWeekday = 2
     }
@@ -128,6 +131,19 @@ final class TrackersViewController: UIViewController {
         return contentView
     }()
     
+    private lazy var buttonFilter: UIButton = {
+        let buttonFilter = UIButton()
+        buttonFilter.backgroundColor = .blueFilterButton
+        buttonFilter.translatesAutoresizingMaskIntoConstraints = false
+        buttonFilter.setTitle(ConstantsTrackerVc.filters, for: .normal)
+        buttonFilter.addTarget(self, action: #selector(actionButtonFilter), for: .touchUpInside)
+        buttonFilter.titleLabel?.font = ConstantsTrackerVc.fontButtonFilter
+        buttonFilter.layer.cornerRadius = ConstantsTrackerVc.buttonFilterCornerRadius
+        buttonFilter.layer.masksToBounds = true
+        
+        return buttonFilter
+    }()
+    
     init(viewModel: TrackerViewModelProtocol) {
         super.init(nibName: nil, bundle: nil)
     }
@@ -144,10 +160,17 @@ final class TrackersViewController: UIViewController {
         viewModel = TrackerViewModel()
         bind()
         guard let viewModel = viewModel as? TrackerViewModel else { return }
-        viewModel.getShowListTrackersForDay(date: datePicker.date)
-        guard let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
-        else { return }
-        self.showStabView(flag: !visibleCategories.isEmpty)
+//        guard let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
+//        else { return }
+//        self.showStabView(flag: !visibleCategories.isEmpty)
+        setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+        if let state = viewModel.getSelectFilter() {
+            if let state = FiltersState(rawValue: state) {
+                filterForState(state: state)
+            }
+        } else {
+            viewModel.allTrackers(date: datePicker.date)
+        }
     }
 }
 
@@ -156,7 +179,7 @@ private extension TrackersViewController {
         guard let viewModel = viewModel as? TrackerViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
-            viewModel.getShowListTrackersForDay(date: self.datePicker.date)
+            filterForState(state: viewModel.getFilterState())
         }
         
         viewModel.$indexPath.bind { [weak self] indexPath in
@@ -168,18 +191,43 @@ private extension TrackersViewController {
             guard let self,
                   let cat = handler.resultTypeHandlerGetValue(result)
             else { return }
+            self.buttonFilter.isHidden = cat.isEmpty
             self.showStabView(flag: !cat.isEmpty)
             self.trackerCollectionView.reloadData()
+        }
+        
+        viewModel.$filterState.bind { [weak self] state in
+            guard let self else { return }
+            switch state {
+            case .allTrackers:
+                viewModel.allTrackers(date: datePicker.date)
+                setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+            case .toDayTrackers:
+                datePicker.date = Date()
+                viewModel.allTrackers(date: datePicker.date)
+                setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+            case .completed:
+                viewModel.getCompleted(date: datePicker.date)
+                setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+            case .notCompleted:
+                viewModel.getNotCompleted(date: datePicker.date)
+                setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+            }
         }
     }
     
     //MARK: - обработка событий
     @objc
+    func actionButtonFilter() {
+        let filtersVC = FiltersViewController(viewModel: FiltersViewModel(), delegate: self)
+        filtersVC.modalPresentationStyle = .formSheet
+        present(filtersVC, animated: true)
+    }
+    
+    @objc
     func actionForTapDatePicker() {
         guard let viewModel else { return }
-        chengeStab(text: ConstantsTrackerVc.labelStabText, nameImage: ConstantsTrackerVc.imageStar)
-        viewModel.getShowListTrackersForDay(date: datePicker.date)
-        
+        filterForState(state: viewModel.getFilterState())
     }
     
     @objc
@@ -190,33 +238,37 @@ private extension TrackersViewController {
         present(greateVC, animated: true)
     }
     
-    //метод изменения заглушки
     func chengeStab(text: String, nameImage: String) {
         lableTextStab.text = text
         imageViewStab.image = UIImage(named: nameImage)
     }
     
-    //функция для сравнения двух дат, вернет true, если дата больше или равна текущей
-    func dateComparison(date: Date, currentDate: Date) -> Bool {
-        let result = Calendar.current.compare(date, to: currentDate, toGranularity: .day)
-        var flag: Bool
-        switch result {
-        case .orderedAscending:
-            flag = false
-        case .orderedSame:
-            flag = true
-        case .orderedDescending:
-            flag = true
-        }
-        return flag
-    }
-    
-    //метод показа/скрытия заглушки
     func showStabView(flag: Bool) {
         [imageViewStab, lableTextStab].forEach { $0.isHidden = flag }
     }
     
-    //метод создания кастомной CollectionView
+    func filterForState(state: FiltersState) {
+        guard let viewModel else { return }
+        switch state {
+        case .allTrackers:
+            viewModel.allTrackers(date: datePicker.date)
+            setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+        case .toDayTrackers:
+            viewModel.allTrackers(date: datePicker.date)
+            setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+        case .completed:
+            viewModel.getCompleted(date: datePicker.date)
+            setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+        case .notCompleted:
+            viewModel.getNotCompleted(date: datePicker.date)
+            setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
+        }
+    }
+    
+    func setColorButtonFilter(state: FiltersState, button: UIButton) {
+        button.setTitleColor(state == .allTrackers ? .colorSelection9 : .colorSelection1, for: .normal)
+    }
+    
     func greateTrackerCollectionView() -> TrackerCollectionView {
         let params = GeometricParams(cellCount: 2, leftInset: .zero, rightInset: .zero, cellSpacing: 12)
         let layout = UICollectionViewFlowLayout()
@@ -235,7 +287,6 @@ private extension TrackersViewController {
     }
     
     //MARK: - Menu Action
-    
     func pinnedAction(text: String, tracker: Tracker, category: TrackerCategory) -> UIAction {
         UIAction(title: text) { [weak self] _ in
             guard let self,
@@ -317,6 +368,8 @@ private extension TrackersViewController {
         setupContentView()
         setupStabView()
         setupNavBarItem()
+        setupButtonFilter()
+        
     }
     
     func setupNavBarItem() {
@@ -387,6 +440,17 @@ private extension TrackersViewController {
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
         ])
     }
+    
+    func setupButtonFilter() {
+        view.addSubview(buttonFilter)
+        
+        NSLayoutConstraint.activate([
+            buttonFilter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            buttonFilter.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            buttonFilter.heightAnchor.constraint(equalToConstant: 50),
+            buttonFilter.widthAnchor.constraint(equalToConstant: 114)
+        ])
+    }
 }
 
 //MARK: - UICollectionViewDataSource
@@ -439,6 +503,7 @@ extension TrackersViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - UICollectionViewDelegate
 extension TrackersViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         contextMenuConfiguration configuration: UIContextMenuConfiguration,
@@ -575,6 +640,14 @@ extension TrackersViewController: UpdateTrackerViewControllerDelegate {
     }
     
     func trackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
+        vc.dismiss(animated: true)
+    }
+}
+
+extension TrackersViewController: FiltersViewControllerDelegate {
+    func filter(vc: FiltersViewController, filterState: FiltersState) {
+        guard let viewModel else { return }
+        viewModel.setFilterState(state: filterState)
         vc.dismiss(animated: true)
     }
 }
