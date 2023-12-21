@@ -34,7 +34,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1AE96E0A2B341E000061F10D"
+               BlueprintIdentifier = "1AE96E1F2B3424E40061F10D"
                BuildableName = "TrackerTests.xctest"
                BlueprintName = "TrackerTests"
                ReferencedContainer = "container:Tracker.xcodeproj">

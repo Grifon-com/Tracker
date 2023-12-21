@@ -121,7 +121,6 @@ extension TrackerStore: TrackerStoreProtocol {
         do {
             if let category = try searchCategory(name: nameCategory) {
                 let trackerCoreData = TrackerCoreData(context: context)
-//                trackerCoreData.addToRecord(<#T##value: TrackerRecordCoreData##TrackerRecordCoreData#>)
                 updateExistingTrackerRecord(trackerCoreData: trackerCoreData, tracker: tracker)
                 category.addToTrakers(trackerCoreData)
                 return save()
