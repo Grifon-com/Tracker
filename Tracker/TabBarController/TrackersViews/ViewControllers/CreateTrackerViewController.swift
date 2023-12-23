@@ -51,6 +51,7 @@ final class CreateTrackerViewController: UIViewController {
     
     private let viewModel: EditTrackerModelProtocol
     private let handlerResultType = HandlerResultType()
+    private let colors = Colors()
     
     private lazy var newHabitLabel: UILabel = {
         let newHabitLabel = UILabel()

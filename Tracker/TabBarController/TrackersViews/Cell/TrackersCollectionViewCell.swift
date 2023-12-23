@@ -34,6 +34,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: TrackersCollectionViewCellDelegate?
     private var isSelectedAddButton: Bool = false
+    private let colors = Colors()
     
     private lazy var colorView: UIView = {
         let colorView = UIView()
@@ -76,7 +77,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     private lazy var dayCounterLable: UILabel = {
         let dayCounterLable = UILabel()
-        dayCounterLable.textColor = .blackDay
+        dayCounterLable.textColor = colors.whiteBlackItemColor
         dayCounterLable.font = ConstantsTrackerCell.fontLableDayCounter
         
         return dayCounterLable
@@ -157,7 +158,6 @@ extension TrackersCollectionViewCell {
         }
     }
     
-    //метод удаляет фон на кнопку addButton
     func updateBackgraundAddButton(isHidden: Bool) {
         backgroundAddButtonView.isHidden = isHidden
     }

@@ -32,7 +32,7 @@ final class TrackerCategoryStore: NSObject {
         request.sortDescriptors = [sortPinned, sortName]
         let fetchedResultController = NSFetchedResultsController(fetchRequest: request,
                                                                  managedObjectContext: context,
-                                                                 sectionNameKeyPath: nil,
+                                                                 sectionNameKeyPath: #keyPath(TrackerCategoryCoreData.nameCategory),
                                                                  cacheName: nil)
         fetchedResultController.delegate = self
         try? fetchedResultController.performFetch()

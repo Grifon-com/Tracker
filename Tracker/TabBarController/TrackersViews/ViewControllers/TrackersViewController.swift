@@ -36,17 +36,20 @@ final class TrackersViewController: UIViewController {
         static let datePickerCornerRadius = CGFloat(8)
         static let buttonFilterCornerRadius = CGFloat(16)
         static let heightCollectionView = CGFloat(148)
+        static let cellSpacing = CGFloat(12)
         
         static let fontLableTextStab = UIFont.systemFont(ofSize: 12, weight: .medium)
         static let fontLabelHeader = UIFont.boldSystemFont(ofSize: 34)
         static let fontButtonFilter = UIFont.systemFont(ofSize: 17, weight: .medium)
         
+        static let cellCount = 2
         static let firstWeekday = 2
     }
     
     weak var delegate: TrackersViewControllerDelegate?
     private var viewModel: TrackerViewModelProtocol?
     private let handler = HandlerResultType()
+    private let colors = Colors()
     
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
@@ -75,12 +78,15 @@ final class TrackersViewController: UIViewController {
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
+        datePicker.backgroundColor = .liteGray
         datePicker.datePickerMode = .date
+        datePicker.tintColor = .blueDay
         datePicker.preferredDatePickerStyle = .compact
         datePicker.calendar.firstWeekday = ConstantsTrackerVc.firstWeekday
         datePicker.layer.cornerRadius = ConstantsTrackerVc.datePickerCornerRadius
         datePicker.layer.masksToBounds = true
-        datePicker.locale = .current
+        datePicker.overrideUserInterfaceStyle = .light
+        datePicker.locale = .autoupdatingCurrent
         datePicker.addTarget(self, action: #selector(actionForTapDatePicker), for: .valueChanged)
         
         return datePicker
@@ -155,18 +161,15 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = colors.viewBackground
         setupUIElement()
         viewModel = TrackerViewModel()
         bind()
         guard let viewModel = viewModel as? TrackerViewModel else { return }
-//        guard let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
-//        else { return }
-//        self.showStabView(flag: !visibleCategories.isEmpty)
         setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         if let state = viewModel.getSelectFilter() {
             if let state = FiltersState(rawValue: state) {
-                filterForState(state: state)
+                filterState(state: state)
             }
         } else {
             viewModel.allTrackers(date: datePicker.date)
@@ -179,7 +182,7 @@ private extension TrackersViewController {
         guard let viewModel = viewModel as? TrackerViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
-            filterForState(state: viewModel.getFilterState())
+            filterState(state: viewModel.getFilterState())
         }
         
         viewModel.$indexPath.bind { [weak self] indexPath in
@@ -227,7 +230,7 @@ private extension TrackersViewController {
     @objc
     func actionForTapDatePicker() {
         guard let viewModel else { return }
-        filterForState(state: viewModel.getFilterState())
+        filterState(state: viewModel.getFilterState())
     }
     
     @objc
@@ -247,7 +250,7 @@ private extension TrackersViewController {
         [imageViewStab, lableTextStab].forEach { $0.isHidden = flag }
     }
     
-    func filterForState(state: FiltersState) {
+    func filterState(state: FiltersState) {
         guard let viewModel else { return }
         switch state {
         case .allTrackers:
@@ -270,7 +273,10 @@ private extension TrackersViewController {
     }
     
     func greateTrackerCollectionView() -> TrackerCollectionView {
-        let params = GeometricParams(cellCount: 2, leftInset: .zero, rightInset: .zero, cellSpacing: 12)
+        let params = GeometricParams(cellCount: ConstantsTrackerVc.cellCount,
+                                     leftInset: .zero,
+                                     rightInset: .zero,
+                                     cellSpacing: ConstantsTrackerVc.cellSpacing)
         let layout = UICollectionViewFlowLayout()
         let trackerCollectionView = TrackerCollectionView(frame: .zero,
                                                           collectionViewLayout: layout,
@@ -382,7 +388,7 @@ private extension TrackersViewController {
         
         topItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         topItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: .zero, left: -10, bottom: .zero, right: .zero)
-        topItem.leftBarButtonItem?.tintColor = .blackDay
+        topItem.leftBarButtonItem?.tintColor = colors.whiteBlackItemColor
         navBar.backgroundColor = .clear
         
         navigationItem.title = ConstantsTrackerVc.headerText

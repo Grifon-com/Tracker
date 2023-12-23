@@ -13,7 +13,6 @@ final class TrackerTests: XCTestCase {
     
     func testViewController() {
         let vc = TabBarController()
-        
         assertSnapshot(matching: vc, as: .image)
     }
 }

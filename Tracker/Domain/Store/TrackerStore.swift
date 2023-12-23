@@ -10,7 +10,6 @@ import CoreData
 
 protocol TrackerStoreProtocol {
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
-    func getTracker(indexPath: IndexPath) -> TrackerCoreData
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error>
     func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func deleteTracker(_ id: UUID) -> Result<Void, Error>
@@ -31,6 +30,7 @@ final class TrackerStore: NSObject {
     private lazy var fetchedTrackerResultController: NSFetchedResultsController<TrackerCoreData> = {
         let request = TrackerCoreData.fetchRequest()
         let sortName = NSSortDescriptor(keyPath: \TrackerCoreData.name, ascending: true)
+        let sortId = NSSortDescriptor(keyPath: \TrackerCoreData.id, ascending: true)
         request.sortDescriptors = [sortName]
         let fetchedResultController = NSFetchedResultsController(fetchRequest: request,
                                                                  managedObjectContext: context,
@@ -96,6 +96,10 @@ private extension TrackerStore {
         }
     }
     
+    func getTrackerFor(_ indexPath: IndexPath) -> TrackerCoreData {
+        fetchedTrackerResultController.object(at: indexPath)
+    }
+    
     func searchTracker(id: UUID) throws -> TrackerCoreData? {
         let request = NSFetchRequest<TrackerCoreData>(entityName: "\(TrackerCoreData.self)")
         request.returnsObjectsAsFaults = false
@@ -132,7 +136,6 @@ extension TrackerStore: TrackerStoreProtocol {
     }
     
     func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error> {
-        let _ = fetchedTrackerResultController
         do {
             if let categoryCD = try searchCategory(name: nameCategory) {
                 do {
@@ -178,16 +181,12 @@ extension TrackerStore: TrackerStoreProtocol {
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error> {
         do {
             let trackers = try objects.map({ try tracker(from: $0) })
-            return .success(trackers)
+            return .success(trackers.sorted { $0.name < $1.name })
         } catch {
             return .failure(error)
         }
     }
-    
-    func getTracker(indexPath: IndexPath) -> TrackerCoreData {
-        fetchedTrackerResultController.object(at: indexPath)
-    }
-    
+        
     func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error> {
         do {
             if let trackerCD = try searchTracker(id: id) {
