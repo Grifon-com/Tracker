@@ -299,6 +299,7 @@ extension CreateTrackerViewController {
                                                         tracker: tracker)
             createTrackerDelegate.trackerViewControllerDidCancel(self)
         }
+        AnalyticsService.shared.addTracker()
     }
     
     @objc

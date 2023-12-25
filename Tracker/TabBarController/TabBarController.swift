@@ -55,6 +55,10 @@ final class TabBarController: UITabBarController {
              }
          }
     }
+    
+    deinit {
+        AnalyticsService.shared.close()
+    }
 }
 
 //MARK: - Setup

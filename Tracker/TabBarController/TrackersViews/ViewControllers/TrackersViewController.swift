@@ -161,6 +161,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AnalyticsService.shared.open()
         view.backgroundColor = colors.viewBackground
         setupUIElement()
         viewModel = TrackerViewModel()
@@ -222,6 +223,7 @@ private extension TrackersViewController {
     //MARK: - обработка событий
     @objc
     func actionButtonFilter() {
+        AnalyticsService.shared.filter()
         let filtersVC = FiltersViewController(viewModel: FiltersViewModel(), delegate: self)
         filtersVC.modalPresentationStyle = .formSheet
         present(filtersVC, animated: true)
@@ -344,6 +346,7 @@ private extension TrackersViewController {
                                            nameCategory: category.nameCategory,
                                            indexPath: indexPath)
             }
+            AnalyticsService.shared.edit()
         }
     }
     
@@ -356,6 +359,7 @@ private extension TrackersViewController {
             let deleteAction = UIAlertAction(title: ConstantsTrackerVc.textDelete,
                                              style: .destructive) { _ in
                 self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                AnalyticsService.shared.delete()
                 alert.dismiss(animated: true)
             }
             let cancelAction = UIAlertAction(title: ConstantsTrackerVc.textCancel,
@@ -623,6 +627,7 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
         let tracker = visibleCategories[indexPath.section].arrayTrackers[indexPath.row]
         viewModel.setIndexPath(indexPath)
         handler.resultTypeHandler(viewModel.updateCompletedTrackers(tracker: tracker, date: datePicker.date)) {}
+        AnalyticsService.shared.track()
     }
 }
 
@@ -650,6 +655,7 @@ extension TrackersViewController: UpdateTrackerViewControllerDelegate {
     }
 }
 
+//MARK: - FiltersViewControllerDelegate
 extension TrackersViewController: FiltersViewControllerDelegate {
     func filter(vc: FiltersViewController, filterState: FiltersState) {
         guard let viewModel else { return }
