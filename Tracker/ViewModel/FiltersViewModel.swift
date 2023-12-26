@@ -15,9 +15,8 @@ protocol FiltersViewModelProtocol {
 }
 
 final class FiltersViewModel {
-    private static let keySelectFilter = "select_filter"
     let filtersState: [FiltersState] = [.allTrackers, .toDayTrackers, .completed, .notCompleted]
-    @UserDefaultsBacked<String>(key: FiltersViewModel.keySelectFilter) private var selectFilter: String?
+    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectFilter.rawValue) private var selectFilter: String?
 }
 
 extension FiltersViewModel: FiltersViewModelProtocol {

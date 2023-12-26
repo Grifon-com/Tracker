@@ -90,7 +90,7 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
     
     func jonedSchedule(schedule: [WeekDay], stringArrayDay: String) -> String {
         var stringListDay: String
-        if schedule.count == 7 {
+        if schedule.count == regular.count {
             stringListDay = stringArrayDay
             return stringListDay
         }

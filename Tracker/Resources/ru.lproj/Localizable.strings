@@ -21,6 +21,11 @@
 "completed" = "Завершенные";
 "notCompleted" = "Не завершенные";
 
+//MARK: - StatisticViewController
+"headerStatisticText" = "Статистика";
+"labelStubStatisticsText" = "Анализировать пока нечего";
+"secondaryStatisticText" = "Трекеров завершено";
+
 //MARK: - TrackersViewController
 "headerText" = "Трекеры";
 "labelStabText" = "Что будем отслеживать?";

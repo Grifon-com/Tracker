@@ -22,6 +22,11 @@
 "completed" = "Completed";
 "notCompleted" = "Not Completed";
  
+//MARK: - StatisticViewController
+"headerStatisticText" = "Statistics";
+"labelStubStatisticsText" = "There is nothing to analyze yet";
+"secondaryStatisticText" = "Trackers completed";
+
 //MARK: - TrackersViewController
 "headerText" = "Trackers";
 "labelStabText" = "What will we track?";

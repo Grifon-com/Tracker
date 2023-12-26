@@ -25,10 +25,10 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBar()
         let trackerViewController = TrackersViewController(viewModel: TrackerViewModel())
-        let statisticViewController = StatisticViewController()
+        let statisticsViewController = StatisticsViewController()
         
         let trackerNavigationController = UINavigationController(rootViewController: trackerViewController)
-        let statisticNavigationController = UINavigationController(rootViewController: statisticViewController)
+        let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
         
         viewControllers = [
             generateViewController(vc: trackerNavigationController,
@@ -36,7 +36,7 @@ final class TabBarController: UITabBarController {
                                    title: ConstantsTabBar.tabBarTitleTrecker,
                                    insert: ConstantsTabBar.insertImage),
             
-            generateViewController(vc: statisticNavigationController,
+            generateViewController(vc: statisticsNavigationController,
                                    imageName: ConstantsTabBar.tabBarImageStatistic,
                                    title: ConstantsTabBar.tabBarTitleStatistic,
                                    insert: ConstantsTabBar.insertImage)

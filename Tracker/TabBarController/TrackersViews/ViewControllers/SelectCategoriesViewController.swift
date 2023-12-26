@@ -7,13 +7,13 @@
 
 import UIKit
 
-//MARK: - CreateCategoriesViewControllerDelegate
-protocol CreateCategoriesViewControllerDelegate: AnyObject {
+//MARK: - SelectCategoriesViewControllerDelegate
+protocol SelectCategoriesViewControllerDelegate: AnyObject {
     func createCategoriesViewController(vc: UIViewController, nameCategory: String)
 }
 
-//MARK: - CreateCategoriesViewController
-final class CreateCategoriesViewController: UIViewController {
+//MARK: - SelectCategoriesViewController
+final class SelectCategoriesViewController: UIViewController {
     private struct ConstantsCreateCatVc {
         static let imageViewImageStab = "Star"
         static let alertActionErrorTitle = "Ok"
@@ -32,7 +32,7 @@ final class CreateCategoriesViewController: UIViewController {
         static let insertSeparatorTableView = UIEdgeInsets(top: .zero, left: 12, bottom: .zero, right: 12)
     }
     
-    weak var delegate: CreateCategoriesViewControllerDelegate?
+    weak var delegate: SelectCategoriesViewControllerDelegate?
     private var viewModel: CategoryViewModelProtocol
     
     private let handler = HandlerResultType()
@@ -101,7 +101,7 @@ final class CreateCategoriesViewController: UIViewController {
         return createCategoryButton
     }()
     
-    init(delegate: CreateCategoriesViewControllerDelegate, viewModel: CategoryViewModelProtocol) {
+    init(delegate: SelectCategoriesViewControllerDelegate, viewModel: CategoryViewModelProtocol) {
         self.delegate = delegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -128,7 +128,7 @@ final class CreateCategoriesViewController: UIViewController {
     }
 }
 
-extension CreateCategoriesViewController {
+extension SelectCategoriesViewController {
     //MARK: - обработка событий
     @objc
     private func didTapСategoryButton() {
@@ -217,7 +217,7 @@ extension CreateCategoriesViewController {
 }
 
 //MARK: - UITableViewDataSource
-extension CreateCategoriesViewController: UITableViewDataSource {
+extension SelectCategoriesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())?.count ?? 0
     }
@@ -258,7 +258,7 @@ extension CreateCategoriesViewController: UITableViewDataSource {
 }
 
 //MARK: - UITableViewDelegate
-extension CreateCategoriesViewController: UITableViewDelegate {
+extension SelectCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell,
               let delegate
@@ -273,7 +273,7 @@ extension CreateCategoriesViewController: UITableViewDelegate {
 }
 
 //MARK: - NewCategoriViewControllerDelegate
-extension CreateCategoriesViewController: NewCategoriViewControllerDelegate {
+extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
     func didNewCategoryName(_ vc: UIViewController, nameCategory: String) {
         guard let category = handler.resultTypeHandlerGetValue(viewModel.getCategory())
         else { return }

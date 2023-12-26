@@ -4021,8 +4021,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "deleteTracker(_:)"
             landmarkType = "7">
             <Locations>
@@ -4130,8 +4130,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "deleteTracker(_:)"
             landmarkType = "7">
             <Locations>
@@ -4634,8 +4634,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "addNewTracker(_:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4666,8 +4666,8 @@
             filePath = "Tracker/Domain/Store/TrackerRecordStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "updateTrackerRecord(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4682,8 +4682,8 @@
             filePath = "Tracker/Domain/Store/TrackerRecordStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "addNewTrackerRecord(_:)"
             landmarkType = "7">
             <Locations>
@@ -4918,8 +4918,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "addPinnedCategory(_:pinnedCategory:)"
             landmarkType = "7">
             <Locations>
@@ -5615,8 +5615,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
             <Locations>
@@ -5663,8 +5663,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5679,8 +5679,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
             landmarkName = "storeCategory(trackerCategoryStore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5773,8 +5773,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "217"
-            endingLineNumber = "217"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "controllerDidChangeContent(_:)"
             landmarkType = "7">
             <Locations>
@@ -6079,8 +6079,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
             <Locations>
@@ -6157,8 +6157,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
             <Locations>
@@ -6268,8 +6268,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6284,8 +6284,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6537,8 +6537,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "TrackerStore"
             landmarkType = "21">
             <Locations>
@@ -6630,8 +6630,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "TrackerStore"
             landmarkType = "21">
             <Locations>
@@ -6740,8 +6740,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "comparisonWeekDays(date:day:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6756,8 +6756,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "filterListTrackersCompleted(trackerCategory:date:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6772,8 +6772,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "filterListTrackersCompleted(trackerCategory:date:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6883,8 +6883,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "filterListTrackersNotCompleted(trackerCategory:date:)"
             landmarkType = "7">
             <Locations>
@@ -7059,8 +7059,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
             landmarkName = "fetchedTrackerResultController"
             landmarkType = "24">
          </BreakpointContent>
@@ -7075,8 +7075,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "fetchedTrackerResultController"
             landmarkType = "24">
          </BreakpointContent>

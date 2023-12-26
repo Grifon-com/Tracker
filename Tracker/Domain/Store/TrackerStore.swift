@@ -23,6 +23,7 @@ protocol TrackerStoreDelegate: AnyObject {
 //MARK: - TrackerStore
 final class TrackerStore: NSObject {
     weak var delegate: TrackerStoreDelegate?
+    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
     
     private let context: NSManagedObjectContext
     private let colorMarshalling = UIColorMarshalling()
@@ -179,6 +180,7 @@ extension TrackerStore: TrackerStoreProtocol {
     }
     
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error> {
+        isTracker = objects.isEmpty
         do {
             let trackers = try objects.map({ try tracker(from: $0) })
             return .success(trackers.sorted { $0.name < $1.name })

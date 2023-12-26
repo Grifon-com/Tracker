@@ -21,7 +21,7 @@ final class CategoryViewModel {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
     
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
-    @UserDefaultsBacked<String>(key: "select_name_category") private var selectNameCategory: String?
+    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private var selectNameCategory: String?
     
     private let trackerCategoryStore: TrackerCategoryStoreProtocol
     private let trackerStore: TrackerStoreProtocol

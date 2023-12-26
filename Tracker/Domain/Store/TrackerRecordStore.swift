@@ -10,8 +10,9 @@ import CoreData
 
 protocol TrackerRecordStoreProtocol {
     func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error>
-    func loadTrackerRecord(id: UUID) -> Result<Int, Error>
-    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error> 
+    func getCountTrackerRecordForDate(id: UUID) -> Result<Int, Error>
+    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
+    func getCountTrackerComplet() -> Int?
 }
 
 protocol TrackerRecordStoreDelegate: AnyObject {
@@ -132,7 +133,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
     }
     
-    func loadTrackerRecord(id: UUID) -> Result<Int, Error> {
+    func getCountTrackerRecordForDate(id: UUID) -> Result<Int, Error> {
         do {
             if let countTrackers = try getCountTrackersRecord(id: id) {
                 return .success(countTrackers)
@@ -142,6 +143,11 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
         return .failure(StoreErrors.TrackrerRecordStoreError.loadTrackerRecord)
     }
+    
+    func getCountTrackerComplet() -> Int? {
+        fetchedTrackerRecordResultController.fetchedObjects?.count
+    }
+    
 }
 
 //MARK: - NSFetchedResultsControllerDelegate

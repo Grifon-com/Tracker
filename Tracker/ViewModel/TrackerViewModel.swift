@@ -43,15 +43,13 @@ protocol TrackerViewModelProtocol {
 //MARK: - ViewModel
 final class TrackerViewModel {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
-    private static let keySelectFilter = "select_filter"
-    private static let keySelectNameCategory = "select_name_category"
     
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
     @Observable<IndexPath> private(set) var indexPath: IndexPath
     @Observable<Result<[TrackerCategory], Error>> private(set) var visibleCategory: Result<[TrackerCategory], Error>
     @Observable<FiltersState>private(set) var filterState: FiltersState
-    @UserDefaultsBacked<String>(key: TrackerViewModel.keySelectNameCategory) private var selectNameCategory: String?
-    @UserDefaultsBacked<String>(key: TrackerViewModel.keySelectFilter) private var selectFilter: String?
+    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private var selectNameCategory: String?
+    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectFilter.rawValue) private var selectFilter: String?
     
     private(set) var completedTrackers: Result<Set<TrackerRecord>, Error>
     
@@ -244,7 +242,7 @@ extension TrackerViewModel: TrackerViewModelProtocol {
     }
     
     func loadTrackerRecord(id: UUID) -> Result<Int, Error> {
-        trackerRecordStore.loadTrackerRecord(id: id)
+        trackerRecordStore.getCountTrackerRecordForDate(id: id)
     }
     
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error> {
