@@ -11,6 +11,10 @@ protocol NewCategoriViewControllerDelegate: AnyObject {
     func didNewCategoryName(_ vc: UIViewController, nameCategory: String)
 }
 
+protocol UpdateCategoriViewControllerDelegate: AnyObject {
+    func didUpdateCategoryName(_ vc: UIViewController, newNameCategory: String, oldNameCategory: String)
+}
+
 //MARK: - NewCategoriViewController
 class NewCategoriViewController: UIViewController {
     private struct ConstantsNewCatVc {
@@ -24,13 +28,10 @@ class NewCategoriViewController: UIViewController {
         static let textFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
     }
     
-    private var nameCategori: String = "" {
-        didSet {
-            chengeHiddenButton(flag: nameCategori.isEmpty)
-        }
-    }
+    weak var createCategorydelegate: NewCategoriViewControllerDelegate?
+    weak var updateCategoryrDelegate: UpdateCategoriViewControllerDelegate?
     
-    weak var delegate: NewCategoriViewControllerDelegate?
+    private var viewModel: NewCategoryViewModelProtocol?
     
     private lazy var newCategoriLabel: UILabel = {
         let newCategoriLabel = UILabel()
@@ -72,8 +73,22 @@ class NewCategoriViewController: UIViewController {
         return createNameTextField
     }()
     
+    init(createCategorydelegate: NewCategoriViewControllerDelegate? = nil,
+         updateCategoryrDelegate: UpdateCategoriViewControllerDelegate? = nil)
+    {
+        self.createCategorydelegate = createCategorydelegate
+        self.updateCategoryrDelegate = updateCategoryrDelegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = NewCategoryViewModel()
+        bind()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -83,10 +98,24 @@ class NewCategoriViewController: UIViewController {
 }
 
 private extension NewCategoriViewController {
+    func bind() {
+        guard let viewModel = viewModel as? NewCategoryViewModel else { return }
+        viewModel.$newNameCategory.bind { [weak self] text in
+            guard let self else { return }
+            chengeHiddenButton(flag: viewModel.getNewNameCategory().isEmpty)
+        }
+    }
+    
     //MARK: - Обработка событий
     @objc
     func didTapNewСategoriButton() {
-        delegate?.didNewCategoryName(self, nameCategory: nameCategori)
+        guard let viewModel else { return }
+        if let createCategorydelegate {
+            createCategorydelegate.didNewCategoryName(self, nameCategory: viewModel.getNewNameCategory())
+        }
+        if let updateCategoryrDelegate {
+            updateCategoryrDelegate.didUpdateCategoryName(self, newNameCategory: viewModel.getNewNameCategory(), oldNameCategory: viewModel.getOldNameCategory())
+        }
         dismiss(animated: true)
     }
     
@@ -144,12 +173,22 @@ private extension NewCategoriViewController {
 //MARK: - UITextFieldDelegate
 extension NewCategoriViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let text = textField.text else { return }
-        nameCategori = text
+        guard let text = textField.text, let viewModel
+        else { return }
+        viewModel.setNewNameCategory(text: text)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         createNameTextField.resignFirstResponder()
         return true
+    }
+}
+
+extension NewCategoriViewController: SelectCategoryEditViewControllerDelegate {
+    func editCategoriesViewController(vc: UIViewController, oldNameCategory: String) {
+        guard let viewModel else { return }
+        createNameTextField.text = oldNameCategory
+        viewModel.setNewNameCategory(text: oldNameCategory)
+        viewModel.setOldNameCategory(text: oldNameCategory)
     }
 }

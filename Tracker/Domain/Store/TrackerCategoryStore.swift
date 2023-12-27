@@ -12,6 +12,7 @@ protocol TrackerCategoryStoreProtocol {
     func addCategory(_ nameCategory: String) -> Result<Void, Error>
     func getListTrackerCategoryCoreData() -> [TrackerCategoryCoreData]?
     func deleteCategory(nameCategory: String) -> Result<Void, Error>
+    func updateNameCategory(newNameCategory: String, oldNameCategory: String) -> Result<Void, Error>
 }
 
 protocol TrackerCategoryStoreDelegate: AnyObject {
@@ -22,7 +23,7 @@ protocol TrackerCategoryStoreDelegate: AnyObject {
 final class TrackerCategoryStore: NSObject {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
     weak var delegate: TrackerCategoryStoreDelegate?
-    
+    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
     private let context: NSManagedObjectContext
     
     private lazy var fetchedCategoryResultController: NSFetchedResultsController<TrackerCategoryCoreData> = {
@@ -32,7 +33,7 @@ final class TrackerCategoryStore: NSObject {
         request.sortDescriptors = [sortPinned, sortName]
         let fetchedResultController = NSFetchedResultsController(fetchRequest: request,
                                                                  managedObjectContext: context,
-                                                                 sectionNameKeyPath: #keyPath(TrackerCategoryCoreData.nameCategory),
+                                                                 sectionNameKeyPath: nil,
                                                                  cacheName: nil)
         fetchedResultController.delegate = self
         try? fetchedResultController.performFetch()
@@ -51,13 +52,25 @@ final class TrackerCategoryStore: NSObject {
 }
 
 private extension TrackerCategoryStore {
-    func save(context: NSManagedObjectContext) -> Result<Void, Error> {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
         } catch {
             return .failure(error)
         }
+    }
+    
+    func searchTrackerCategoryCD(nameCategory: String) throws -> TrackerCategoryCoreData? {
+        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "\(TrackerCategoryCoreData.self)")
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.nameCategory), nameCategory as CVarArg)
+        return try context.fetch(request).first
+    }
+    
+    func update(trackerCategoryCD: TrackerCategoryCoreData, newNameCategory: String) -> Result<Void, Error>  {
+        trackerCategoryCD.nameCategory = newNameCategory
+        return save()
     }
 }
 
@@ -67,26 +80,37 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
         let categoryCoreData = TrackerCategoryCoreData(context: context)
         categoryCoreData.nameCategory = nameCategory
         categoryCoreData.isPinned = nameCategory == textFixed ? false : true
-        return save(context: context)
+        return save()
     }
     
     func getListTrackerCategoryCoreData() -> [TrackerCategoryCoreData]? {
-        fetchedCategoryResultController.fetchedObjects
+        let trackCatCD = fetchedCategoryResultController.fetchedObjects
+        isTracker = trackCatCD?.first { $0.trakers?.count ?? 0 > 0 } == nil
+        return trackCatCD
     }
     
     func deleteCategory(nameCategory: String) -> Result<Void, Error> {
-        let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "\(TrackerCategoryCoreData.self)")
-        request.returnsObjectsAsFaults = false
-        request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.nameCategory), nameCategory as CVarArg)
         do {
-            if let category = try context.fetch(request).first {
+            if let category = try searchTrackerCategoryCD(nameCategory: nameCategory) {
                 context.delete(category)
-                return save(context: context)
+                category.trakers = nil
+                return save()
             }
         } catch {
             return .failure(error)
         }
-        return save(context: context)
+        return save()
+    }
+    
+    func updateNameCategory(newNameCategory: String, oldNameCategory: String) -> Result<Void, Error> {
+        do {
+            if let trackCatCD = try searchTrackerCategoryCD(nameCategory: oldNameCategory) {
+                return update(trackerCategoryCD: trackCatCD, newNameCategory: newNameCategory)
+            }
+        } catch {
+            return .failure(error)
+        }
+        return save()
     }
 }
 

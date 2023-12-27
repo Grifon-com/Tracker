@@ -173,7 +173,7 @@ final class TrackersViewController: UIViewController {
                 filterState(state: state)
             }
         } else {
-            viewModel.allTrackers(date: datePicker.date)
+            viewModel.allTrackersByDate(date: datePicker.date)
         }
     }
 }
@@ -204,11 +204,11 @@ private extension TrackersViewController {
             guard let self else { return }
             switch state {
             case .allTrackers:
-                viewModel.allTrackers(date: datePicker.date)
+                viewModel.allTrackersByDate(date: datePicker.date)
                 setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
             case .toDayTrackers:
                 datePicker.date = Date()
-                viewModel.allTrackers(date: datePicker.date)
+                viewModel.allTrackersByDate(date: datePicker.date)
                 setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
             case .completed:
                 viewModel.getCompleted(date: datePicker.date)
@@ -256,10 +256,10 @@ private extension TrackersViewController {
         guard let viewModel else { return }
         switch state {
         case .allTrackers:
-            viewModel.allTrackers(date: datePicker.date)
+            viewModel.allTrackersByDate(date: datePicker.date)
             setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         case .toDayTrackers:
-            viewModel.allTrackers(date: datePicker.date)
+            viewModel.allTrackersByDate(date: datePicker.date)
             setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         case .completed:
             viewModel.getCompleted(date: datePicker.date)
@@ -334,7 +334,7 @@ private extension TrackersViewController {
         UIAction(title: text) { [weak self] _ in
             guard let self else { return }
             let viewModel = EditTrackerViewModel()
-            let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self, createTrackerDelegate: nil)
+            let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self)
             delegate = createTrackerVC
             if tracker.schedule.count != viewModel.regular.count {
                 createTrackerVC.reverseIsSchedul()

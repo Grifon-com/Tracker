@@ -452,8 +452,8 @@ extension CreateTrackerViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.listSettings[indexPath.row] {
         case .category:
-            let greateCategoriViewController = SelectCategoriesViewController(delegate: self, viewModel: CategoryViewModel())
-            presentViewController(vc: greateCategoriViewController, modalStyle: .formSheet)
+            let selectCategoriesViewController = SelectCategoriesViewController(delegate: self, viewModel: CategoryViewModel())
+            presentViewController(vc: selectCategoriesViewController, modalStyle: .formSheet)
         case .schedule:
             let viewModel = SheduleViewModel()
             let scheduleViewController = ScheduleViewController(viewModel: viewModel)
@@ -588,7 +588,7 @@ extension CreateTrackerViewController: ScheduleViewControllerDelegate {
 
 //MARK: - GreateCategoriesViewControllerDelegate
 extension CreateTrackerViewController: SelectCategoriesViewControllerDelegate {
-    func createCategoriesViewController(vc: UIViewController, nameCategory: String) {
+    func categoriesViewController(vc: UIViewController, nameCategory: String) {
         viewModel.setNameNewCategory(self, nameCategory: nameCategory)
         vc.dismiss(animated: true)
     }

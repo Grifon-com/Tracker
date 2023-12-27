@@ -31,7 +31,7 @@ protocol TrackerViewModelProtocol {
     func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
     
-    func allTrackers(date: Date)
+    func allTrackersByDate(date: Date)
     func getToDayTrackers(date: Date)
     func getNotCompleted(date: Date)
     func getCompleted(date: Date)
@@ -50,6 +50,7 @@ final class TrackerViewModel {
     @Observable<FiltersState>private(set) var filterState: FiltersState
     @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private var selectNameCategory: String?
     @UserDefaultsBacked<String>(key: UserDefaultKeys.selectFilter.rawValue) private var selectFilter: String?
+    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
     
     private(set) var completedTrackers: Result<Set<TrackerRecord>, Error>
     
@@ -242,7 +243,7 @@ extension TrackerViewModel: TrackerViewModelProtocol {
     }
     
     func loadTrackerRecord(id: UUID) -> Result<Int, Error> {
-        trackerRecordStore.getCountTrackerRecordForDate(id: id)
+        trackerRecordStore.getCountTrackerRecord(id: id)
     }
     
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error> {
@@ -326,7 +327,7 @@ extension TrackerViewModel: TrackerViewModelProtocol {
         pinnedCategoryStore.deleteAndGetPinnedCategory(id)
     }
     
-    func allTrackers(date: Date) {
+    func allTrackersByDate(date: Date) {
         getShowListTrackersForDay(date: date)
     }
     

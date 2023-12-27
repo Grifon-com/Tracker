@@ -11,9 +11,11 @@ protocol CategoryViewModelProtocol {
     func isCategorySelected(at index: Int) -> Result<Bool, Error>
     func getCategory() -> Result<[TrackerCategory], Error>
     func сategoryExcludingFixed() -> Result<[TrackerCategory], Error>
-    func createNameCategory(at index: Int) -> Result<String, Error>
-    func selectСategory(at index: Int) -> Result<Void, Error>
     func addCategory(nameCategory: String) -> Result<Void, Error>
+    func createNameCategory(at index: Int) -> Result<String, Error>
+    func updateNameCategory(newNameCategory: String, oldNameCaetegory: String) -> Result<Void, Error>
+    func deleteCategory(nameCategory: String) -> Result<Void, Error>
+    func selectСategory(at index: Int) -> Result<Void, Error>
 }
 
 //MARK: - ViewModel
@@ -21,7 +23,7 @@ final class CategoryViewModel {
     private let textFixed = NSLocalizedString("textFixed", comment: "")
     
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
-    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private var selectNameCategory: String?
+    @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private(set) var selectNameCategory: String?
     
     private let trackerCategoryStore: TrackerCategoryStoreProtocol
     private let trackerStore: TrackerStoreProtocol
@@ -74,6 +76,10 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         trackerCategoryStore.addCategory(nameCategory)
     }
     
+    func updateNameCategory(newNameCategory: String, oldNameCaetegory: String) -> Result<Void, Error>  {
+        trackerCategoryStore.updateNameCategory(newNameCategory: newNameCategory, oldNameCategory: oldNameCaetegory)
+    }
+    
     func isCategorySelected(at index: Int) -> Result<Bool, Error> {
         switch category {
         case .success(let category):
@@ -112,6 +118,10 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func deleteCategory(nameCategory: String) -> Result<Void, Error> {
+        trackerCategoryStore.deleteCategory(nameCategory: nameCategory)
     }
     
     func selectСategory(at index: Int) -> Result<Void, Error> {

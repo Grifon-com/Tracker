@@ -12,10 +12,10 @@ protocol StatisticsViewModelProtocol {
     func getIsTracker() -> Bool?
 }
 
-final class StatisticsViewModel{
+final class StatisticsViewModel {
     @Observable<Int?> private(set) var countTrackerComplet: Int?
     @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
-    
+
     let trackerRecordStore: TrackerRecordStoreProtocol
     
     convenience init() {

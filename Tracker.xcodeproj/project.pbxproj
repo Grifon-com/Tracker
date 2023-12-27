@@ -65,6 +65,7 @@
 		1AC642722B383AD50072E081 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC642712B383AD50072E081 /* AnalyticsService.swift */; };
 		1AC642742B38442E0072E081 /* EventAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AC642732B38442E0072E081 /* EventAnalytics.swift */; };
 		1AD277712ACD4B1800F92219 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD277702ACD4B1800F92219 /* UITextField.swift */; };
+		1AD888BA2B3AF7A400F8C26D /* NewCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD888B92B3AF7A400F8C26D /* NewCategoryViewModel.swift */; };
 		1ADD3D742ACBDBB1005F639F /* TrackerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD3D732ACBDBB1005F639F /* TrackerCollectionView.swift */; };
 		1AE08AB82B2F5C250042CE59 /* FiltersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE08AB72B2F5C250042CE59 /* FiltersViewModel.swift */; };
 		1AE27C2D2B0604A800C4A925 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AE27C2C2B0604A800C4A925 /* Errors.swift */; };
@@ -156,6 +157,7 @@
 		1AC642712B383AD50072E081 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		1AC642732B38442E0072E081 /* EventAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAnalytics.swift; sourceTree = "<group>"; };
 		1AD277702ACD4B1800F92219 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		1AD888B92B3AF7A400F8C26D /* NewCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCategoryViewModel.swift; sourceTree = "<group>"; };
 		1ADD3D732ACBDBB1005F639F /* TrackerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerCollectionView.swift; sourceTree = "<group>"; };
 		1AE08AB72B2F5C250042CE59 /* FiltersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersViewModel.swift; sourceTree = "<group>"; };
 		1AE27C2C2B0604A800C4A925 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				1A0077F72B2DD6DF000EAE69 /* CategoryViewModel.swift */,
 				1AE08AB72B2F5C250042CE59 /* FiltersViewModel.swift */,
 				1A79C42C2B39C3E4009CE43A /* StatisticViewModel.swift */,
+				1AD888B92B3AF7A400F8C26D /* NewCategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -677,6 +680,7 @@
 				1A8A576C2ACD5F4D00C060FA /* CreateTrackerTableViewCell.swift in Sources */,
 				1A598BB82AC6FAC5009B166D /* TrackersViewController.swift in Sources */,
 				1A8A7FEA2AC55D970038CB42 /* StatisticsViewController.swift in Sources */,
+				1AD888BA2B3AF7A400F8C26D /* NewCategoryViewModel.swift in Sources */,
 				1AC642742B38442E0072E081 /* EventAnalytics.swift in Sources */,
 				1A66BB192B25D16500838F5F /* PinnTrackerModel.swift in Sources */,
 				1A598BB62AC6F352009B166D /* TabBarController.swift in Sources */,

@@ -86,7 +86,7 @@ class StatisticsViewController: UIViewController {
     }
 }
 
-extension StatisticsViewController {
+private extension StatisticsViewController {
     func bind() {
         guard let viewModel = viewModel as? StatisticsViewModel else { return }
         viewModel.$countTrackerComplet.bind { [weak self] count in
@@ -95,7 +95,7 @@ extension StatisticsViewController {
         }
     }
     
-    private func addBorderGradient(view: UIView,
+    func addBorderGradient(view: UIView,
                                    colors: [CGColor],
                                    borderWidth: CGFloat,
                                    startPoint: CGPoint,
@@ -121,7 +121,7 @@ extension StatisticsViewController {
         view.layer.addSublayer(gradient)
     }
     
-    private func showStabView(flag: Bool?) {
+    func showStabView(flag: Bool?) {
         guard let flag else {
             imageViewStab.isHidden = false
             lableTextStab.isHidden = false
@@ -132,13 +132,13 @@ extension StatisticsViewController {
         cardStatysticsView.isHidden = flag
     }
     
-    private func setupSubView() {
+    func setupSubView() {
         setupLabelHeader()
         setupStabView()
         setupCardStatysticsView()
     }
     
-    private func setupLabelHeader() {
+    func setupLabelHeader() {
         view.addSubview(labelHeader)
         NSLayoutConstraint.activate([
             labelHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -146,7 +146,7 @@ extension StatisticsViewController {
         ])
     }
     
-    private func setupStabView() {
+    func setupStabView() {
         [imageViewStab, lableTextStab].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

@@ -1,5 +1,5 @@
 //
-//  CreateCategoriesTableViewCell.swift
+//  CustomTableViewCell.swift
 //  Tracker
 //
 //  Created by Григорий Машук on 13.10.23.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - CreateCategoriesTableViewCell
+//MARK: - CustomTableViewCell
 final class CustomTableViewCell: UITableViewCell {    
     private struct ConstantsGreateCell {
         static let iconButton = "IconButtonCell"

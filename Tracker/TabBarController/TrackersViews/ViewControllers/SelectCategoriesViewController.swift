@@ -9,7 +9,11 @@ import UIKit
 
 //MARK: - SelectCategoriesViewControllerDelegate
 protocol SelectCategoriesViewControllerDelegate: AnyObject {
-    func createCategoriesViewController(vc: UIViewController, nameCategory: String)
+    func categoriesViewController(vc: UIViewController, nameCategory: String)
+}
+
+protocol SelectCategoryEditViewControllerDelegate: AnyObject {
+    func editCategoriesViewController(vc: UIViewController, oldNameCategory: String)
 }
 
 //MARK: - SelectCategoriesViewController
@@ -21,6 +25,8 @@ final class SelectCategoriesViewController: UIViewController {
         static let categoryLabelText = NSLocalizedString("categoriLabelText", comment: "")
         static let categoryAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
         static let labelStabText = NSLocalizedString("labelStabText", comment: "")
+        static let textEdit = NSLocalizedString("textEdit", comment: "")
+        static let textDelete = NSLocalizedString("textDelete", comment: "")
         static let textFixed = NSLocalizedString("textFixed", comment: "")
         
         static let lableTextStabNumberOfLines = 2
@@ -33,6 +39,7 @@ final class SelectCategoriesViewController: UIViewController {
     }
     
     weak var delegate: SelectCategoriesViewControllerDelegate?
+    weak var editDelegate: SelectCategoryEditViewControllerDelegate?
     private var viewModel: CategoryViewModelProtocol
     
     private let handler = HandlerResultType()
@@ -132,8 +139,7 @@ extension SelectCategoriesViewController {
     //MARK: - обработка событий
     @objc
     private func didTapСategoryButton() {
-        let newCategoryVC = NewCategoriViewController()
-        newCategoryVC.delegate = self
+        let newCategoryVC = NewCategoriViewController(createCategorydelegate: self)
         newCategoryVC.modalPresentationStyle = .formSheet
         present(newCategoryVC, animated: true)
     }
@@ -153,6 +159,27 @@ extension SelectCategoriesViewController {
         }
     }
     
+    private func editAction(text: String,
+                            category: TrackerCategory) -> UIAction
+    {
+        UIAction(title: text) { [weak self] _ in
+            guard let self else { return }
+            let newCategoryVC = NewCategoriViewController(updateCategoryrDelegate: self)
+            self.editDelegate = newCategoryVC
+            newCategoryVC.modalPresentationStyle = .formSheet
+            present(newCategoryVC, animated: true) {
+                self.editDelegate?.editCategoriesViewController(vc: self, oldNameCategory: category.nameCategory)
+            }
+        }
+    }
+    
+    private func deleteAction(text: String, category: TrackerCategory) -> UIAction {
+        UIAction(title: text, attributes: .destructive) { [weak self] _ in
+            guard let self else { return }
+            handler.resultTypeHandler(viewModel.deleteCategory(nameCategory: category.nameCategory)) {}
+        }
+    }
+        
     //MARK: - SetupUI
     private func setupUIElement() {
         setupCategoryButton()
@@ -267,8 +294,23 @@ extension SelectCategoriesViewController: UITableViewDelegate {
         handler.resultTypeHandler(viewModel.selectСategory(at: indexPath.row)) {}
         handler.resultTypeHandler(viewModel.createNameCategory(at: indexPath.row)) { [weak self] cat in
             guard let self else { return }
-            delegate.createCategoriesViewController(vc: self, nameCategory: cat)
+            delegate.categoriesViewController(vc: self, nameCategory: cat)
         }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
+            guard let self,
+                  let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())?[indexPath.row]
+            else { return UIMenu()}
+            return UIMenu(children: [
+                editAction(text: ConstantsCreateCatVc.textEdit, category: category),
+                deleteAction(text: ConstantsCreateCatVc.textDelete, category: category)
+            ])
+        })
     }
 }
 
@@ -285,5 +327,12 @@ extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
             return
         }
         handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased)) {}
+    }
+}
+
+//MARK: - UpdateCategoriViewControllerDelegate
+extension SelectCategoriesViewController: UpdateCategoriViewControllerDelegate {
+    func didUpdateCategoryName(_ vc: UIViewController, newNameCategory: String, oldNameCategory: String) {
+        handler.resultTypeHandler(viewModel.updateNameCategory(newNameCategory: newNameCategory, oldNameCaetegory: oldNameCategory)) {}
     }
 }

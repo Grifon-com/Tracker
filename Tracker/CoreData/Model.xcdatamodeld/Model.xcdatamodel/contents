@@ -18,9 +18,10 @@
         <attribute name="schedule" optional="YES" attributeType="Transformable" valueTransformerName="DaysValueTransformer"/>
         <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackerCategoryCoreData" inverseName="trakers" inverseEntity="TrackerCategoryCoreData"/>
         <relationship name="pinnedCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PinnCategoryCoreData" inverseName="tracker" inverseEntity="PinnCategoryCoreData"/>
+        <relationship name="record" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackerRecordCoreData" inverseName="tracker" inverseEntity="TrackerRecordCoreData"/>
     </entity>
     <entity name="TrackerRecordCoreData" representedClassName="TrackerRecordCoreData" syncable="YES" codeGenerationType="class">
-        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="trackerId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="tracker" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackerCoreData" inverseName="record" inverseEntity="TrackerCoreData"/>
     </entity>
 </model>

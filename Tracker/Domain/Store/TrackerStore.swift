@@ -23,7 +23,6 @@ protocol TrackerStoreDelegate: AnyObject {
 //MARK: - TrackerStore
 final class TrackerStore: NSObject {
     weak var delegate: TrackerStoreDelegate?
-    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
     
     private let context: NSManagedObjectContext
     private let colorMarshalling = UIColorMarshalling()
@@ -95,10 +94,6 @@ private extension TrackerStore {
         } catch {
             return .failure(error)
         }
-    }
-    
-    func getTrackerFor(_ indexPath: IndexPath) -> TrackerCoreData {
-        fetchedTrackerResultController.object(at: indexPath)
     }
     
     func searchTracker(id: UUID) throws -> TrackerCoreData? {
@@ -180,10 +175,10 @@ extension TrackerStore: TrackerStoreProtocol {
     }
     
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error> {
-        isTracker = objects.isEmpty
+        let _ = fetchedTrackerResultController
         do {
-            let trackers = try objects.map({ try tracker(from: $0) })
-            return .success(trackers.sorted { $0.name < $1.name })
+            let trackers = try objects.map({ try tracker(from: $0) }).sorted { $0.name < $1.name }
+            return .success(trackers)
         } catch {
             return .failure(error)
         }
@@ -202,15 +197,6 @@ extension TrackerStore: TrackerStoreProtocol {
         }
         return save()
     }
-    
-//    func getCompletedTrackers(id: UUID, date: Date) -> TrackerCoreData?  {
-//        let request = NSFetchRequest<TrackerCoreData>(entityName: "\(TrackerCoreData.self)")
-//        request.returnsObjectsAsFaults = false
-//        guard let keyPath = (\TrackerRecordCoreData.trackerId)._kvcKeyPathString
-//        else { return nil }
-//        request.predicate = NSPredicate(format: "%K == %@ AND %K == %@", keyPath, id as CVarArg, #keyPath(TrackerRecordCoreData.date), date as CVarArg)
-//        return try? context.fetch(request).first
-//    }
 }
 
 extension TrackerStore: NSFetchedResultsControllerDelegate {

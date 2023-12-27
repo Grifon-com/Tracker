@@ -2,7 +2,7 @@
 //  PinnedCategoryStore.swift
 //  Tracker
 //
-//  Created by Марина Машук on 11.12.23.
+//  Created by Григорий Машук on 11.12.23.
 //
 
 import Foundation
@@ -34,13 +34,22 @@ final class PinnedCategoryStore: NSObject {
 }
 
 private extension PinnedCategoryStore {
-    func save(context: NSManagedObjectContext) -> Result<Void, Error> {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
         } catch {
             return .failure(error)
         }
+    }
+    
+    func searchCategoryById(id: UUID) throws -> PinnCategoryCoreData? {
+        let request = NSFetchRequest<PinnCategoryCoreData>(entityName: "\(PinnCategoryCoreData.self)")
+        request.returnsObjectsAsFaults = false
+        guard let keyPath = (\PinnCategoryCoreData.trackerId)._kvcKeyPathString
+        else { throw  StoreErrors.TrackrerStoreError.getTrackerError }
+        request.predicate = NSPredicate(format: "%K == %@", keyPath, id as CVarArg)
+        return try context.fetch(request).first
     }
 }
 
@@ -56,17 +65,12 @@ extension PinnedCategoryStore: PinnedCategoryStoreProtocol {
     }
     
     func deleteAndGetPinnedCategory(_ id: UUID) -> Result<String?, Error> {
-        let request = NSFetchRequest<PinnCategoryCoreData>(entityName: "\(PinnCategoryCoreData.self)")
-        request.returnsObjectsAsFaults = false
-        guard let keyPath = (\PinnCategoryCoreData.trackerId)._kvcKeyPathString
-        else { return .failure(StoreErrors.TrackrerStoreError.getTrackerError) }
-        request.predicate = NSPredicate(format: "%K == %@", keyPath, id as CVarArg)
         do {
-            if let pinnCategoryCoreData = try context.fetch(request).first {
+            if let pinnCategoryCoreData = try searchCategoryById(id: id) {
                 let nameCategory = pinnCategoryCoreData.nameCategory
                 pinnCategoryCoreData.nameCategory = nil
                 pinnCategoryCoreData.trackerId = nil
-                let _ = save(context: context)
+                let _ = save()
                 return .success(nameCategory)
             }
         } catch {

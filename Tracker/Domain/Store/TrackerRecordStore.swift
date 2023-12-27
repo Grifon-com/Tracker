@@ -10,7 +10,7 @@ import CoreData
 
 protocol TrackerRecordStoreProtocol {
     func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error>
-    func getCountTrackerRecordForDate(id: UUID) -> Result<Int, Error>
+    func getCountTrackerRecord(id: UUID) -> Result<Int, Error>
     func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
     func getCountTrackerComplet() -> Int?
 }
@@ -110,7 +110,8 @@ private extension TrackerRecordStore {
 //MARK: - TrackerRecordStoreProtocol
 extension TrackerRecordStore: TrackerRecordStoreProtocol {
     func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error> {
-        guard let trackerRecordsCoreData = fetchedTrackerRecordResultController.fetchedObjects
+        let trackerRecordsCoreData = fetchedTrackerRecordResultController.fetchedObjects
+        guard let trackerRecordsCoreData
         else { return .failure(StoreErrors.TrackrerRecordStoreError.loadTrackerRecord) }
         do {
             let trackerRecord = try trackerRecordsCoreData.map ({ try self.trackerRecord(from: $0) })
@@ -133,7 +134,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
     }
     
-    func getCountTrackerRecordForDate(id: UUID) -> Result<Int, Error> {
+    func getCountTrackerRecord(id: UUID) -> Result<Int, Error> {
         do {
             if let countTrackers = try getCountTrackersRecord(id: id) {
                 return .success(countTrackers)
