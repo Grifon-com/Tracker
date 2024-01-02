@@ -7,8 +7,9 @@
 
 import UIKit
 
+//MARK: - TrackersViewControllerDelegate
 protocol TrackersViewControllerDelegate: AnyObject {
-    func editTracker(vc: TrackersViewController, editTracker: Tracker, nameCategory: String, indexPath: IndexPath)
+    func editTracker(vc: TrackersViewController, editTracker: Tracker, count: Int, nameCategory: String, indexPath: IndexPath)
 }
 
 //MARK: - TrackersViewController
@@ -96,7 +97,6 @@ final class TrackersViewController: UIViewController {
         let lableHeader = UILabel()
         lableHeader.text = ConstantsTrackerVc.headerText
         lableHeader.font = ConstantsTrackerVc.fontLabelHeader
-        lableHeader.textColor = .blackDay
         lableHeader.translatesAutoresizingMaskIntoConstraints = false
         lableHeader.backgroundColor = .clear
         
@@ -105,6 +105,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var trackerCollectionView: TrackerCollectionView = {
         let trackerCollectionView = greateTrackerCollectionView()
+        trackerCollectionView.alwaysBounceVertical = true
         trackerCollectionView.delegate = self
         trackerCollectionView.dataSource = self
         trackerCollectionView.backgroundColor = .clear
@@ -161,7 +162,6 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AnalyticsService.shared.open()
         view.backgroundColor = colors.viewBackground
         setupUIElement()
         viewModel = TrackerViewModel()
@@ -175,6 +175,10 @@ final class TrackersViewController: UIViewController {
         } else {
             viewModel.allTrackersByDate(date: datePicker.date)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        AnalyticsService.shared.open()
     }
 }
 
@@ -191,11 +195,15 @@ private extension TrackersViewController {
             self.trackerCollectionView.reloadItems(at: [indexPath])
         }
         
+        viewModel.$filterListTrackersWeekDay.bind { [weak self] category in
+            guard let self else { return }
+            self.buttonFilter.isHidden = category.isEmpty
+        }
+        
         viewModel.$visibleCategory.bind { [weak self] result in
             guard let self,
                   let cat = handler.resultTypeHandlerGetValue(result)
             else { return }
-            self.buttonFilter.isHidden = cat.isEmpty
             self.showStabView(flag: !cat.isEmpty)
             self.trackerCollectionView.reloadData()
         }
@@ -211,10 +219,10 @@ private extension TrackersViewController {
                 viewModel.allTrackersByDate(date: datePicker.date)
                 setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
             case .completed:
-                viewModel.getCompleted(date: datePicker.date)
+                viewModel.getCompleted(date: datePicker.date, flag: true)
                 setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
             case .notCompleted:
-                viewModel.getNotCompleted(date: datePicker.date)
+                viewModel.getNotCompleted(date: datePicker.date, flag: false)
                 setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
             }
         }
@@ -262,10 +270,10 @@ private extension TrackersViewController {
             viewModel.allTrackersByDate(date: datePicker.date)
             setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         case .completed:
-            viewModel.getCompleted(date: datePicker.date)
+            viewModel.getCompleted(date: datePicker.date, flag: true)
             setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         case .notCompleted:
-            viewModel.getNotCompleted(date: datePicker.date)
+            viewModel.getNotCompleted(date: datePicker.date, flag: false)
             setColorButtonFilter(state: viewModel.getFilterState(), button: buttonFilter)
         }
     }
@@ -302,14 +310,16 @@ private extension TrackersViewController {
                   let cat = self.handler.resultTypeHandlerGetValue(viewModel.getCategory())
             else { return }
             if category.isPinned {
-                handler.resultTypeHandler(viewModel.addPinnedCategory(id: tracker.id, nameCategory: category.nameCategory)) {}
-                self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                handler.resultTypeHandler(viewModel.addPinnedCategory(id: tracker.id, nameCategory: category.nameCategory)) {
+                    self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                }
                 let filterNameCategory = cat.filter { $0.nameCategory == ConstantsTrackerVc.textFixed }
                 if let _ = filterNameCategory.first?.nameCategory {
                     self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
                 } else {
-                    self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {}
-                    self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                    self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: ConstantsTrackerVc.textFixed)) {
+                        self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: ConstantsTrackerVc.textFixed)) {}
+                    }
                 }
             } else {
                 if let nameCategory = handler.resultTypeHandlerGetValue(viewModel.deleteAndGetPinnedCategory(id: tracker.id)) {
@@ -318,8 +328,9 @@ private extension TrackersViewController {
                         self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: category.nameCategory)) {}
                     } else {
                         guard let nameCategory else { return }
-                        self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {}
-                        self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategory)) {}
+                        self.handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameCategory)) {
+                            self.handler.resultTypeHandler(viewModel.addNewTracker(tracker, nameCategory: nameCategory)) {}
+                        }
                     }
                 }
             }
@@ -332,17 +343,22 @@ private extension TrackersViewController {
                            indexPath: IndexPath) -> UIAction
     {
         UIAction(title: text) { [weak self] _ in
-            guard let self else { return }
-            let viewModel = EditTrackerViewModel()
-            let createTrackerVC = CreateTrackerViewController(viewModel: viewModel, updateTrackerDelegate: self)
+            guard let self,
+                  let viewModel
+            else { return }
+            let editViewModel = EditTrackerViewModel()
+            let createTrackerVC = CreateTrackerViewController(viewModel: editViewModel, updateTrackerDelegate: self)
             delegate = createTrackerVC
-            if tracker.schedule.count != viewModel.regular.count {
+            if tracker.schedule.count != editViewModel.regular.count {
                 createTrackerVC.reverseIsSchedul()
             }
             createTrackerVC.modalPresentationStyle = .formSheet
             present(createTrackerVC, animated: true) {
+                let count = self.handler.resultTypeHandlerGetValue(viewModel.getCountTrackerCompleted(id: tracker.id))
+                guard let count else { return }
                 self.delegate?.editTracker(vc: self,
                                            editTracker: tracker,
+                                           count: count,
                                            nameCategory: category.nameCategory,
                                            indexPath: indexPath)
             }
@@ -358,7 +374,10 @@ private extension TrackersViewController {
                                           preferredStyle: .actionSheet)
             let deleteAction = UIAlertAction(title: ConstantsTrackerVc.textDelete,
                                              style: .destructive) { _ in
-                self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {}
+                
+                self.handler.resultTypeHandler(viewModel.deleteTracker(tracker.id)) {
+                    self.handler.resultTypeHandler(viewModel.deleteTrackersRecord(id: tracker.id)) {}
+                }
                 AnalyticsService.shared.delete()
                 alert.dismiss(animated: true)
             }
@@ -379,7 +398,6 @@ private extension TrackersViewController {
         setupStabView()
         setupNavBarItem()
         setupButtonFilter()
-        
     }
     
     func setupNavBarItem() {
@@ -471,7 +489,7 @@ extension TrackersViewController: UICollectionViewDataSource {
         else { return .zero }
         return itemsCount
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let viewModel = viewModel as? TrackerViewModel,
               let sectionCount = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)?.count
@@ -522,6 +540,16 @@ extension TrackersViewController: UICollectionViewDelegate {
         else { return nil }
         let previewTarget = UIPreviewTarget(container: self.trackerCollectionView, center: cell.center)
         return .init(view: cell.getView(), parameters: UIPreviewParameters(), target: previewTarget)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let viewModel,
+              let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
+        else { return }
+        
+        if visibleCategories.count - 1 == indexPath.row {
+            buttonFilter.isHidden = false
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -584,7 +612,12 @@ extension TrackersViewController: UICollectionViewDelegateFlowLayout {
                   let viewModel = viewModel as? TrackerViewModel,
                   let visibleCategories = handler.resultTypeHandlerGetValue(viewModel.visibleCategory)
             else { return UICollectionReusableView() }
-            supplementary.label.text = visibleCategories[indexPath.section].nameCategory
+            let nameCategory = visibleCategories[indexPath.section].nameCategory
+            if nameCategory == Fixed.fixedRu.rawValue || nameCategory == Fixed.fixedEng.rawValue {
+                supplementary.setTextLable(text: ConstantsTrackerVc.textFixed)
+                return supplementary
+            }
+            supplementary.setTextLable(text: nameCategory)
             return supplementary
         default:
             return UICollectionReusableView()
@@ -599,19 +632,22 @@ extension TrackersViewController: UISearchResultsUpdating {
               let viewModel
         else { return }
         if !word.isEmpty {
-            guard let seachCategory = handler.resultTypeHandlerGetValue(viewModel.filterListTrackersName(word: word)) else { return }
+            guard let seachCategory = handler.resultTypeHandlerGetValue(viewModel.filterListTrackersName(word: word))
+            else { return }
             viewModel.getShowListTrackerSearchForName(seachCategory)
             return
         }
         
-        if  word.isEmpty {
-            viewModel.getShowListTrackersForDay(date: datePicker.date)
-            chengeStab(text: ConstantsTrackerVc.labelNothingFoundText, nameImage: ConstantsTrackerVc.imageNothingFound)
+        if word.isEmpty {
+            let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
+            chengeStab(text: ConstantsTrackerVc.labelNothingFoundText,
+                       nameImage: ConstantsTrackerVc.imageNothingFound)
         }
         
         if !searchController.isActive {
-            viewModel.getShowListTrackersForDay(date: datePicker.date)
-            chengeStab(text: ConstantsTrackerVc.labelStabText, nameImage: ConstantsTrackerVc.imageStar)
+            let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
+            chengeStab(text: ConstantsTrackerVc.labelStabText,
+                       nameImage: ConstantsTrackerVc.imageStar)
         }
     }
 }

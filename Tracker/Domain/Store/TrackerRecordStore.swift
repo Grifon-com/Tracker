@@ -8,13 +8,18 @@
 import Foundation
 import CoreData
 
+//MARK: - TrackerRecordStoreProtocol
 protocol TrackerRecordStoreProtocol {
-    func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error>
+    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error>
     func getCountTrackerRecord(id: UUID) -> Result<Int, Error>
     func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
+    func getIsTrackerRecord(id: UUID, date: Date) throws -> Bool
     func getCountTrackerComplet() -> Int?
+    func deleteTrackerRecord(id: UUID) -> Result<Void, Error>
+    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error>
 }
 
+//MARK: - TrackerRecordStoreDelegate
 protocol TrackerRecordStoreDelegate: AnyObject {
     func trackerRecordStore(trackerRecordStore: TrackerRecordStoreProtocol)
 }
@@ -24,7 +29,7 @@ final class TrackerRecordStore: NSObject {
     weak var delegate: TrackerRecordStoreDelegate?
     
     private let context: NSManagedObjectContext
-
+    
     private lazy var fetchedTrackerRecordResultController: NSFetchedResultsController<TrackerRecordCoreData> = {
         let request = TrackerRecordCoreData.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \TrackerRecordCoreData.date, ascending: true)]
@@ -48,6 +53,7 @@ final class TrackerRecordStore: NSObject {
     }
 }
 
+//MARK: - private extension
 private extension TrackerRecordStore {
     func save() -> Result<Void, Error> {
         do {
@@ -70,14 +76,14 @@ private extension TrackerRecordStore {
         return trackerRecord
     }
     
-    func updateExistingTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData, trackerRecord: TrackerRecord) {
-        trackerRecordCoreData.trackerId = trackerRecord.id
-        trackerRecordCoreData.date = trackerRecord.date
+    func updateExistingTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData, id: UUID, date: Date) {
+        trackerRecordCoreData.trackerId = id
+        trackerRecordCoreData.date = date
     }
     
-    func addNewTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error> {
+    func addNewTrackerRecord(id: UUID, date: Date) -> Result<Void, Error> {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
-        updateExistingTrackerRecord(trackerRecordCoreData, trackerRecord: trackerRecord)
+        updateExistingTrackerRecord(trackerRecordCoreData, id: id, date: date)
         return save()
     }
     
@@ -86,24 +92,26 @@ private extension TrackerRecordStore {
         return save()
     }
     
-    func searchTrackerRecordForDate(trackerRecord: TrackerRecord) throws -> TrackerRecordCoreData? {
+    func searchTrackerRecordForDate(id: UUID, date: Date) throws -> TrackerRecordCoreData? {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@ AND %K == %@",
                                         #keyPath(TrackerRecordCoreData.date),
-                                        trackerRecord.date as CVarArg,
+                                        date as CVarArg,
                                         #keyPath(TrackerRecordCoreData.trackerId),
-                                        trackerRecord.id as CVarArg)
-        return try context.fetch(request).first
+                                        id as CVarArg)
+        let trackerRecord = try context.fetch(request)
+        
+        return trackerRecord.first
     }
     
-    func getCountTrackersRecord(id: UUID) throws -> Int? {
+    func getLisTrackersRecord(id: UUID) throws -> [TrackerRecordCoreData] {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@",
                                         #keyPath(TrackerRecordCoreData.trackerId),
                                         id as CVarArg)
-        return try context.fetch(request).count
+        return try context.fetch(request)
     }
 }
 
@@ -121,12 +129,35 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
     }
     
-    func updateTrackerRecord(_ trackerRecord: TrackerRecord) -> Result<Void, Error> {
+    func deleteTrackerRecord(id: UUID) -> Result<Void, Error> {
         do {
-            if let trackerRecord = try searchTrackerRecordForDate(trackerRecord: trackerRecord) {
+            let trackerRecord = try getLisTrackersRecord(id: id)
+            trackerRecord.forEach { context.delete($0) }
+            return save()
+        }
+        catch {
+            return .failure(error)
+        }
+    }
+    
+    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error> {
+        do {
+            try trackers.forEach {
+                let trackerRecords = try getLisTrackersRecord(id: $0.id)
+                trackerRecords.forEach { context.delete($0) }
+            }
+        } catch {
+            return .failure(error)
+        }
+        return save()
+    }
+    
+    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error> {
+        do {
+            if let trackerRecord = try searchTrackerRecordForDate(id: id, date: date) {
                 return deleteTrackerRecord(trackerRecord)
             } else {
-                return addNewTrackerRecord(trackerRecord)
+                return addNewTrackerRecord(id: id, date: date)
             }
         }
         catch {
@@ -136,19 +167,25 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
     
     func getCountTrackerRecord(id: UUID) -> Result<Int, Error> {
         do {
-            if let countTrackers = try getCountTrackersRecord(id: id) {
-                return .success(countTrackers)
-            }
+            let countTrackers = try getLisTrackersRecord(id: id).count
+            return .success(countTrackers)
         } catch {
             return .failure(error)
         }
-        return .failure(StoreErrors.TrackrerRecordStoreError.loadTrackerRecord)
     }
     
     func getCountTrackerComplet() -> Int? {
         fetchedTrackerRecordResultController.fetchedObjects?.count
     }
     
+    func getIsTrackerRecord(id: UUID, date: Date) throws -> Bool {
+        do {
+            let tracker = try searchTrackerRecordForDate(id: id, date: date)
+            return tracker != nil
+        } catch {
+            throw error
+        }
+    }
 }
 
 //MARK: - NSFetchedResultsControllerDelegate

@@ -24,6 +24,7 @@ final class CreateTrackerViewController: UIViewController {
     private struct ConstantsCreateVc {
         static let newHabit = NSLocalizedString("newHabit", comment: "")
         static let newIrregular = NSLocalizedString("newIrregular", comment: "")
+        static let numberOfDays = NSLocalizedString("numberOfDays", tableName: "LocalizableDict", comment: "")
         static let placeholderTrackerTextField = NSLocalizedString("placeholderTrackerTextField", comment: "")
         static let textCancelButton = NSLocalizedString("textCancelButton", comment: "")
         static let textGreateButton = NSLocalizedString("textGreateButton", comment: "")
@@ -36,6 +37,7 @@ final class CreateTrackerViewController: UIViewController {
         static let heightCollectionView = CGFloat(54)
         
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
+        static let countСompletedTrackersFont = UIFont.boldSystemFont(ofSize: 32)
         static let createNameTextFieldFont = UIFont.systemFont(ofSize: 17, weight: .regular)
         static let spacingButtonSpacing = CGFloat(10)
         static let spacingContentStack = CGFloat(24)
@@ -50,18 +52,24 @@ final class CreateTrackerViewController: UIViewController {
     weak var createTrackerDelegate: CreateTrackerViewControllerDelegate?
     
     private let viewModel: EditTrackerModelProtocol
-    private let handlerResultType = HandlerResultType()
     private let colors = Colors()
     
     private lazy var newHabitLabel: UILabel = {
         let newHabitLabel = UILabel()
         newHabitLabel.text = viewModel.isSchedul ? ConstantsCreateVc.newIrregular : ConstantsCreateVc.newHabit
-        newHabitLabel.textColor = .blackDay
         newHabitLabel.font = ConstantsCreateVc.textFont
         newHabitLabel.textAlignment = .center
         newHabitLabel.backgroundColor = .clear
         
         return newHabitLabel
+    }()
+    
+    private lazy var countСompletedTrackers: UILabel = {
+        let countСompletedTrackers = UILabel()
+        countСompletedTrackers.font = ConstantsCreateVc.countСompletedTrackersFont
+        countСompletedTrackers.text = setTextCountLable(count: 0)
+        
+        return countСompletedTrackers
     }()
     
     private lazy var createNameTextField: UITextField = {
@@ -109,6 +117,7 @@ final class CreateTrackerViewController: UIViewController {
         selectionTableView.backgroundColor = .clear
         selectionTableView.isScrollEnabled = false
         selectionTableView.separatorStyle = viewModel.isSchedul ? .none : .singleLine
+        selectionTableView.separatorColor = .grayDay
         selectionTableView.separatorInset = ConstantsCreateVc.insertSeparatorTableView
         selectionTableView.register(CreateTrackerTableViewCell.self, forCellReuseIdentifier: "\(CreateTrackerTableViewCell.self)")
         
@@ -169,8 +178,8 @@ final class CreateTrackerViewController: UIViewController {
         createButton.layer.cornerRadius = ConstantsCreateVc.cornerRadius
         createButton.layer.masksToBounds = true
         createButton.backgroundColor = .grayDay
+        createButton.setTitleColor(.whiteDay, for: .normal)
         createButton.setTitle(ConstantsCreateVc.textGreateButton, for: .normal)
-        createButton.titleLabel?.textColor = .redDay
         createButton.titleLabel?.font = ConstantsCreateVc.textFont
         createButton.isEnabled = false
         createButton.addTarget(self, action: #selector(didTapGreateButton) , for: .touchUpInside)
@@ -221,7 +230,7 @@ final class CreateTrackerViewController: UIViewController {
         super.viewDidLoad()
         bind()
         setupUIElement()
-        view.backgroundColor = .white
+        view.backgroundColor = colors.viewBackground
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -229,7 +238,7 @@ final class CreateTrackerViewController: UIViewController {
 }
 
 extension CreateTrackerViewController {
-    func bind() {
+    private func bind() {
         guard let viewModel = viewModel as? EditTrackerViewModel else { return }
         viewModel.$schedule.bind { [weak self] _ in
             guard let self else { return }
@@ -260,7 +269,7 @@ extension CreateTrackerViewController {
         }
     }
     
-    func chengeActivButton() {
+    private func chengeActivButton() {
         let flag = self.viewModel.checkingForEmptiness()
         isActivCreateButton(flag: flag)
     }
@@ -322,26 +331,45 @@ extension CreateTrackerViewController {
         view.endEditing(true)
     }
     
-    //MARK: - Логика
     private func isActivCreateButton(flag: Bool) {
         createButton.isEnabled = flag
-        createButton.backgroundColor = flag ? .blackDay : .grayDay
+        createButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
+        createButton.setTitleColor( flag ? .textEventColor : .whiteDay, for: .normal)
     }
     
     func reverseIsSchedul() {
         viewModel.reverseIsSchedul()
     }
     
+    func setTextCountLable(count: Int) -> String {
+        String.localizedStringWithFormat(ConstantsCreateVc.numberOfDays,
+                                         count)
+    }
+    
     func presentViewController(vc: UIViewController, modalStyle: UIModalPresentationStyle) {
         vc.modalPresentationStyle = modalStyle
         present(vc, animated: true)
     }
+    
     //MARK: - SetupUI
     func setupUIElement() {
         setupNewHabitLabel()
+        if updateTrackerDelegate != nil {
+            setupCountLabel()
+        }
         setupButtonStack()
         setupScrollView()
         setupStackView()
+    }
+    
+    func setupCountLabel() {
+        view.addSubview(countСompletedTrackers)
+        countСompletedTrackers.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            countСompletedTrackers.topAnchor.constraint(equalTo: newHabitLabel.bottomAnchor, constant: 38),
+            countСompletedTrackers.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     func setupNewHabitLabel() {
@@ -373,8 +401,10 @@ extension CreateTrackerViewController {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
+        let scrollTopAnchor = updateTrackerDelegate == nil ? newHabitLabel.bottomAnchor : countСompletedTrackers.bottomAnchor
+        
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: newHabitLabel.bottomAnchor, constant: 24),
+            scrollView.topAnchor.constraint(equalTo: scrollTopAnchor, constant: 24),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             scrollView.bottomAnchor.constraint(equalTo: buttonStack.topAnchor)
@@ -405,11 +435,12 @@ extension CreateTrackerViewController {
 //MARK: - UITableViewDataSource
 extension CreateTrackerViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.listSettings.count
+        return viewModel.listSettings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as? CreateTrackerTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as?
+                CreateTrackerTableViewCell,
               let viewModel = viewModel as? EditTrackerViewModel
         else { return UITableViewCell() }
         let secondarySchedulText = viewModel.jonedSchedule(schedule: viewModel.schedule,
@@ -567,10 +598,10 @@ extension CreateTrackerViewController: UICollectionViewDelegateFlowLayout {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if collectionView == colorCollectionView {
-                supplementary.label.text = Header.color.name
+                supplementary.setTextLable(text: Header.color.name)
             }
             if collectionView == emojiCollectionView {
-                supplementary.label.text = Header.emoji.name
+                supplementary.setTextLable(text: Header.emoji.name)
             }
         default:
             return UICollectionReusableView()
@@ -596,9 +627,10 @@ extension CreateTrackerViewController: SelectCategoriesViewControllerDelegate {
 
 //MARK: - TrackersViewControllerDelegate
 extension CreateTrackerViewController: TrackersViewControllerDelegate {
-    func editTracker(vc: TrackersViewController, editTracker: Tracker, nameCategory: String, indexPath: IndexPath) {
+    func editTracker(vc: TrackersViewController, editTracker: Tracker, count: Int, nameCategory: String, indexPath: IndexPath) {
         let colorRow = viewModel.getColorRow(color: editTracker.color)
         let emojiRow = viewModel.getEmojiRow(emoji: editTracker.emoji)
+        countСompletedTrackers.text = setTextCountLable(count: count)
         
         guard let emojiCell = emojiCollectionView.cellForItem(at: IndexPath(row: emojiRow, section: 0)) as? EmojiCollectionViewCell,
               let colorCell = colorCollectionView.cellForItem(at: IndexPath(row: colorRow, section: 0)) as? ColorCollectionViewCell

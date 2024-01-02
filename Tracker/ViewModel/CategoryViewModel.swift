@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - CategoryViewModelProtocol
 protocol CategoryViewModelProtocol {
     func isCategorySelected(at index: Int) -> Result<Bool, Error>
     func getCategory() -> Result<[TrackerCategory], Error>
@@ -15,24 +16,27 @@ protocol CategoryViewModelProtocol {
     func createNameCategory(at index: Int) -> Result<String, Error>
     func updateNameCategory(newNameCategory: String, oldNameCaetegory: String) -> Result<Void, Error>
     func deleteCategory(nameCategory: String) -> Result<Void, Error>
+    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error>
+    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error>
     func selectСategory(at index: Int) -> Result<Void, Error>
 }
 
 //MARK: - ViewModel
 final class CategoryViewModel {
-    private let textFixed = NSLocalizedString("textFixed", comment: "")
-    
     @Observable<Result<[TrackerCategory], Error>> private(set) var category: Result<[TrackerCategory], Error>
     @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue) private(set) var selectNameCategory: String?
     
     private let trackerCategoryStore: TrackerCategoryStoreProtocol
     private let trackerStore: TrackerStoreProtocol
+    private let trackerRecordStore: TrackerRecordStoreProtocol
     
     convenience init() {
         let trackerCategoryStore = TrackerCategoryStore()
         let trackerStore = TrackerStore()
+        let trackerRecordStore = TrackerRecordStore()
         self.init(trackerCategoryStore: trackerCategoryStore,
                   trackerStore: trackerStore,
+                  trackerRecordStore: trackerRecordStore,
                   category: .success([])
                   )
         trackerCategoryStore.delegate = self
@@ -42,11 +46,13 @@ final class CategoryViewModel {
     
     init(trackerCategoryStore: TrackerCategoryStoreProtocol,
          trackerStore: TrackerStoreProtocol,
+         trackerRecordStore: TrackerRecordStoreProtocol,
          category: Result<[TrackerCategory], Error>
 )
     {
         self.trackerCategoryStore = trackerCategoryStore
         self.trackerStore = trackerStore
+        self.trackerRecordStore = trackerRecordStore
         self.category = category
     }
 }
@@ -103,7 +109,10 @@ extension CategoryViewModel: CategoryViewModelProtocol {
     func сategoryExcludingFixed() -> Result<[TrackerCategory], Error> {
         switch category {
         case .success(let category):
-            let filterCat = category.filter { $0.nameCategory != textFixed }
+            let filterCat = category.filter {
+                $0.nameCategory != Fixed.fixedRu.rawValue &&
+                $0.nameCategory != Fixed.fixedEng.rawValue
+            }
             return .success(filterCat)
         case .failure(let error):
             return .failure(error)
@@ -122,6 +131,14 @@ extension CategoryViewModel: CategoryViewModelProtocol {
     
     func deleteCategory(nameCategory: String) -> Result<Void, Error> {
         trackerCategoryStore.deleteCategory(nameCategory: nameCategory)
+    }
+    
+    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error> {
+        trackerStore.deleteTrackers(trackers: trackers)
+    }
+    
+    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error> {
+        trackerRecordStore.deleteTrackerRecords(trackers: trackers)
     }
     
     func selectСategory(at index: Int) -> Result<Void, Error> {

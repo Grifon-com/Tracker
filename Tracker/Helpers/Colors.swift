@@ -8,17 +8,26 @@
 import UIKit
 
 final class Colors {
-    let viewBackground = UIColor.systemBackground
+    lazy var viewBackground = UIColor.systemBackground
     
-    let buttonDisabledColor = UIColor { (traits: UITraitCollection) -> UIColor in
+    lazy var buttonDisabledColor = UIColor { (traits: UITraitCollection) -> UIColor in
         if traits.userInterfaceStyle == .light {
-            return UIColor.lightGray
+            return UIColor.blackDay
         } else {
-            return UIColor(red: 0.8, green: 0.5, blue: 0.8, alpha: 1)
+            return UIColor.whiteDay
+//            return UIColor(red: 0.8, green: 0.5, blue: 0.8, alpha: 1)
         }
     }
     
-    let whiteBlackItemColor = UIColor { (traits: UITraitCollection) -> UIColor in
+    lazy var buttonEventColor = UIColor { (traits: UITraitCollection) -> UIColor in
+        if traits.userInterfaceStyle == .light {
+            return UIColor.blackDay
+        } else {
+            return UIColor.whiteDay
+        }
+    }
+    
+    lazy var whiteBlackItemColor = UIColor { (traits: UITraitCollection) -> UIColor in
         if traits.userInterfaceStyle == .light {
             return UIColor.black
         } else {

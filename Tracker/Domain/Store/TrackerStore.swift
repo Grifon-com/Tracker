@@ -8,14 +8,17 @@
 import Foundation
 import CoreData
 
+//MARK: - TrackerStoreProtocol
 protocol TrackerStoreProtocol {
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error>
     func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func deleteTracker(_ id: UUID) -> Result<Void, Error>
+    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error>
     func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error>
 }
 
+//MARK: - TrackerStoreDelegate
 protocol TrackerStoreDelegate: AnyObject {
     func updateTracker(_ trackerCoreData: TrackerStoreProtocol)
 }
@@ -30,7 +33,6 @@ final class TrackerStore: NSObject {
     private lazy var fetchedTrackerResultController: NSFetchedResultsController<TrackerCoreData> = {
         let request = TrackerCoreData.fetchRequest()
         let sortName = NSSortDescriptor(keyPath: \TrackerCoreData.name, ascending: true)
-        let sortId = NSSortDescriptor(keyPath: \TrackerCoreData.id, ascending: true)
         request.sortDescriptors = [sortName]
         let fetchedResultController = NSFetchedResultsController(fetchRequest: request,
                                                                  managedObjectContext: context,
@@ -52,7 +54,7 @@ final class TrackerStore: NSObject {
     }
 }
 
-//MARK: - Private
+//MARK: - Private extension
 private extension TrackerStore {
     func tracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
         guard let id = trackerCoreData.id else {
@@ -102,7 +104,8 @@ private extension TrackerStore {
         guard let keyPath = (\TrackerCoreData.id)._kvcKeyPathString
         else { throw StoreErrors.TrackrerStoreError.getTrackerError }
         request.predicate = NSPredicate(format: "%K == %@", keyPath, id as CVarArg)
-        return try context.fetch(request).first
+        let trackerCD = try context.fetch(request)
+        return trackerCD.first
     }
     
     func searchCategory(name: String) throws -> TrackerCategoryCoreData? {
@@ -174,6 +177,18 @@ extension TrackerStore: TrackerStoreProtocol {
         return save()
     }
     
+    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error> {
+        do { try trackers .forEach {
+            if let tracker = try searchTracker(id: $0.id) {
+                context.delete(tracker)
+            }
+        }
+            return save()
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error> {
         let _ = fetchedTrackerResultController
         do {
@@ -183,13 +198,12 @@ extension TrackerStore: TrackerStoreProtocol {
             return .failure(error)
         }
     }
-        
+    
     func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error> {
         do {
             if let trackerCD = try searchTracker(id: id) {
                 pinnedCategory.addToTracker(trackerCD)
                 pinnedCategory.trackerId = id
-                
                 return save()
             }
         } catch {
@@ -199,6 +213,7 @@ extension TrackerStore: TrackerStoreProtocol {
     }
 }
 
+//MARK: - NSFetchedResultsControllerDelegate
 extension TrackerStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let delegate else { return }

@@ -32,11 +32,11 @@ class NewCategoriViewController: UIViewController {
     weak var updateCategoryrDelegate: UpdateCategoriViewControllerDelegate?
     
     private var viewModel: NewCategoryViewModelProtocol?
+    private let colors = Colors()
     
     private lazy var newCategoriLabel: UILabel = {
         let newCategoriLabel = UILabel()
         newCategoriLabel.text = ConstantsNewCatVc.newcategoriLabelText
-        newCategoriLabel.textColor = .blackDay
         newCategoriLabel.font = ConstantsNewCatVc.font
         newCategoriLabel.textAlignment = .center
         newCategoriLabel.backgroundColor = .clear
@@ -47,7 +47,7 @@ class NewCategoriViewController: UIViewController {
     private lazy var readyButton: UIButton = {
         let readyButton = UIButton()
         readyButton.setTitle(ConstantsNewCatVc.buttonName, for: .normal)
-        readyButton.titleLabel?.textColor = UIColor.whiteDay
+        readyButton.setTitleColor(.textEventColor, for: .normal)
         readyButton.isEnabled = false
         readyButton.backgroundColor = .grayDay
         readyButton.titleLabel?.font = ConstantsNewCatVc.font
@@ -92,7 +92,7 @@ class NewCategoriViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-        view.backgroundColor = .white
+        view.backgroundColor = colors.viewBackground
         setupUIElement()
     }
 }
@@ -103,6 +103,8 @@ private extension NewCategoriViewController {
         viewModel.$newNameCategory.bind { [weak self] text in
             guard let self else { return }
             chengeHiddenButton(flag: viewModel.getNewNameCategory().isEmpty)
+            readyButton.backgroundColor = !text.isEmpty ? colors.buttonDisabledColor : .grayDay
+            readyButton.setTitleColor( !text.isEmpty ? .textEventColor : .whiteDay, for: .normal)
         }
     }
     
@@ -111,10 +113,13 @@ private extension NewCategoriViewController {
     func didTapNewСategoriButton() {
         guard let viewModel else { return }
         if let createCategorydelegate {
-            createCategorydelegate.didNewCategoryName(self, nameCategory: viewModel.getNewNameCategory())
+            createCategorydelegate.didNewCategoryName(self,
+                                                      nameCategory: viewModel.getNewNameCategory())
         }
         if let updateCategoryrDelegate {
-            updateCategoryrDelegate.didUpdateCategoryName(self, newNameCategory: viewModel.getNewNameCategory(), oldNameCategory: viewModel.getOldNameCategory())
+            updateCategoryrDelegate.didUpdateCategoryName(self,
+                                                          newNameCategory: viewModel.getNewNameCategory(),
+                                                          oldNameCategory: viewModel.getOldNameCategory())
         }
         dismiss(animated: true)
     }
@@ -127,6 +132,8 @@ private extension NewCategoriViewController {
     func chengeHiddenButton(flag: Bool) {
         readyButton.isEnabled = !flag
         readyButton.backgroundColor = !flag ? .blackDay : .grayDay
+        readyButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
+        readyButton.setTitleColor( flag ? .textEventColor : .whiteDay, for: .normal)
     }
     
     //MARK: - SetupUI

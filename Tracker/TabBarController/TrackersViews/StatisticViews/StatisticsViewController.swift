@@ -22,12 +22,12 @@ class StatisticsViewController: UIViewController {
     }
     
     private var viewModel: StatisticsViewModelProtocol?
+    private let colors = Colors()
     
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
         labelHeader.text = ConstantsStatisticVC.headerStatisticText
         labelHeader.font = ConstantsStatisticVC.fontLabelHeader
-        labelHeader.textColor = .blackDay
         labelHeader.translatesAutoresizingMaskIntoConstraints = false
         labelHeader.backgroundColor = .clear
         
@@ -60,11 +60,11 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = colors.viewBackground
         viewModel = StatisticsViewModel()
         showStabView(flag: viewModel?.getIsTracker())
         bind()
         cardStatysticsView.setCount(count: viewModel?.getCountTrackerComplet() ?? 0)
-        view.backgroundColor = .white
         setupSubView()
     }
     

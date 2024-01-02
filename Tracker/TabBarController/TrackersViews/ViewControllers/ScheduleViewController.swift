@@ -26,12 +26,13 @@ final class ScheduleViewController: UIViewController {
     
     weak var delegate: ScheduleViewControllerDelegate?
     private let viewModel: SheduleViewModelProtocol
+    private let colors = Colors()
     
     private lazy var scheduleLable: UILabel = {
         let scheduleLable = UILabel()
         scheduleLable.text = ConstantsShedulVc.scheduleLableText
         scheduleLable.font = ConstantsShedulVc.scheduleLableFont
-        scheduleLable.textColor = .blackDay
+        scheduleLable.textColor = colors.buttonEventColor
         scheduleLable.backgroundColor = .clear
         scheduleLable.textAlignment = .center
         
@@ -45,6 +46,7 @@ final class ScheduleViewController: UIViewController {
         weekDayTableView.allowsSelection = false
         weekDayTableView.backgroundColor = .clear
         weekDayTableView.separatorInset = ConstantsShedulVc.separatorInsetTableView
+        weekDayTableView.separatorColor = .separatorColor
         weekDayTableView.register(WeekDayTableViewCell.self, forCellReuseIdentifier: "\(WeekDayTableViewCell.self)")
         
         return weekDayTableView
@@ -55,9 +57,9 @@ final class ScheduleViewController: UIViewController {
         doneButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
         doneButton.layer.cornerRadius = ConstantsShedulVc.cornerRadiusUIElement
         doneButton.layer.masksToBounds = true
-        doneButton.backgroundColor = .blackDay
+        doneButton.backgroundColor = colors.buttonDisabledColor
         doneButton.setTitle(ConstantsShedulVc.doneButtonText, for: .normal)
-        doneButton.titleLabel?.textColor = .whiteDay
+        doneButton.setTitleColor(.textEventColor, for: .normal)
         
         return doneButton
     }()
@@ -82,7 +84,7 @@ final class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .whiteDay
+        view.backgroundColor = colors.viewBackground
         setupContentSteck()
     }
 }

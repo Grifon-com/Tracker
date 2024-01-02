@@ -12,6 +12,7 @@ protocol SelectCategoriesViewControllerDelegate: AnyObject {
     func categoriesViewController(vc: UIViewController, nameCategory: String)
 }
 
+//MARK: - SelectCategoryEditViewControllerDelegate
 protocol SelectCategoryEditViewControllerDelegate: AnyObject {
     func editCategoriesViewController(vc: UIViewController, oldNameCategory: String)
 }
@@ -20,7 +21,6 @@ protocol SelectCategoryEditViewControllerDelegate: AnyObject {
 final class SelectCategoriesViewController: UIViewController {
     private struct ConstantsCreateCatVc {
         static let imageViewImageStab = "Star"
-        static let alertActionErrorTitle = "Ok"
         
         static let categoryLabelText = NSLocalizedString("categoriLabelText", comment: "")
         static let categoryAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
@@ -30,6 +30,7 @@ final class SelectCategoriesViewController: UIViewController {
         static let textFixed = NSLocalizedString("textFixed", comment: "")
         
         static let lableTextStabNumberOfLines = 2
+        static let one = 1
         static let selectionCategoryTableViewRowHeight = CGFloat(75)
         static let cornerRadius = CGFloat(16)
         static let categoryLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -43,6 +44,7 @@ final class SelectCategoriesViewController: UIViewController {
     private var viewModel: CategoryViewModelProtocol
     
     private let handler = HandlerResultType()
+    private let colors = Colors()
     
     private lazy var categoryLabel: UILabel = {
         let categoryLabel = UILabel()
@@ -88,6 +90,7 @@ final class SelectCategoriesViewController: UIViewController {
         selectionCategoryTableView.delegate = self
         selectionCategoryTableView.backgroundColor = .clear
         selectionCategoryTableView.separatorStyle = .singleLine
+        selectionCategoryTableView.separatorColor = .separatorColor
         selectionCategoryTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "\(CustomTableViewCell.self)")
         selectionCategoryTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         
@@ -97,8 +100,8 @@ final class SelectCategoriesViewController: UIViewController {
     private lazy var createCategoryButton: UIButton = {
         let createCategoryButton = UIButton()
         createCategoryButton.setTitle(ConstantsCreateCatVc.categoryAddButtonText, for: .normal)
-        createCategoryButton.titleLabel?.textColor = .whiteDay
-        createCategoryButton.backgroundColor = .blackDay
+        createCategoryButton.setTitleColor(.textEventColor, for: .normal)
+        createCategoryButton.backgroundColor = colors.buttonDisabledColor
         createCategoryButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
         createCategoryButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
         createCategoryButton.layer.masksToBounds = true
@@ -123,7 +126,7 @@ final class SelectCategoriesViewController: UIViewController {
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         setupUIElement()
         bind()
-        view.backgroundColor = .whiteDay
+        view.backgroundColor = colors.viewBackground
         handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { [weak self] cat in
             guard let self else { return }
             self.showStabView(flag: !cat.isEmpty)
@@ -155,7 +158,7 @@ extension SelectCategoriesViewController {
             handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { cat in
                 self.showStabView(flag: !cat.isEmpty)
             }
-            selectionCategoryTableView.reloadData()
+            self.selectionCategoryTableView.reloadData()
         }
     }
     
@@ -173,13 +176,19 @@ extension SelectCategoriesViewController {
         }
     }
     
-    private func deleteAction(text: String, category: TrackerCategory) -> UIAction {
+    private func deleteAction(text: String, category: TrackerCategory, trackers: [Tracker]) -> UIAction {
         UIAction(title: text, attributes: .destructive) { [weak self] _ in
             guard let self else { return }
-            handler.resultTypeHandler(viewModel.deleteCategory(nameCategory: category.nameCategory)) {}
+            self.handler.resultTypeHandler(self.viewModel.deleteTrackerRecords(trackers: trackers)) {}
+            self.handler.resultTypeHandler(self.viewModel.deleteTrackers(trackers: category.arrayTrackers)) {}
+            self.handler.resultTypeHandler(self.viewModel.deleteCategory(nameCategory: category.nameCategory)) {
+                self.handler.resultTypeHandler(self.viewModel.deleteTrackers(trackers: category.arrayTrackers)) {
+                    self.handler.resultTypeHandler(self.viewModel.deleteTrackerRecords(trackers: trackers)) {}
+                }
+            }
         }
     }
-        
+    
     //MARK: - SetupUI
     private func setupUIElement() {
         setupCategoryButton()
@@ -259,25 +268,30 @@ extension SelectCategoriesViewController: UITableViewDataSource {
         let model = CustomCellModel(text: text, color: .backgroundNight)
         cell.config(model: model)
         
-        if category.count > 1 {
+        if category.count > ConstantsCreateCatVc.one {
             cell.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         }
         
-        if indexPath.row == .zero && category.count == 1 {
+        if indexPath.row == .zero && category.count == ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: nil)
             cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
         }
         
-        if indexPath.row == .zero && category.count > 1 {
+        if indexPath.row == .zero && category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
         }
         
-        if indexPath.row == category.count - 1 && category.count > 1 {
+        if indexPath.row == category.count - ConstantsCreateCatVc.one &&
+            category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
+        }
+        
+        if category.count == ConstantsCreateCatVc.one {
+            cell.layer.cornerRadius = 16
         }
         
         return cell
@@ -308,7 +322,7 @@ extension SelectCategoriesViewController: UITableViewDelegate {
             else { return UIMenu()}
             return UIMenu(children: [
                 editAction(text: ConstantsCreateCatVc.textEdit, category: category),
-                deleteAction(text: ConstantsCreateCatVc.textDelete, category: category)
+                deleteAction(text: ConstantsCreateCatVc.textDelete, category: category, trackers: category.arrayTrackers)
             ])
         })
     }
@@ -323,7 +337,7 @@ extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
         if let _ = category.filter({ $0.nameCategory == nameFirstUppercased }).first {
             return
         }
-        if nameFirstUppercased == ConstantsCreateCatVc.textFixed {
+        if nameFirstUppercased == Fixed.fixedRu.rawValue || nameFirstUppercased == Fixed.fixedEng.rawValue {
             return
         }
         handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased)) {}

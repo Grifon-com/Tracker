@@ -15,12 +15,11 @@ final class StatisticsView: UIView {
         static let borderWidth = CGFloat(1)
     }
     
+    private let colors = Colors()
+    
     private lazy var lableHeader: UILabel = {
         let lableHeader = UILabel()
         lableHeader.font = ConstantsStatistics.fontLabelHeader
-        lableHeader.textColor = .blackDay
-        lableHeader.translatesAutoresizingMaskIntoConstraints = false
-        lableHeader.backgroundColor = .clear
         
         return lableHeader
     }()
@@ -28,23 +27,14 @@ final class StatisticsView: UIView {
     private lazy var secondaryTextLable: UILabel = {
         let secondaryTextLable = UILabel()
         secondaryTextLable.font =  ConstantsStatistics.lableFont
-        secondaryTextLable.textColor = .blackDay
-        lableStackView.translatesAutoresizingMaskIntoConstraints = false
         
         return secondaryTextLable
     }()
     
-    private lazy var lableStackView: UIStackView = {
-        let lableStackView = UIStackView()
-        lableStackView.translatesAutoresizingMaskIntoConstraints = false
-        lableStackView.axis = .vertical
-        
-        return lableStackView
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupSteckView()
+        setupView()
+        backgroundColor = colors.viewBackground
     }
     
     required init?(coder: NSCoder) {
@@ -53,17 +43,20 @@ final class StatisticsView: UIView {
 }
 
 extension StatisticsView {
-    private func setupSteckView() {
-        addSubview(lableStackView)
+    private func setupView() {
         [lableHeader, secondaryTextLable].forEach {
             $0.backgroundColor = .clear
             $0.translatesAutoresizingMaskIntoConstraints = false
-            lableStackView.addArrangedSubview($0)
+            addSubview($0)
         }
         
+        let indentation = CGFloat(12)
+        
         NSLayoutConstraint.activate([
-            lableStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
-            lableStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            lableHeader.topAnchor.constraint(equalTo: topAnchor, constant: indentation),
+            lableHeader.leadingAnchor.constraint(equalTo: leadingAnchor, constant: indentation),
+            secondaryTextLable.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -indentation),
+            secondaryTextLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: indentation)
         ])
     }
     

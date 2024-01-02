@@ -20,6 +20,8 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         static let isPinnedImage = "IsPinned"
         static let numberOfDays = NSLocalizedString("numberOfDays", tableName: "LocalizableDict", comment: "")
         
+        static let numberOfLines = 2
+        
         static let cornerRadiusColorView = CGFloat(16)
         static let borderWidthColorView = CGFloat(1)
         
@@ -67,7 +69,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     
     private lazy var nameTrackerLabel: UILabel = {
         let nameTrackerLabel = UILabel()
-        nameTrackerLabel.numberOfLines = 2
+        nameTrackerLabel.numberOfLines = ConstantsTrackerCell.numberOfLines
         nameTrackerLabel.font = ConstantsTrackerCell.fontTextLable
         nameTrackerLabel.textColor = .white
         nameTrackerLabel.textAlignment = .justified
@@ -242,18 +244,20 @@ extension TrackersCollectionViewCell {
             colorView.addSubview($0)
         }
         
+        let indentation = CGFloat(12)
+        
         NSLayoutConstraint.activate([
-            emojiLable.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
-            emojiLable.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
+            emojiLable.topAnchor.constraint(equalTo: colorView.topAnchor, constant: indentation),
+            emojiLable.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: indentation),
             emojiLable.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
             emojiLable.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
             
-            nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: 12),
-            nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -12),
-            nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -12),
+            nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor, constant: indentation),
+            nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -indentation),
+            nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor, constant: -indentation),
             
-            isPinnedImageView.topAnchor.constraint(equalTo: colorView.topAnchor, constant: 12),
-            isPinnedImageView.trailingAnchor.constraint(equalTo: colorView.trailingAnchor),
+            isPinnedImageView.topAnchor.constraint(equalTo: colorView.topAnchor, constant: indentation),
+            isPinnedImageView.trailingAnchor.constraint(equalTo: colorView.trailingAnchor, constant: -6),
             isPinnedImageView.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeIsPinnedImage.height),
             isPinnedImageView.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeIsPinnedImage.width)
         ])

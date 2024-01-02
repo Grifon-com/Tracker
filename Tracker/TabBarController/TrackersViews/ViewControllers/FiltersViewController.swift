@@ -22,6 +22,7 @@ final class FiltersViewController: UIViewController {
     
     weak var delegate: FiltersViewControllerDelegate?
     private let viewModel: FiltersViewModelProtocol
+    private let colors = Colors()
     
     private lazy var filtersLable: UILabel = {
         let filtersLable = UILabel()
@@ -40,6 +41,7 @@ final class FiltersViewController: UIViewController {
         filterTableView.delegate = self
         filterTableView.backgroundColor = .clear
         filterTableView.separatorStyle = .singleLine
+        filterTableView.separatorColor = .separatorColor
         filterTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "\(CustomTableViewCell.self)")
         filterTableView.separatorInset = ConstantsFilters.insertSeparatorTableView
         
@@ -48,7 +50,7 @@ final class FiltersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = colors.viewBackground
         setupCategoryLabel()
         setupTableView()
     }
@@ -88,6 +90,7 @@ private extension FiltersViewController {
     }
 }
 
+//MARK: - UITableViewDataSource
 extension FiltersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.filtersState.count
@@ -117,6 +120,7 @@ extension FiltersViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension FiltersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate else { return }

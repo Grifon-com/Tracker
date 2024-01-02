@@ -36,7 +36,7 @@
 		1A704D3F2B2B76C60035C94D /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */; };
 		1A760A9D2B29EDC900B0C1CC /* EditTrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A760A9C2B29EDC900B0C1CC /* EditTrackerViewModel.swift */; };
 		1A79C42D2B39C3E4009CE43A /* StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42C2B39C3E4009CE43A /* StatisticViewModel.swift */; };
-		1A79C42F2B39FBCC009CE43A /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */; };
+		1A79C42F2B39FBCC009CE43A /* HelpersEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */; };
 		1A80951A2B3964A000591911 /* StatisticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8095192B3964A000591911 /* StatisticView.swift */; };
 		1A83156E2B2C786000097DE7 /* HandlerResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A83156D2B2C786000097DE7 /* HandlerResultType.swift */; };
 		1A84F3792AC87F4E001DD42F /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A84F3782AC87F4E001DD42F /* GeometricParams.swift */; };
@@ -123,7 +123,7 @@
 		1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A760A9C2B29EDC900B0C1CC /* EditTrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrackerViewModel.swift; sourceTree = "<group>"; };
 		1A79C42C2B39C3E4009CE43A /* StatisticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewModel.swift; sourceTree = "<group>"; };
-		1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
+		1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersEnum.swift; sourceTree = "<group>"; };
 		1A8095192B3964A000591911 /* StatisticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticView.swift; sourceTree = "<group>"; };
 		1A83156D2B2C786000097DE7 /* HandlerResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerResultType.swift; sourceTree = "<group>"; };
 		1A84F3782AC87F4E001DD42F /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
@@ -458,7 +458,7 @@
 				1AE27C2C2B0604A800C4A925 /* Errors.swift */,
 				1A6724122B2F108000719A9D /* FiltersState.swift */,
 				1AC642732B38442E0072E081 /* EventAnalytics.swift */,
-				1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */,
+				1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -728,7 +728,7 @@
 				1AAC05C32ACC595800AA4B6B /* CreateTrackerViewController.swift in Sources */,
 				1A21DD952ADE5A6A00583A01 /* DaysValueTransformer.swift in Sources */,
 				1A2F9B652AC82FBF00914B60 /* EventSelectionViewController.swift in Sources */,
-				1A79C42F2B39FBCC009CE43A /* UserDefaultKeys.swift in Sources */,
+				1A79C42F2B39FBCC009CE43A /* HelpersEnum.swift in Sources */,
 				1AA5B2372AD91D1800CB38A2 /* SelectCategoriesViewController.swift in Sources */,
 				1A79C42D2B39C3E4009CE43A /* StatisticViewModel.swift in Sources */,
 				1A8A7FE82AC55D970038CB42 /* SceneDelegate.swift in Sources */,

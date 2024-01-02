@@ -15,10 +15,11 @@ final class CustomTableViewCell: UITableViewCell {
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
     }
     
+    private let colors = Colors()
+    
     private lazy var nameCategoriLableView: UILabel = {
         let nameCategoriLableView = UILabel()
         nameCategoriLableView.font = ConstantsGreateCell.lableFont
-        nameCategoriLableView.textColor = .blackDay
         
         return nameCategoriLableView
     }()
@@ -37,6 +38,7 @@ final class CustomTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         layer.masksToBounds = true
+        backgroundColor = colors.viewBackground
         setupLable()
         setupSelectedImage()
     }
@@ -48,6 +50,10 @@ final class CustomTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         layer.cornerRadius = 0
+        layer.maskedCorners = [.layerMinXMinYCorner,
+                               .layerMinXMaxYCorner,
+                               .layerMaxXMinYCorner,
+                               .layerMaxXMaxYCorner]
     }
 }
 

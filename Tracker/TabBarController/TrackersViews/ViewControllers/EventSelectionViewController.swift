@@ -19,17 +19,16 @@ final class EventSelectionViewController: UIViewController {
         static let texGreatetLabelName = NSLocalizedString("texGreatetLabelName", comment: "")
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let cornerRadius = CGFloat(16)
-        static let lableGreateImage = UIColor(named: "blackDay")
     }
     
     weak var delegate: EventSelectionViewControllerDelegate?
+    private let colors = Colors()
     
     private lazy var labelCreate: UILabel = {
         let labelCreate = UILabel()
         labelCreate.text = ConstantsEventVc.texGreatetLabelName
         labelCreate.font = ConstantsEventVc.textFont
         labelCreate.backgroundColor = .clear
-        labelCreate.textColor = ConstantsEventVc.lableGreateImage
         labelCreate.translatesAutoresizingMaskIntoConstraints = false
         
         return labelCreate
@@ -60,7 +59,7 @@ final class EventSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = colors.viewBackground
         setupLableGreate()
         setupStackView()
     }
@@ -94,8 +93,8 @@ private extension EventSelectionViewController {
     func setupButton(text: NameEvent, font: UIFont, cornerRadius: CGFloat? = nil) -> UIButton {
         let button = UIButton()
         button.setTitle(text.name, for: .normal)
-        button.titleLabel?.textColor = UIColor.whiteDay
-        button.backgroundColor = UIColor.blackDay
+        button.backgroundColor = colors.buttonEventColor
+        button.setTitleColor(.textEventColor, for: .normal)
         button.titleLabel?.font = font
         button.layer.cornerRadius = cornerRadius ?? CGFloat(0)
         button.layer.masksToBounds = cornerRadius == nil ? false : true

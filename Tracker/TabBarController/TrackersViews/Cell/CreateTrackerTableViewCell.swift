@@ -15,10 +15,11 @@ class CreateTrackerTableViewCell: UITableViewCell {
         static let choiceButtonSize = CGSize(width: 44, height: 44)
     }
     
+    private let colors = Colors()
+    
     private lazy var lableView: UILabel = {
         let lableView = UILabel()
         lableView.font = ConstantsCreateCell.lableFont
-        lableView.textColor = .blackDay
         
         return lableView
     }()
@@ -51,6 +52,7 @@ class CreateTrackerTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = colors.viewBackground
         setupUIElement()
     }
     
@@ -58,6 +60,7 @@ class CreateTrackerTableViewCell: UITableViewCell {
         super.init(coder: coder)
         assertionFailure("init(coder:) has not been implemented")
     }
+    
 }
 
 extension CreateTrackerTableViewCell {

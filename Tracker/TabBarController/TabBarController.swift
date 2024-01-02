@@ -23,7 +23,8 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTabBar()
+        tabBar.layer.borderWidth = 1
+        tabBar.clipsToBounds = true
         let trackerViewController = TrackersViewController(viewModel: TrackerViewModel())
         let statisticsViewController = StatisticsViewController()
         
@@ -73,10 +74,5 @@ private extension TabBarController {
         vc.tabBarItem.imageInsets = insert
         
         return vc
-    }
-    
-    func setupTabBar() {
-        tabBar.layer.borderWidth = 1
-        tabBar.clipsToBounds = true
     }
 }

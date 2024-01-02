@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+//MARK: - TrackerCategoryStoreProtocol
 protocol TrackerCategoryStoreProtocol {
     func addCategory(_ nameCategory: String) -> Result<Void, Error>
     func getListTrackerCategoryCoreData() -> [TrackerCategoryCoreData]?
@@ -15,6 +16,7 @@ protocol TrackerCategoryStoreProtocol {
     func updateNameCategory(newNameCategory: String, oldNameCategory: String) -> Result<Void, Error>
 }
 
+//MARK: - TrackerCategoryStoreDelegate
 protocol TrackerCategoryStoreDelegate: AnyObject {
     func storeCategory(trackerCategoryStore: TrackerCategoryStoreProtocol)
 }
@@ -93,7 +95,6 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
         do {
             if let category = try searchTrackerCategoryCD(nameCategory: nameCategory) {
                 context.delete(category)
-                category.trakers = nil
                 return save()
             }
         } catch {

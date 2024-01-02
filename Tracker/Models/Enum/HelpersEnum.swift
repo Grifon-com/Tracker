@@ -12,3 +12,8 @@ enum UserDefaultKeys: String {
     case selectNameCategory
     case selectFilter
 }
+
+enum Fixed: String {
+    case fixedEng = "Fixed"
+    case fixedRu = "Закрепленные"
+}

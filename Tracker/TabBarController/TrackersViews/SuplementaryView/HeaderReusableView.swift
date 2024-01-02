@@ -13,12 +13,12 @@ final class HeaderReusableView: UICollectionReusableView {
         static let fontLable = UIFont.boldSystemFont(ofSize: 19)
         static let numberOfLinesLable = 1
     }
+    private let colors = Colors()
     
-    lazy var label: UILabel = {
+    private lazy var label: UILabel = {
         let label = UILabel()
         label.backgroundColor = .clear
         label.font = ConstantsHeader.fontLable
-        label.textColor = .blackDay
         label.numberOfLines = ConstantsHeader.numberOfLinesLable
         
         return label
@@ -26,6 +26,7 @@ final class HeaderReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = colors.viewBackground
         setupLable()
     }
     
@@ -35,8 +36,8 @@ final class HeaderReusableView: UICollectionReusableView {
 }
 
 //MARK: - SetupUI
-private extension HeaderReusableView {
-    func setupLable() {
+extension HeaderReusableView {
+    private func setupLable() {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -45,5 +46,9 @@ private extension HeaderReusableView {
             label.topAnchor.constraint(equalTo: topAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    func setTextLable(text: String) {
+        label.text = text
     }
 }

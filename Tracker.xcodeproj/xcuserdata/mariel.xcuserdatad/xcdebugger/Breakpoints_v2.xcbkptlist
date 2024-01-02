@@ -674,8 +674,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -690,8 +690,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "addDayInListkDay(cell:flag:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -706,8 +706,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "addDayInListkDay(cell:flag:)"
             landmarkType = "7">
             <Locations>
@@ -754,8 +754,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "addDayInListkDay(cell:flag:)"
             landmarkType = "7">
             <Locations>
@@ -802,8 +802,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "updateListWeekDay(flag:day:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -818,8 +818,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "updateListWeekDay(flag:day:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -834,8 +834,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "updateListWeekDay(flag:day:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -850,8 +850,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/SuplementaryView/HeaderReusableView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
             landmarkName = "label"
             landmarkType = "24">
          </BreakpointContent>
@@ -866,8 +866,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "583"
-            endingLineNumber = "583"
+            startingLineNumber = "611"
+            endingLineNumber = "611"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1064,8 +1064,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "581"
-            endingLineNumber = "581"
+            startingLineNumber = "609"
+            endingLineNumber = "609"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1172,8 +1172,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "566"
-            endingLineNumber = "566"
+            startingLineNumber = "594"
+            endingLineNumber = "594"
             landmarkName = "collectionView(_:layout:insetForSectionAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1188,8 +1188,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
+            startingLineNumber = "587"
+            endingLineNumber = "587"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1204,8 +1204,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "580"
-            endingLineNumber = "580"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -1312,8 +1312,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "registerCellAndHeader(collectionView:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1328,8 +1328,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "603"
+            endingLineNumber = "603"
             landmarkName = "collectionView(_:layout:referenceSizeForHeaderInSection:)"
             landmarkType = "7">
             <Locations>
@@ -1439,8 +1439,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/EventSelectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "trackerViewControllerDidCancel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1455,8 +1455,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "642"
-            endingLineNumber = "642"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
             landmarkName = "eventSelectionViewControllerDidCancel(_:)"
             landmarkType = "7">
             <Locations>
@@ -1519,8 +1519,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "601"
-            endingLineNumber = "601"
+            startingLineNumber = "634"
+            endingLineNumber = "634"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
             <Locations>
@@ -1693,8 +1693,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/EventSelectionViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "trackerViewControllerDidCancel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1803,8 +1803,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "608"
-            endingLineNumber = "608"
+            startingLineNumber = "642"
+            endingLineNumber = "642"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1851,8 +1851,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "562"
-            endingLineNumber = "562"
+            startingLineNumber = "590"
+            endingLineNumber = "590"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2169,8 +2169,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
+            startingLineNumber = "599"
+            endingLineNumber = "599"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2876,8 +2876,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "609"
-            endingLineNumber = "609"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
             landmarkName = "updateSearchResults(for:)"
             landmarkType = "7">
             <Locations>
@@ -2924,8 +2924,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "425"
-            endingLineNumber = "425"
+            startingLineNumber = "456"
+            endingLineNumber = "456"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2940,8 +2940,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "didTapDoneButton()"
             landmarkType = "7">
             <Locations>
@@ -3004,8 +3004,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/NewCategoriViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "textFieldDidEndEditing(_:)"
             landmarkType = "7">
             <Locations>
@@ -3847,8 +3847,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "512"
-            endingLineNumber = "512"
+            startingLineNumber = "530"
+            endingLineNumber = "530"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3863,8 +3863,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "566"
+            endingLineNumber = "566"
             landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -3879,8 +3879,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
+            startingLineNumber = "555"
+            endingLineNumber = "555"
             landmarkName = "collectionView(_:contextMenuConfigurationForItemsAt:point:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4014,99 +4014,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E741F325-4178-4663-9AD2-29485430C899"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/Domain/Store/TrackerStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "deleteTracker(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E741F325-4178-4663-9AD2-29485430C899 - 4653010b9713f1e3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "105"
-                  endingLineNumber = "105"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-               <Location
-                  uuid = "E741F325-4178-4663-9AD2-29485430C899 - 4653010b9713f1c2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "106"
-                  endingLineNumber = "106"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-               <Location
-                  uuid = "E741F325-4178-4663-9AD2-29485430C899 - 4653010b9713f621"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "107"
-                  endingLineNumber = "107"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-               <Location
-                  uuid = "E741F325-4178-4663-9AD2-29485430C899 - 4653010b9713f600"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "108"
-                  endingLineNumber = "108"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-               <Location
-                  uuid = "E741F325-4178-4663-9AD2-29485430C899 - 4653010b9713f7d3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "121"
-                  endingLineNumber = "121"
-                  offsetFromSymbolStart = "1492">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "999B42A7-93CC-41AC-B7AD-A42E383E3ABD"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4118,54 +4025,6 @@
             endingLineNumber = "94"
             landmarkName = "unknown"
             landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "19C77031-1E79-4360-BA7E-7320350830D5"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/Domain/Store/TrackerStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "deleteTracker(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "19C77031-1E79-4360-BA7E-7320350830D5 - 4653010b9713f6db"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "1648">
-               </Location>
-               <Location
-                  uuid = "19C77031-1E79-4360-BA7E-7320350830D5 - 4653010b9713f6fc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerStore.deleteTracker(Tracker.Tracker) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "112"
-                  endingLineNumber = "112"
-                  offsetFromSymbolStart = "1648">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4286,8 +4145,8 @@
             filePath = "Tracker/Domain/Store/TrackerCategoryStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "fetchedCategoryResultController"
             landmarkType = "24">
          </BreakpointContent>
@@ -4460,8 +4319,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
+            startingLineNumber = "674"
+            endingLineNumber = "674"
             landmarkName = "eventSelectionViewController(vc:nameCategories:tracker:)"
             landmarkType = "7">
             <Locations>
@@ -4634,8 +4493,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "addNewTracker(_:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4650,8 +4509,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/Cell/TrackersCollectionViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "didTapAddButton()"
             landmarkType = "7">
          </BreakpointContent>
@@ -4666,10 +4525,72 @@
             filePath = "Tracker/Domain/Store/TrackerRecordStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "updateTrackerRecord(_:)"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "deleteOrCreateTrackerRecord(id:date:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "70415C9D-D0F6-428D-8DC1-9CF2ED749411 - b487d0435a9e5c51"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.TrackerRecordStore.updateTrackerRecord(id: Foundation.UUID, date: Foundation.Date) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerRecordStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "157"
+                  endingLineNumber = "157"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "70415C9D-D0F6-428D-8DC1-9CF2ED749411 - b487d0435a9e5c13"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.TrackerRecordStore.updateTrackerRecord(id: Foundation.UUID, date: Foundation.Date) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerRecordStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "159"
+                  endingLineNumber = "159"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "70415C9D-D0F6-428D-8DC1-9CF2ED749411 - b487d0435a9e5cfc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.TrackerRecordStore.updateTrackerRecord(id: Foundation.UUID, date: Foundation.Date) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerRecordStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "160"
+                  endingLineNumber = "160"
+                  offsetFromSymbolStart = "160">
+               </Location>
+               <Location
+                  uuid = "70415C9D-D0F6-428D-8DC1-9CF2ED749411 - 4973062137ba1035"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.TrackerRecordStore.deleteOrCreateTrackerRecord(id: Foundation.UUID, date: Foundation.Date) -&gt; Swift.Result&lt;(), Swift.Error&gt;"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/Domain/Store/TrackerRecordStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "160"
+                  endingLineNumber = "160"
+                  offsetFromSymbolStart = "160">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4682,9 +4603,9 @@
             filePath = "Tracker/Domain/Store/TrackerRecordStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "addNewTrackerRecord(_:)"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "addNewTrackerRecord(id:date:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -4730,8 +4651,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "bind()"
             landmarkType = "7">
             <Locations>
@@ -4825,6 +4746,21 @@
                   endingLineNumber = "179"
                   offsetFromSymbolStart = "148">
                </Location>
+               <Location
+                  uuid = "D84F44DF-974D-45F4-929E-450B69FAE8BE - a74cfca2a84d406b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Foundation.IndexPath) -&gt; () in Tracker.TrackersViewController.bind() -&gt; ()"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "201"
+                  endingLineNumber = "201"
+                  offsetFromSymbolStart = "148">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -4879,22 +4815,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "851B75DA-DB51-4CB2-A4D4-37A619C4E967"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "bind()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "DD9C096B-58F7-4B65-84A8-1490CF5E1C10"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -4902,8 +4822,8 @@
             filePath = "Tracker/Domain/Store/TrackerCategoryStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "controllerDidChangeContent(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4918,8 +4838,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "addPinnedCategory(_:pinnedCategory:)"
             landmarkType = "7">
             <Locations>
@@ -5169,8 +5089,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5185,8 +5105,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "bind()"
             landmarkType = "7">
             <Locations>
@@ -5248,8 +5168,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
+            startingLineNumber = "261"
+            endingLineNumber = "261"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5264,8 +5184,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5280,9 +5200,9 @@
             filePath = "Tracker/ViewModel/CategoryViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "init(trackerCategoryStore:trackerStore:category:)"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "init(trackerCategoryStore:trackerStore:trackerRecordStore:category:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5296,8 +5216,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/ScheduleViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "didTapDoneButton()"
             landmarkType = "7">
          </BreakpointContent>
@@ -5312,9 +5232,9 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "603"
-            endingLineNumber = "603"
-            landmarkName = "editTracker(vc:editTracker:nameCategory:indexPath:)"
+            startingLineNumber = "635"
+            endingLineNumber = "635"
+            landmarkName = "editTracker(vc:editTracker:count:nameCategory:indexPath:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -5328,8 +5248,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "546"
-            endingLineNumber = "546"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
             landmarkName = "collectionView(_:layout:sizeForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5344,8 +5264,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
+            startingLineNumber = "590"
+            endingLineNumber = "590"
             landmarkName = "collectionView(_:layout:referenceSizeForHeaderInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5360,8 +5280,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "570"
-            endingLineNumber = "570"
+            startingLineNumber = "601"
+            endingLineNumber = "601"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -5408,8 +5328,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "573"
-            endingLineNumber = "573"
+            startingLineNumber = "604"
+            endingLineNumber = "604"
             landmarkName = "collectionView(_:viewForSupplementaryElementOfKind:at:)"
             landmarkType = "7">
             <Locations>
@@ -5456,8 +5376,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "518"
-            endingLineNumber = "518"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5472,8 +5392,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "556"
+            endingLineNumber = "556"
             landmarkName = "collectionView(_:didSelectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5488,8 +5408,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "493"
-            endingLineNumber = "493"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5520,9 +5440,9 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "607"
-            endingLineNumber = "607"
-            landmarkName = "editTracker(vc:editTracker:nameCategory:indexPath:)"
+            startingLineNumber = "639"
+            endingLineNumber = "639"
+            landmarkName = "editTracker(vc:editTracker:count:nameCategory:indexPath:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -5583,8 +5503,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "564"
+            endingLineNumber = "564"
             landmarkName = "collectionView(_:didDeselectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5599,8 +5519,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "569"
+            endingLineNumber = "569"
             landmarkName = "collectionView(_:didDeselectItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5615,8 +5535,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
             <Locations>
@@ -5663,8 +5583,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5679,8 +5599,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "372"
-            endingLineNumber = "372"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "storeCategory(trackerCategoryStore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5695,8 +5615,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "650"
-            endingLineNumber = "650"
+            startingLineNumber = "686"
+            endingLineNumber = "686"
             landmarkName = "trackerViewController(vc:nameCategory:tracker:)"
             landmarkType = "7">
             <Locations>
@@ -5803,8 +5723,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "controllerDidChangeContent(_:)"
             landmarkType = "7">
             <Locations>
@@ -5896,8 +5816,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
             landmarkName = "didTapGreateButton()"
             landmarkType = "7">
             <Locations>
@@ -6184,8 +6104,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
             <Locations>
@@ -6277,8 +6197,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
             <Locations>
@@ -6355,8 +6275,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "didTapGreateButton()"
             landmarkType = "7">
             <Locations>
@@ -6403,8 +6323,8 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6419,8 +6339,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "updateTracker(tracker:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6435,8 +6355,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "didTapGreateButton()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6451,8 +6371,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/CreateTrackerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
             landmarkName = "didTapGreateButton()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6467,10 +6387,42 @@
             filePath = "Tracker/TabBarController/TrackersViews/Cell/CustomTableViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "setupCornerRadius(cornerRadius:maskedCorners:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8096EEF7-C496-492A-B520-81B73487A4BA - 1c255211a8c64403"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.CustomTableViewCell.setupCornerRadius(cornerRadius: CoreGraphics.CGFloat, maskedCorners: Swift.Optional&lt;__C.CACornerMask&gt;) -&gt; ()"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/Cell/CustomTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "200">
+               </Location>
+               <Location
+                  uuid = "8096EEF7-C496-492A-B520-81B73487A4BA - 1c255211a8c644e4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Tracker.CustomTableViewCell.setupCornerRadius(cornerRadius: CoreGraphics.CGFloat, maskedCorners: Swift.Optional&lt;__C.CACornerMask&gt;) -&gt; ()"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/Cell/CustomTableViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "200">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6640,8 +6592,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6656,8 +6608,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6672,8 +6624,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -6688,10 +6640,42 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "bind()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2056FD57-6FDE-45FA-B09F-061465E9042F - 23224759c85cc995"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (Tracker.FiltersState) -&gt; () in Tracker.TrackersViewController.bind() -&gt; ()"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "223"
+                  endingLineNumber = "223"
+                  offsetFromSymbolStart = "704">
+               </Location>
+               <Location
+                  uuid = "2056FD57-6FDE-45FA-B09F-061465E9042F - 23224759c85cca74"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (Tracker.FiltersState) -&gt; () in Tracker.TrackersViewController.bind() -&gt; ()"
+                  moduleName = "Tracker"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "224"
+                  endingLineNumber = "224"
+                  offsetFromSymbolStart = "704">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6704,41 +6688,9 @@
             filePath = "Tracker/ViewModel/TrackerViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "comparisonWeekDays(date:day:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F574F8DD-F3DC-4ACA-9775-3EA5251F044E"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/ViewModel/TrackerViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
-            landmarkName = "filterListTrackersCompleted(trackerCategory:date:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CB5AD351-EA51-4F26-B7F7-E84FB74362F3"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/ViewModel/TrackerViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "filterListTrackersCompleted(trackerCategory:date:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -6752,8 +6704,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "629"
-            endingLineNumber = "629"
+            startingLineNumber = "665"
+            endingLineNumber = "665"
             landmarkName = "didTrackerCompleted(_:)"
             landmarkType = "7">
             <Locations>
@@ -6815,8 +6767,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/Cell/TrackersCollectionViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "updateLableCountAndImageAddButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6831,58 +6783,10 @@
             filePath = "Tracker/TabBarController/TrackersViews/Cell/TrackersCollectionViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "updateLableCountAndImageAddButton(_:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "00A0FFB8-E722-4EFE-8EE9-35C88D7ABABC"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Tracker/ViewModel/TrackerViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "filterListTrackersNotCompleted(trackerCategory:date:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "00A0FFB8-E722-4EFE-8EE9-35C88D7ABABC - 9884aa250078aa3d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerViewModel.filterListTrackersNotCompleted(trackerCategory: Swift.Array&lt;Tracker.TrackerCategory&gt;, date: Foundation.Date) -&gt; ()"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/ViewModel/TrackerViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "186"
-                  endingLineNumber = "186"
-                  offsetFromSymbolStart = "1568">
-               </Location>
-               <Location
-                  uuid = "00A0FFB8-E722-4EFE-8EE9-35C88D7ABABC - 9884aa250078aa1e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Tracker.TrackerViewModel.filterListTrackersNotCompleted(trackerCategory: Swift.Array&lt;Tracker.TrackerCategory&gt;, date: Foundation.Date) -&gt; ()"
-                  moduleName = "Tracker"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mariel/Desktop/Tracker/Tracker/ViewModel/TrackerViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "1676">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6895,8 +6799,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "filterState(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6911,8 +6815,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
             landmarkName = "filterState(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6927,8 +6831,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "filterState(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6943,8 +6847,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
+            startingLineNumber = "273"
+            endingLineNumber = "273"
             landmarkName = "filterState(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -6991,8 +6895,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/TrackersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "186"
-            endingLineNumber = "186"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "bind()"
             landmarkType = "7">
          </BreakpointContent>
@@ -7007,8 +6911,8 @@
             filePath = "Tracker/TabBarController/TrackersViews/ViewControllers/FiltersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -7023,8 +6927,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "fetchedTrackerResultController"
             landmarkType = "24">
          </BreakpointContent>
@@ -7039,8 +6943,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "fetchedTrackerResultController"
             landmarkType = "24">
          </BreakpointContent>
