@@ -43,6 +43,12 @@ class StatisticsViewController: UIViewController {
         return cardStatistics
     }()
     
+    private lazy var cardStatysticsViewStack: UIStackView = {
+        let cardStatysticsViewStack = UIStackView()
+        
+        return cardStatysticsViewStack
+    }()
+    
     private lazy var imageViewStab: UIImageView = {
         let imageViewStab = UIImageView()
         imageViewStab.image = UIImage(named: ConstantsStatisticVC.imageNothingFound)
@@ -58,7 +64,8 @@ class StatisticsViewController: UIViewController {
         return lableTextStab
     }()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         view.backgroundColor = colors.viewBackground
         viewModel = StatisticsViewModel()
@@ -68,9 +75,10 @@ class StatisticsViewController: UIViewController {
         setupSubView()
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews()
+    {
         super.viewDidLayoutSubviews()
-        addBorderGradient(view: cardStatysticsView,
+        addBorderGradient(views: [cardStatysticsView],
                           colors: [UIColor.redGradient.cgColor,
                                    UIColor.greenGradient.cgColor,
                                    UIColor.blueGradient.cgColor],
@@ -80,14 +88,16 @@ class StatisticsViewController: UIViewController {
                           cornerRadius: ConstantsStatisticVC.borderRadius)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool)
+    {
         super.viewWillAppear(animated)
         showStabView(flag: viewModel?.getIsTracker())
     }
 }
 
 private extension StatisticsViewController {
-    func bind() {
+    func bind()
+    {
         guard let viewModel = viewModel as? StatisticsViewModel else { return }
         viewModel.$countTrackerComplet.bind { [weak self] count in
             guard let self else { return }
@@ -95,50 +105,56 @@ private extension StatisticsViewController {
         }
     }
     
-    func addBorderGradient(view: UIView,
-                                   colors: [CGColor],
-                                   borderWidth: CGFloat,
-                                   startPoint: CGPoint,
-                                   endPoint: CGPoint,
-                                   cornerRadius: CGFloat)
+    func addBorderGradient(views: [UIView],
+                           colors: [CGColor],
+                           borderWidth: CGFloat,
+                           startPoint: CGPoint,
+                           endPoint: CGPoint,
+                           cornerRadius: CGFloat)
     {
-        view.layer.cornerRadius = cornerRadius
-        view.clipsToBounds = true
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors = colors
-        gradient.startPoint = startPoint
-        gradient.endPoint = endPoint
-        
-        let shape = CAShapeLayer()
-        shape.lineWidth = borderWidth
-        let path = UIBezierPath(roundedRect: view.bounds, cornerRadius: cornerRadius).cgPath
-        shape.path = path
-        shape.strokeColor = UIColor.blackDay.cgColor
-        shape.fillColor = UIColor.clear.cgColor
-        gradient.mask = shape
-        view.layer.addSublayer(gradient)
+        views.forEach {
+            $0.layer.cornerRadius = cornerRadius
+            $0.clipsToBounds = true
+            
+            let gradient = CAGradientLayer()
+            gradient.frame = $0.bounds
+            gradient.colors = colors
+            gradient.startPoint = startPoint
+            gradient.endPoint = endPoint
+            
+            let shape = CAShapeLayer()
+            shape.lineWidth = borderWidth
+            let path = UIBezierPath(roundedRect: $0.bounds,
+                                    cornerRadius: cornerRadius).cgPath
+            shape.path = path
+            shape.strokeColor = UIColor.blackDay.cgColor
+            shape.fillColor = UIColor.clear.cgColor
+            gradient.mask = shape
+            $0.layer.addSublayer(gradient)
+        }
     }
     
-    func showStabView(flag: Bool?) {
+    func showStabView(flag: Bool?)
+    {
         guard let flag else {
-            imageViewStab.isHidden = false
-            lableTextStab.isHidden = false
-            cardStatysticsView.isHidden = true
+            imageViewStab.isHidden = flag == nil
+            lableTextStab.isHidden = flag == nil
+            cardStatysticsView.isHidden = flag != nil
             return }
         imageViewStab.isHidden = !flag
         lableTextStab.isHidden = !flag
         cardStatysticsView.isHidden = flag
     }
     
-    func setupSubView() {
+    func setupSubView()
+    {
         setupLabelHeader()
         setupStabView()
         setupCardStatysticsView()
     }
     
-    func setupLabelHeader() {
+    func setupLabelHeader()
+    {
         view.addSubview(labelHeader)
         NSLayoutConstraint.activate([
             labelHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -146,7 +162,8 @@ private extension StatisticsViewController {
         ])
     }
     
-    func setupStabView() {
+    func setupStabView()
+    {
         [imageViewStab, lableTextStab].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -162,7 +179,8 @@ private extension StatisticsViewController {
         ])
     }
     
-    func setupCardStatysticsView() {
+    func setupCardStatysticsView()
+    {
         view.addSubview(cardStatysticsView)
         NSLayoutConstraint.activate([
             cardStatysticsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

@@ -14,11 +14,14 @@ protocol StatisticsViewModelProtocol {
 
 final class StatisticsViewModel {
     @Observable<Int?> private(set) var countTrackerComplet: Int?
-    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue) private(set) var isTracker: Bool?
+    
+    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue)
+    private(set) var isTracker: Bool?
 
     let trackerRecordStore: TrackerRecordStoreProtocol
     
-    convenience init() {
+    convenience init()
+    {
         let trackerRecordStore = TrackerRecordStore()
         self.init(trackerRecordStore: trackerRecordStore)
         countTrackerComplet = getCountTrackerComplet()
@@ -41,7 +44,7 @@ extension StatisticsViewModel: StatisticsViewModelProtocol {
 }
 
 extension StatisticsViewModel: TrackerRecordStoreDelegate {
-    func trackerRecordStore(trackerRecordStore: TrackerRecordStoreProtocol) {
+    func trackerRecordStore(trackerRecordStore: TrackerRecordStoreProtocol, flag: Bool) {
         countTrackerComplet = getCountTrackerComplet()
     }
 }

@@ -27,12 +27,5 @@ struct Tracker {
         self.schedule = schedule
     }
 }
-
-extension Tracker: Equatable {
-    static func == (lhs: Tracker, rhs: Tracker) -> Bool {
-            lhs.id == rhs.id
-    }
-}
-
-extension Tracker: Hashable {}
+ 
 

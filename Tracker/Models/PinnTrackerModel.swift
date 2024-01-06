@@ -13,7 +13,8 @@ struct PinnTracker {
 }
 
 extension PinnTracker: Equatable {
-    static func == (lhs: PinnTracker, rhs: PinnTracker) -> Bool {
+    static func == (lhs: PinnTracker,
+                    rhs: PinnTracker) -> Bool {
         lhs.id == rhs.id
     }
 }

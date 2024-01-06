@@ -47,14 +47,17 @@ final class ScheduleViewController: UIViewController {
         weekDayTableView.backgroundColor = .clear
         weekDayTableView.separatorInset = ConstantsShedulVc.separatorInsetTableView
         weekDayTableView.separatorColor = .separatorColor
-        weekDayTableView.register(WeekDayTableViewCell.self, forCellReuseIdentifier: "\(WeekDayTableViewCell.self)")
+        weekDayTableView.register(WeekDayTableViewCell.self,
+                                  forCellReuseIdentifier: "\(WeekDayTableViewCell.self)")
         
         return weekDayTableView
     }()
     
     private lazy var doneButton: UIButton = {
         let doneButton = UIButton()
-        doneButton.addTarget(self, action: #selector(didTapDoneButton), for: .touchUpInside)
+        doneButton.addTarget(self,
+                             action: #selector(didTapDoneButton),
+                             for: .touchUpInside)
         doneButton.layer.cornerRadius = ConstantsShedulVc.cornerRadiusUIElement
         doneButton.layer.masksToBounds = true
         doneButton.backgroundColor = colors.buttonDisabledColor
@@ -73,16 +76,19 @@ final class ScheduleViewController: UIViewController {
         return contentStackView
     }()
     
-    init(viewModel: SheduleViewModelProtocol) {
+    init(viewModel: SheduleViewModelProtocol)
+    {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         view.backgroundColor = colors.viewBackground
         setupContentSteck()
@@ -93,7 +99,8 @@ final class ScheduleViewController: UIViewController {
 private extension ScheduleViewController {
     //MARK: - Обработка событий
     @objc
-    func didTapDoneButton() {
+    func didTapDoneButton()
+    {
         guard let delegate
         else { return }
         //передаем список дней для поля "schedule" при создании трекера
@@ -104,7 +111,8 @@ private extension ScheduleViewController {
     
     //MARK: - Логика
     //метод обновления списка listWeekDay в зависимости от положения переключателя в яцейке weekDayTableView
-    func updateListWeekDay(flag: Bool, day: WeekDay) {
+    func updateListWeekDay(flag: Bool, day: WeekDay)
+    {
         if flag {
             var listDay: [WeekDay] = []
             listDay = viewModel.listWeekDay
@@ -120,7 +128,8 @@ private extension ScheduleViewController {
     }
     
     //MARK: - SetupUI
-    func setupContentSteck() {
+    func setupContentSteck()
+    {
         view.addSubview(contentStackView)
         [scheduleLable, weekDayTableView, doneButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -129,10 +138,14 @@ private extension ScheduleViewController {
         contentStackView.setCustomSpacing(38, after: scheduleLable)
         
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            contentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                  constant: 16),
+            contentStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                     constant: -16),
+            contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                      constant: 16),
+            contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                       constant: -16),
             
             doneButton.heightAnchor.constraint(equalToConstant: 60)
         ])
@@ -141,22 +154,29 @@ private extension ScheduleViewController {
 
 //MARK: - UITableViewDataSource
 extension ScheduleViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         viewModel.weekDay.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WeekDayTableViewCell.self)") as? WeekDayTableViewCell else { return UITableViewCell() }
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WeekDayTableViewCell.self)")
+                as? WeekDayTableViewCell
+        else { return UITableViewCell() }
         cell.delegate = self
         cell.config(nameDay: viewModel.weekDay[indexPath.row])
         if viewModel.weekDay[indexPath.row] == viewModel.weekDay.first {
             cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
-                                   maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+                                   maskedCorners: [.layerMinXMinYCorner,
+                                                   .layerMaxXMinYCorner])
             
         }
         if viewModel.weekDay[indexPath.row] == viewModel.weekDay.last {
             cell.setupCornerRadius(cornerRadius: ConstantsShedulVc.cornerRadiusUIElement,
-                                   maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+                                   maskedCorners: [.layerMinXMaxYCorner,
+                                                   .layerMaxXMaxYCorner])
             cell.separatorInset = UIEdgeInsets(top: 0,
                                                left: 0,
                                                bottom: 0,
@@ -168,15 +188,19 @@ extension ScheduleViewController: UITableViewDataSource {
 }
 
 //MARK: - UITableViewDelegate
-extension ScheduleViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+extension ScheduleViewController: UITableViewDelegate
+{
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
         ConstantsShedulVc.heightCell
     }
 }
 
 //MARK: - WeekDayTableViewCellDelegate
 extension ScheduleViewController: WeekDayTableViewCellDelegate {
-    func addDayInListkDay(cell: UITableViewCell, flag: Bool) {
+    func addDayInListkDay(cell: UITableViewCell, flag: Bool)
+    {
         guard let cell = cell as? WeekDayTableViewCell,
               let indexPath = weekDayTableView.indexPath(for: cell)
         else { return }

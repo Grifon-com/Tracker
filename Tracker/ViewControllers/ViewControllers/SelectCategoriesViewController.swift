@@ -27,7 +27,10 @@ final class SelectCategoriesViewController: UIViewController {
         static let labelStabText = NSLocalizedString("labelStabText", comment: "")
         static let textEdit = NSLocalizedString("textEdit", comment: "")
         static let textDelete = NSLocalizedString("textDelete", comment: "")
+        static let textCancel = NSLocalizedString("textCancel", comment: "")
         static let textFixed = NSLocalizedString("textFixed", comment: "")
+        static let sureDeleteTracker = NSLocalizedString("sureDeleteTracker", comment: "")
+        static let alertDeleteCategoryMessage = NSLocalizedString("deleteCategoryMessage", comment: "")
         
         static let lableTextStabNumberOfLines = 2
         static let one = 1
@@ -91,7 +94,8 @@ final class SelectCategoriesViewController: UIViewController {
         selectionCategoryTableView.backgroundColor = .clear
         selectionCategoryTableView.separatorStyle = .singleLine
         selectionCategoryTableView.separatorColor = .separatorColor
-        selectionCategoryTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "\(CustomTableViewCell.self)")
+        selectionCategoryTableView.register(CustomTableViewCell.self,
+                                            forCellReuseIdentifier: "\(CustomTableViewCell.self)")
         selectionCategoryTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         
         return selectionCategoryTableView
@@ -106,28 +110,33 @@ final class SelectCategoriesViewController: UIViewController {
         createCategoryButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
         createCategoryButton.layer.masksToBounds = true
         createCategoryButton.translatesAutoresizingMaskIntoConstraints = false
-        createCategoryButton.addTarget(self, action: #selector(didTapСategoryButton), for: .touchUpInside)
+        createCategoryButton.addTarget(self, action: #selector(didTapСategoryButton),
+                                       for: .touchUpInside)
         
         return createCategoryButton
     }()
     
-    init(delegate: SelectCategoriesViewControllerDelegate, viewModel: CategoryViewModelProtocol) {
+    init(delegate: SelectCategoriesViewControllerDelegate,
+         viewModel: CategoryViewModelProtocol)
+    {
         self.delegate = delegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         setupUIElement()
         bind()
         view.backgroundColor = colors.viewBackground
-        handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { [weak self] cat in
+        handler.resultTypeHandler(viewModel.сategoryExcludingFixed(), vc: self) { [weak self] cat in
             guard let self else { return }
             self.showStabView(flag: !cat.isEmpty)
         }
@@ -141,21 +150,24 @@ final class SelectCategoriesViewController: UIViewController {
 extension SelectCategoriesViewController {
     //MARK: - обработка событий
     @objc
-    private func didTapСategoryButton() {
+    private func didTapСategoryButton()
+    {
         let newCategoryVC = NewCategoriViewController(createCategorydelegate: self)
         newCategoryVC.modalPresentationStyle = .formSheet
         present(newCategoryVC, animated: true)
     }
     
-    private func showStabView(flag: Bool) {
+    private func showStabView(flag: Bool)
+    {
         conteinerStabView.isHidden = flag
     }
     
-    private func bind() {
+    private func bind()
+    {
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
-            handler.resultTypeHandler(viewModel.сategoryExcludingFixed()) { cat in
+            handler.resultTypeHandler(viewModel.сategoryExcludingFixed(), vc: self) { cat in
                 self.showStabView(flag: !cat.isEmpty)
             }
             self.selectionCategoryTableView.reloadData()
@@ -171,33 +183,59 @@ extension SelectCategoriesViewController {
             self.editDelegate = newCategoryVC
             newCategoryVC.modalPresentationStyle = .formSheet
             present(newCategoryVC, animated: true) {
-                self.editDelegate?.editCategoriesViewController(vc: self, oldNameCategory: category.nameCategory)
+                self.editDelegate?.editCategoriesViewController(vc: self,
+                                                                oldNameCategory: category.nameCategory)
             }
         }
     }
     
-    private func deleteAction(text: String, category: TrackerCategory, trackers: [Tracker]) -> UIAction {
+    private func deleteAction(text: String,
+                              category: TrackerCategory,
+                              index: Int,
+                              trackers: [Tracker]) -> UIAction
+    {
         UIAction(title: text, attributes: .destructive) { [weak self] _ in
             guard let self else { return }
-            self.handler.resultTypeHandler(self.viewModel.deleteTrackerRecords(trackers: trackers)) {}
-            self.handler.resultTypeHandler(self.viewModel.deleteTrackers(trackers: category.arrayTrackers)) {}
-            self.handler.resultTypeHandler(self.viewModel.deleteCategory(nameCategory: category.nameCategory)) {
-                self.handler.resultTypeHandler(self.viewModel.deleteTrackers(trackers: category.arrayTrackers)) {
-                    self.handler.resultTypeHandler(self.viewModel.deleteTrackerRecords(trackers: trackers)) {}
+            let alert = UIAlertController(title: nil,
+                                          message: ConstantsCreateCatVc.alertDeleteCategoryMessage,
+                                          preferredStyle: .actionSheet)
+            let deleteAction = UIAlertAction(title: ConstantsCreateCatVc.textDelete,
+                                             style: .destructive) { _ in
+                if let isCategorySelected =  self.handler.resultTypeHandlerGetValue(self.viewModel.isCategorySelected(at: index),
+                                                                                    vc: self),
+                   !isCategorySelected {
+                    self.viewModel.deleteSelectCategory()
+                }
+                self.handler.resultTypeHandler(self.viewModel.deleteCategory(nameCategory: category.nameCategory),
+                                               vc: self) {
+                    self.handler.resultTypeHandler(self.viewModel.deleteTrackers(trackers: category.arrayTrackers),
+                                                   vc: self) {
+                        self.handler.resultTypeHandler(self.viewModel.deleteTrackerRecords(trackers: trackers),
+                                                       vc: self) {}
+                    }
                 }
             }
+            let cancelAction = UIAlertAction(title: ConstantsCreateCatVc.textCancel,
+                                             style: .cancel) { _ in
+                alert.dismiss(animated: true)
+            }
+            alert.addAction(deleteAction)
+            alert.addAction(cancelAction)
+            present(alert, animated: true)
         }
     }
     
     //MARK: - SetupUI
-    private func setupUIElement() {
+    private func setupUIElement()
+    {
         setupCategoryButton()
         setupCategoryLabel()
         setupTableView()
         setupStabView()
     }
     
-    private func setupCategoryButton() {
+    private func setupCategoryButton()
+    {
         view.addSubview(createCategoryButton)
         
         NSLayoutConstraint.activate([
@@ -208,29 +246,36 @@ extension SelectCategoriesViewController {
         ])
     }
     
-    private func setupCategoryLabel() {
+    private func setupCategoryLabel()
+    {
         view.addSubview(categoryLabel)
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            categoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            categoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                               constant: 24),
             categoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
-    private func setupTableView() {
+    private func setupTableView()
+    {
         view.addSubview(selectionCategoryTableView)
         selectionCategoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            selectionCategoryTableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 24),
-            selectionCategoryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            selectionCategoryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
+            selectionCategoryTableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor,
+                                                            constant: 24),
+            selectionCategoryTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                                constant: 16),
+            selectionCategoryTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                                 constant: -16),
             selectionCategoryTableView.bottomAnchor.constraint(equalTo: createCategoryButton.topAnchor)
         ])
     }
     
-    private func setupStabView() {
+    private func setupStabView()
+    {
         view.addSubview(conteinerStabView)
         [imageViewStab, lableTextStab].forEach {
             conteinerStabView.addSubview($0)
@@ -247,22 +292,30 @@ extension SelectCategoriesViewController {
             
             lableTextStab.widthAnchor.constraint(equalToConstant: 200),
             lableTextStab.centerXAnchor.constraint(equalTo: conteinerStabView.centerXAnchor),
-            lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
+            lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor,
+                                               constant: 10)
         ])
     }
 }
 
 //MARK: - UITableViewDataSource
 extension SelectCategoriesViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())?.count ?? 0
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed(),
+                                          vc: self)?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)") as? CustomTableViewCell,
-              let isSelected = handler.resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row)),
-              let text = handler.resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row)),
-              let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)")
+                as? CustomTableViewCell,
+              let isSelected = handler.resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row),
+                                                                 vc: self),
+              let text = handler.resultTypeHandlerGetValue(viewModel.createNameCategory(at: indexPath.row),
+                                                           vc: self),
+              let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed(),
+                                                               vc: self)
         else { return UITableViewCell() }
         cell.showSelectedImage(flag: isSelected)
         let model = CustomCellModel(text: text, color: .backgroundNight)
@@ -275,23 +328,27 @@ extension SelectCategoriesViewController: UITableViewDataSource {
         if indexPath.row == .zero && category.count == ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: nil)
-            cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
+            cell.separatorInset = UIEdgeInsets(top: .zero,
+                                               left: view.bounds.width,
+                                               bottom: .zero,
+                                               right: .zero)
         }
         
         if indexPath.row == .zero && category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
-                                   maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+                                   maskedCorners: [.layerMaxXMinYCorner,
+                                                   .layerMinXMinYCorner])
         }
         
         if indexPath.row == category.count - ConstantsCreateCatVc.one &&
             category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
-                                   maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
-            cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
-        }
-        
-        if category.count == ConstantsCreateCatVc.one {
-            cell.layer.cornerRadius = 16
+                                   maskedCorners: [.layerMinXMaxYCorner,
+                                                   .layerMaxXMaxYCorner])
+            cell.separatorInset = UIEdgeInsets(top: .zero,
+                                               left: view.bounds.width,
+                                               bottom: .zero,
+                                               right: .zero)
         }
         
         return cell
@@ -300,13 +357,17 @@ extension SelectCategoriesViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 extension SelectCategoriesViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath)
+    {
         guard let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell,
               let delegate
         else { return }
         cell.showSelectedImage(flag: false)
-        handler.resultTypeHandler(viewModel.selectСategory(at: indexPath.row)) {}
-        handler.resultTypeHandler(viewModel.createNameCategory(at: indexPath.row)) { [weak self] cat in
+        handler.resultTypeHandler(viewModel.selectСategory(at: indexPath.row),
+                                  vc: self) {}
+        handler.resultTypeHandler(viewModel.createNameCategory(at: indexPath.row),
+                                  vc: self) { [weak self] cat in
             guard let self else { return }
             delegate.categoriesViewController(vc: self, nameCategory: cat)
         }
@@ -315,14 +376,20 @@ extension SelectCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,
                    point: CGPoint
-    ) -> UIContextMenuConfiguration? {
+    ) -> UIContextMenuConfiguration?
+    {
         return UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
             guard let self,
-                  let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed())?[indexPath.row]
+                  let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed(),
+                                                                   vc: self)?[indexPath.row]
             else { return UIMenu()}
             return UIMenu(children: [
-                editAction(text: ConstantsCreateCatVc.textEdit, category: category),
-                deleteAction(text: ConstantsCreateCatVc.textDelete, category: category, trackers: category.arrayTrackers)
+                editAction(text: ConstantsCreateCatVc.textEdit,
+                           category: category),
+                deleteAction(text: ConstantsCreateCatVc.textDelete,
+                             category: category,
+                             index: indexPath.row,
+                             trackers: category.arrayTrackers)
             ])
         })
     }
@@ -330,23 +397,32 @@ extension SelectCategoriesViewController: UITableViewDelegate {
 
 //MARK: - NewCategoriViewControllerDelegate
 extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
-    func didNewCategoryName(_ vc: UIViewController, nameCategory: String) {
-        guard let category = handler.resultTypeHandlerGetValue(viewModel.getCategory())
+    func didNewCategoryName(_ vc: UIViewController, nameCategory: String)
+    {
+        guard let category = handler.resultTypeHandlerGetValue(viewModel.getCategory(),
+                                                               vc: self)
         else { return }
         let nameFirstUppercased = nameCategory.lowercased().firstUppercased
         if let _ = category.filter({ $0.nameCategory == nameFirstUppercased }).first {
             return
         }
-        if nameFirstUppercased == Fixed.fixedRu.rawValue || nameFirstUppercased == Fixed.fixedEng.rawValue {
+        if nameFirstUppercased == Fixed.fixedRu.rawValue ||
+            nameFirstUppercased == Fixed.fixedEng.rawValue {
             return
         }
-        handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased)) {}
+        handler.resultTypeHandler(viewModel.addCategory(nameCategory: nameFirstUppercased),
+                                  vc: self) {}
     }
 }
 
 //MARK: - UpdateCategoriViewControllerDelegate
 extension SelectCategoriesViewController: UpdateCategoriViewControllerDelegate {
-    func didUpdateCategoryName(_ vc: UIViewController, newNameCategory: String, oldNameCategory: String) {
-        handler.resultTypeHandler(viewModel.updateNameCategory(newNameCategory: newNameCategory, oldNameCaetegory: oldNameCategory)) {}
+    func didUpdateCategoryName(_ vc: UIViewController,
+                               newNameCategory: String,
+                               oldNameCategory: String)
+    {
+        handler.resultTypeHandler(viewModel.updateNameCategory(newNameCategory: newNameCategory,
+                                                               oldNameCaetegory: oldNameCategory),
+                                  vc: self) {}
     }
 }

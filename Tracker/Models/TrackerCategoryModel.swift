@@ -14,12 +14,13 @@ struct TrackerCategory {
 }
 
 extension TrackerCategory: Hashable {
-    static func == (lhs: TrackerCategory, rhs: TrackerCategory) -> Bool {
-            return lhs.nameCategory == rhs.nameCategory
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(nameCategory)
-        }
+    static func == (lhs: TrackerCategory,
+                    rhs: TrackerCategory) -> Bool {
+        lhs.nameCategory == rhs.nameCategory
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(nameCategory)
+    }
 }
 

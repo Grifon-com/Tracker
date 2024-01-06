@@ -60,6 +60,7 @@
 "categoriLabelText" = "Категория";
 "categoriAddButtonText" = "Добавить категорию";
 "labelStabText" = "Привычки и события можно обЪединить по смыслу";
+"deleteCategoryMessage" = "Эта категория точно не нужна?";
 
 //MARK: - NewCategoriViewController
 "newcategoriLabelText" = "Новая категория";
@@ -93,3 +94,25 @@
 "friday" = "Пт";
 "saturday" = "Сб";
 "sunday" = "Вс";
+
+//MARK: - ErrorLocalizedDescription
+"decodingErrorInvalidNameCategory" = "Ошибка декодирования названия категории";
+"getCategoryCoreDataError" = "Ошибка получения категории из базы данных";
+
+"getTrackerError" = "Ошибка получения трекера из базы данных";
+"decodingErrorInvalidName" = "Ошибка декодирования названия трекера";
+"decodingErrorInvalidId" = "Ошибка декодирования Id";
+"decodingErrorInvalidColor" = "Ошибка декодирования цвета фона трекера";
+"decodingErrorInvalidEmoji" = "Ошибка декодирования Emoji трекера";
+"decodingErrorInvalidSchedul" = "Ошибка декодирования расписания трекера";
+
+"transformationErrorInvalid" = "Ошибка трансформации";
+"decodingErrorInvalidDate" = "Ошибка декодирования даты";
+"loadTrackerRecord" = "Ошибка загрузки выполненных трекеров";
+"getTrackerRecord" = "Ошибка получения трекера";
+
+//MARK: - StatisticsEvent
+"bestPeriod" = "Лучший период"
+"perfectDays" = "Идеальные дни"
+"trackersCompleted" = "Трекеров завершено"
+"averageValue" = "Среднее значение"

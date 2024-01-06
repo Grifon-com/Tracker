@@ -21,54 +21,63 @@ protocol AnalyticsServiceProtocol {
 struct AnalyticsService {
     static let shared = AnalyticsService()
     private let handler: (MetricEvent) -> Void = { field in
-        YMMYandexMetrica.reportEvent(field.event.rawValue, parameters: field.params, onFailure: { error in
+        YMMYandexMetrica.reportEvent(field.event.rawValue,
+                                     parameters: field.params,
+                                     onFailure: { error in
             print("REPORT ERROR: %@", error.localizedDescription)
         })
     }
 }
     
 extension AnalyticsService: AnalyticsServiceProtocol {
-    func open() {
+    func open()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue]
         let metricEvent = MetricEvent(event: .open, params: params)
         handler(metricEvent)
     }
     
-    func close() {
+    func close()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue]
         let metricEvent = MetricEvent(event: .close, params: params)
         handler(metricEvent)
     }
     
-    func addTracker() {
+    func addTracker()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue,
                       EventFields.item.rawValue: ItemClick.add_track.rawValue]
         let metricEvent = MetricEvent(event: .click, params: params)
         handler(metricEvent)
     }
     
-    func track() {
+    func track()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue,
                       EventFields.item.rawValue: ItemClick.track.rawValue]
         let metricEvent = MetricEvent(event: .click, params: params)
         handler(metricEvent)
     }
     
-    func edit() {
+    func edit()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue,
                       EventFields.item.rawValue: ItemClick.edit.rawValue]
         let metricEvent = MetricEvent(event: .click, params: params)
         handler(metricEvent)
     }
     
-    func delete() {
+    func delete()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue,
                       EventFields.item.rawValue: ItemClick.delete.rawValue]
         let metricEvent = MetricEvent(event: .click, params: params)
         handler(metricEvent)
     }
     
-    func filter() {
+    func filter()
+    {
         let params = [EventFields.screen.rawValue: Screen.Main.rawValue,
                       EventFields.item.rawValue: ItemClick.filter.rawValue]
         let metricEvent = MetricEvent(event: .click, params: params)

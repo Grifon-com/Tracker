@@ -14,7 +14,8 @@ protocol WeekDayTableViewCellDelegate: AnyObject {
 
 //MARK: -
 final class WeekDayTableViewCell: UITableViewCell {
-    private static let dayLableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
+    private static let dayLableFont = UIFont.systemFont(ofSize: 17,
+                                                        weight: .regular)
     
     weak var delegate: WeekDayTableViewCellDelegate?
     
@@ -28,12 +29,15 @@ final class WeekDayTableViewCell: UITableViewCell {
     private lazy var choiceDaySwitch: UISwitch = {
         let choiceDaySwitch = UISwitch()
         choiceDaySwitch.onTintColor = .blueDay
-        choiceDaySwitch.addTarget(self, action: #selector(switching), for: .touchUpInside)
+        choiceDaySwitch.addTarget(self,
+                                  action: #selector(switching),
+                                  for: .touchUpInside)
         
         return choiceDaySwitch
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
+    {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .backgroundDay
         layer.masksToBounds = true
@@ -41,7 +45,8 @@ final class WeekDayTableViewCell: UITableViewCell {
         setupElement()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -49,13 +54,17 @@ final class WeekDayTableViewCell: UITableViewCell {
 extension WeekDayTableViewCell {
     //MARK: - Обработка событий
     @objc
-    private func switching(_ sender: UISwitch) {
+    private func switching(_ sender: UISwitch)
+    {
         guard let delegate else { return }
-        delegate.addDayInListkDay(cell: self, flag: choiceDaySwitch.isOn)
+        delegate.addDayInListkDay(cell: self,
+                                  flag: choiceDaySwitch.isOn)
     }
     
     //MARK: - Configuration
-    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+    func setupCornerRadius(cornerRadius: CGFloat,
+                           maskedCorners: CACornerMask)
+    {
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = maskedCorners
     }
@@ -73,11 +82,13 @@ extension WeekDayTableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            dayLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            dayLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                              constant: 12),
             dayLable.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             
-            choiceDaySwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            choiceDaySwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                      constant: -12),
             choiceDaySwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }

@@ -17,7 +17,10 @@ final class FiltersViewController: UIViewController {
         static let filterLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let cornerRadiusCell = CGFloat(16)
         static let heightCell = CGFloat(75)
-        static let insertSeparatorTableView = UIEdgeInsets(top: .zero, left: 12, bottom: .zero, right: 12)
+        static let insertSeparatorTableView = UIEdgeInsets(top: .zero,
+                                                           left: 12,
+                                                           bottom: .zero,
+                                                           right: 12)
     }
     
     weak var delegate: FiltersViewControllerDelegate?
@@ -42,7 +45,8 @@ final class FiltersViewController: UIViewController {
         filterTableView.backgroundColor = .clear
         filterTableView.separatorStyle = .singleLine
         filterTableView.separatorColor = .separatorColor
-        filterTableView.register(CustomTableViewCell.self, forCellReuseIdentifier: "\(CustomTableViewCell.self)")
+        filterTableView.register(CustomTableViewCell.self,
+                                 forCellReuseIdentifier: "\(CustomTableViewCell.self)")
         filterTableView.separatorInset = ConstantsFilters.insertSeparatorTableView
         
         return filterTableView
@@ -55,7 +59,9 @@ final class FiltersViewController: UIViewController {
         setupTableView()
     }
     
-    init(viewModel: FiltersViewModelProtocol, delegate: FiltersViewControllerDelegate) {
+    init(viewModel: FiltersViewModelProtocol,
+         delegate: FiltersViewControllerDelegate)
+    {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -72,19 +78,24 @@ private extension FiltersViewController {
         filtersLable.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            filtersLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            filtersLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                              constant: 24),
             filtersLable.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
-    private func setupTableView() {
+    private func setupTableView()
+    {
         view.addSubview(filterTableView)
         filterTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            filterTableView.topAnchor.constraint(equalTo: filtersLable.bottomAnchor, constant: 24),
-            filterTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            filterTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -16),
+            filterTableView.topAnchor.constraint(equalTo: filtersLable.bottomAnchor,
+                                                 constant: 24),
+            filterTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                     constant: 16),
+            filterTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                      constant: -16),
             filterTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
@@ -92,28 +103,41 @@ private extension FiltersViewController {
 
 //MARK: - UITableViewDataSource
 extension FiltersViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int
+    {
         viewModel.filtersState.count
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
         ConstantsFilters.heightCell
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = filterTableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)", for: indexPath) as? CustomTableViewCell
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
+        guard let cell = filterTableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)",
+                                                             for: indexPath) as? CustomTableViewCell
         else { return UITableViewCell() }
         cell.showSelectedImage(flag: viewModel.comparison(filter: viewModel.filtersState[indexPath.row].rawValue))
-        let model = CustomCellModel(text: viewModel.filtersState[indexPath.row].name, color: .backgroundNight)
+        let model = CustomCellModel(text: viewModel.filtersState[indexPath.row].name,
+                                    color: .backgroundNight)
         cell.config(model: model)
         if indexPath.row == viewModel.filtersState.count - 1 {
             cell.setupCornerRadius(cornerRadius: ConstantsFilters.cornerRadiusCell,
-                                   maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
-            cell.separatorInset = UIEdgeInsets(top: .zero, left: view.bounds.width, bottom: .zero, right: .zero)
+                                   maskedCorners: [.layerMinXMaxYCorner,
+                                                   .layerMaxXMaxYCorner])
+            cell.separatorInset = UIEdgeInsets(top: .zero,
+                                               left: view.bounds.width,
+                                               bottom: .zero,
+                                               right: .zero)
         }
         if indexPath.row == .zero {
             cell.setupCornerRadius(cornerRadius: ConstantsFilters.cornerRadiusCell,
-                                   maskedCorners: [.layerMaxXMinYCorner, .layerMinXMinYCorner])
+                                   maskedCorners: [.layerMaxXMinYCorner,
+                                                   .layerMinXMinYCorner])
         }
         
         return cell
@@ -122,7 +146,9 @@ extension FiltersViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 extension FiltersViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath)
+    {
         guard let delegate else { return }
         let selectFilter = viewModel.filtersState[indexPath.row]
         viewModel.setSelectFilter(selectFilter: selectFilter.rawValue)

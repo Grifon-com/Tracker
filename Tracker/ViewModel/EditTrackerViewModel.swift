@@ -35,13 +35,13 @@ final class EditTrackerViewModel {
     var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
     let dataSection: [Header] = [.emoji, .color]
     let emojies: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
-                                     "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
+                             "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
     
     let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
-                                     .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
-                                     .colorSelection9, .colorSelection10, .colorSelection11, .colorSelection12,
-                                     .colorSelection13, .colorSelection14, .colorSelection15, .colorSelection16,
-                                     .colorSelection17, .colorSelection18]
+                             .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
+                             .colorSelection9, .colorSelection10, .colorSelection11, .colorSelection12,
+                             .colorSelection13, .colorSelection14, .colorSelection15, .colorSelection16,
+                             .colorSelection17, .colorSelection18]
     
     let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
     
@@ -54,19 +54,22 @@ final class EditTrackerViewModel {
     
     private let marshalling: UIColorMarshalling
     
-    convenience init() {
+    convenience init()
+    {
         let marshalling = UIColorMarshalling()
         self.init(marshalling: marshalling)
     }
     
-    init(marshalling: UIColorMarshalling) {
+    init(marshalling: UIColorMarshalling)
+    {
         self.marshalling = marshalling
     }
 }
 
 //MARK: - EditTrackerViewModel
 extension EditTrackerViewModel: EditTrackerModelProtocol {
-    func checkingForEmptiness() -> Bool {
+    func checkingForEmptiness() -> Bool
+    {
         var flag: Bool
         if isSchedul {
             flag = !nameTracker.isEmpty &&
@@ -84,11 +87,14 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return flag
     }
     
-    func reverseIsSchedul() {
+    func reverseIsSchedul()
+    {
         isSchedul = isSchedul ? !isSchedul : isSchedul
     }
     
-    func jonedSchedule(schedule: [WeekDay], stringArrayDay: String) -> String {
+    func jonedSchedule(schedule: [WeekDay],
+                       stringArrayDay: String) -> String
+    {
         var stringListDay: String
         if schedule.count == regular.count {
             stringListDay = stringArrayDay
@@ -100,11 +106,13 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return stringListDay
     }
     
-    func setListWeekDay(listWeekDay: [WeekDay]) {
+    func setListWeekDay(listWeekDay: [WeekDay])
+    {
         schedule = listWeekDay
     }
     
-    func getColorRow(color: UIColor) -> Int {
+    func getColorRow(color: UIColor) -> Int
+    {
         var colorRow: Int = 0
         for (index, value) in colors.enumerated() {
             let colorMarshalling = marshalling.color(from: marshalling.hexString(from: value))
@@ -115,7 +123,8 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return colorRow
     }
     
-    func getEmojiRow(emoji: String) -> Int {
+    func getEmojiRow(emoji: String) -> Int
+    {
         var emojiRow: Int = 0
         for (index, value) in emojies.enumerated() {
             if value == emoji {
@@ -125,27 +134,38 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return emojiRow
     }
     
-    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay]) {
+    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay])
+    {
         self.schedule = schedule
     }
     
-    func setColor(_ vc: CreateTrackerViewController, color: UIColor) {
+    func setColor(_ vc: CreateTrackerViewController, color: UIColor)
+    {
         self.color = color
     }
     
-    func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String) {
+    func setNameNewCategory(_ vc: CreateTrackerViewController,
+                            nameCategory: String)
+    {
         self.nameNewCategory = nameCategory
     }
     
-    func setNameTracker(_ vc: CreateTrackerViewController, nameTracker: String) {
+    func setNameTracker(_ vc: CreateTrackerViewController,
+                        nameTracker: String)
+    {
         self.nameTracker = nameTracker
     }
     
-    func setEmojiTracker(_ vc: CreateTrackerViewController, emoji: String) {
+    func setEmojiTracker(_ vc: CreateTrackerViewController,
+                         emoji: String)
+    {
         self.emoji = emoji
     }
     
-    func editTracker(vc: CreateTrackerViewController, editTracker: Tracker, nameCategory: String) {
+    func editTracker(vc: CreateTrackerViewController,
+                     editTracker: Tracker,
+                     nameCategory: String)
+    {
         schedule = editTracker.schedule
         color = editTracker.color
         nameNewCategory = nameCategory

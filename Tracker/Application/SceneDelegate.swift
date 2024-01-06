@@ -11,9 +11,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    @UserDefaultsBacked<Bool>(key: "is_onboarding") private var isOnboarding
+    @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isOnboarding.rawValue) private var isOnboarding
     
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene,
+               willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions)
+    {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let tabBarViewController = TabBarController()

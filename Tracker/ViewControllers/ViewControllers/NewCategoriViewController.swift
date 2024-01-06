@@ -12,7 +12,9 @@ protocol NewCategoriViewControllerDelegate: AnyObject {
 }
 
 protocol UpdateCategoriViewControllerDelegate: AnyObject {
-    func didUpdateCategoryName(_ vc: UIViewController, newNameCategory: String, oldNameCategory: String)
+    func didUpdateCategoryName(_ vc: UIViewController,
+                               newNameCategory: String,
+                               oldNameCategory: String)
 }
 
 //MARK: - NewCategoriViewController
@@ -81,15 +83,18 @@ class NewCategoriViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         viewModel = NewCategoryViewModel()
         bind()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        let tapGesture = UITapGestureRecognizer(target: self,
+                                                action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         view.backgroundColor = colors.viewBackground
@@ -98,7 +103,8 @@ class NewCategoriViewController: UIViewController {
 }
 
 private extension NewCategoriViewController {
-    func bind() {
+    func bind()
+    {
         guard let viewModel = viewModel as? NewCategoryViewModel else { return }
         viewModel.$newNameCategory.bind { [weak self] text in
             guard let self else { return }
@@ -110,7 +116,8 @@ private extension NewCategoriViewController {
     
     //MARK: - Обработка событий
     @objc
-    func didTapNewСategoriButton() {
+    func didTapNewСategoriButton()
+    {
         guard let viewModel else { return }
         if let createCategorydelegate {
             createCategorydelegate.didNewCategoryName(self,
@@ -125,11 +132,13 @@ private extension NewCategoriViewController {
     }
     
     @objc
-    private func hideKeyboard() {
+    private func hideKeyboard()
+    {
         view.endEditing(true)
     }
     
-    func chengeHiddenButton(flag: Bool) {
+    func chengeHiddenButton(flag: Bool)
+    {
         readyButton.isEnabled = !flag
         readyButton.backgroundColor = !flag ? .blackDay : .grayDay
         readyButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
@@ -137,41 +146,52 @@ private extension NewCategoriViewController {
     }
     
     //MARK: - SetupUI
-    func setupUIElement() {
+    func setupUIElement()
+    {
         setupCategoriButton()
         setupCategoriLabel()
         setupCreateNameTextField()
     }
     
-    func setupCategoriButton() {
+    func setupCategoriButton()
+    {
         view.addSubview(readyButton)
         
         NSLayoutConstraint.activate([
             readyButton.heightAnchor.constraint(equalToConstant: 60),
-            readyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            readyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            readyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            readyButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                constant: -10),
+            readyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                 constant: 20),
+            readyButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                  constant: -20)
         ])
     }
     
-    func setupCategoriLabel() {
+    func setupCategoriLabel()
+    {
         view.addSubview(newCategoriLabel)
         newCategoriLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            newCategoriLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            newCategoriLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                  constant: 24),
             newCategoriLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
     
-    func setupCreateNameTextField() {
+    func setupCreateNameTextField()
+    {
         view.addSubview(createNameTextField)
         createNameTextField.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            createNameTextField.topAnchor.constraint(equalTo: newCategoriLabel.bottomAnchor, constant: 24),
-            createNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            createNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            createNameTextField.topAnchor.constraint(equalTo: newCategoriLabel.bottomAnchor,
+                                                     constant: 24),
+            createNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                         constant: 16),
+            createNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                          constant: -16),
             createNameTextField.heightAnchor.constraint(equalToConstant: 75)
         ])
     }
@@ -179,20 +199,24 @@ private extension NewCategoriViewController {
 
 //MARK: - UITextFieldDelegate
 extension NewCategoriViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField)
+    {
         guard let text = textField.text, let viewModel
         else { return }
         viewModel.setNewNameCategory(text: text)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
         createNameTextField.resignFirstResponder()
         return true
     }
 }
 
 extension NewCategoriViewController: SelectCategoryEditViewControllerDelegate {
-    func editCategoriesViewController(vc: UIViewController, oldNameCategory: String) {
+    func editCategoriesViewController(vc: UIViewController,
+                                      oldNameCategory: String)
+    {
         guard let viewModel else { return }
         createNameTextField.text = oldNameCategory
         viewModel.setNewNameCategory(text: oldNameCategory)

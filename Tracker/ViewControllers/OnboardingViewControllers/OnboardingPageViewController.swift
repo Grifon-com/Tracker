@@ -9,26 +9,28 @@ import UIKit
 
 //MARK: - OnboardingPageViewController
 final class OnboardingPageViewController: UIPageViewController {
-    private struct ConstantsOnboardingPageViewController {
+    private struct ConstantsOnboarding {
         static let textLableTwoVC = NSLocalizedString("textLableTwoVC", comment: "")
         static let imageNameTwoVC = "twoPage"
         static let numberOfPages = 2
         static let currentPage = 0
+        static let pageIndicatorTintColor = UIColor.blackDay.withAlphaComponent(0.3)
     }
     
     private var currentIndex: Int = 1
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.numberOfPages = ConstantsOnboardingPageViewController.numberOfPages
-        pageControl.currentPage = ConstantsOnboardingPageViewController.currentPage
+        pageControl.numberOfPages = ConstantsOnboarding.numberOfPages
+        pageControl.currentPage = ConstantsOnboarding.currentPage
         pageControl.currentPageIndicatorTintColor = .blackDay
-        pageControl.pageIndicatorTintColor = .blackDay.withAlphaComponent(0.3)
+        pageControl.pageIndicatorTintColor = ConstantsOnboarding.pageIndicatorTintColor
         
         return pageControl
     }()
-        
-    override func viewDidLoad() {
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         dataSource = self
         delegate = self
@@ -37,30 +39,36 @@ final class OnboardingPageViewController: UIPageViewController {
 }
 
 private extension OnboardingPageViewController {
-    func setupPageControl() {
+    func setupPageControl()
+    {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -134)
+            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                constant: -134)
         ])
     }
 }
 
 //MARK: - UIPageViewControllerDataSource
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerBefore viewController: UIViewController) -> UIViewController?
+    {
         return nil
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            viewControllerAfter viewController: UIViewController) -> UIViewController?
+    {
         let twoViewControllers = OnboardingViewController()
-        let onboardingModelTwoVC = Onboarding(imageName: ConstantsOnboardingPageViewController.imageNameTwoVC,
-                                              textLable: ConstantsOnboardingPageViewController.textLableTwoVC)
+        let onboardingModelTwoVC = Onboarding(imageName: ConstantsOnboarding.imageNameTwoVC,
+                                              textLable: ConstantsOnboarding.textLableTwoVC)
         twoViewControllers.config(model: onboardingModelTwoVC)
-        if currentIndex == ConstantsOnboardingPageViewController.numberOfPages {
+        if currentIndex == ConstantsOnboarding.numberOfPages {
             return nil
         }
         currentIndex += 1
@@ -71,7 +79,10 @@ extension OnboardingPageViewController: UIPageViewControllerDataSource {
 
 //MARK: - UIPageViewControllerDelegate
 extension OnboardingPageViewController: UIPageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController,
+                            didFinishAnimating finished: Bool,
+                            previousViewControllers: [UIViewController],
+                            transitionCompleted completed: Bool) {
         pageControl.currentPage = pageControl.currentPage == 1 ? 0 : 1
     }
 }

@@ -19,7 +19,8 @@ final class SheduleViewModel {
 }
 
 extension SheduleViewModel: SheduleViewModelProtocol {
-    func setListWeekDay(listWeekDay: [WeekDay]) {
+    func setListWeekDay(listWeekDay: [WeekDay])
+    {
         self.listWeekDay = listWeekDay
     }
 }

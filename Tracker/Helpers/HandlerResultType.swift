@@ -8,30 +8,41 @@
 import UIKit
 
 final class HandlerResultType {
-    func resultTypeHandler<Value>(_ listCategory: Result<Value, Error>, handler: (Value) -> Void) {
+    func resultTypeHandler<Value>(_ listCategory: Result<Value,
+                                  Error>, vc: UIViewController,
+                                  handler: (Value) -> Void)
+    {
         switch listCategory {
         case .success(let newValue):
             handler(newValue)
         case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
+            showMessageErrorAlert(message: error.localizedDescription,
+                                  viewController: vc)
         }
     }
     
-    func resultTypeHandlerGetValue<Value>(_ value: Result<Value, Error>) -> Value? {
+    func resultTypeHandlerGetValue<Value>(_ value: Result<Value, Error>,
+                                          vc: UIViewController) -> Value?
+    {
         switch value {
         case .success(let newValue):
             return newValue
         case .failure(let error):
-            showMessageErrorAlert(message: error.localizedDescription)
+            showMessageErrorAlert(message: error.localizedDescription,
+                                  viewController: vc)
             return nil
         }
     }
     
-    private func showMessageErrorAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "Ok", style: .cancel) { _ in
+    private func showMessageErrorAlert(message: String, viewController: UIViewController)
+    {
+        let alert = UIAlertController(title: nil,
+                                      message: message,
+                                      preferredStyle: .alert)
+        viewController.present(alert, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
             alert.dismiss(animated: true)
-        }
-        alert.addAction(action)
+        })
     }
 }

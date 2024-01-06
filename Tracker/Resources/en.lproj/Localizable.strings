@@ -61,6 +61,7 @@
 "categoriLabelText" = "Category";
 "categoriAddButtonText" = "Add a categorycategory";
 "labelStabText" = "Habits and events can be combined in meaning";
+"deleteCategoryMessage" = "Are you sure you don't need this category?";
 
 //MARK: - NewCategoriViewController
 "newcategoriLabelText" = "New category";
@@ -94,3 +95,25 @@
 "friday" = "Fri";
 "saturday" = "Sat";
 "sunday" = "Sun";
+
+//MARK: - ErrorLocalizedDescription
+"decodingErrorInvalidNameCategory" = "Error decoding the category name";
+"getCategoryCoreDataError" = "Error getting a category from the database";
+
+"getTrackerError" = "Error getting the tracker from the database";
+"decodingErrorInvalidName" = "Error decoding the tracker name";
+"decodingErrorInvalidId" = "Id decoding error";
+"decodingErrorInvalidColor" = "Error decoding the background color of the tracker";
+"decodingErrorInvalidEmoji" = "Error decoding the Emoji tracker";
+"decodingErrorInvalidSchedul" = "Tracker schedule decoding error";
+
+"transformationErrorInvalid" = "Transformation error";
+"decodingErrorInvalidDate" = "Date decoding error";
+"loadTrackerRecord" = "Error loading completed trackers";
+"getTrackerRecord" = "Error receiving the tracker";
+
+//MARK: - StatisticsEvent
+"bestPeriod" = "Best period"
+"perfectDays" = "Perfect days"
+"trackersCompleted" = "Trackers completed"
+"averageValue" = "Average Value"

@@ -49,14 +49,17 @@ class CreateTrackerTableViewCell: UITableViewCell {
         return clickImage
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
+    
+    {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = colors.viewBackground
         setupUIElement()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         super.init(coder: coder)
         assertionFailure("init(coder:) has not been implemented")
     }
@@ -65,12 +68,14 @@ class CreateTrackerTableViewCell: UITableViewCell {
 
 extension CreateTrackerTableViewCell {
     //MARK: - SetupUI
-    private func setupUIElement() {
+    private func setupUIElement()
+    {
         setupSelf()
         setupSteckView()
     }
     
-    private func setupSelf() {
+    private func setupSelf()
+    {
         backgroundColor = .backgroundNight
         layer.masksToBounds = true
         clickImage.translatesAutoresizingMaskIntoConstraints = false
@@ -78,14 +83,16 @@ extension CreateTrackerTableViewCell {
         clickImage.backgroundColor = .clear
         
         NSLayoutConstraint.activate([
-            clickImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            clickImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                 constant: -12),
             clickImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             clickImage.heightAnchor.constraint(equalToConstant: 24),
             clickImage.widthAnchor.constraint(equalToConstant: 24)
         ])
     }
     
-    private func setupSteckView() {
+    private func setupSteckView()
+    {
         contentView.addSubview(lableStackView)
         [lableView, secondaryTextLable].forEach {
             $0.backgroundColor = .clear
@@ -94,24 +101,28 @@ extension CreateTrackerTableViewCell {
         }
         
         NSLayoutConstraint.activate([
-            lableStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            lableStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                    constant: 12),
             lableStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
     
     //MARK: - Configuration
-    func configCell(choice: ChoiceParametrs) {
+    func configCell(choice: ChoiceParametrs)
+    {
         lableView.text = choice.name
     }
     
-    func configSecondaryLableShedule(secondaryText: String) {
+    func configSecondaryLableShedule(secondaryText: String)
+    {
         if !secondaryText.isEmpty {
             secondaryTextLable.text = secondaryText
             secondaryTextLable.isHidden = false
         }
     }
     
-    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask) {
+    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask)
+    {
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = maskedCorners
     }

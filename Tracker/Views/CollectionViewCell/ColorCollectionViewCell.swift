@@ -14,7 +14,7 @@ final class ColorCollectionViewCell: UICollectionViewCell {
         static let borderWidth = CGFloat(3)
         static let alfaComponent = CGFloat(0.3)
     }
-
+    
     private var contentColorView: UIView = {
         let contentColorView = UIView()
         contentColorView.layer.masksToBounds = true
@@ -31,13 +31,15 @@ final class ColorCollectionViewCell: UICollectionViewCell {
         
         return colorView
     }()
-
-    override init(frame: CGRect) {
+    
+    override init(frame: CGRect)
+    {
         super.init(frame: frame)
         setupColorView()
     }
     
-    required init?(coder: NSCoder) {
+    required init?(coder: NSCoder)
+    {
         super.init(coder: coder)
         assertionFailure("init(coder:) has not been implemented")
     }
@@ -45,11 +47,13 @@ final class ColorCollectionViewCell: UICollectionViewCell {
 
 extension ColorCollectionViewCell {
     //MARK: - Config
-    func configColor(color: UIColor) {
+    func configColor(color: UIColor)
+    {
         colorView.backgroundColor = color
     }
     
-    func colorSelection(color: UIColor, flag: Bool) {
+    func colorSelection(color: UIColor, flag: Bool)
+    {
         contentColorView.layer.cornerRadius = flag ? ConstantsCell.cornerRadius : 0
         contentColorView.layer.borderWidth = flag ? ConstantsCell.borderWidth : 0
         contentColorView.layer.masksToBounds = flag
@@ -57,7 +61,8 @@ extension ColorCollectionViewCell {
     }
     
     //MARK: - SetupUI
-    private func setupColorView() {
+    private func setupColorView()
+    {
         addSubview(contentColorView)
         contentColorView.addSubview(colorView)
         

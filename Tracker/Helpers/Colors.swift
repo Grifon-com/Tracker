@@ -15,7 +15,6 @@ final class Colors {
             return UIColor.blackDay
         } else {
             return UIColor.whiteDay
-//            return UIColor(red: 0.8, green: 0.5, blue: 0.8, alpha: 1)
         }
     }
     

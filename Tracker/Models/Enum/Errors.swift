@@ -8,8 +8,19 @@
 import Foundation
 enum StoreErrors {
     enum TrackrerCategoryStoreError: Error {
-        case decodingErrorInvalidNameCategori
+        case decodingErrorInvalidNameCategory
         case getCategoryCoreDataError
+        
+        var localizedDescription: String {
+            var localizedDescription = ""
+            switch self {
+            case .decodingErrorInvalidNameCategory:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidNameCategory", comment: "")
+            case .getCategoryCoreDataError:
+                localizedDescription = NSLocalizedString("getCategoryCoreDataError", comment: "")
+            }
+            return localizedDescription
+        }
     }
     
     enum TrackrerStoreError: Error {
@@ -19,21 +30,56 @@ enum StoreErrors {
         case decodingErrorInvalidColor
         case decodingErrorInvalidEmoji
         case decodingErrorInvalidSchedul
+        
+        var localizedDescription: String {
+            var localizedDescription = ""
+            switch self {
+            case .getTrackerError:
+                localizedDescription = NSLocalizedString("getTrackerError", comment: "")
+            case .decodingErrorInvalidName:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidName", comment: "")
+            case .decodingErrorInvalidId:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidId", comment: "")
+            case .decodingErrorInvalidColor:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidColor", comment: "")
+            case .decodingErrorInvalidEmoji:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidEmoji", comment: "")
+            case .decodingErrorInvalidSchedul:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidSchedul", comment: "")
+            }
+            
+            return localizedDescription
+        }
     }
     
     enum NSSetError: Error {
         case transformationErrorInvalid
+        
+        var localizedDescription: String {
+            NSLocalizedString("transformationErrorInvalid", comment: "")
+        }
     }
     
     enum TrackrerRecordStoreError: Error {
         case decodingErrorInvalidId
         case decodingErrorInvalidDate
-        case deleteError
         case loadTrackerRecord
         case getTrackerRecord
-    }
-    
-    enum PinnedCategoryStoreError: Error {
-        case decodingErrorInvalidName
+        
+        var localizedDescription: String {
+            var localizedDescription = ""
+            switch self {
+            case .decodingErrorInvalidId:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidId", comment: "")
+            case .decodingErrorInvalidDate:
+                localizedDescription = NSLocalizedString("decodingErrorInvalidDate", comment: "")
+            case .loadTrackerRecord:
+                localizedDescription = NSLocalizedString("loadTrackerRecord", comment: "")
+            case .getTrackerRecord:
+                localizedDescription = NSLocalizedString("getTrackerRecord", comment: "")
+            }
+            
+            return localizedDescription
+        }
     }
 }

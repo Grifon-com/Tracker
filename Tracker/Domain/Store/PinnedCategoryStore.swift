@@ -34,7 +34,8 @@ final class PinnedCategoryStore: NSObject {
 }
 
 private extension PinnedCategoryStore {
-    func save() -> Result<Void, Error> {
+    func save() -> Result<Void, Error>
+    {
         do {
             try context.save()
             return .success(())
@@ -43,7 +44,8 @@ private extension PinnedCategoryStore {
         }
     }
     
-    func searchCategoryById(id: UUID) throws -> PinnCategoryCoreData? {
+    func searchCategoryById(id: UUID) throws -> PinnCategoryCoreData?
+    {
         let request = NSFetchRequest<PinnCategoryCoreData>(entityName: "\(PinnCategoryCoreData.self)")
         request.returnsObjectsAsFaults = false
         guard let keyPath = (\PinnCategoryCoreData.trackerId)._kvcKeyPathString
@@ -53,8 +55,10 @@ private extension PinnedCategoryStore {
     }
 }
 
+//MARK: - PinnedCategoryStoreProtocol
 extension PinnedCategoryStore: PinnedCategoryStoreProtocol {
-    func addPinnedCategory(_ nameCategory: String) -> Result<PinnCategoryCoreData, Error> {
+    func addPinnedCategory(_ nameCategory: String) -> Result<PinnCategoryCoreData, Error>
+    {
         let pinnCategoryCoreData = PinnCategoryCoreData(context: context)
         pinnCategoryCoreData.nameCategory = nameCategory
         do {
@@ -64,12 +68,12 @@ extension PinnedCategoryStore: PinnedCategoryStoreProtocol {
         catch { return .failure(error) }
     }
     
-    func deleteAndGetPinnedCategory(_ id: UUID) -> Result<String?, Error> {
+    func deleteAndGetPinnedCategory(_ id: UUID) -> Result<String?, Error>
+    {
         do {
             if let pinnCategoryCoreData = try searchCategoryById(id: id) {
                 let nameCategory = pinnCategoryCoreData.nameCategory
-                pinnCategoryCoreData.nameCategory = nil
-                pinnCategoryCoreData.trackerId = nil
+                context.delete(pinnCategoryCoreData)
                 let _ = save()
                 return .success(nameCategory)
             }

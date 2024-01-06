@@ -21,7 +21,8 @@ final class TabBarController: UITabBarController {
     
     private let colors = Colors()
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         tabBar.layer.borderWidth = 1
         tabBar.clipsToBounds = true
@@ -44,17 +45,19 @@ final class TabBarController: UITabBarController {
         ]
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?)
+    {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 13.0, *),
-             // Проверяем только изменение цветовой схемы
-             traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-             if traitCollection.userInterfaceStyle == .dark {
-                 tabBar.layer.borderColor = UIColor.black.cgColor
-             } else {
-                 tabBar.layer.borderColor = UIColor.grayDay.cgColor
-             }
-         }
+           // Проверяем только изменение цветовой схемы
+           traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection)
+        {
+            if traitCollection.userInterfaceStyle == .dark {
+                tabBar.layer.borderColor = UIColor.black.cgColor
+            } else {
+                tabBar.layer.borderColor = UIColor.grayDay.cgColor
+            }
+        }
     }
     
     deinit {

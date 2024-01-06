@@ -36,7 +36,7 @@
 		1A704D3F2B2B76C60035C94D /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */; };
 		1A760A9D2B29EDC900B0C1CC /* EditTrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A760A9C2B29EDC900B0C1CC /* EditTrackerViewModel.swift */; };
 		1A79C42D2B39C3E4009CE43A /* StatisticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42C2B39C3E4009CE43A /* StatisticViewModel.swift */; };
-		1A79C42F2B39FBCC009CE43A /* HelpersEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */; };
+		1A79C42F2B39FBCC009CE43A /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */; };
 		1A80951A2B3964A000591911 /* StatisticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8095192B3964A000591911 /* StatisticView.swift */; };
 		1A83156E2B2C786000097DE7 /* HandlerResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A83156D2B2C786000097DE7 /* HandlerResultType.swift */; };
 		1A84F3792AC87F4E001DD42F /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A84F3782AC87F4E001DD42F /* GeometricParams.swift */; };
@@ -49,6 +49,7 @@
 		1A8A7FF22AC55D980038CB42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A7FF02AC55D980038CB42 /* LaunchScreen.storyboard */; };
 		1A8ED50D2AEFEA1900BA4EE4 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8ED50C2AEFEA1900BA4EE4 /* OnboardingPageViewController.swift */; };
 		1A8ED50F2AEFEB5A00BA4EE4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8ED50E2AEFEB5A00BA4EE4 /* OnboardingViewController.swift */; };
+		1A92B6872B488439006C18C2 /* StatisticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A92B6862B488439006C18C2 /* StatisticsEvent.swift */; };
 		1A959AF42AE24C44001C0EAE /* UIColorMarshalling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A959AF32AE24C44001C0EAE /* UIColorMarshalling.swift */; };
 		1A9AC5AF2AF373F000A9213D /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9AC5AE2AF373F000A9213D /* Observable.swift */; };
 		1A9AC5B42AF37AED00A9213D /* TrackerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A9AC5B32AF37AED00A9213D /* TrackerViewModel.swift */; };
@@ -123,7 +124,7 @@
 		1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A760A9C2B29EDC900B0C1CC /* EditTrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrackerViewModel.swift; sourceTree = "<group>"; };
 		1A79C42C2B39C3E4009CE43A /* StatisticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticViewModel.swift; sourceTree = "<group>"; };
-		1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpersEnum.swift; sourceTree = "<group>"; };
+		1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		1A8095192B3964A000591911 /* StatisticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticView.swift; sourceTree = "<group>"; };
 		1A83156D2B2C786000097DE7 /* HandlerResultType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerResultType.swift; sourceTree = "<group>"; };
 		1A84F3782AC87F4E001DD42F /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		1A8A7FF32AC55D980038CB42 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A8ED50C2AEFEA1900BA4EE4 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		1A8ED50E2AEFEB5A00BA4EE4 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		1A92B6862B488439006C18C2 /* StatisticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsEvent.swift; sourceTree = "<group>"; };
 		1A959AF32AE24C44001C0EAE /* UIColorMarshalling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorMarshalling.swift; sourceTree = "<group>"; };
 		1A9AC5AE2AF373F000A9213D /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		1A9AC5B32AF37AED00A9213D /* TrackerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerViewModel.swift; sourceTree = "<group>"; };
@@ -248,18 +250,21 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		1A3ED44D2ACDE0B40006EBBB /* CollectionView */ = {
+		1A3ED44D2ACDE0B40006EBBB /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				1ABB3D2B2AC9AAB40037B601 /* HeaderReusableView.swift */,
+				1A8095192B3964A000591911 /* StatisticView.swift */,
 				1ADD3D732ACBDBB1005F639F /* TrackerCollectionView.swift */,
 			);
-			path = CollectionView;
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 		1A3ED44E2ACDE1020006EBBB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				1A598BB72AC6FAC5009B166D /* TrackersViewController.swift */,
+				1A8A7FE92AC55D970038CB42 /* StatisticsViewController.swift */,
 				1AAC05C22ACC595800AA4B6B /* CreateTrackerViewController.swift */,
 				1A3ED44B2ACDDE4A0006EBBB /* ScheduleViewController.swift */,
 				1AA5B2362AD91D1800CB38A2 /* SelectCategoriesViewController.swift */,
@@ -281,25 +286,24 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
-		1A598BB42AC6F0A9009B166D /* TabBarController */ = {
+		1A598BB42AC6F0A9009B166D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				1A598BB52AC6F352009B166D /* TabBarController.swift */,
-				1A598BB92AC6FB97009B166D /* TrackersViews */,
+				1A8ED50B2AEFE9AA00BA4EE4 /* OnboardingViewControllers */,
+				1A3ED44E2ACDE1020006EBBB /* ViewControllers */,
 			);
-			path = TabBarController;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		1A598BB92AC6FB97009B166D /* TrackersViews */ = {
+		1A598BB92AC6FB97009B166D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1A3ED44E2ACDE1020006EBBB /* ViewControllers */,
-				1A3ED44D2ACDE0B40006EBBB /* CollectionView */,
-				1AAC05C12ACC56EC00AA4B6B /* SuplementaryView */,
-				1A8A576D2ACD603200C060FA /* StatisticViews */,
-				1AAC05C02ACC56A500AA4B6B /* Cell */,
+				1A3ED44D2ACDE0B40006EBBB /* CustomViews */,
+				1A92B6852B487A55006C18C2 /* CollectionViewCell */,
+				1AAC05C02ACC56A500AA4B6B /* TableViewCell */,
 			);
-			path = TrackersViews;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		1A84F3772AC87F28001DD42F /* Models */ = {
@@ -315,14 +319,6 @@
 				1A0C3C182B388CC3008E5202 /* MetrycEvent.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		1A8A576D2ACD603200C060FA /* StatisticViews */ = {
-			isa = PBXGroup;
-			children = (
-				1A8A7FE92AC55D970038CB42 /* StatisticsViewController.swift */,
-			);
-			path = StatisticViews;
 			sourceTree = "<group>";
 		};
 		1A8A7FD92AC55D960038CB42 = {
@@ -349,17 +345,17 @@
 		1A8A7FE42AC55D970038CB42 /* Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				1AC642702B383AB60072E081 /* AnalyticsService */,
+				1A598BB42AC6F0A9009B166D /* ViewControllers */,
+				1A598BB92AC6FB97009B166D /* Views */,
 				1A9AC5B52AF3854A00A9213D /* ViewModel */,
-				1A8ED50B2AEFE9AA00BA4EE4 /* Onboarding */,
 				1A2FC2482AED1E05000156FE /* Domain */,
 				1A21DD932ADE5A0700583A01 /* CoreData */,
-				1A598BB42AC6F0A9009B166D /* TabBarController */,
 				1A84F3772AC87F28001DD42F /* Models */,
 				1A3477CB2AD18D2100EDEAED /* Helpers */,
 				1A2980BB2AC86499007FE528 /* Extension */,
 				1AAD15662AF14E2D0080EB72 /* PropertyWrappers */,
 				1AA7BFC52B00E41A00C678FF /* Resources */,
+				1AC642702B383AB60072E081 /* AnalyticsService */,
 				1AF783BD2ACD9D6C0002BB54 /* Application */,
 				1A8A7FEE2AC55D980038CB42 /* Assets.xcassets */,
 				1A8A7FF02AC55D980038CB42 /* LaunchScreen.storyboard */,
@@ -368,13 +364,23 @@
 			path = Tracker;
 			sourceTree = "<group>";
 		};
-		1A8ED50B2AEFE9AA00BA4EE4 /* Onboarding */ = {
+		1A8ED50B2AEFE9AA00BA4EE4 /* OnboardingViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				1A8ED50C2AEFEA1900BA4EE4 /* OnboardingPageViewController.swift */,
 				1A8ED50E2AEFEB5A00BA4EE4 /* OnboardingViewController.swift */,
 			);
-			path = Onboarding;
+			path = OnboardingViewControllers;
+			sourceTree = "<group>";
+		};
+		1A92B6852B487A55006C18C2 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				1A1410692ADD5185001D6DE6 /* ColorCollectionViewCell.swift */,
+				1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */,
+				1AB78AA22AC750A900904AB2 /* TrackersCollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
 			sourceTree = "<group>";
 		};
 		1A9AC5B52AF3854A00A9213D /* ViewModel */ = {
@@ -401,26 +407,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		1AAC05C02ACC56A500AA4B6B /* Cell */ = {
+		1AAC05C02ACC56A500AA4B6B /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				1A8A576B2ACD5F4D00C060FA /* CreateTrackerTableViewCell.swift */,
-				1AB78AA22AC750A900904AB2 /* TrackersCollectionViewCell.swift */,
-				1A3ED4512ACDEA3E0006EBBB /* WeekDayTableViewCell.swift */,
 				1A1E94B42AD952EF00FE9A0C /* CustomTableViewCell.swift */,
-				1A1410692ADD5185001D6DE6 /* ColorCollectionViewCell.swift */,
-				1A704D3E2B2B76C60035C94D /* EmojiCollectionViewCell.swift */,
-				1A8095192B3964A000591911 /* StatisticView.swift */,
+				1A3ED4512ACDEA3E0006EBBB /* WeekDayTableViewCell.swift */,
 			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		1AAC05C12ACC56EC00AA4B6B /* SuplementaryView */ = {
-			isa = PBXGroup;
-			children = (
-				1ABB3D2B2AC9AAB40037B601 /* HeaderReusableView.swift */,
-			);
-			path = SuplementaryView;
+			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		1AAD15662AF14E2D0080EB72 /* PropertyWrappers */ = {
@@ -458,7 +452,8 @@
 				1AE27C2C2B0604A800C4A925 /* Errors.swift */,
 				1A6724122B2F108000719A9D /* FiltersState.swift */,
 				1AC642732B38442E0072E081 /* EventAnalytics.swift */,
-				1A79C42E2B39FBCC009CE43A /* HelpersEnum.swift */,
+				1A79C42E2B39FBCC009CE43A /* UserDefaultKeys.swift */,
+				1A92B6862B488439006C18C2 /* StatisticsEvent.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -695,6 +690,7 @@
 				1A80951A2B3964A000591911 /* StatisticView.swift in Sources */,
 				1A8A7FE62AC55D970038CB42 /* AppDelegate.swift in Sources */,
 				1A3B83AA2AD56323003C3897 /* NameEvent.swift in Sources */,
+				1A92B6872B488439006C18C2 /* StatisticsEvent.swift in Sources */,
 				1A45A6782ADE8E9E0063F08C /* TrackerStore.swift in Sources */,
 				1AE27C2D2B0604A800C4A925 /* Errors.swift in Sources */,
 				1AE989302ACAF14B00392315 /* TrackerCategoryModel.swift in Sources */,
@@ -728,7 +724,7 @@
 				1AAC05C32ACC595800AA4B6B /* CreateTrackerViewController.swift in Sources */,
 				1A21DD952ADE5A6A00583A01 /* DaysValueTransformer.swift in Sources */,
 				1A2F9B652AC82FBF00914B60 /* EventSelectionViewController.swift in Sources */,
-				1A79C42F2B39FBCC009CE43A /* HelpersEnum.swift in Sources */,
+				1A79C42F2B39FBCC009CE43A /* UserDefaultKeys.swift in Sources */,
 				1AA5B2372AD91D1800CB38A2 /* SelectCategoriesViewController.swift in Sources */,
 				1A79C42D2B39C3E4009CE43A /* StatisticViewModel.swift in Sources */,
 				1A8A7FE82AC55D970038CB42 /* SceneDelegate.swift in Sources */,

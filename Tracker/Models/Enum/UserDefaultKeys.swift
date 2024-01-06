@@ -11,6 +11,7 @@ enum UserDefaultKeys: String {
     case isTracker
     case selectNameCategory
     case selectFilter
+    case isOnboarding
 }
 
 enum Fixed: String {
