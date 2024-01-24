@@ -9,8 +9,7 @@ import UIKit
 import CoreData
 import YandexMobileMetrica
 
-//please insert your key
-private let apiKeyYMM = ""
+private let apiKeyYMM = "4a0432b5-adf6-45f2-800c-b160a4f7c44a"
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -113,7 +113,7 @@
 "getTrackerRecord" = "Error receiving the tracker";
 
 //MARK: - StatisticsEvent
-"bestPeriod" = "Best period"
-"perfectDays" = "Perfect days"
-"trackersCompleted" = "Trackers completed"
-"averageValue" = "Average Value"
+"bestPeriod" = "Best period";
+"perfectDays" = "Perfect days";
+"trackersCompleted" = "Trackers completed";
+"averageValue" = "Average Value";

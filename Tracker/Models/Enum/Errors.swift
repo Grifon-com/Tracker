@@ -60,7 +60,7 @@ enum StoreErrors {
         }
     }
     
-    enum TrackrerRecordStoreError: Error {
+    enum TrackrerRecordStoreError: String, Error {
         case decodingErrorInvalidId
         case decodingErrorInvalidDate
         case loadTrackerRecord
@@ -70,13 +70,13 @@ enum StoreErrors {
             var localizedDescription = ""
             switch self {
             case .decodingErrorInvalidId:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidId", comment: "")
+                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
             case .decodingErrorInvalidDate:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidDate", comment: "")
+                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
             case .loadTrackerRecord:
-                localizedDescription = NSLocalizedString("loadTrackerRecord", comment: "")
+                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
             case .getTrackerRecord:
-                localizedDescription = NSLocalizedString("getTrackerRecord", comment: "")
+                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
             }
             
             return localizedDescription

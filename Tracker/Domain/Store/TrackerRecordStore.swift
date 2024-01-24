@@ -45,8 +45,7 @@ final class TrackerRecordStore: NSObject {
         return fetchedResultController
     }()
     
-    convenience override init()
-    {
+    convenience override init() {
         let context = AppDelegate.container.viewContext
         self.init(context: context)
     }
@@ -97,8 +96,7 @@ private extension TrackerRecordStore {
         return save()
     }
     
-    func deleteTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData) -> Result<Void, Error>
-    {
+    func deleteTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData) -> Result<Void, Error> {
         context.delete(trackerRecordCoreData)
         return save()
     }
@@ -116,7 +114,8 @@ private extension TrackerRecordStore {
         return trackerRecord.first
     }
     
-    func getLisTrackersRecord(id: UUID) throws -> [TrackerRecordCoreData] {
+    func getLisTrackersRecord(id: UUID) throws -> [TrackerRecordCoreData]
+    {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@",

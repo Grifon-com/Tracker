@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ChoiceParametrs {
+enum ChoiceParametrs: String {
     case category
     case schedule
     
@@ -15,9 +15,9 @@ enum ChoiceParametrs {
         var name: String
         switch self {
         case .category:
-            name = NSLocalizedString("category", comment: "")
+            name = NSLocalizedString(self.rawValue, comment: "")
         case .schedule:
-            name = NSLocalizedString("schedule", comment: "")
+            name = NSLocalizedString(self.rawValue, comment: "")
         }
         return name
     }

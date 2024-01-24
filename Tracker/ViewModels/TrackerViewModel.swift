@@ -162,37 +162,42 @@ private extension TrackerViewModel {
         }
     }
     
-    func comparisonWeekDays(date: Date, day: WeekDay) -> Bool
-    {
-        FormatDate.shared.greateWeekDayInt(date: date) == day.rawValue
-    }
-    
     func filterListTrackersWeekDay(trackerCategory: [TrackerCategory],
                                    date: Date) -> [TrackerCategory]
     {
-        let listCategories = trackerCategory.filter {
-            !$0.arrayTrackers.filter {
-                !$0.schedule.filter {
-                    comparisonWeekDays(date: date, day: $0) }.isEmpty }.isEmpty
+        let calendar = Calendar.current
+        let filter = calendar.component(.weekday, from: date)
+        
+        let listCategories: [TrackerCategory] = trackerCategory.compactMap { cat in
+            let trackers = cat.arrayTrackers.filter { tracker in
+                tracker.schedule.contains { weekDay in
+                    weekDay.rawValue + 1 == filter
+                }
+            }
+            
+            if trackers.isEmpty {
+                return nil
+            }
+            
+            return TrackerCategory(nameCategory: cat.nameCategory,
+                                   arrayTrackers: trackers,
+                                   isPinned: cat.isPinned)
         }
+        
         isfilterListTrackersWeekDay = !listCategories.isEmpty
         return listCategories
     }
     
-    func filterListTrackersCompleted(date: Date, flag: Bool)
-    {
+    func filterListTrackersCompleted(date: Date, flag: Bool) {
         setVisibleCategory(date: date, flag: flag)
     }
     
-    func filterListTrackersNotCompleted(date: Date, flag: Bool)
-    {
+    func filterListTrackersNotCompleted(date: Date, flag: Bool) {
         setVisibleCategory(date: date, flag: flag)
     }
     
-    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error>
-    {
-        return trackerRecordStore.deleteOrCreateTrackerRecord(id: id,
-                                                              date: date.ignoringTime)
+    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error> {
+        trackerRecordStore.deleteOrCreateTrackerRecord(id: id, date: date.ignoringTime)
     }
     
     func trackerCompletedOrNotByCategory(category: TrackerCategory,
@@ -220,13 +225,11 @@ extension TrackerViewModel: TrackerViewModelProtocol
         trackerStore.deleteTracker(id)
     }
     
-    func deleteTrackersRecord(id: UUID) -> Result<Void, Error>
-    {
+    func deleteTrackersRecord(id: UUID) -> Result<Void, Error> {
         trackerRecordStore.deleteTrackerRecord(id: id)
     }
     
-    func addCategory(nameCategory: String) -> Result<Void, Error>
-    {
+    func addCategory(nameCategory: String) -> Result<Void, Error> {
         trackerCategoryStore.addCategory(nameCategory)
     }
     
@@ -243,13 +246,11 @@ extension TrackerViewModel: TrackerViewModelProtocol
         }
     }
     
-    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
-    {
+    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error> {
         trackerRecordStore.treckersRecordsResult()
     }
     
-    func loadTrackerRecord(id: UUID) -> Result<Int, Error>
-    {
+    func loadTrackerRecord(id: UUID) -> Result<Int, Error> {
         trackerRecordStore.getCountTrackerRecord(id: id)
     }
     
@@ -261,10 +262,8 @@ extension TrackerViewModel: TrackerViewModelProtocol
         return trackerCoreData
     }
     
-    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
-    {
-        trackerStore.updateTracker(tracker: tracker,
-                                   nameCategory: nameCategory)
+    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>{
+        trackerStore.updateTracker(tracker: tracker, nameCategory: nameCategory)
     }
     
     func getShowListTrackersForDay(date: Date)
@@ -298,13 +297,11 @@ extension TrackerViewModel: TrackerViewModelProtocol
         }
     }
     
-    func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error>
-    {
+    func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error> {
         return deleteOrCreateTrackerRecord(id: tracker.id, date: date)
     }
     
-    func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory])
-    {
+    func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory]) {
         visibleCategory = .success(searchCategory)
     }
     
@@ -321,8 +318,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
         }
     }
     
-    func setIndexPath(_ indexPath: IndexPath)
-    {
+    func setIndexPath(_ indexPath: IndexPath) {
         self.indexPath = indexPath
     }
     
@@ -338,56 +334,46 @@ extension TrackerViewModel: TrackerViewModelProtocol
         }
     }
     
-    func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
-    {
+    func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error> {
         pinnedCategoryStore.deleteAndGetPinnedCategory(id)
     }
     
-    func allTrackersByDate(date: Date)
-    {
+    func allTrackersByDate(date: Date) {
         getShowListTrackersForDay(date: date)
     }
     
-    func getNotCompleted(date: Date, flag: Bool)
-    {
+    func getNotCompleted(date: Date, flag: Bool) {
         filterListTrackersNotCompleted(date: date, flag: flag)
     }
     
-    func getCompleted(date: Date, flag: Bool)
-    {
+    func getCompleted(date: Date, flag: Bool) {
         filterListTrackersCompleted(date: date, flag: flag)
     }
     
-    func setFilterState(state: FiltersState)
-    {
+    func setFilterState(state: FiltersState) {
         filterState = state
     }
     
-    func getFilterState() -> FiltersState
-    {
+    func getFilterState() -> FiltersState {
         filterState
     }
     
-    func getSelectFilter() -> String?
-    {
+    func getSelectFilter() -> String? {
         selectFilter
     }
     
-    func getCountTrackerCompleted(id: UUID) -> Result<Int, Error>
-    {
+    func getCountTrackerCompleted(id: UUID) -> Result<Int, Error> {
         trackerRecordStore.getCountTrackerRecord(id: id)
     }
     
-    func getIsCategoryForDay() -> Bool?
-    {
+    func getIsCategoryForDay() -> Bool? {
         isfilterListTrackersWeekDay
     }
 }
 
 //MARK: - TrackerCategoryStoreDelegate
 extension TrackerViewModel: TrackerCategoryStoreDelegate {
-    func storeCategory(trackerCategoryStore: TrackerCategoryStoreProtocol)
-    {
+    func storeCategory(trackerCategoryStore: TrackerCategoryStoreProtocol) {
         category = getCategory()
     }
 }
@@ -395,8 +381,7 @@ extension TrackerViewModel: TrackerCategoryStoreDelegate {
 //MARK: - TrackerRecordStoreDelegate
 extension TrackerViewModel: TrackerRecordStoreDelegate {
     func trackerRecordStore(trackerRecordStore: TrackerRecordStoreProtocol,
-                            flag: Bool)
-    {
+                            flag: Bool) {
         completedTrackers = trackerRecordStore.treckersRecordsResult()
         if flag {
             self.indexPath = indexPath
@@ -405,8 +390,7 @@ extension TrackerViewModel: TrackerRecordStoreDelegate {
 }
 
 //MARK: - TrackerStoreDelegate
-extension TrackerViewModel: TrackerStoreDelegate
-{
+extension TrackerViewModel: TrackerStoreDelegate {
     func updateTracker(_ trackerCoreData: TrackerStoreProtocol) {
         category = getCategory()
     }

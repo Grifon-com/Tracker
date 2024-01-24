@@ -44,8 +44,7 @@ final class TrackerStore: NSObject {
         return fetchedResultController
     }()
     
-    convenience override init()
-    {
+    convenience override init() {
         let context = AppDelegate.container.viewContext
         self.init(context: context)
     }
@@ -236,8 +235,7 @@ extension TrackerStore: TrackerStoreProtocol {
 
 //MARK: - NSFetchedResultsControllerDelegate
 extension TrackerStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
-    {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let delegate else { return }
         delegate.updateTracker(self)
     }

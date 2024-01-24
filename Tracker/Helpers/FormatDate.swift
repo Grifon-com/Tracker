@@ -7,19 +7,19 @@
 
 import Foundation
 
-final class FormatDate {
-    static let shared = FormatDate()
+//final class FormatDate {
+//    static let shared = FormatDate()
     
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "e"
-
-        return dateFormatter
-    }()
+//    private lazy var dateFormatter: DateFormatter = {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "e"
+//
+//        return dateFormatter
+//    }()
     
-    func greateWeekDayInt(date: Date) -> Int {
-        let weekDayString = dateFormatter.string(from: date)
-        let deyWeek = NSString(string: weekDayString).intValue - 1
-        return Int(deyWeek)
-    }
-}
+//    func greateWeekDayInt(date: Date) -> Int {
+//        let weekDayString = dateFormatter.string(from: date)
+//        let deyWeek = NSString(string: weekDayString).intValue
+//        return Int(deyWeek)
+//    }
+//}

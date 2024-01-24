@@ -225,21 +225,17 @@ private extension TrackersViewController {
             switch state {
             case .allTrackers:
                 viewModel.allTrackersByDate(date: datePicker.date)
-                setColorButtonFilter(state: viewModel.getFilterState(),
-                                     button: buttonFilter)
+                setColorButtonFilter(state: state, button: buttonFilter)
             case .toDayTrackers:
                 datePicker.date = Date()
                 viewModel.allTrackersByDate(date: datePicker.date)
-                setColorButtonFilter(state: viewModel.getFilterState(),
-                                     button: buttonFilter)
+                setColorButtonFilter(state: state, button: buttonFilter)
             case .completed:
                 viewModel.getCompleted(date: datePicker.date, flag: true)
-                setColorButtonFilter(state: viewModel.getFilterState(),
-                                     button: buttonFilter)
+                setColorButtonFilter(state: state, button: buttonFilter)
             case .notCompleted:
                 viewModel.getNotCompleted(date: datePicker.date, flag: false)
-                setColorButtonFilter(state: viewModel.getFilterState(),
-                                     button: buttonFilter)
+                setColorButtonFilter(state: state, button: buttonFilter)
             }
         }
     }

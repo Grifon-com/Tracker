@@ -46,8 +46,7 @@ final class TrackerCategoryStore: NSObject {
         return fetchedResultController
     }()
     
-    convenience override init()
-    {
+    convenience override init() {
         let context = AppDelegate.container.viewContext
         self.init(context: context)
     }

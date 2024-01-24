@@ -87,8 +87,7 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return flag
     }
     
-    func reverseIsSchedul()
-    {
+    func reverseIsSchedul() {
         isSchedul = isSchedul ? !isSchedul : isSchedul
     }
     
@@ -106,8 +105,7 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return stringListDay
     }
     
-    func setListWeekDay(listWeekDay: [WeekDay])
-    {
+    func setListWeekDay(listWeekDay: [WeekDay]) {
         schedule = listWeekDay
     }
     
@@ -134,31 +132,23 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return emojiRow
     }
     
-    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay])
-    {
+    func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay]) {
         self.schedule = schedule
     }
     
-    func setColor(_ vc: CreateTrackerViewController, color: UIColor)
-    {
+    func setColor(_ vc: CreateTrackerViewController, color: UIColor) {
         self.color = color
     }
     
-    func setNameNewCategory(_ vc: CreateTrackerViewController,
-                            nameCategory: String)
-    {
+    func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String) {
         self.nameNewCategory = nameCategory
     }
     
-    func setNameTracker(_ vc: CreateTrackerViewController,
-                        nameTracker: String)
-    {
+    func setNameTracker(_ vc: CreateTrackerViewController, nameTracker: String) {
         self.nameTracker = nameTracker
     }
     
-    func setEmojiTracker(_ vc: CreateTrackerViewController,
-                         emoji: String)
-    {
+    func setEmojiTracker(_ vc: CreateTrackerViewController, emoji: String) {
         self.emoji = emoji
     }
     

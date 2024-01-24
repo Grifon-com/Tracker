@@ -112,7 +112,7 @@
 "getTrackerRecord" = "Ошибка получения трекера";
 
 //MARK: - StatisticsEvent
-"bestPeriod" = "Лучший период"
-"perfectDays" = "Идеальные дни"
-"trackersCompleted" = "Трекеров завершено"
-"averageValue" = "Среднее значение"
+"bestPeriod" = "Лучший период";
+"perfectDays" = "Идеальные дни";
+"trackersCompleted" = "Трекеров завершено";
+"averageValue" = "Среднее значение";
