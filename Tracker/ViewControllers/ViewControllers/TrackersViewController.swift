@@ -84,7 +84,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
-        datePicker.backgroundColor = .liteGray
+        datePicker.backgroundColor = .lightGray
         datePicker.datePickerMode = .date
         datePicker.tintColor = .blueDay
         datePicker.preferredDatePickerStyle = .compact
