@@ -111,6 +111,7 @@ final class CreateTrackerViewController: UIViewController {
         selectionTableView.delegate = self
         selectionTableView.backgroundColor = .clear
         selectionTableView.isScrollEnabled = false
+        selectionTableView.separatorColor = .grayDay
         selectionTableView.register(CreateTrackerTableViewCell.self,
                                     forCellReuseIdentifier: "\(CreateTrackerTableViewCell.self)")
         
@@ -458,7 +459,8 @@ extension CreateTrackerViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as?
                 CreateTrackerTableViewCell,
               let viewModel = viewModel as? EditTrackerViewModel
@@ -473,31 +475,35 @@ extension CreateTrackerViewController: UITableViewDataSource {
         case .schedule:
             cell.configCell(choice: listSettings)
             cell.configSecondaryLableShedule(secondaryText: secondarySchedulText)
-            tableView.separatorInset = UIEdgeInsets(top: 0,
-                                                    left: view.bounds.width,
-                                                    bottom: 0,
-                                                    right: 0)
         }
         
         if viewModel.isSchedul {
             cell.layer.cornerRadius = ConstantsCreateVc.cornerRadius
         }
-        
+
+        if !viewModel.isSchedul && indexPath.row == 0 {
+            cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
+                                   maskedCorners: [.layerMinXMinYCorner,
+                                                   .layerMaxXMinYCorner])
+        }
+
         if !viewModel.isSchedul && indexPath.row == 1 {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
                                    maskedCorners: [.layerMinXMaxYCorner,
                                                    .layerMaxXMaxYCorner])
         }
         
-        if !viewModel.isSchedul && indexPath.row == 0 {
-            cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
-                                   maskedCorners: [.layerMinXMinYCorner,
-                                                   .layerMaxXMinYCorner])
+        if indexPath.row == 0 {
+                    tableView.separatorInset = ConstantsCreateVc.insertSeparatorTableView
+                    tableView.separatorStyle = viewModel.isSchedul ? .none : .singleLine
         }
         
-        tableView.separatorStyle = viewModel.isSchedul ? .none : .singleLine
-        tableView.separatorColor = .grayDay
-        tableView.separatorInset = ConstantsCreateVc.insertSeparatorTableView
+        if indexPath.row == 1 {
+                        tableView.separatorInset = UIEdgeInsets(top: 0,
+                                                                left: view.bounds.width,
+                                                                bottom: 0,
+                                                                right: 0)
+        }
         
         return cell
     }
