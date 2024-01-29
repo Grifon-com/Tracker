@@ -8,11 +8,8 @@
 import UIKit
 
 //MARK: - StatisticsViewController
-class StatisticsViewController: UIViewController {
+final class StatisticsViewController: UIViewController {
     private struct ConstantsStatisticVC {
-        static let headerStatisticText = NSLocalizedString("headerStatisticText", comment: "")
-        static let secondaryStatisticText = NSLocalizedString("secondaryStatisticText", comment: "")
-        static let labelStubStatisticsText = NSLocalizedString("labelStubStatisticsText", comment: "")
         static let imageNothingFound = "NothingFound"
         
         static let borderRadius = CGFloat(16)
@@ -26,7 +23,7 @@ class StatisticsViewController: UIViewController {
     
     private lazy var labelHeader: UILabel = {
         let labelHeader = UILabel()
-        labelHeader.text = ConstantsStatisticVC.headerStatisticText
+        labelHeader.text = Translate.headerStatisticText
         labelHeader.font = ConstantsStatisticVC.fontLabelHeader
         labelHeader.translatesAutoresizingMaskIntoConstraints = false
         labelHeader.backgroundColor = .clear
@@ -36,7 +33,7 @@ class StatisticsViewController: UIViewController {
     
     private lazy var cardStatysticsView: StatisticsView = {
         let cardStatistics = StatisticsView()
-        cardStatistics.setSecondaryTextLable(text: ConstantsStatisticVC.secondaryStatisticText)
+        cardStatistics.setSecondaryTextLable(text: Translate.secondaryStatisticText)
         cardStatistics.translatesAutoresizingMaskIntoConstraints = false
         cardStatistics.backgroundColor = .clear
         
@@ -58,14 +55,13 @@ class StatisticsViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = ConstantsStatisticVC.labelStubStatisticsText
+        lableTextStab.text = Translate.labelStubStatisticsText
         lableTextStab.font = ConstantsStatisticVC.fontLabelTextStub
         
         return lableTextStab
     }()
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = colors.viewBackground
         viewModel = StatisticsViewModel()
@@ -75,8 +71,7 @@ class StatisticsViewController: UIViewController {
         setupSubView()
     }
     
-    override func viewDidLayoutSubviews()
-    {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addBorderGradient(views: [cardStatysticsView],
                           colors: [UIColor.redGradient.cgColor,
@@ -88,16 +83,14 @@ class StatisticsViewController: UIViewController {
                           cornerRadius: ConstantsStatisticVC.borderRadius)
     }
     
-    override func viewWillAppear(_ animated: Bool)
-    {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showStabView(flag: viewModel?.getIsTracker())
     }
 }
 
 private extension StatisticsViewController {
-    func bind()
-    {
+    func bind() {
         guard let viewModel = viewModel as? StatisticsViewModel else { return }
         viewModel.$countTrackerComplet.bind { [weak self] count in
             guard let self else { return }
@@ -110,8 +103,7 @@ private extension StatisticsViewController {
                            borderWidth: CGFloat,
                            startPoint: CGPoint,
                            endPoint: CGPoint,
-                           cornerRadius: CGFloat)
-    {
+                           cornerRadius: CGFloat) {
         views.forEach {
             $0.layer.cornerRadius = cornerRadius
             $0.clipsToBounds = true
@@ -134,8 +126,7 @@ private extension StatisticsViewController {
         }
     }
     
-    func showStabView(flag: Bool?)
-    {
+    func showStabView(flag: Bool?) {
         guard let flag else {
             imageViewStab.isHidden = flag == nil
             lableTextStab.isHidden = flag == nil
@@ -146,15 +137,13 @@ private extension StatisticsViewController {
         cardStatysticsView.isHidden = flag
     }
     
-    func setupSubView()
-    {
+    func setupSubView() {
         setupLabelHeader()
         setupStabView()
         setupCardStatysticsView()
     }
     
-    func setupLabelHeader()
-    {
+    func setupLabelHeader() {
         view.addSubview(labelHeader)
         NSLayoutConstraint.activate([
             labelHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -162,8 +151,7 @@ private extension StatisticsViewController {
         ])
     }
     
-    func setupStabView()
-    {
+    func setupStabView() {
         [imageViewStab, lableTextStab].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -179,8 +167,7 @@ private extension StatisticsViewController {
         ])
     }
     
-    func setupCardStatysticsView()
-    {
+    func setupCardStatysticsView() {
         view.addSubview(cardStatysticsView)
         NSLayoutConstraint.activate([
             cardStatysticsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

@@ -14,9 +14,6 @@ protocol ScheduleViewControllerDelegate: AnyObject {
 //MARK: - ScheduleViewController
 final class ScheduleViewController: UIViewController {
     private struct ConstantsShedulVc {
-        static let scheduleLableText = NSLocalizedString("scheduleLableText", comment: "")
-        static let doneButtonText = NSLocalizedString("doneButtonText", comment: "")
-        
         static let spacingVerticalStack = CGFloat(20)
         static let cornerRadiusUIElement = CGFloat(16)
         static let heightCell = CGFloat(75)
@@ -30,7 +27,7 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var scheduleLable: UILabel = {
         let scheduleLable = UILabel()
-        scheduleLable.text = ConstantsShedulVc.scheduleLableText
+        scheduleLable.text = Translate.scheduleLableText
         scheduleLable.font = ConstantsShedulVc.scheduleLableFont
         scheduleLable.textColor = colors.buttonEventColor
         scheduleLable.backgroundColor = .clear
@@ -61,7 +58,7 @@ final class ScheduleViewController: UIViewController {
         doneButton.layer.cornerRadius = ConstantsShedulVc.cornerRadiusUIElement
         doneButton.layer.masksToBounds = true
         doneButton.backgroundColor = colors.buttonDisabledColor
-        doneButton.setTitle(ConstantsShedulVc.doneButtonText, for: .normal)
+        doneButton.setTitle(Translate.doneButtonText, for: .normal)
         doneButton.setTitleColor(.textEventColor, for: .normal)
         
         return doneButton
@@ -76,19 +73,16 @@ final class ScheduleViewController: UIViewController {
         return contentStackView
     }()
     
-    init(viewModel: SheduleViewModelProtocol)
-    {
+    init(viewModel: SheduleViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = colors.viewBackground
         setupContentSteck()
@@ -99,8 +93,7 @@ final class ScheduleViewController: UIViewController {
 private extension ScheduleViewController {
     //MARK: - Обработка событий
     @objc
-    func didTapDoneButton()
-    {
+    func didTapDoneButton() {
         guard let delegate
         else { return }
         //передаем список дней для поля "schedule" при создании трекера
@@ -111,8 +104,7 @@ private extension ScheduleViewController {
     
     //MARK: - Логика
     //метод обновления списка listWeekDay в зависимости от положения переключателя в яцейке weekDayTableView
-    func updateListWeekDay(flag: Bool, day: WeekDay)
-    {
+    func updateListWeekDay(flag: Bool, day: WeekDay) {
         if flag {
             var listDay: [WeekDay] = []
             listDay = viewModel.listWeekDay
@@ -128,8 +120,7 @@ private extension ScheduleViewController {
     }
     
     //MARK: - SetupUI
-    func setupContentSteck()
-    {
+    func setupContentSteck() {
         view.addSubview(contentStackView)
         [scheduleLable, weekDayTableView, doneButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -154,14 +145,12 @@ private extension ScheduleViewController {
 
 //MARK: - UITableViewDataSource
 extension ScheduleViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.weekDay.count
     }
     
     func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(WeekDayTableViewCell.self)")
                 as? WeekDayTableViewCell
         else { return UITableViewCell() }
@@ -188,19 +177,16 @@ extension ScheduleViewController: UITableViewDataSource {
 }
 
 //MARK: - UITableViewDelegate
-extension ScheduleViewController: UITableViewDelegate
-{
+extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
         ConstantsShedulVc.heightCell
     }
 }
 
 //MARK: - WeekDayTableViewCellDelegate
 extension ScheduleViewController: WeekDayTableViewCellDelegate {
-    func addDayInListkDay(cell: UITableViewCell, flag: Bool)
-    {
+    func addDayInListkDay(cell: UITableViewCell, flag: Bool) {
         guard let cell = cell as? WeekDayTableViewCell,
               let indexPath = weekDayTableView.indexPath(for: cell)
         else { return }

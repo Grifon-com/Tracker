@@ -13,16 +13,12 @@ final class TabBarController: UITabBarController {
         static let tabBarImageTrecker =  "tabBarTracker"
         static let tabBarImageStatistic = "tabBarStatistic"
         
-        static let tabBarTitleTrecker = NSLocalizedString("trackers", comment: "")
-        static let tabBarTitleStatistic = NSLocalizedString("statistics", comment: "")
-        
         static let insertImage = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0)
     }
     
     private let colors = Colors()
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.layer.borderWidth = 1
         tabBar.clipsToBounds = true
@@ -35,23 +31,21 @@ final class TabBarController: UITabBarController {
         viewControllers = [
             generateViewController(vc: trackerNavigationController,
                                    imageName: ConstantsTabBar.tabBarImageTrecker,
-                                   title: ConstantsTabBar.tabBarTitleTrecker,
+                                   title: Translate.tabBarTitleTrecker,
                                    insert: ConstantsTabBar.insertImage),
             
             generateViewController(vc: statisticsNavigationController,
                                    imageName: ConstantsTabBar.tabBarImageStatistic,
-                                   title: ConstantsTabBar.tabBarTitleStatistic,
+                                   title: Translate.tabBarTitleStatistic,
                                    insert: ConstantsTabBar.insertImage)
         ]
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?)
-    {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if #available(iOS 13.0, *),
            // Проверяем только изменение цветовой схемы
-           traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection)
-        {
+           traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             if traitCollection.userInterfaceStyle == .dark {
                 tabBar.layer.borderColor = UIColor.black.cgColor
             } else {
@@ -61,7 +55,8 @@ final class TabBarController: UITabBarController {
     }
     
     deinit {
-        AnalyticsService.shared.close()
+        AnalyticsService.reportEvent(field: MetricEvent(event: .close,
+                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue]))
     }
 }
 
@@ -70,8 +65,7 @@ private extension TabBarController {
     func generateViewController(vc: UIViewController,
                                 imageName: String,
                                 title: String,
-                                insert: UIEdgeInsets ) -> UIViewController
-    {
+                                insert: UIEdgeInsets ) -> UIViewController {
         vc.tabBarItem.image = UIImage(named: imageName)
         vc.tabBarItem.title = title
         vc.tabBarItem.imageInsets = insert

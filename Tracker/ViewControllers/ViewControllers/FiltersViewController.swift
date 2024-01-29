@@ -13,7 +13,6 @@ protocol FiltersViewControllerDelegate: AnyObject {
 
 final class FiltersViewController: UIViewController {
     private struct ConstantsFilters {
-        static let filtersLableText = NSLocalizedString("filters", comment: "")
         static let filterLabelFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let cornerRadiusCell = CGFloat(16)
         static let heightCell = CGFloat(75)
@@ -29,7 +28,7 @@ final class FiltersViewController: UIViewController {
     
     private lazy var filtersLable: UILabel = {
         let filtersLable = UILabel()
-        filtersLable.text = ConstantsFilters.filtersLableText
+        filtersLable.text = Translate.filtersLableText
         filtersLable.textColor = .blackDay
         filtersLable.font = ConstantsFilters.filterLabelFont
         filtersLable.textAlignment = .center
@@ -60,8 +59,7 @@ final class FiltersViewController: UIViewController {
     }
     
     init(viewModel: FiltersViewModelProtocol,
-         delegate: FiltersViewControllerDelegate)
-    {
+         delegate: FiltersViewControllerDelegate) {
         self.viewModel = viewModel
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
@@ -84,8 +82,7 @@ private extension FiltersViewController {
         ])
     }
     
-    private func setupTableView()
-    {
+    private func setupTableView() {
         view.addSubview(filterTableView)
         filterTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -104,20 +101,17 @@ private extension FiltersViewController {
 //MARK: - UITableViewDataSource
 extension FiltersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView,
-                   numberOfRowsInSection section: Int) -> Int
-    {
+                   numberOfRowsInSection section: Int) -> Int {
         viewModel.filtersState.count
     }
     
     func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
         ConstantsFilters.heightCell
     }
     
     func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = filterTableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)",
                                                              for: indexPath) as? CustomTableViewCell
         else { return UITableViewCell() }
@@ -147,8 +141,7 @@ extension FiltersViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension FiltersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath)
-    {
+                   didSelectRowAt indexPath: IndexPath) {
         guard let delegate else { return }
         let selectFilter = viewModel.filtersState[indexPath.row]
         viewModel.setSelectFilter(selectFilter: selectFilter.rawValue)

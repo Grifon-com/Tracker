@@ -26,14 +26,12 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
         return emojiView
     }()
     
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupColorView()
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         assertionFailure("init(coder:) has not been implemented")
     }
@@ -41,20 +39,17 @@ final class EmojiCollectionViewCell: UICollectionViewCell {
 
 extension EmojiCollectionViewCell {
     //MARK: - Config
-    func configEmoji(emoji: String)
-    {
+    func configEmoji(emoji: String) {
         emojiView.text = emoji
     }
     
     //MARK: - Selected
-    func emojiSelection(isBackground: Bool)
-    {
+    func emojiSelection(isBackground: Bool) {
         emojiView.backgroundColor = isBackground ? .grayDay : .clear
     }
     
     //MARK: - SetupUI
-    private func setupColorView()
-    {
+    private func setupColorView() {
         addSubview(emojiView)
         
         NSLayoutConstraint.activate([

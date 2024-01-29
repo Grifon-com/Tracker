@@ -18,8 +18,7 @@ struct Tracker {
          name: String,
          color: UIColor,
          emoji: String,
-         schedule: [WeekDay])
-    {
+         schedule: [WeekDay]) {
         self.id = id
         self.name = name
         self.color = color
@@ -27,5 +26,5 @@ struct Tracker {
         self.schedule = schedule
     }
 }
- 
+
 

@@ -1,10 +1,10 @@
 /* 
-  Localizable.strings
-  Tracker
-
-  Created by Григорий Машук on 12.11.23.
-  
-*/
+ Localizable.strings
+ Tracker
+ 
+ Created by Григорий Машук on 12.11.23.
+ 
+ */
 
 //MARK: - Onboarding
 "textLableOneVC" = "Отслеживайте только то, что хотите";

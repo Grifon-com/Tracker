@@ -34,8 +34,7 @@ final class CustomTableViewCell: UITableViewCell {
         return selectedImage
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
-    {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         layer.masksToBounds = true
@@ -44,13 +43,11 @@ final class CustomTableViewCell: UITableViewCell {
         setupSelectedImage()
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse()
-    {
+    override func prepareForReuse() {
         super.prepareForReuse()
         layer.cornerRadius = 0
         layer.maskedCorners = [.layerMinXMinYCorner,
@@ -62,27 +59,23 @@ final class CustomTableViewCell: UITableViewCell {
 
 extension CustomTableViewCell {
     //MARK: - Config
-    func config(model: CustomCellModel)
-    {
+    func config(model: CustomCellModel) {
         nameCategoriLableView.text = model.text
         backgroundColor = model.color
     }
     
-    func showSelectedImage(flag: Bool)
-    {
+    func showSelectedImage(flag: Bool) {
         selectedImage.isHidden = flag
     }
     
-    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask?)
-    {
+    func setupCornerRadius(cornerRadius: CGFloat, maskedCorners: CACornerMask?) {
         layer.cornerRadius = cornerRadius
         guard let maskedCorners else { return }
         layer.maskedCorners = maskedCorners
     }
     
     //MARK: - SetupUI
-    private func setupLable()
-    {
+    private func setupLable() {
         nameCategoriLableView.translatesAutoresizingMaskIntoConstraints = false
         nameCategoriLableView.backgroundColor = .clear
         contentView.addSubview(nameCategoriLableView)
@@ -94,8 +87,7 @@ extension CustomTableViewCell {
         ])
     }
     
-    private func setupSelectedImage()
-    {
+    private func setupSelectedImage() {
         contentView.addSubview(selectedImage)
         selectedImage.translatesAutoresizingMaskIntoConstraints = false
         

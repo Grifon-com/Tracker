@@ -5,7 +5,6 @@
 //  Created by Григорий Машук on 16.11.23.
 //
 
-import Foundation
 enum StoreErrors {
     enum TrackrerCategoryStoreError: Error {
         case decodingErrorInvalidNameCategory
@@ -15,9 +14,9 @@ enum StoreErrors {
             var localizedDescription = ""
             switch self {
             case .decodingErrorInvalidNameCategory:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidNameCategory", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidNameCategory
             case .getCategoryCoreDataError:
-                localizedDescription = NSLocalizedString("getCategoryCoreDataError", comment: "")
+                localizedDescription = Translate.getCategoryCoreDataError
             }
             return localizedDescription
         }
@@ -35,17 +34,17 @@ enum StoreErrors {
             var localizedDescription = ""
             switch self {
             case .getTrackerError:
-                localizedDescription = NSLocalizedString("getTrackerError", comment: "")
+                localizedDescription = Translate.getTrackerError
             case .decodingErrorInvalidName:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidName", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidName
             case .decodingErrorInvalidId:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidId", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidId
             case .decodingErrorInvalidColor:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidColor", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidColor
             case .decodingErrorInvalidEmoji:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidEmoji", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidEmoji
             case .decodingErrorInvalidSchedul:
-                localizedDescription = NSLocalizedString("decodingErrorInvalidSchedul", comment: "")
+                localizedDescription = Translate.decodingErrorInvalidSchedul
             }
             
             return localizedDescription
@@ -56,7 +55,7 @@ enum StoreErrors {
         case transformationErrorInvalid
         
         var localizedDescription: String {
-            NSLocalizedString("transformationErrorInvalid", comment: "")
+            Translate.transformationErrorInvalid
         }
     }
     
@@ -70,13 +69,13 @@ enum StoreErrors {
             var localizedDescription = ""
             switch self {
             case .decodingErrorInvalidId:
-                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
+                localizedDescription = Translate.decodingErrorInvalidId
             case .decodingErrorInvalidDate:
-                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
+                localizedDescription = Translate.decodingErrorInvalidDate
             case .loadTrackerRecord:
-                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
+                localizedDescription = Translate.loadTrackerRecord
             case .getTrackerRecord:
-                localizedDescription = NSLocalizedString(self.rawValue, comment: "")
+                localizedDescription = Translate.getTrackerRecord
             }
             
             return localizedDescription

@@ -51,8 +51,7 @@ final class CategoryViewModel {
     init(trackerCategoryStore: TrackerCategoryStoreProtocol,
          trackerStore: TrackerStoreProtocol,
          trackerRecordStore: TrackerRecordStoreProtocol,
-         category: Result<[TrackerCategory], Error>)
-    {
+         category: Result<[TrackerCategory], Error>) {
         self.trackerCategoryStore = trackerCategoryStore
         self.trackerStore = trackerStore
         self.trackerRecordStore = trackerRecordStore
@@ -61,8 +60,7 @@ final class CategoryViewModel {
 }
 //MARK: - Extension
 private extension CategoryViewModel {
-    func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory
-    {
+    func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
         guard let nameCategory = trackerCategoryCoreData.nameCategory else {
             throw StoreErrors.TrackrerCategoryStoreError.decodingErrorInvalidNameCategory
         }
@@ -93,8 +91,7 @@ extension CategoryViewModel: CategoryViewModelProtocol {
                                                 oldNameCategory: oldNameCaetegory)
     }
     
-    func isCategorySelected(at index: Int) -> Result<Bool, Error>
-    {
+    func isCategorySelected(at index: Int) -> Result<Bool, Error> {
         switch сategoryExcludingFixed() {
         case .success(let category):
             return .success(category[index].nameCategory != selectNameCategory)
@@ -103,8 +100,7 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         }
     }
     
-    func getCategory() -> Result<[TrackerCategory], Error>
-    {
+    func getCategory() -> Result<[TrackerCategory], Error> {
         let trackerCategoryCoreData = trackerCategoryStore.getListTrackerCategoryCoreData()
         guard let trackerCategoryCoreData else
         { return .failure(StoreErrors.TrackrerStoreError.getTrackerError) }
@@ -116,8 +112,7 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         }
     }
     
-    func сategoryExcludingFixed() -> Result<[TrackerCategory], Error>
-    {
+    func сategoryExcludingFixed() -> Result<[TrackerCategory], Error> {
         switch category {
         case .success(let category):
             let filterCat = category.filter {
@@ -130,8 +125,7 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         }
     }
     
-    func createNameCategory(at index: Int) -> Result<String, Error>
-    {
+    func createNameCategory(at index: Int) -> Result<String, Error> {
         switch сategoryExcludingFixed() {
         case .success(let category):
             let name = category[index].nameCategory
@@ -153,8 +147,7 @@ extension CategoryViewModel: CategoryViewModelProtocol {
         trackerRecordStore.deleteTrackerRecords(trackers: trackers)
     }
     
-    func selectСategory(at index: Int) -> Result<Void, Error>
-    {
+    func selectСategory(at index: Int) -> Result<Void, Error> {
         switch сategoryExcludingFixed() {
         case .success(let category):
             print(category[index].nameCategory)

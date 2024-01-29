@@ -12,7 +12,7 @@ import CoreData
 protocol TrackerStoreProtocol {
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error>
-    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
+    func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error>
     func deleteTracker(_ id: UUID) -> Result<Void, Error>
     func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error>
     func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error>
@@ -56,8 +56,7 @@ final class TrackerStore: NSObject {
 
 //MARK: - Private extension
 private extension TrackerStore {
-    func tracker(from trackerCoreData: TrackerCoreData) throws -> Tracker
-    {
+    func tracker(from trackerCoreData: TrackerCoreData) throws -> Tracker {
         guard let id = trackerCoreData.id else {
             assertionFailure("not found ID")
             throw StoreErrors.TrackrerStoreError.decodingErrorInvalidId
@@ -86,8 +85,7 @@ private extension TrackerStore {
                        schedule: schedul)
     }
     
-    func updateExistingTrackerRecord(trackerCoreData: TrackerCoreData, tracker: Tracker)
-    {
+    func updateExistingTrackerRecord(trackerCoreData: TrackerCoreData, tracker: Tracker) {
         trackerCoreData.id = tracker.id
         trackerCoreData.colorHex = colorMarshalling.hexString(from: tracker.color)
         trackerCoreData.emoji = tracker.emoji
@@ -95,8 +93,7 @@ private extension TrackerStore {
         trackerCoreData.schedule = tracker.schedule as NSObject
     }
     
-    func save() -> Result<Void, Error>
-    {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
@@ -105,8 +102,7 @@ private extension TrackerStore {
         }
     }
     
-    func searchTracker(id: UUID) throws -> TrackerCoreData?
-    {
+    func searchTracker(id: UUID) throws -> TrackerCoreData? {
         let request = NSFetchRequest<TrackerCoreData>(entityName: "\(TrackerCoreData.self)")
         request.returnsObjectsAsFaults = false
         guard let keyPath = (\TrackerCoreData.id)._kvcKeyPathString
@@ -116,8 +112,7 @@ private extension TrackerStore {
         return trackerCD.first
     }
     
-    func searchCategory(name: String) throws -> TrackerCategoryCoreData?
-    {
+    func searchCategory(name: String) throws -> TrackerCategoryCoreData? {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "\(TrackerCategoryCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@",
@@ -125,13 +120,45 @@ private extension TrackerStore {
                                         name as CVarArg)
         return try context.fetch(request).first
     }
+    
+    func updateTrackerAndCategory(tracker: Tracker, nameCategory: String) -> Result<Void, Error> {
+        do {
+            if let categoryCD = try searchCategory(name: nameCategory) {
+                do {
+                    if let trackerCD = try searchTracker(id: tracker.id) {
+                        trackerCD.category = categoryCD
+                        updateExistingTrackerRecord(trackerCoreData: trackerCD,
+                                                    tracker: tracker)
+                        return save()
+                    }
+                } catch {
+                    return .failure(error)
+                }
+            }
+        } catch {
+            return .failure(error)
+        }
+        return save()
+    }
+    
+    func updateTracker(tracker: Tracker) -> Result<Void, Error> {
+        do {
+            if let trackerCD = try searchTracker(id: tracker.id) {
+                updateExistingTrackerRecord(trackerCoreData: trackerCD,
+                                            tracker: tracker)
+                return save()
+            }
+        } catch {
+            return .failure(error)
+        }
+        return .failure(StoreErrors.TrackrerStoreError.getTrackerError)
+    }
 }
 
 //MARK: - TrackerStoreProtocol
 extension TrackerStore: TrackerStoreProtocol {
     func addNewTracker(_ tracker: Tracker,
-                       nameCategory: String) -> Result<Void, Error>
-    {
+                       nameCategory: String) -> Result<Void, Error> {
         do {
             if let category = try searchCategory(name: nameCategory) {
                 let trackerCoreData = TrackerCoreData(context: context)
@@ -146,43 +173,17 @@ extension TrackerStore: TrackerStoreProtocol {
         return save()
     }
     
-    func updateTracker(tracker: Tracker,
-                       nameCategory: String) -> Result<Void, Error>
-    {
+    func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error> {
         do {
-            if let categoryCD = try searchCategory(name: nameCategory) {
-                do {
-                    if let trackerCD = try searchTracker(id: tracker.id) {
-                        trackerCD.category = categoryCD
-                        updateExistingTrackerRecord(trackerCoreData: trackerCD,
-                                                    tracker: tracker)
-                        return save()
-                    }
-                } catch {
-                    return .failure(error)
-                }
+            if let nameCategory {
+                return updateTrackerAndCategory(tracker: tracker, nameCategory: nameCategory)
             } else {
-                let catCD = TrackerCategoryCoreData(context: context)
-                catCD.nameCategory = nameCategory
-                do {
-                    if let trackerCD = try searchTracker(id: tracker.id) {
-                        trackerCD.category = catCD
-                        updateExistingTrackerRecord(trackerCoreData: trackerCD,
-                                                    tracker: tracker)
-                        return save()
-                    }
-                } catch {
-                    return .failure(error)
-                }
+                return updateTracker(tracker: tracker)
             }
-        } catch {
-            return .failure(error)
         }
-        return save()
     }
     
-    func deleteTracker(_ id: UUID) -> Result<Void, Error>
-    {
+    func deleteTracker(_ id: UUID) -> Result<Void, Error> {
         do {
             if let trackerCoreData = try searchTracker(id: id) {
                 context.delete(trackerCoreData)
@@ -194,8 +195,7 @@ extension TrackerStore: TrackerStoreProtocol {
         return save()
     }
     
-    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error>
-    {
+    func deleteTrackers(trackers: [Tracker]) -> Result<Void, Error> {
         do { try trackers .forEach {
             if let tracker = try searchTracker(id: $0.id) {
                 context.delete(tracker)
@@ -207,8 +207,7 @@ extension TrackerStore: TrackerStoreProtocol {
         }
     }
     
-    func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error>
-    {
+    func getTrackers(_ objects: [TrackerCoreData]) -> Result<[Tracker], Error> {
         let _ = fetchedTrackerResultController
         do {
             let trackers = try objects.map({ try tracker(from: $0) }).sorted { $0.name < $1.name }
@@ -218,8 +217,7 @@ extension TrackerStore: TrackerStoreProtocol {
         }
     }
     
-    func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error>
-    {
+    func addPinnedCategory(_ id: UUID, pinnedCategory: PinnCategoryCoreData) -> Result<Void, Error> {
         do {
             if let trackerCD = try searchTracker(id: id) {
                 pinnedCategory.addToTracker(trackerCD)

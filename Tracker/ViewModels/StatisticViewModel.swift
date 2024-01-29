@@ -17,11 +17,10 @@ final class StatisticsViewModel {
     
     @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue)
     private(set) var isTracker: Bool?
-
+    
     let trackerRecordStore: TrackerRecordStoreProtocol
     
-    convenience init()
-    {
+    convenience init() {
         let trackerRecordStore = TrackerRecordStore()
         self.init(trackerRecordStore: trackerRecordStore)
         countTrackerComplet = getCountTrackerComplet()

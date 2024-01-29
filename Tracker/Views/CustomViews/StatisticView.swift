@@ -31,23 +31,19 @@ final class StatisticsView: UIView {
         return secondaryTextLable
     }()
     
-    override init(frame: CGRect)
-    
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         backgroundColor = colors.viewBackground
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension StatisticsView {
-    private func setupView()
-    {
+    private func setupView() {
         [lableHeader, secondaryTextLable].forEach {
             $0.backgroundColor = .clear
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -68,13 +64,11 @@ extension StatisticsView {
         ])
     }
     
-    func setCount(count: Int)
-    {
+    func setCount(count: Int) {
         lableHeader.text = String(count)
     }
     
-    func setSecondaryTextLable(text: String)
-    {
+    func setSecondaryTextLable(text: String) {
         secondaryTextLable.text = text
     }
 }

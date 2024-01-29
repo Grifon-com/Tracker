@@ -20,10 +20,6 @@ protocol UpdateCategoriViewControllerDelegate: AnyObject {
 //MARK: - NewCategoriViewController
 class NewCategoriViewController: UIViewController {
     private struct ConstantsNewCatVc {
-        static let newcategoriLabelText = NSLocalizedString("newcategoriLabelText", comment: "")
-        static let buttonName = NSLocalizedString("buttonName", comment: "")
-        static let placeholderCategoryTextField = NSLocalizedString("placeholderCategoryTextField", comment: "")
-        
         static let cornerRadius = CGFloat(16)
         static let leftIndentTextField = CGFloat(12)
         static let font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -38,7 +34,7 @@ class NewCategoriViewController: UIViewController {
     
     private lazy var newCategoriLabel: UILabel = {
         let newCategoriLabel = UILabel()
-        newCategoriLabel.text = ConstantsNewCatVc.newcategoriLabelText
+        newCategoriLabel.text = Translate.newcategoriLabelText
         newCategoriLabel.font = ConstantsNewCatVc.font
         newCategoriLabel.textAlignment = .center
         newCategoriLabel.backgroundColor = .clear
@@ -48,7 +44,7 @@ class NewCategoriViewController: UIViewController {
     
     private lazy var readyButton: UIButton = {
         let readyButton = UIButton()
-        readyButton.setTitle(ConstantsNewCatVc.buttonName, for: .normal)
+        readyButton.setTitle(Translate.buttonName, for: .normal)
         readyButton.setTitleColor(.textEventColor, for: .normal)
         readyButton.isEnabled = false
         readyButton.backgroundColor = .grayDay
@@ -64,7 +60,7 @@ class NewCategoriViewController: UIViewController {
     private lazy var createNameTextField: UITextField = {
         let createNameTextField = UITextField()
         createNameTextField.delegate = self
-        createNameTextField.placeholder = ConstantsNewCatVc.placeholderCategoryTextField
+        createNameTextField.placeholder = Translate.placeholderCategoryTextField
         createNameTextField.font = ConstantsNewCatVc.textFieldFont
         createNameTextField.indent(size: ConstantsNewCatVc.leftIndentTextField)
         createNameTextField.backgroundColor = .backgroundNight
@@ -76,20 +72,17 @@ class NewCategoriViewController: UIViewController {
     }()
     
     init(createCategorydelegate: NewCategoriViewControllerDelegate? = nil,
-         updateCategoryrDelegate: UpdateCategoriViewControllerDelegate? = nil)
-    {
+         updateCategoryrDelegate: UpdateCategoriViewControllerDelegate? = nil) {
         self.createCategorydelegate = createCategorydelegate
         self.updateCategoryrDelegate = updateCategoryrDelegate
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = NewCategoryViewModel()
         bind()
@@ -103,8 +96,7 @@ class NewCategoriViewController: UIViewController {
 }
 
 private extension NewCategoriViewController {
-    func bind()
-    {
+    func bind() {
         guard let viewModel = viewModel as? NewCategoryViewModel else { return }
         viewModel.$newNameCategory.bind { [weak self] text in
             guard let self else { return }
@@ -116,8 +108,7 @@ private extension NewCategoriViewController {
     
     //MARK: - Обработка событий
     @objc
-    func didTapNewСategoriButton()
-    {
+    func didTapNewСategoriButton() {
         guard let viewModel else { return }
         if let createCategorydelegate {
             createCategorydelegate.didNewCategoryName(self,
@@ -132,13 +123,11 @@ private extension NewCategoriViewController {
     }
     
     @objc
-    private func hideKeyboard()
-    {
+    private func hideKeyboard() {
         view.endEditing(true)
     }
     
-    func chengeHiddenButton(flag: Bool)
-    {
+    func chengeHiddenButton(flag: Bool) {
         readyButton.isEnabled = !flag
         readyButton.backgroundColor = !flag ? .blackDay : .grayDay
         readyButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
@@ -146,15 +135,13 @@ private extension NewCategoriViewController {
     }
     
     //MARK: - SetupUI
-    func setupUIElement()
-    {
+    func setupUIElement() {
         setupCategoriButton()
         setupCategoriLabel()
         setupCreateNameTextField()
     }
     
-    func setupCategoriButton()
-    {
+    func setupCategoriButton() {
         view.addSubview(readyButton)
         
         NSLayoutConstraint.activate([
@@ -168,8 +155,7 @@ private extension NewCategoriViewController {
         ])
     }
     
-    func setupCategoriLabel()
-    {
+    func setupCategoriLabel() {
         view.addSubview(newCategoriLabel)
         newCategoriLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -180,8 +166,7 @@ private extension NewCategoriViewController {
         ])
     }
     
-    func setupCreateNameTextField()
-    {
+    func setupCreateNameTextField() {
         view.addSubview(createNameTextField)
         createNameTextField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -199,15 +184,13 @@ private extension NewCategoriViewController {
 
 //MARK: - UITextFieldDelegate
 extension NewCategoriViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField)
-    {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text, let viewModel
         else { return }
         viewModel.setNewNameCategory(text: text)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
-    {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         createNameTextField.resignFirstResponder()
         return true
     }
@@ -215,8 +198,7 @@ extension NewCategoriViewController: UITextFieldDelegate {
 
 extension NewCategoriViewController: SelectCategoryEditViewControllerDelegate {
     func editCategoriesViewController(vc: UIViewController,
-                                      oldNameCategory: String)
-    {
+                                      oldNameCategory: String) {
         guard let viewModel else { return }
         createNameTextField.text = oldNameCategory
         viewModel.setNewNameCategory(text: oldNameCategory)

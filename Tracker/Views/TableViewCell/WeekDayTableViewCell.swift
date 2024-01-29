@@ -36,8 +36,7 @@ final class WeekDayTableViewCell: UITableViewCell {
         return choiceDaySwitch
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
-    {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         backgroundColor = .backgroundDay
         layer.masksToBounds = true
@@ -45,8 +44,7 @@ final class WeekDayTableViewCell: UITableViewCell {
         setupElement()
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -54,8 +52,7 @@ final class WeekDayTableViewCell: UITableViewCell {
 extension WeekDayTableViewCell {
     //MARK: - Обработка событий
     @objc
-    private func switching(_ sender: UISwitch)
-    {
+    private func switching(_ sender: UISwitch) {
         guard let delegate else { return }
         delegate.addDayInListkDay(cell: self,
                                   flag: choiceDaySwitch.isOn)
@@ -63,8 +60,7 @@ extension WeekDayTableViewCell {
     
     //MARK: - Configuration
     func setupCornerRadius(cornerRadius: CGFloat,
-                           maskedCorners: CACornerMask)
-    {
+                           maskedCorners: CACornerMask) {
         layer.cornerRadius = cornerRadius
         layer.maskedCorners = maskedCorners
     }

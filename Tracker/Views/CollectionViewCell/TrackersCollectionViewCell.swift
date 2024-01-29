@@ -18,7 +18,6 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         static let addButtonImageAdd = "Add"
         static let adButttonImageDone = "Done"
         static let isPinnedImage = "IsPinned"
-        static let numberOfDays = NSLocalizedString("numberOfDays", tableName: "LocalizableDict", comment: "")
         
         static let numberOfLines = 2
         
@@ -125,14 +124,12 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return verticalStack
     }()
     
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupUIElement()
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 }
@@ -140,8 +137,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
 extension TrackersCollectionViewCell {
     //MARK: - Обработка событий
     @objc
-    private func didTapAddButton()
-    {
+    private func didTapAddButton() {
         guard let delegate else { return }
         delegate.didTrackerCompleted(self)
     }
@@ -149,9 +145,8 @@ extension TrackersCollectionViewCell {
     //MARK: - Configuration
     
     //метод обновления счетчика выполнения трекера и imageButton
-    func updateLableCountAndImageAddButton(_ updateModel: UpdateTracker)
-    {
-        let textLable = String.localizedStringWithFormat(ConstantsTrackerCell.numberOfDays,
+    func updateLableCountAndImageAddButton(_ updateModel: UpdateTracker) {
+        let textLable = String.localizedStringWithFormat(Translate.numberOfDays,
                                                          updateModel.count)
         dayCounterLable.text = textLable
         switch updateModel.flag {
@@ -164,50 +159,42 @@ extension TrackersCollectionViewCell {
         }
     }
     
-    func updateBackgraundAddButton(isHidden: Bool)
-    {
+    func updateBackgraundAddButton(isHidden: Bool) {
         backgroundAddButtonView.isHidden = isHidden
     }
     
-    func setPinned(flag: Bool)
-    {
+    func setPinned(flag: Bool) {
         isPinnedImageView.isHidden = flag
     }
     
-    func isEnableAddButton(flag: Bool)
-    {
+    func isEnableAddButton(flag: Bool) {
         addButton.isEnabled = flag
     }
     
-    private func setIsSelectedAddButton(flag: Bool)
-    {
+    private func setIsSelectedAddButton(flag: Bool) {
         isSelectedAddButton = flag
     }
     
-    func config(tracker: Tracker)
-    {
+    func config(tracker: Tracker) {
         colorView.backgroundColor = tracker.color
         emojiLable.text = tracker.emoji
         addButton.backgroundColor = tracker.color
         nameTrackerLabel.text = tracker.name
     }
     
-    func getView() -> UIView
-    {
+    func getView() -> UIView {
         colorView
     }
     
     //MARK: - SetupUI
-    private func setupUIElement()
-    {
+    private func setupUIElement() {
         setupColorView()
         setupVerticallStack()
         setupHorisontalStack()
         setupBackgroundAddButtonView()
     }
     
-    private func setupVerticallStack()
-    {
+    private func setupVerticallStack() {
         contentView.addSubview(verticalStack)
         [colorView, horisontalStack].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -222,8 +209,7 @@ extension TrackersCollectionViewCell {
         ])
     }
     
-    private func setupHorisontalStack()
-    {
+    private func setupHorisontalStack() {
         [dayCounterLable, addButton].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             horisontalStack.addArrangedSubview($0)
@@ -244,8 +230,7 @@ extension TrackersCollectionViewCell {
         ])
     }
     
-    private func setupBackgroundAddButtonView()
-    {
+    private func setupBackgroundAddButtonView() {
         addButton.addSubview(backgroundAddButtonView)
         
         NSLayoutConstraint.activate([
@@ -256,8 +241,7 @@ extension TrackersCollectionViewCell {
         ])
     }
     
-    private func setupColorView()
-    {
+    private func setupColorView() {
         [emojiLable, nameTrackerLabel, isPinnedImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             colorView.addSubview($0)

@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 25.12.23.
 //
 
-import Foundation
-
 enum UserDefaultKeys: String {
     case isTracker
     case selectNameCategory
@@ -14,7 +12,4 @@ enum UserDefaultKeys: String {
     case isOnboarding
 }
 
-enum Fixed: String {
-    case fixedEng = "Fixed"
-    case fixedRu = "Закрепленные"
-}
+

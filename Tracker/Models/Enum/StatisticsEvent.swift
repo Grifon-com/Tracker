@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 5.01.24.
 //
 
-import Foundation
-
 enum StatisticsEvent: String {
     case bestPeriod
     case perfectDays
@@ -17,13 +15,13 @@ enum StatisticsEvent: String {
         var statisticName = ""
         switch self {
         case .bestPeriod:
-            statisticName = NSLocalizedString(self.rawValue, comment: "")
+            statisticName = Translate.bestPeriod
         case .perfectDays:
-            statisticName = NSLocalizedString(self.rawValue, comment: "")
+            statisticName = Translate.perfectDays
         case .trackersCompleted:
-            statisticName = NSLocalizedString(self.rawValue, comment: "")
+            statisticName = Translate.trackersCompleted
         case .averageValue:
-            statisticName = NSLocalizedString(self.rawValue, comment: "")
+            statisticName = Translate.averageValue
         }
         
         return statisticName

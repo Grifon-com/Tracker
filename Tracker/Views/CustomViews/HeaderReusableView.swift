@@ -24,23 +24,20 @@ final class HeaderReusableView: UICollectionReusableView {
         return label
     }()
     
-    override init(frame: CGRect)
-    {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = colors.viewBackground
         setupLable()
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 //MARK: - SetupUI
 extension HeaderReusableView {
-    private func setupLable()
-    {
+    private func setupLable() {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -52,8 +49,7 @@ extension HeaderReusableView {
         ])
     }
     
-    func setTextLable(text: String)
-    {
+    func setTextLable(text: String) {
         label.text = text
     }
 }

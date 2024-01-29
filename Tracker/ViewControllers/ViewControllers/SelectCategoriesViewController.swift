@@ -21,17 +21,6 @@ protocol SelectCategoryEditViewControllerDelegate: AnyObject {
 final class SelectCategoriesViewController: UIViewController {
     private struct ConstantsCreateCatVc {
         static let imageViewImageStab = "Star"
-        
-        static let categoryLabelText = NSLocalizedString("categoriLabelText", comment: "")
-        static let categoryAddButtonText = NSLocalizedString("categoriAddButtonText", comment: "")
-        static let labelStabText = NSLocalizedString("labelStabText", comment: "")
-        static let textEdit = NSLocalizedString("textEdit", comment: "")
-        static let textDelete = NSLocalizedString("textDelete", comment: "")
-        static let textCancel = NSLocalizedString("textCancel", comment: "")
-        static let textFixed = NSLocalizedString("textFixed", comment: "")
-        static let sureDeleteTracker = NSLocalizedString("sureDeleteTracker", comment: "")
-        static let alertDeleteCategoryMessage = NSLocalizedString("deleteCategoryMessage", comment: "")
-        
         static let lableTextStabNumberOfLines = 2
         static let one = 1
         static let selectionCategoryTableViewRowHeight = CGFloat(75)
@@ -51,7 +40,7 @@ final class SelectCategoriesViewController: UIViewController {
     
     private lazy var categoryLabel: UILabel = {
         let categoryLabel = UILabel()
-        categoryLabel.text = ConstantsCreateCatVc.categoryLabelText
+        categoryLabel.text = Translate.categoryLabelText
         categoryLabel.textColor = .blackDay
         categoryLabel.font = ConstantsCreateCatVc.categoryLabelFont
         categoryLabel.textAlignment = .center
@@ -70,7 +59,7 @@ final class SelectCategoriesViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = ConstantsCreateCatVc.labelStabText
+        lableTextStab.text = Translate.labelStabText
         lableTextStab.font = ConstantsCreateCatVc.labelStabTextFont
         lableTextStab.numberOfLines = ConstantsCreateCatVc.lableTextStabNumberOfLines
         lableTextStab.textAlignment = .center
@@ -103,7 +92,7 @@ final class SelectCategoriesViewController: UIViewController {
     
     private lazy var createCategoryButton: UIButton = {
         let createCategoryButton = UIButton()
-        createCategoryButton.setTitle(ConstantsCreateCatVc.categoryAddButtonText, for: .normal)
+        createCategoryButton.setTitle(Translate.categoryAddButtonText, for: .normal)
         createCategoryButton.setTitleColor(.textEventColor, for: .normal)
         createCategoryButton.backgroundColor = colors.buttonDisabledColor
         createCategoryButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
@@ -117,20 +106,17 @@ final class SelectCategoriesViewController: UIViewController {
     }()
     
     init(delegate: SelectCategoriesViewControllerDelegate,
-         viewModel: CategoryViewModelProtocol)
-    {
+         viewModel: CategoryViewModelProtocol) {
         self.delegate = delegate
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         setupUIElement()
@@ -150,20 +136,17 @@ final class SelectCategoriesViewController: UIViewController {
 extension SelectCategoriesViewController {
     //MARK: - обработка событий
     @objc
-    private func didTapСategoryButton()
-    {
+    private func didTapСategoryButton() {
         let newCategoryVC = NewCategoriViewController(createCategorydelegate: self)
         newCategoryVC.modalPresentationStyle = .formSheet
         present(newCategoryVC, animated: true)
     }
     
-    private func showStabView(flag: Bool)
-    {
+    private func showStabView(flag: Bool) {
         conteinerStabView.isHidden = flag
     }
     
-    private func bind()
-    {
+    private func bind() {
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         viewModel.$category.bind { [weak self] _ in
             guard let self else { return }
@@ -175,8 +158,7 @@ extension SelectCategoriesViewController {
     }
     
     private func editAction(text: String,
-                            category: TrackerCategory) -> UIAction
-    {
+                            category: TrackerCategory) -> UIAction {
         UIAction(title: text) { [weak self] _ in
             guard let self else { return }
             let newCategoryVC = NewCategoriViewController(updateCategoryrDelegate: self)
@@ -192,14 +174,13 @@ extension SelectCategoriesViewController {
     private func deleteAction(text: String,
                               category: TrackerCategory,
                               index: Int,
-                              trackers: [Tracker]) -> UIAction
-    {
+                              trackers: [Tracker]) -> UIAction {
         UIAction(title: text, attributes: .destructive) { [weak self] _ in
             guard let self else { return }
             let alert = UIAlertController(title: nil,
-                                          message: ConstantsCreateCatVc.alertDeleteCategoryMessage,
+                                          message: Translate.alertDeleteCategoryMessage,
                                           preferredStyle: .actionSheet)
-            let deleteAction = UIAlertAction(title: ConstantsCreateCatVc.textDelete,
+            let deleteAction = UIAlertAction(title: Translate.textDelete,
                                              style: .destructive) { _ in
                 if let isCategorySelected =  self.handler.resultTypeHandlerGetValue(self.viewModel.isCategorySelected(at: index),
                                                                                     vc: self),
@@ -215,7 +196,7 @@ extension SelectCategoriesViewController {
                     }
                 }
             }
-            let cancelAction = UIAlertAction(title: ConstantsCreateCatVc.textCancel,
+            let cancelAction = UIAlertAction(title: Translate.textCancel,
                                              style: .cancel) { _ in
                 alert.dismiss(animated: true)
             }
@@ -226,16 +207,14 @@ extension SelectCategoriesViewController {
     }
     
     //MARK: - SetupUI
-    private func setupUIElement()
-    {
+    private func setupUIElement() {
         setupCategoryButton()
         setupCategoryLabel()
         setupTableView()
         setupStabView()
     }
     
-    private func setupCategoryButton()
-    {
+    private func setupCategoryButton() {
         view.addSubview(createCategoryButton)
         
         NSLayoutConstraint.activate([
@@ -246,8 +225,7 @@ extension SelectCategoriesViewController {
         ])
     }
     
-    private func setupCategoryLabel()
-    {
+    private func setupCategoryLabel() {
         view.addSubview(categoryLabel)
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -258,8 +236,7 @@ extension SelectCategoriesViewController {
         ])
     }
     
-    private func setupTableView()
-    {
+    private func setupTableView() {
         view.addSubview(selectionCategoryTableView)
         selectionCategoryTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -274,8 +251,7 @@ extension SelectCategoriesViewController {
         ])
     }
     
-    private func setupStabView()
-    {
+    private func setupStabView() {
         view.addSubview(conteinerStabView)
         [imageViewStab, lableTextStab].forEach {
             conteinerStabView.addSubview($0)
@@ -300,14 +276,12 @@ extension SelectCategoriesViewController {
 
 //MARK: - UITableViewDataSource
 extension SelectCategoriesViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed(),
                                           vc: self)?.count ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CustomTableViewCell.self)")
                 as? CustomTableViewCell,
               let isSelected = handler.resultTypeHandlerGetValue(viewModel.isCategorySelected(at: indexPath.row),
@@ -358,8 +332,7 @@ extension SelectCategoriesViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension SelectCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
-                   didSelectRowAt indexPath: IndexPath)
-    {
+                   didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? CustomTableViewCell,
               let delegate
         else { return }
@@ -375,18 +348,16 @@ extension SelectCategoriesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    contextMenuConfigurationForRowAt indexPath: IndexPath,
-                   point: CGPoint
-    ) -> UIContextMenuConfiguration?
-    {
+                   point: CGPoint) -> UIContextMenuConfiguration? {
         return UIContextMenuConfiguration(actionProvider:  { [weak self] _ in
             guard let self,
                   let category = handler.resultTypeHandlerGetValue(viewModel.сategoryExcludingFixed(),
                                                                    vc: self)?[indexPath.row]
             else { return UIMenu()}
             return UIMenu(children: [
-                editAction(text: ConstantsCreateCatVc.textEdit,
+                editAction(text: Translate.textEdit,
                            category: category),
-                deleteAction(text: ConstantsCreateCatVc.textDelete,
+                deleteAction(text: Translate.textDelete,
                              category: category,
                              index: indexPath.row,
                              trackers: category.arrayTrackers)
@@ -397,8 +368,7 @@ extension SelectCategoriesViewController: UITableViewDelegate {
 
 //MARK: - NewCategoriViewControllerDelegate
 extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
-    func didNewCategoryName(_ vc: UIViewController, nameCategory: String)
-    {
+    func didNewCategoryName(_ vc: UIViewController, nameCategory: String) {
         guard let category = handler.resultTypeHandlerGetValue(viewModel.getCategory(),
                                                                vc: self)
         else { return }
@@ -419,8 +389,7 @@ extension SelectCategoriesViewController: NewCategoriViewControllerDelegate {
 extension SelectCategoriesViewController: UpdateCategoriViewControllerDelegate {
     func didUpdateCategoryName(_ vc: UIViewController,
                                newNameCategory: String,
-                               oldNameCategory: String)
-    {
+                               oldNameCategory: String) {
         handler.resultTypeHandler(viewModel.updateNameCategory(newNameCategory: newNameCategory,
                                                                oldNameCaetegory: oldNameCategory),
                                   vc: self) {}

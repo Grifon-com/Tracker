@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 2.10.23.
 //
 
-import Foundation
-
 enum WeekDay: Int {
     case monday = 1
     case tuesday
@@ -20,19 +18,19 @@ enum WeekDay: Int {
         var day: String
         switch self {
         case .monday:
-            day = NSLocalizedString("monday.complete", comment: "")
+            day = Translate.monday
         case .tuesday:
-            day = NSLocalizedString("tuesday.complete", comment: "")
+            day = Translate.tuesday
         case .wednesday:
-            day = NSLocalizedString("wednesday.complete", comment: "")
+            day = Translate.wednesday
         case .thursday:
-            day = NSLocalizedString("thursday.complete", comment: "")
+            day = Translate.thursday
         case .friday:
-            day = NSLocalizedString("friday.complete", comment: "")
+            day = Translate.friday
         case .saturday:
-            day = NSLocalizedString("saturday.complete", comment: "")
+            day = Translate.saturday
         case .sunday:
-            day = NSLocalizedString("sunday.complete", comment: "")
+            day = Translate.sunday
         }
         return day
     }
@@ -41,19 +39,19 @@ enum WeekDay: Int {
         var briefWordDay: String
         switch self {
         case .monday:
-            briefWordDay = NSLocalizedString("monday", comment: "")
+            briefWordDay = Translate.briefMonday
         case .tuesday:
-            briefWordDay = NSLocalizedString("tuesday", comment: "")
+            briefWordDay = Translate.briefTuesday
         case .wednesday:
-            briefWordDay = NSLocalizedString("wednesday", comment: "")
+            briefWordDay = Translate.briefWednesday
         case .thursday:
-            briefWordDay = NSLocalizedString("thursday", comment: "")
+            briefWordDay = Translate.briefThursday
         case .friday:
-            briefWordDay = NSLocalizedString("friday", comment: "")
+            briefWordDay = Translate.briefFriday
         case .saturday:
-            briefWordDay = NSLocalizedString("saturday", comment: "")
+            briefWordDay = Translate.briefSaturday
         case .sunday:
-            briefWordDay = NSLocalizedString("sunday", comment: "")
+            briefWordDay = Translate.briefSunday
         }
         return briefWordDay
     }

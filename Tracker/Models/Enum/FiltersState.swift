@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 17.12.23.
 //
 
-import Foundation
-
 enum FiltersState: String {
     case allTrackers
     case toDayTrackers
@@ -17,13 +15,13 @@ enum FiltersState: String {
         var name = ""
         switch self {
         case .allTrackers:
-            name = NSLocalizedString(self.rawValue, comment: "")
+            name = Translate.allTrackers
         case .toDayTrackers:
-            name = NSLocalizedString(self.rawValue, comment: "")
+            name = Translate.toDayTrackers
         case .completed:
-            name = NSLocalizedString(self.rawValue, comment: "")
+            name = Translate.completed
         case .notCompleted:
-            name = NSLocalizedString(self.rawValue, comment: "")
+            name = Translate.notCompleted
         }
         return name
     }

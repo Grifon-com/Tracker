@@ -18,7 +18,7 @@ protocol TrackerViewModelProtocol {
     func deleteTrackersRecord(id: UUID) -> Result<Void, Error>
     
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
-    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>
+    func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error>
     func deleteTracker(id: UUID) -> Result<Void, Error>
     
     func getShowListTrackersForDay(date: Date)
@@ -26,6 +26,8 @@ protocol TrackerViewModelProtocol {
     func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error>
     
     func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
+    func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error>
+    func getPinnedCategory(_ id: UUID) -> Result<String?, Error>
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
     
     func allTrackersByDate(date: Date)
@@ -40,8 +42,6 @@ protocol TrackerViewModelProtocol {
 
 //MARK: - TrackerViewModel
 final class TrackerViewModel {
-    private let textFixed = NSLocalizedString("textFixed", comment: "")
-    
     @Observable<Result<[TrackerCategory], Error>>
     private(set) var category: Result<[TrackerCategory], Error>
     
@@ -68,8 +68,7 @@ final class TrackerViewModel {
     private let trackerStore: TrackerStoreProtocol
     private let pinnedCategoryStore: PinnedCategoryStoreProtocol
     
-    convenience init()
-    {
+    convenience init() {
         let trackerCategoryStore = TrackerCategoryStore()
         let trackerRecordStore = TrackerRecordStore()
         let trackerStore = TrackerStore()
@@ -102,8 +101,7 @@ final class TrackerViewModel {
          category: Result<[TrackerCategory], Error>,
          completedTrackers: Result<Set<TrackerRecord>, Error>,
          visibleCategory: Result<[TrackerCategory], Error>,
-         indexPath: IndexPath, filterState: FiltersState)
-    {
+         indexPath: IndexPath, filterState: FiltersState) {
         self.trackerCategoryStore = trackerCategoryStore
         self.trackerRecordStore = trackerRecordStore
         self.trackerStore = trackerStore
@@ -117,8 +115,7 @@ final class TrackerViewModel {
 }
 //MARK: - Extension
 private extension TrackerViewModel {
-    func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory
-    {
+    func category(from trackerCategoryCoreData: TrackerCategoryCoreData) throws -> TrackerCategory {
         guard let nameCategory = trackerCategoryCoreData.nameCategory else {
             throw StoreErrors.TrackrerCategoryStoreError.decodingErrorInvalidNameCategory
         }
@@ -136,8 +133,7 @@ private extension TrackerViewModel {
         }
     }
     
-    func setVisibleCategory(date: Date, flag: Bool)
-    {
+    func setVisibleCategory(date: Date, flag: Bool) {
         switch category {
         case .success(let category):
             var listCategories: [TrackerCategory] = []
@@ -163,8 +159,7 @@ private extension TrackerViewModel {
     }
     
     func filterListTrackersWeekDay(trackerCategory: [TrackerCategory],
-                                   date: Date) -> [TrackerCategory]
-    {
+                                   date: Date) -> [TrackerCategory] {
         let calendar = Calendar.current
         let filter = calendar.component(.weekday, from: date)
         
@@ -203,8 +198,7 @@ private extension TrackerViewModel {
     func trackerCompletedOrNotByCategory(category: TrackerCategory,
                                          date: Date,
                                          flag: Bool,
-                                         filter: (UUID, Date) throws -> Bool) throws -> TrackerCategory
-    {
+                                         filter: (UUID, Date) throws -> Bool) throws -> TrackerCategory {
         let trackers = category.arrayTrackers
         do {
             let trackers = try trackers.filter { try flag == filter($0.id, date) }
@@ -233,8 +227,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
         trackerCategoryStore.addCategory(nameCategory)
     }
     
-    func getCategory() -> Result<[TrackerCategory], Error>
-    {
+    func getCategory() -> Result<[TrackerCategory], Error> {
         let trackerCategoryCoreData = trackerCategoryStore.getListTrackerCategoryCoreData()
         guard let trackerCategoryCoreData
         else { return .failure(StoreErrors.TrackrerStoreError.getTrackerError) }
@@ -255,19 +248,17 @@ extension TrackerViewModel: TrackerViewModelProtocol
     }
     
     func addNewTracker(_ tracker: Tracker,
-                       nameCategory: String) -> Result<Void, Error>
-    {
+                       nameCategory: String) -> Result<Void, Error> {
         let trackerCoreData = trackerStore.addNewTracker(tracker,
                                                          nameCategory: nameCategory)
         return trackerCoreData
     }
     
-    func updateTracker(tracker: Tracker, nameCategory: String) -> Result<Void, Error>{
+    func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error> {
         trackerStore.updateTracker(tracker: tracker, nameCategory: nameCategory)
     }
     
-    func getShowListTrackersForDay(date: Date)
-    {
+    func getShowListTrackersForDay(date: Date) {
         switch category {
         case .success(let trackerCategory):
             let filterList = filterListTrackersWeekDay(trackerCategory: trackerCategory,
@@ -278,8 +269,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
         }
     }
     
-    func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error>
-    {
+    func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error> {
         var listCategories: [TrackerCategory] = []
         switch category {
         case .success(let cat):
@@ -305,8 +295,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
         visibleCategory = .success(searchCategory)
     }
     
-    func getIsComplited(tracker: Tracker, date: Date) -> Result<Bool, Error>
-    {
+    func getIsComplited(tracker: Tracker, date: Date) -> Result<Bool, Error> {
         switch completedTrackers {
         case .success(let compTrack):
             return .success(compTrack.contains (where: { $0.id == tracker.id &&
@@ -322,8 +311,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
         self.indexPath = indexPath
     }
     
-    func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
-    {
+    func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error> {
         let pinnCategoryCoreData = pinnedCategoryStore.addPinnedCategory(nameCategory)
         switch pinnCategoryCoreData {
         case .success(let pinnCategoryCoreData):
@@ -332,6 +320,14 @@ extension TrackerViewModel: TrackerViewModelProtocol
         case .failure(let error):
             return .failure(error)
         }
+    }
+    
+    func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error> {
+        pinnedCategoryStore.editPinnedCategory(id, newPinnedCat: newPinnedCat)
+    }
+    
+    func getPinnedCategory(_ id: UUID) -> Result<String?, Error> {
+        pinnedCategoryStore.getPinnedCategory(id)
     }
     
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error> {

@@ -18,7 +18,6 @@ protocol EventSelectionViewControllerDelegate: AnyObject {
 //MARK: - EventSelectionViewController
 final class EventSelectionViewController: UIViewController {
     private struct ConstantsEventVc {
-        static let texGreatetLabelName = NSLocalizedString("texGreatetLabelName", comment: "")
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let cornerRadius = CGFloat(16)
         static let stackViewSpacing = CGFloat(10)
@@ -29,7 +28,7 @@ final class EventSelectionViewController: UIViewController {
     
     private lazy var labelCreate: UILabel = {
         let labelCreate = UILabel()
-        labelCreate.text = ConstantsEventVc.texGreatetLabelName
+        labelCreate.text = Translate.texGreatetLabelName
         labelCreate.font = ConstantsEventVc.textFont
         labelCreate.backgroundColor = .clear
         labelCreate.translatesAutoresizingMaskIntoConstraints = false
@@ -67,8 +66,7 @@ final class EventSelectionViewController: UIViewController {
         return irregularEventButton
     }()
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = colors.viewBackground
         setupLableGreate()
@@ -79,22 +77,19 @@ final class EventSelectionViewController: UIViewController {
 private extension EventSelectionViewController {
     //MARK: - Обработка событий
     @objc
-    func didTapHabitButton()
-    {
+    func didTapHabitButton() {
         let greateVC = createTrackerVC()
         greateVC.reverseIsSchedul()
         present(greateVC, animated: true)
     }
     
     @objc
-    func didTapIrregularEventButton()
-    {
+    func didTapIrregularEventButton() {
         let greateVC = createTrackerVC()
         present(greateVC, animated: true)
     }
     
-    func createTrackerVC() -> CreateTrackerViewController
-    {
+    func createTrackerVC() -> CreateTrackerViewController {
         let viewModel = EditTrackerViewModel()
         let createVC = CreateTrackerViewController(viewModel: viewModel,
                                                    updateTrackerDelegate: nil,
@@ -106,8 +101,7 @@ private extension EventSelectionViewController {
     //MARK: - SetupUI
     func setupButton(text: NameEvent,
                      font: UIFont,
-                     cornerRadius: CGFloat? = nil) -> UIButton
-    {
+                     cornerRadius: CGFloat? = nil) -> UIButton {
         let button = UIButton()
         button.setTitle(text.name, for: .normal)
         button.backgroundColor = colors.buttonEventColor
@@ -120,8 +114,7 @@ private extension EventSelectionViewController {
         return button
     }
     
-    func setupLableGreate()
-    {
+    func setupLableGreate() {
         view.addSubview(labelCreate)
         
         NSLayoutConstraint.activate([
@@ -132,8 +125,7 @@ private extension EventSelectionViewController {
         ])
     }
     
-    func setupStackView()
-    {
+    func setupStackView() {
         view.addSubview(stackView)
         [habitButton, irregularEventButton].forEach {
             stackView.addArrangedSubview($0)
@@ -157,15 +149,13 @@ private extension EventSelectionViewController {
 extension EventSelectionViewController: CreateTrackerViewControllerDelegate {
     func trackerViewController(vc: UIViewController,
                                nameCategory: String,
-                               tracker: Tracker)
-    {
+                               tracker: Tracker) {
         delegate?.eventSelectionViewController(vc: self,
                                                nameCategories: nameCategory,
                                                tracker: tracker)
     }
     
-    func trackerViewControllerDidCancel(_ vc: CreateTrackerViewController)
-    {
+    func trackerViewControllerDidCancel(_ vc: CreateTrackerViewController) {
         vc.dismiss(animated: false)
         delegate?.eventSelectionViewControllerDidCancel(self)
     }

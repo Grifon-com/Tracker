@@ -12,11 +12,9 @@ struct PinnTracker {
     let nameCategory: String
 }
 
-extension PinnTracker: Equatable {
+extension PinnTracker: Equatable, Hashable {
     static func == (lhs: PinnTracker,
                     rhs: PinnTracker) -> Bool {
         lhs.id == rhs.id
     }
 }
-
-extension PinnTracker: Hashable {}

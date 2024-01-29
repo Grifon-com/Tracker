@@ -10,7 +10,6 @@ import UIKit
 //MARK: - OnboardingPageViewController
 final class OnboardingPageViewController: UIPageViewController {
     private struct ConstantsOnboarding {
-        static let textLableTwoVC = NSLocalizedString("textLableTwoVC", comment: "")
         static let imageNameTwoVC = "twoPage"
         static let numberOfPages = 2
         static let currentPage = 0
@@ -29,8 +28,7 @@ final class OnboardingPageViewController: UIPageViewController {
         return pageControl
     }()
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = self
         delegate = self
@@ -39,8 +37,7 @@ final class OnboardingPageViewController: UIPageViewController {
 }
 
 private extension OnboardingPageViewController {
-    func setupPageControl()
-    {
+    func setupPageControl() {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.backgroundColor = .clear
@@ -56,17 +53,15 @@ private extension OnboardingPageViewController {
 //MARK: - UIPageViewControllerDataSource
 extension OnboardingPageViewController: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerBefore viewController: UIViewController) -> UIViewController?
-    {
+                            viewControllerBefore viewController: UIViewController) -> UIViewController? {
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController,
-                            viewControllerAfter viewController: UIViewController) -> UIViewController?
-    {
+                            viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let twoViewControllers = OnboardingViewController()
         let onboardingModelTwoVC = Onboarding(imageName: ConstantsOnboarding.imageNameTwoVC,
-                                              textLable: ConstantsOnboarding.textLableTwoVC)
+                                              textLable: Translate.textLableTwoVC)
         twoViewControllers.config(model: onboardingModelTwoVC)
         if currentIndex == ConstantsOnboarding.numberOfPages {
             return nil

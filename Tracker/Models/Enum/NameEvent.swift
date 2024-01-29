@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 10.10.23.
 //
 
-import Foundation
-
 enum NameEvent {
     case habit
     case irregularEvent
@@ -15,9 +13,9 @@ enum NameEvent {
         var name: String
         switch self {
         case .habit:
-            name = NSLocalizedString("nameHabit", comment: "")
+            name = Translate.nameHabit
         case .irregularEvent:
-            name = NSLocalizedString("nameIrregularEvent", comment: "")
+            name = Translate.nameIrregularEvent
         }
         return name
     }

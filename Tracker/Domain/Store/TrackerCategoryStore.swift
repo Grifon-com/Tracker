@@ -23,7 +23,6 @@ protocol TrackerCategoryStoreDelegate: AnyObject {
 
 //MARK: - TrackerCategoryStore
 final class TrackerCategoryStore: NSObject {
-    private let textFixed = NSLocalizedString("textFixed", comment: "")
     weak var delegate: TrackerCategoryStoreDelegate?
     
     @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue)
@@ -57,8 +56,7 @@ final class TrackerCategoryStore: NSObject {
 }
 
 private extension TrackerCategoryStore {
-    func save() -> Result<Void, Error>
-    {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
@@ -67,8 +65,7 @@ private extension TrackerCategoryStore {
         }
     }
     
-    func searchTrackerCategoryCD(nameCategory: String) throws -> TrackerCategoryCoreData?
-    {
+    func searchTrackerCategoryCD(nameCategory: String) throws -> TrackerCategoryCoreData? {
         let request = NSFetchRequest<TrackerCategoryCoreData>(entityName: "\(TrackerCategoryCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@", #keyPath(TrackerCategoryCoreData.nameCategory),
@@ -76,8 +73,7 @@ private extension TrackerCategoryStore {
         return try context.fetch(request).first
     }
     
-    func update(trackerCategoryCD: TrackerCategoryCoreData, newNameCategory: String) -> Result<Void, Error>
-    {
+    func update(trackerCategoryCD: TrackerCategoryCoreData, newNameCategory: String) -> Result<Void, Error> {
         trackerCategoryCD.nameCategory = newNameCategory
         return save()
     }
@@ -85,23 +81,20 @@ private extension TrackerCategoryStore {
 
 //MARK: - TrackerCategoryStoreProtocol
 extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
-    func addCategory(_ nameCategory: String) -> Result<Void, Error>
-    {
+    func addCategory(_ nameCategory: String) -> Result<Void, Error> {
         let categoryCoreData = TrackerCategoryCoreData(context: context)
         categoryCoreData.nameCategory = nameCategory
-        categoryCoreData.isPinned = nameCategory == textFixed ? false : true
+        categoryCoreData.isPinned = nameCategory == Translate.textFixed ? false : true
         return save()
     }
     
-    func getListTrackerCategoryCoreData() -> [TrackerCategoryCoreData]?
-    {
+    func getListTrackerCategoryCoreData() -> [TrackerCategoryCoreData]? {
         let trackCatCD = fetchedCategoryResultController.fetchedObjects
         isTracker = trackCatCD?.first { $0.trakers?.count ?? 0 > 0 } == nil
         return trackCatCD
     }
     
-    func deleteCategory(nameCategory: String) -> Result<Void, Error>
-    {
+    func deleteCategory(nameCategory: String) -> Result<Void, Error> {
         do {
             if let category = try searchTrackerCategoryCD(nameCategory: nameCategory) {
                 context.delete(category)
@@ -114,8 +107,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
     }
     
     func updateNameCategory(newNameCategory: String,
-                            oldNameCategory: String) -> Result<Void, Error>
-    {
+                            oldNameCategory: String) -> Result<Void, Error> {
         do {
             if let trackCatCD = try searchTrackerCategoryCD(nameCategory: oldNameCategory) {
                 return update(trackerCategoryCD: trackCatCD, newNameCategory: newNameCategory)
@@ -129,8 +121,7 @@ extension TrackerCategoryStore: TrackerCategoryStoreProtocol {
 
 //MARK: - NSFetchedResultsControllerDelegate
 extension TrackerCategoryStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
-    {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let delegate
         else { return }
         delegate.storeCategory(trackerCategoryStore: self)

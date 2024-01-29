@@ -10,8 +10,7 @@ import UIKit
 final class HandlerResultType {
     func resultTypeHandler<Value>(_ listCategory: Result<Value,
                                   Error>, vc: UIViewController,
-                                  handler: (Value) -> Void)
-    {
+                                  handler: (Value) -> Void) {
         switch listCategory {
         case .success(let newValue):
             handler(newValue)
@@ -22,8 +21,7 @@ final class HandlerResultType {
     }
     
     func resultTypeHandlerGetValue<Value>(_ value: Result<Value, Error>,
-                                          vc: UIViewController) -> Value?
-    {
+                                          vc: UIViewController) -> Value? {
         switch value {
         case .success(let newValue):
             return newValue
@@ -34,8 +32,7 @@ final class HandlerResultType {
         }
     }
     
-    private func showMessageErrorAlert(message: String, viewController: UIViewController)
-    {
+    private func showMessageErrorAlert(message: String, viewController: UIViewController) {
         let alert = UIAlertController(title: nil,
                                       message: message,
                                       preferredStyle: .alert)

@@ -10,7 +10,6 @@ import UIKit
 //MARK: - OnboardingViewController
 final class OnboardingViewController: UIViewController {
     private struct ConstantsOnboardingViewController {
-        static let textButton = NSLocalizedString("textButton", comment: "")
         static let cornerRadiusButton = CGFloat(16)
         static let fontTextLable = UIFont.systemFont(ofSize: 32, weight: .bold)
         static let fontTextButton = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -35,7 +34,7 @@ final class OnboardingViewController: UIViewController {
     
     private lazy var startButton: UIButton = {
         let startButton = UIButton()
-        startButton.setTitle(ConstantsOnboardingViewController.textButton, for: .normal)
+        startButton.setTitle(Translate.textButton, for: .normal)
         startButton.titleLabel?.font = ConstantsOnboardingViewController.fontTextButton
         startButton.titleLabel?.textColor = .whiteDay
         startButton.addTarget(self, action: #selector(showViewController), for: .touchUpInside)
@@ -43,8 +42,7 @@ final class OnboardingViewController: UIViewController {
         return startButton
     }()
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         setupSubViews()
@@ -53,8 +51,7 @@ final class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController {
     //MARK: - SetupUI
-    private func setupSubViews()
-    {
+    private func setupSubViews() {
         [imageView, onboardingLableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -65,8 +62,7 @@ extension OnboardingViewController {
         setupOnboardingLableView()
     }
     
-    private func setupContentImageView()
-    {
+    private func setupContentImageView() {
         NSLayoutConstraint.activate ([
             imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: -1),
             imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 1),
@@ -75,8 +71,7 @@ extension OnboardingViewController {
         ])
     }
     
-    private func setupOnboardingLableView()
-    {
+    private func setupOnboardingLableView() {
         NSLayoutConstraint.activate([
             onboardingLableView.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -160),
             onboardingLableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -84,8 +79,7 @@ extension OnboardingViewController {
         ])
     }
     
-    private func setupStartButton()
-    {
+    private func setupStartButton() {
         view.addSubview(startButton)
         startButton.translatesAutoresizingMaskIntoConstraints = false
         startButton.backgroundColor = .blackDay
@@ -101,16 +95,14 @@ extension OnboardingViewController {
     }
     
     //MARK: - Configure
-    func config(model: Onboarding)
-    {
+    func config(model: Onboarding) {
         guard let image = UIImage(named: model.imageName) else { return }
         imageView.image = image
         onboardingLableView.text = model.textLable
     }
     
     @objc
-    private func showViewController()
-    {
+    private func showViewController() {
         guard let window = UIApplication.shared.windows.first else { return }
         let vc = TabBarController()
         window.rootViewController = vc

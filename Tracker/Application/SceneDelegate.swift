@@ -15,8 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
-               options connectionOptions: UIScene.ConnectionOptions)
-    {
+               options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
         let tabBarViewController = TabBarController()
@@ -25,8 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let onboardingVC = OnboardingPageViewController(transitionStyle: .scroll,
                                                             navigationOrientation: .horizontal)
             let oneWisibleVc = OnboardingViewController()
-            let textLable = NSLocalizedString("textLableOneVC", comment: "")
-            let model = Onboarding(imageName: "onePage", textLable: textLable)
+            let model = Onboarding(imageName: "onePage", textLable: Translate.textLable)
             oneWisibleVc.config(model: model)
             onboardingVC.setViewControllers([oneWisibleVc], direction: .forward, animated: true)
             rootViewController = onboardingVC

@@ -10,9 +10,6 @@ import UIKit
 protocol EditTrackerModelProtocol {
     var isSchedul: Bool { get }
     var listSettings: [ChoiceParametrs] { get }
-    var dataSection: [Header] { get }
-    var emojies: [String] { get }
-    var colors: [UIColor] { get }
     
     func reverseIsSchedul()
     func checkingForEmptiness() -> Bool
@@ -26,50 +23,43 @@ protocol EditTrackerModelProtocol {
     func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String)
     func setNameTracker(_ vc: CreateTrackerViewController, nameTracker: String)
     func setEmojiTracker(_ vc: CreateTrackerViewController, emoji: String)
-    func editTracker(vc: CreateTrackerViewController, editTracker: Tracker, nameCategory: String)
+    func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error>
+    func editTracker(vc: CreateTrackerViewController, editTracker: Tracker, nameCategory: String, isPinned: Bool)
 }
 
 //MARK: - EditTrackerViewModel
 final class EditTrackerViewModel {
     var isSchedul: Bool = true
     var listSettings: [ChoiceParametrs] { isSchedul ? [.category] : [.category, .schedule] }
-    let dataSection: [Header] = [.emoji, .color]
-    let emojies: [String] = ["🙂", "😻", "🌺", "🐶", "❤️", "😱", "😇", "😡", "🥶",
-                             "🤔", "🙌", "🍔", "🥦", "🏓", "🥇", "🎸", "🏝️", "😪"]
-    
-    let colors: [UIColor] = [.colorSelection1, .colorSelection2, .colorSelection3,.colorSelection4,
-                             .colorSelection5, .colorSelection6, .colorSelection7, .colorSelection8,
-                             .colorSelection9, .colorSelection10, .colorSelection11, .colorSelection12,
-                             .colorSelection13, .colorSelection14, .colorSelection15, .colorSelection16,
-                             .colorSelection17, .colorSelection18]
-    
-    let regular: [WeekDay] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
     
     @Observable<[WeekDay]> private(set) var schedule: [WeekDay] = []
     @Observable<UIColor?> private(set) var color: UIColor?
     @Observable<String> private(set) var nameNewCategory: String = ""
     @Observable<String> private(set) var nameTracker: String = ""
     @Observable<String> private(set) var emoji: String = ""
+    private(set) var isPinned: Bool = false
     private(set) var id: UUID?
     
     private let marshalling: UIColorMarshalling
+    private let pinnedCategoryStore: PinnedCategoryStoreProtocol
     
-    convenience init()
-    {
+    convenience init() {
         let marshalling = UIColorMarshalling()
-        self.init(marshalling: marshalling)
+        let pinnedCategoryStore = PinnedCategoryStore()
+        self.init(marshalling: marshalling,
+                  pinnedCategoryStore: pinnedCategoryStore)
     }
     
-    init(marshalling: UIColorMarshalling)
-    {
+    init(marshalling: UIColorMarshalling,
+         pinnedCategoryStore: PinnedCategoryStoreProtocol) {
         self.marshalling = marshalling
+        self.pinnedCategoryStore = pinnedCategoryStore
     }
 }
 
 //MARK: - EditTrackerViewModel
 extension EditTrackerViewModel: EditTrackerModelProtocol {
-    func checkingForEmptiness() -> Bool
-    {
+    func checkingForEmptiness() -> Bool {
         var flag: Bool
         if isSchedul {
             flag = !nameTracker.isEmpty &&
@@ -92,10 +82,9 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
     }
     
     func jonedSchedule(schedule: [WeekDay],
-                       stringArrayDay: String) -> String
-    {
+                       stringArrayDay: String) -> String {
         var stringListDay: String
-        if schedule.count == regular.count {
+        if schedule.count == DataSource.regular.count {
             stringListDay = stringArrayDay
             return stringListDay
         }
@@ -109,10 +98,9 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         schedule = listWeekDay
     }
     
-    func getColorRow(color: UIColor) -> Int
-    {
+    func getColorRow(color: UIColor) -> Int {
         var colorRow: Int = 0
-        for (index, value) in colors.enumerated() {
+        for (index, value) in DataSource.colors.enumerated() {
             let colorMarshalling = marshalling.color(from: marshalling.hexString(from: value))
             if colorMarshalling == color {
                 colorRow = index
@@ -121,10 +109,9 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         return colorRow
     }
     
-    func getEmojiRow(emoji: String) -> Int
-    {
+    func getEmojiRow(emoji: String) -> Int {
         var emojiRow: Int = 0
-        for (index, value) in emojies.enumerated() {
+        for (index, value) in DataSource.emojies.enumerated() {
             if value == emoji {
                 emojiRow = index
             }
@@ -152,16 +139,21 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         self.emoji = emoji
     }
     
+    func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error>  {
+        pinnedCategoryStore.editPinnedCategory(id, newPinnedCat: newPinnedCat)
+    }
+    
     func editTracker(vc: CreateTrackerViewController,
                      editTracker: Tracker,
-                     nameCategory: String)
-    {
+                     nameCategory: String,
+                     isPinned: Bool) {
         schedule = editTracker.schedule
         color = editTracker.color
         nameNewCategory = nameCategory
         nameTracker = editTracker.name
         emoji = editTracker.emoji
         id = editTracker.id
+        self.isPinned = isPinned
     }
 }
 

@@ -57,8 +57,7 @@ final class TrackerRecordStore: NSObject {
 
 //MARK: - private extension
 private extension TrackerRecordStore {
-    func save() -> Result<Void, Error>
-    {
+    func save() -> Result<Void, Error> {
         do {
             try context.save()
             return .success(())
@@ -67,8 +66,7 @@ private extension TrackerRecordStore {
         }
     }
     
-    func trackerRecord(from trackerRecordCoreDate: TrackerRecordCoreData) throws -> TrackerRecord
-    {
+    func trackerRecord(from trackerRecordCoreDate: TrackerRecordCoreData) throws -> TrackerRecord {
         guard let id = trackerRecordCoreDate.trackerId else {
             throw StoreErrors.TrackrerRecordStoreError.decodingErrorInvalidId
         }
@@ -82,14 +80,12 @@ private extension TrackerRecordStore {
     
     func updateExistingTrackerRecord(_ trackerRecordCoreData: TrackerRecordCoreData,
                                      id: UUID,
-                                     date: Date)
-    {
+                                     date: Date) {
         trackerRecordCoreData.trackerId = id
         trackerRecordCoreData.date = date
     }
     
-    func addNewTrackerRecord(id: UUID, date: Date) -> Result<Void, Error>
-    {
+    func addNewTrackerRecord(id: UUID, date: Date) -> Result<Void, Error> {
         let trackerRecordCoreData = TrackerRecordCoreData(context: context)
         updateExistingTrackerRecord(trackerRecordCoreData, id: id,
                                     date: date)
@@ -114,8 +110,7 @@ private extension TrackerRecordStore {
         return trackerRecord.first
     }
     
-    func getLisTrackersRecord(id: UUID) throws -> [TrackerRecordCoreData]
-    {
+    func getLisTrackersRecord(id: UUID) throws -> [TrackerRecordCoreData] {
         let request = NSFetchRequest<TrackerRecordCoreData>(entityName: "\(TrackerRecordCoreData.self)")
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "%K == %@",
@@ -127,8 +122,7 @@ private extension TrackerRecordStore {
 
 //MARK: - TrackerRecordStoreProtocol
 extension TrackerRecordStore: TrackerRecordStoreProtocol {
-    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error>
-    {
+    func treckersRecordsResult() -> Result<Set<TrackerRecord>, Error> {
         let trackerRecordsCoreData = fetchedTrackerRecordResultController.fetchedObjects
         guard let trackerRecordsCoreData
         else { return .failure(StoreErrors.TrackrerRecordStoreError.loadTrackerRecord) }
@@ -140,8 +134,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
     }
     
-    func deleteTrackerRecord(id: UUID) -> Result<Void, Error>
-    {
+    func deleteTrackerRecord(id: UUID) -> Result<Void, Error> {
         do {
             let trackerRecord = try getLisTrackersRecord(id: id)
             trackerRecord.forEach { context.delete($0) }
@@ -153,8 +146,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         return save()
     }
     
-    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error>
-    {
+    func deleteTrackerRecords(trackers: [Tracker]) -> Result<Void, Error> {
         do {
             try trackers.forEach {
                 let trackerRecords = try getLisTrackersRecord(id: $0.id)
@@ -167,8 +159,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         return save()
     }
     
-    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error>
-    {
+    func deleteOrCreateTrackerRecord(id: UUID, date: Date) -> Result<Void, Error> {
         flag = true
         do {
             if let trackerRecord = try searchTrackerRecordForDate(id: id,
@@ -183,8 +174,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         }
     }
     
-    func getCountTrackerRecord(id: UUID) -> Result<Int, Error>
-    {
+    func getCountTrackerRecord(id: UUID) -> Result<Int, Error> {
         do {
             let countTrackers = try getLisTrackersRecord(id: id).count
             return .success(countTrackers)
@@ -197,8 +187,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
         fetchedTrackerRecordResultController.fetchedObjects?.count
     }
     
-    func getIsTrackerRecord(id: UUID, date: Date) throws -> Bool
-    {
+    func getIsTrackerRecord(id: UUID, date: Date) throws -> Bool {
         do {
             let tracker = try searchTrackerRecordForDate(id: id, date: date)
             return tracker != nil
@@ -210,8 +199,7 @@ extension TrackerRecordStore: TrackerRecordStoreProtocol {
 
 //MARK: - NSFetchedResultsControllerDelegate
 extension TrackerRecordStore: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>)
-    {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let delegate else { return }
         delegate.trackerRecordStore(trackerRecordStore: self, flag: flag)
     }
