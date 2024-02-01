@@ -144,11 +144,11 @@ extension TrackersCollectionViewCell {
             addButton.setImage(image, for: .normal)
             addButton.backgroundColor = updateModel.color.withAlphaComponent(
                 ConstantsTrackerCell.alphaComponentDoneButton)
-            addButton.tintColor = .textEventColor
+            addButton.tintColor = .liteDarkThemeColor
         case false:
             let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
-            addButton.tintColor = .textEventColor
+            addButton.tintColor = .liteDarkThemeColor
         }
     }
     

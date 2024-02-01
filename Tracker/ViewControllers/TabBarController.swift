@@ -20,6 +20,7 @@ final class TabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .liteDarkThemeColor
         tabBar.layer.borderWidth = 1
         tabBar.clipsToBounds = true
         let trackerViewController = TrackersViewController(viewModel: TrackerViewModel())

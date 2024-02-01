@@ -38,7 +38,7 @@ final class CustomTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         layer.masksToBounds = true
-        backgroundColor = colors.viewBackground
+        backgroundColor = .liteDarkThemeColor
         setupLable()
         setupSelectedImage()
     }

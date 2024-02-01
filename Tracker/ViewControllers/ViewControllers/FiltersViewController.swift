@@ -53,7 +53,7 @@ final class FiltersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         setupCategoryLabel()
         setupTableView()
     }

@@ -52,7 +52,7 @@ final class CreateTrackerTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = colors.viewBackground
+        backgroundColor = .liteDarkThemeColor
         setupUIElement()
     }
     

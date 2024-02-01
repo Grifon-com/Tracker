@@ -28,6 +28,7 @@ protocol TrackerViewModelProtocol {
     func allTrackersByDate(date: Date)
     func getNotCompleted(date: Date, flag: Bool)
     func getCompleted(date: Date, flag: Bool)
+    func setSelectFilter(selectFilter: String)
     func setFilterState(state: FiltersState)
     func getFilterState() -> FiltersState
     func getIsCategoryForDay() -> Bool?
@@ -331,6 +332,10 @@ extension TrackerViewModel: TrackerViewModelProtocol
     
     func setFilterState(state: FiltersState) {
         filterState = state
+    }
+    
+    func setSelectFilter(selectFilter: String) {
+        self.selectFilter = selectFilter
     }
     
     func getFilterState() -> FiltersState {

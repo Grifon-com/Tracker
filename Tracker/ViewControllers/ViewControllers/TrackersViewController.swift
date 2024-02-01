@@ -158,7 +158,7 @@ final class TrackersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         setupUIElement()
         viewModel = TrackerViewModel()
         bind()
@@ -241,6 +241,10 @@ private extension TrackersViewController {
     func actionForTapDatePicker() {
         guard let viewModel else { return }
         filterState(state: viewModel.getFilterState())
+        if viewModel.getFilterState() == FiltersState.toDayTrackers {
+            viewModel.setSelectFilter(selectFilter: FiltersState.allTrackers.rawValue)
+            setColorButtonFilter(state: .allTrackers, button: buttonFilter)
+        }
     }
     
     @objc

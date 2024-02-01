@@ -59,7 +59,7 @@ final class ScheduleViewController: UIViewController {
         doneButton.layer.masksToBounds = true
         doneButton.backgroundColor = colors.buttonDisabledColor
         doneButton.setTitle(Translate.doneButtonText, for: .normal)
-        doneButton.setTitleColor(.textEventColor, for: .normal)
+        doneButton.setTitleColor(.liteDarkThemeColor, for: .normal)
         
         return doneButton
     }()
@@ -84,7 +84,7 @@ final class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         setupContentSteck()
     }
 }

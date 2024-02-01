@@ -34,7 +34,7 @@ final class StatisticsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        backgroundColor = colors.viewBackground
+        backgroundColor = .liteDarkThemeColor
     }
     
     required init?(coder: NSCoder) {

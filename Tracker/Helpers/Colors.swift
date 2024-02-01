@@ -8,7 +8,6 @@
 import UIKit
 
 final class Colors {
-    lazy var viewBackground = UIColor.systemBackground
     
     lazy var buttonDisabledColor = UIColor { (traits: UITraitCollection) -> UIColor in
         if traits.userInterfaceStyle == .light {

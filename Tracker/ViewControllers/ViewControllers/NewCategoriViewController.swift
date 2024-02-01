@@ -45,7 +45,7 @@ final class NewCategoriViewController: UIViewController {
     private lazy var readyButton: UIButton = {
         let readyButton = UIButton()
         readyButton.setTitle(Translate.buttonName, for: .normal)
-        readyButton.setTitleColor(.textEventColor, for: .normal)
+        readyButton.setTitleColor(.liteDarkThemeColor, for: .normal)
         readyButton.isEnabled = false
         readyButton.backgroundColor = .grayDay
         readyButton.titleLabel?.font = ConstantsNewCatVc.font
@@ -90,7 +90,7 @@ final class NewCategoriViewController: UIViewController {
                                                 action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         setupUIElement()
     }
 }
@@ -102,7 +102,7 @@ private extension NewCategoriViewController {
             guard let self else { return }
             chengeHiddenButton(flag: viewModel.getNewNameCategory().isEmpty)
             readyButton.backgroundColor = !text.isEmpty ? colors.buttonDisabledColor : .grayDay
-            readyButton.setTitleColor( !text.isEmpty ? .textEventColor : .whiteDay, for: .normal)
+            readyButton.setTitleColor( !text.isEmpty ? .liteDarkThemeColor : .whiteDay, for: .normal)
         }
     }
     
@@ -131,7 +131,7 @@ private extension NewCategoriViewController {
         readyButton.isEnabled = !flag
         readyButton.backgroundColor = !flag ? .blackDay : .grayDay
         readyButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
-        readyButton.setTitleColor( flag ? .textEventColor : .whiteDay, for: .normal)
+        readyButton.setTitleColor( flag ? .liteDarkThemeColor : .whiteDay, for: .normal)
     }
     
     //MARK: - SetupUI

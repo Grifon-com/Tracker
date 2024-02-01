@@ -93,7 +93,7 @@ final class SelectCategoriesViewController: UIViewController {
     private lazy var createCategoryButton: UIButton = {
         let createCategoryButton = UIButton()
         createCategoryButton.setTitle(Translate.categoryAddButtonText, for: .normal)
-        createCategoryButton.setTitleColor(.textEventColor, for: .normal)
+        createCategoryButton.setTitleColor(.liteDarkThemeColor, for: .normal)
         createCategoryButton.backgroundColor = colors.buttonDisabledColor
         createCategoryButton.titleLabel?.font = ConstantsCreateCatVc.lableFont
         createCategoryButton.layer.cornerRadius = ConstantsCreateCatVc.cornerRadius
@@ -121,7 +121,7 @@ final class SelectCategoriesViewController: UIViewController {
         guard let viewModel = viewModel as? CategoryViewModel else { return }
         setupUIElement()
         bind()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         handler.resultTypeHandler(viewModel.сategoryExcludingFixed(), vc: self) { [weak self] cat in
             guard let self else { return }
             self.showStabView(flag: !cat.isEmpty)

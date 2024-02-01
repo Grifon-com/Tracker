@@ -39,7 +39,7 @@ extension UIColor {
     static var redGradient: UIColor {UIColor(named: "redGradient") ?? .red}
     static var greenGradient: UIColor {UIColor(named: "greenGradient") ?? .green}
     static var blueGradient: UIColor {UIColor(named: "blueGradient") ?? .blue}
-    static var textEventColor: UIColor {UIColor(named: "textEventColor") ?? .gray}
+    static var liteDarkThemeColor: UIColor {UIColor(named: "liteDarkThemeColor") ?? .gray}
     static var separatorColor: UIColor {UIColor(named: "separatorColor") ?? .gray}
     static var switchBgColor: UIColor {UIColor(named: "switchBgColor") ?? .gray}
     static var placeholder: UIColor {UIColor(named: "placeholder") ?? .gray}

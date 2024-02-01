@@ -63,7 +63,7 @@ final class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         viewModel = StatisticsViewModel()
         showStabView(flag: viewModel?.getIsTracker())
         bind()

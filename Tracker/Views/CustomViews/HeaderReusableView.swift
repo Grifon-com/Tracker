@@ -26,7 +26,7 @@ final class HeaderReusableView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = colors.viewBackground
+        backgroundColor = .liteDarkThemeColor
         setupLable()
     }
     

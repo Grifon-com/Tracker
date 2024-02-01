@@ -68,7 +68,7 @@ final class EventSelectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         setupLableGreate()
         setupStackView()
     }
@@ -105,7 +105,7 @@ private extension EventSelectionViewController {
         let button = UIButton()
         button.setTitle(text.name, for: .normal)
         button.backgroundColor = colors.buttonEventColor
-        button.setTitleColor(.textEventColor, for: .normal)
+        button.setTitleColor(.liteDarkThemeColor, for: .normal)
         button.titleLabel?.font = font
         button.layer.cornerRadius = cornerRadius ?? CGFloat(0)
         button.layer.masksToBounds = cornerRadius == nil ? false : true

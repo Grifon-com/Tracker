@@ -232,7 +232,7 @@ final class CreateTrackerViewController: UIViewController {
         super.viewDidLoad()
         bind()
         setupUIElement()
-        view.backgroundColor = colors.viewBackground
+        view.backgroundColor = .liteDarkThemeColor
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
@@ -342,7 +342,7 @@ extension CreateTrackerViewController {
     private func isActivCreateButton(flag: Bool) {
         createButton.isEnabled = flag
         createButton.backgroundColor = flag ? colors.buttonDisabledColor : .grayDay
-        createButton.setTitleColor( flag ? .textEventColor : .whiteDay, for: .normal)
+        createButton.setTitleColor( flag ? .liteDarkThemeColor : .whiteDay, for: .normal)
     }
     
     func reverseIsSchedul() {

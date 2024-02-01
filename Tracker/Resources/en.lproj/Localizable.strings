@@ -29,7 +29,7 @@
 
 //MARK: - TrackersViewController
 "headerText" = "Trackers";
-"labelStabText" = "What will we track?";
+"trackerLabelStabText" = "What are we going to track?";
 "labelNothingFoundText" = "Nothing found";
 "placeholderSearch" = "Search";
 "textCancel" = "Cancel";
