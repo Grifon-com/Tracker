@@ -137,14 +137,10 @@ private extension TrackerViewModel {
                     if !cat.arrayTrackers.isEmpty {
                         listCategories.append(cat)
                     }
-                } catch {
-//                    visibleCategory = .failure(error)
-                }
+                } catch { }
             }
-//            visibleCategory = .success(listCategories)
             return .success(listCategories)
         case .failure(let error):
-//            visibleCategory = .failure(error)
             return .failure(error)
         }
     }
@@ -251,10 +247,8 @@ extension TrackerViewModel: TrackerViewModelProtocol
         case .success(let trackerCategory):
             let filterList = filterListTrackersWeekDay(trackerCategory: trackerCategory,
                                                        date: date)
-//            visibleCategory = .success(filterList)
             return .success(filterList)
         case .failure(let error):
-//            visibleCategory = .failure(error)
             return .failure(error)
         }
     }
