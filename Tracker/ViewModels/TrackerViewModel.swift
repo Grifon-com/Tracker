@@ -18,20 +18,22 @@ protocol TrackerViewModelProtocol {
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error>
     func deleteTracker(id: UUID) -> Result<Void, Error>
-    func getShowListTrackersForDay(date: Date)
+    func getShowListTrackersForDay(date: Date) -> Result<[TrackerCategory], Error>
     func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory])
-    func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error>
+    func filterListTrackersName(word: String,
+                                category: Result<[TrackerCategory], Error>) -> Result<[TrackerCategory], Error>
     func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
     func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error>
     func getPinnedCategory(_ id: UUID) -> Result<String?, Error>
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
-    func allTrackersByDate(date: Date)
-    func getNotCompleted(date: Date, flag: Bool)
-    func getCompleted(date: Date, flag: Bool)
+    func allTrackersByDate(date: Date) -> Result<[TrackerCategory], Error>
+    func getNotCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>
+    func getCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error> 
     func setSelectFilter(selectFilter: String)
     func setFilterState(state: FiltersState)
     func getFilterState() -> FiltersState
     func getIsCategoryForDay() -> Bool?
+    func showVisibleCategory(categoty: Result<[TrackerCategory], Error>) 
 }
 
 //MARK: - TrackerViewModel
@@ -120,7 +122,7 @@ private extension TrackerViewModel {
         }
     }
     
-    func setVisibleCategory(date: Date, flag: Bool) {
+    func setVisibleCategory(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>  {
         switch category {
         case .success(let category):
             var listCategories: [TrackerCategory] = []
@@ -136,12 +138,14 @@ private extension TrackerViewModel {
                         listCategories.append(cat)
                     }
                 } catch {
-                    visibleCategory = .failure(error)
+//                    visibleCategory = .failure(error)
                 }
             }
-            visibleCategory = .success(listCategories)
+//            visibleCategory = .success(listCategories)
+            return .success(listCategories)
         case .failure(let error):
-            visibleCategory = .failure(error)
+//            visibleCategory = .failure(error)
+            return .failure(error)
         }
     }
     
@@ -167,11 +171,11 @@ private extension TrackerViewModel {
         return listCategories
     }
     
-    func filterListTrackersCompleted(date: Date, flag: Bool) {
+    func filterListTrackersCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>  {
         setVisibleCategory(date: date, flag: flag)
     }
     
-    func filterListTrackersNotCompleted(date: Date, flag: Bool) {
+    func filterListTrackersNotCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>  {
         setVisibleCategory(date: date, flag: flag)
     }
     
@@ -242,18 +246,20 @@ extension TrackerViewModel: TrackerViewModelProtocol
         trackerStore.updateTracker(tracker: tracker, nameCategory: nameCategory)
     }
     
-    func getShowListTrackersForDay(date: Date) {
+    func getShowListTrackersForDay(date: Date) -> Result<[TrackerCategory], Error> {
         switch category {
         case .success(let trackerCategory):
             let filterList = filterListTrackersWeekDay(trackerCategory: trackerCategory,
                                                        date: date)
-            visibleCategory = .success(filterList)
+//            visibleCategory = .success(filterList)
+            return .success(filterList)
         case .failure(let error):
-            visibleCategory = .failure(error)
+//            visibleCategory = .failure(error)
+            return .failure(error)
         }
     }
     
-    func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error> {
+    func filterListTrackersName(word: String, category: Result<[TrackerCategory], Error>) -> Result<[TrackerCategory], Error> {
         var listCategories: [TrackerCategory] = []
         switch category {
         case .success(let cat):
@@ -318,15 +324,15 @@ extension TrackerViewModel: TrackerViewModelProtocol
         pinnedCategoryStore.deleteAndGetPinnedCategory(id)
     }
     
-    func allTrackersByDate(date: Date) {
+    func allTrackersByDate(date: Date) -> Result<[TrackerCategory], Error>  {
         getShowListTrackersForDay(date: date)
     }
     
-    func getNotCompleted(date: Date, flag: Bool) {
+    func getNotCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>  {
         filterListTrackersNotCompleted(date: date, flag: flag)
     }
     
-    func getCompleted(date: Date, flag: Bool) {
+    func getCompleted(date: Date, flag: Bool) -> Result<[TrackerCategory], Error>  {
         filterListTrackersCompleted(date: date, flag: flag)
     }
     
@@ -352,6 +358,15 @@ extension TrackerViewModel: TrackerViewModelProtocol
     
     func getIsCategoryForDay() -> Bool? {
         isfilterListTrackersWeekDay
+    }
+    
+    func showVisibleCategory(categoty: Result<[TrackerCategory], Error>) {
+        switch categoty {
+        case .success(let cat):
+            visibleCategory = .success(cat)
+        case .failure(let error):
+            visibleCategory = .failure(error)
+        }
     }
 }
 

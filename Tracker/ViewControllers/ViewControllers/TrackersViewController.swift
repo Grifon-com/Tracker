@@ -169,7 +169,8 @@ final class TrackersViewController: UIViewController {
                 filterState(state: state)
             }
         } else {
-            viewModel.allTrackersByDate(date: datePicker.date)
+            let cat = viewModel.allTrackersByDate(date: datePicker.date)
+            viewModel.showVisibleCategory(categoty: cat)
         }
     }
     
@@ -207,17 +208,21 @@ private extension TrackersViewController {
             guard let self else { return }
             switch state {
             case .allTrackers:
-                viewModel.allTrackersByDate(date: datePicker.date)
+                let cat = viewModel.allTrackersByDate(date: datePicker.date)
+                viewModel.showVisibleCategory(categoty: cat)
                 setColorButtonFilter(state: state, button: buttonFilter)
             case .toDayTrackers:
                 datePicker.date = Date()
-                viewModel.allTrackersByDate(date: datePicker.date)
+                let cat = viewModel.allTrackersByDate(date: datePicker.date)
+                viewModel.showVisibleCategory(categoty: cat)
                 setColorButtonFilter(state: state, button: buttonFilter)
             case .completed:
-                viewModel.getCompleted(date: datePicker.date, flag: true)
+                let cat = viewModel.getCompleted(date: datePicker.date, flag: true)
+                viewModel.showVisibleCategory(categoty: cat)
                 setColorButtonFilter(state: state, button: buttonFilter)
             case .notCompleted:
-                viewModel.getNotCompleted(date: datePicker.date, flag: false)
+                let cat = viewModel.getNotCompleted(date: datePicker.date, flag: false)
+                viewModel.showVisibleCategory(categoty: cat)
                 setColorButtonFilter(state: state, button: buttonFilter)
             }
         }
@@ -268,19 +273,23 @@ private extension TrackersViewController {
         guard let viewModel else { return }
         switch state {
         case .allTrackers:
-            viewModel.allTrackersByDate(date: datePicker.date)
+            let cat = viewModel.allTrackersByDate(date: datePicker.date)
+            viewModel.showVisibleCategory(categoty: cat)
             setColorButtonFilter(state: viewModel.getFilterState(),
                                  button: buttonFilter)
         case .toDayTrackers:
-            viewModel.allTrackersByDate(date: datePicker.date)
+            let cat = viewModel.allTrackersByDate(date: datePicker.date)
+            viewModel.showVisibleCategory(categoty: cat)
             setColorButtonFilter(state: viewModel.getFilterState(),
                                  button: buttonFilter)
         case .completed:
-            viewModel.getCompleted(date: datePicker.date, flag: true)
+            let cat = viewModel.getCompleted(date: datePicker.date, flag: true)
+            viewModel.showVisibleCategory(categoty: cat)
             setColorButtonFilter(state: viewModel.getFilterState(),
                                  button: buttonFilter)
         case .notCompleted:
-            viewModel.getNotCompleted(date: datePicker.date, flag: false)
+            let cat = viewModel.getNotCompleted(date: datePicker.date, flag: false)
+            viewModel.showVisibleCategory(categoty: cat)
             setColorButtonFilter(state: viewModel.getFilterState(),
                                  button: buttonFilter)
         }
@@ -455,7 +464,7 @@ private extension TrackersViewController {
         searchController.searchBar.resignFirstResponder()
         searchController.searchBar.returnKeyType = .search
         searchController.searchBar.setValue(Translate.textCancel,
-                                             forKey: ConstantsTrackerVc.forKeyTextCancel)
+                                            forKey: ConstantsTrackerVc.forKeyTextCancel)
         searchController.searchBar.searchTextField.leftView?.tintColor = colors.placeholder
         searchController.searchBar.searchTextField.attributedPlaceholder =  NSAttributedString.init(string: Translate.placeholderSearch, attributes: [NSAttributedString.Key.foregroundColor: colors.placeholder])
     }
@@ -560,7 +569,7 @@ extension TrackersViewController: UICollectionViewDataSource {
             guard let self,
                   let isComplited = self.handler.resultTypeHandlerGetValue(
                     viewModel.getIsComplited(tracker: tracker, date: self.datePicker.date),
-                                                                           vc: self)
+                    vc: self)
             else { return }
             let updateModel = UpdateTracker(count: count,
                                             flag: isComplited,
@@ -696,21 +705,43 @@ extension TrackersViewController: UISearchResultsUpdating {
               let viewModel
         else { return }
         if !word.isEmpty {
-            guard let seachCategory = handler.resultTypeHandlerGetValue(viewModel.filterListTrackersName(word: word),
-                                                                        vc: self)
-            else { return }
-            viewModel.getShowListTrackerSearchForName(seachCategory)
+            switch viewModel.getFilterState() {
+            case .allTrackers:
+                let cat = viewModel.allTrackersByDate(date: datePicker.date)
+                if let seachCategory = handler.resultTypeHandlerGetValue(
+                    viewModel.filterListTrackersName(word: word,
+                                                     category: cat), vc: self) {
+                    viewModel.showVisibleCategory(categoty: .success(seachCategory))
+                }
+            case .toDayTrackers:
+                let cat = viewModel.allTrackersByDate(date: datePicker.date)
+                if let seachCategory = handler.resultTypeHandlerGetValue(
+                    viewModel.filterListTrackersName(word: word,
+                                                     category: cat), vc: self) {
+                    viewModel.showVisibleCategory(categoty: .success(seachCategory))
+                }
+            case .completed:
+                let cat = viewModel.getCompleted(date: datePicker.date, flag: true)
+                if let seachCategory = handler.resultTypeHandlerGetValue(
+                    viewModel.filterListTrackersName(word: word,
+                                                     category: cat), vc: self) {
+                    viewModel.showVisibleCategory(categoty: .success(seachCategory))
+                }
+            case .notCompleted:
+                let cat = viewModel.getNotCompleted(date: datePicker.date, flag: false)
+                if let seachCategory = handler.resultTypeHandlerGetValue(
+                    viewModel.filterListTrackersName(word: word,
+                                                     category: cat), vc: self) {
+                    viewModel.showVisibleCategory(categoty: .success(seachCategory))
+                }
+            }
             return
         }
         if word.isEmpty {
-            let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
-            chengeStab(text: Translate.labelNothingFoundText,
-                       nameImage: ConstantsTrackerVc.imageNothingFound)
+            filterState(state: viewModel.getFilterState())
         }
         if !searchController.isActive {
-            let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
-            chengeStab(text: Translate.trackerLabelStabText,
-                       nameImage: ConstantsTrackerVc.imageStar)
+            filterState(state: viewModel.getFilterState())
         }
     }
 }
