@@ -26,6 +26,8 @@ final class TrackersViewController: UIViewController {
         static let imageNothingFound = "NothingFound"
         static let forKeyTextCancel = "cancelButtonText"
         
+        static let locale = Locale(identifier: "ru_RU")
+        
         static let datePickerCornerRadius = CGFloat(8)
         static let buttonFilterCornerRadius = CGFloat(16)
         static let heightCollectionView = CGFloat(148)
@@ -71,15 +73,16 @@ final class TrackersViewController: UIViewController {
     
     private lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
+        datePicker.widthAnchor.constraint(equalToConstant: 100).isActive = true
         datePicker.backgroundColor = .lightGray
         datePicker.datePickerMode = .date
+        datePicker.locale = ConstantsTrackerVc.locale
         datePicker.tintColor = .blueDay
         datePicker.preferredDatePickerStyle = .compact
         datePicker.calendar.firstWeekday = ConstantsTrackerVc.firstWeekday
         datePicker.layer.cornerRadius = ConstantsTrackerVc.datePickerCornerRadius
         datePicker.layer.masksToBounds = true
         datePicker.overrideUserInterfaceStyle = .light
-        datePicker.locale = .autoupdatingCurrent
         datePicker.addTarget(self, action: #selector(actionForTapDatePicker), for: .valueChanged)
         
         return datePicker
@@ -118,7 +121,7 @@ final class TrackersViewController: UIViewController {
     
     private lazy var lableTextStab: UILabel = {
         let lableTextStab = UILabel()
-        lableTextStab.text = Translate.labelStabText
+        lableTextStab.text = Translate.trackerLabelStabText
         lableTextStab.font = ConstantsTrackerVc.fontLableTextStab
         
         return lableTextStab
@@ -172,7 +175,8 @@ final class TrackersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         AnalyticsService.reportEvent(field: MetricEvent(event: .open,
-                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue]))
+                                                        params: [EventAnalytics.screen.rawValue:
+                                                                    Screen.main.rawValue]))
     }
 }
 
@@ -183,17 +187,14 @@ private extension TrackersViewController {
             guard let self else { return }
             filterState(state: viewModel.getFilterState())
         }
-        
         viewModel.$indexPath.bind { [weak self] indexPath in
             guard let self else { return }
             self.trackerCollectionView.reloadItems(at: [indexPath])
         }
-        
         viewModel.$isfilterListTrackersWeekDay.bind { [weak self] flag in
             guard let self, let flag else { return }
             self.buttonFilter.isHidden = !flag
         }
-        
         viewModel.$visibleCategory.bind { [weak self] result in
             guard let self,
                   let cat = handler.resultTypeHandlerGetValue(result,
@@ -202,7 +203,6 @@ private extension TrackersViewController {
             self.showStabView(flag: !cat.isEmpty)
             self.trackerCollectionView.reloadData()
         }
-        
         viewModel.$filterState.bind { [weak self] state in
             guard let self else { return }
             switch state {
@@ -227,8 +227,10 @@ private extension TrackersViewController {
     @objc
     func actionButtonFilter() {
         AnalyticsService.reportEvent(field: MetricEvent(event: .click,
-                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue,
-                                                                 EventAnalytics.item.rawValue: ItemClick.filter.rawValue]))
+                                                        params: [EventAnalytics.screen.rawValue:
+                                                                    Screen.main.rawValue,
+                                                                 EventAnalytics.item.rawValue:
+                                                                    ItemClick.filter.rawValue]))
         let filtersVC = FiltersViewController(viewModel: FiltersViewModel(),
                                               delegate: self)
         filtersVC.modalPresentationStyle = .formSheet
@@ -386,7 +388,7 @@ private extension TrackersViewController {
                                            isPinned: category.isPinned)
             }
             AnalyticsService.reportEvent(field: MetricEvent(event: .click,
-                                                            params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue,
+                                                            params: [EventAnalytics.screen.rawValue: Screen.main.rawValue,
                                                                      EventAnalytics.item.rawValue: ItemClick.edit.rawValue]))
         }
     }
@@ -399,14 +401,14 @@ private extension TrackersViewController {
                                           preferredStyle: .actionSheet)
             let deleteAction = UIAlertAction(title: Translate.textDelete,
                                              style: .destructive) { _ in
-                
                 self.handler.resultTypeHandler(viewModel.deleteTrackersRecord(id: tracker.id),
                                                vc: self) {}
                 self.handler.resultTypeHandler(viewModel.deleteTracker(id: tracker.id),
                                                vc: self) {}
                 AnalyticsService.reportEvent(field: MetricEvent(event: .click,
-                                                                params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue,
-                                                                         EventAnalytics.item.rawValue: ItemClick.edit.rawValue]))
+                                                                params: [EventAnalytics.screen.rawValue:
+                                                                            Screen.main.rawValue,
+                                                                         EventAnalytics.item.rawValue: ItemClick.delete.rawValue]))
             }
             let cancelAction = UIAlertAction(title: Translate.textCancel,
                                              style: .cancel) { _ in
@@ -434,31 +436,29 @@ private extension TrackersViewController {
         topItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: ConstantsTrackerVc.adButtonImageName),
                                                     style: .plain, target: self,
                                                     action: #selector(didTapLeftNavBarItem))
-        
         topItem.rightBarButtonItem = UIBarButtonItem(customView: datePicker)
         topItem.leftBarButtonItem?.imageInsets = UIEdgeInsets(top: .zero, left: -10, bottom: .zero, right: .zero)
         topItem.leftBarButtonItem?.tintColor = colors.whiteBlackItemColor
         navBar.backgroundColor = .clear
-        
         navigationItem.title = Translate.headerText
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        let searcheController = UISearchController(searchResultsController: nil)
-        searcheController.searchResultsUpdater = self
-        searcheController.obscuresBackgroundDuringPresentation = false
-        searcheController.hidesNavigationBarDuringPresentation = false
-        navigationItem.searchController = searcheController
-        searcheController.searchBar.placeholder = Translate.placeholderSearch
-        searcheController.searchBar.resignFirstResponder()
-        searcheController.searchBar.returnKeyType = .search
-        searcheController.searchBar.setValue(Translate.textCancel,
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.searchController = searchController
+        searchController.searchBar.searchTextField.backgroundColor = .seachBarColor
+        searchController.searchBar.resignFirstResponder()
+        searchController.searchBar.returnKeyType = .search
+        searchController.searchBar.setValue(Translate.textCancel,
                                              forKey: ConstantsTrackerVc.forKeyTextCancel)
+        searchController.searchBar.searchTextField.leftView?.tintColor = colors.placeholder
+        searchController.searchBar.searchTextField.attributedPlaceholder =  NSAttributedString.init(string: Translate.placeholderSearch, attributes: [NSAttributedString.Key.foregroundColor: colors.placeholder])
     }
     
     func setupContentView() {
         trackerCollectionView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(trackerCollectionView)
-        
         NSLayoutConstraint.activate([
             trackerCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
             trackerCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -472,7 +472,6 @@ private extension TrackersViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.backgroundColor = .clear
         verticalStack.addArrangedSubview(contentView)
-        
         NSLayoutConstraint.activate([
             verticalStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             verticalStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
@@ -489,7 +488,6 @@ private extension TrackersViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
         }
-        
         NSLayoutConstraint.activate([
             imageViewStab.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             imageViewStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -502,7 +500,6 @@ private extension TrackersViewController {
     
     func setupButtonFilter() {
         view.addSubview(buttonFilter)
-        
         NSLayoutConstraint.activate([
             buttonFilter.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonFilter.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -521,6 +518,7 @@ extension TrackersViewController: UICollectionViewDataSource {
               let itemsCount = handler.resultTypeHandlerGetValue(viewModel.visibleCategory,
                                                                  vc: self)?[section].arrayTrackers.count
         else { return .zero }
+        
         return itemsCount
     }
     
@@ -529,6 +527,7 @@ extension TrackersViewController: UICollectionViewDataSource {
               let sectionCount = handler.resultTypeHandlerGetValue(viewModel.visibleCategory,
                                                                    vc: self)?.count
         else { return .zero }
+        
         return sectionCount
     }
     
@@ -548,24 +547,20 @@ extension TrackersViewController: UICollectionViewDataSource {
         switch dateComparison {
         case .orderedAscending:
             cell.isEnableAddButton(flag: false)
-            cell.updateBackgraundAddButton(isHidden: false)
-        case .orderedSame:
+        default:
             cell.isEnableAddButton(flag: true)
-            cell.updateBackgraundAddButton(isHidden: true)
-        case .orderedDescending:
-            cell.isEnableAddButton(flag: true)
-            cell.updateBackgraundAddButton(isHidden: true)
         }
         cell.setPinned(flag: visibleCategories[indexPath.section].isPinned)
         handler.resultTypeHandler(viewModel.loadTrackerRecord(id: tracker.id),
                                   vc: self) { [weak self] count in
             guard let self,
-                  let isComplited = self.handler.resultTypeHandlerGetValue(viewModel.getIsComplited(tracker: tracker,
-                                                                                                    date: self.datePicker.date),
+                  let isComplited = self.handler.resultTypeHandlerGetValue(
+                    viewModel.getIsComplited(tracker: tracker, date: self.datePicker.date),
                                                                            vc: self)
             else { return }
             let updateModel = UpdateTracker(count: count,
-                                            flag: isComplited)
+                                            flag: isComplited,
+                                            color: tracker.color)
             cell.config(tracker: tracker)
             cell.updateLableCountAndImageAddButton(updateModel)
         }
@@ -703,16 +698,14 @@ extension TrackersViewController: UISearchResultsUpdating {
             viewModel.getShowListTrackerSearchForName(seachCategory)
             return
         }
-        
         if word.isEmpty {
             let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
             chengeStab(text: Translate.labelNothingFoundText,
                        nameImage: ConstantsTrackerVc.imageNothingFound)
         }
-        
         if !searchController.isActive {
             let _ = viewModel.getShowListTrackersForDay(date: datePicker.date)
-            chengeStab(text: Translate.labelStabText,
+            chengeStab(text: Translate.trackerLabelStabText,
                        nameImage: ConstantsTrackerVc.imageStar)
         }
     }
@@ -733,7 +726,7 @@ extension TrackersViewController: TrackersCollectionViewCellDelegate {
                                                                     date: datePicker.date),
                                   vc: self) {}
         AnalyticsService.reportEvent(field: MetricEvent(event: .click,
-                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue,
+                                                        params: [EventAnalytics.screen.rawValue: Screen.main.rawValue,
                                                                  EventAnalytics.item.rawValue: ItemClick.track.rawValue]))
     }
 }

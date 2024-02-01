@@ -29,6 +29,7 @@ final class CreateTrackerViewController: UIViewController {
         static let restrictionsTextField = 38
         static let numberOfLinesRestrictionsTextField = 1
         static let heightCollectionView = CGFloat(54)
+        static let heightRowTableView = CGFloat(75)
         
         static let textFont = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let countСompletedTrackersFont = UIFont.boldSystemFont(ofSize: 32)
@@ -246,23 +247,19 @@ extension CreateTrackerViewController {
             self.chengeActivButton()
             selectionTableView.reloadData()
         }
-        
         viewModel.$color.bind { [weak self] _ in
             guard let self else { return }
             self.chengeActivButton()
         }
-        
         viewModel.$emoji.bind { [weak self] _ in
             guard let self else { return }
             self.chengeActivButton()
         }
-        
         viewModel.$nameNewCategory.bind { [weak self] _ in
             guard let self else { return }
             self.chengeActivButton()
             selectionTableView.reloadData()
         }
-        
         viewModel.$nameTracker.bind { [weak self] nameTracker in
             guard let self else { return }
             self.chengeActivButton()
@@ -316,8 +313,10 @@ extension CreateTrackerViewController {
             createTrackerDelegate.trackerViewControllerDidCancel(self)
         }
         AnalyticsService.reportEvent(field: MetricEvent(event: .click,
-                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue,
-                                                                 EventAnalytics.item.rawValue: ItemClick.add_track.rawValue]))
+                                                        params: [EventAnalytics.screen.rawValue:
+                                                                    Screen.main.rawValue,
+                                                                 EventAnalytics.item.rawValue:
+                                                                    ItemClick.add_track.rawValue]))
     }
     
     @objc
@@ -374,7 +373,6 @@ extension CreateTrackerViewController {
     func setupCountLabel() {
         view.addSubview(countСompletedTrackers)
         countСompletedTrackers.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             countСompletedTrackers.topAnchor.constraint(equalTo: newHabitLabel.bottomAnchor,
                                                         constant: 38),
@@ -385,7 +383,6 @@ extension CreateTrackerViewController {
     func setupNewHabitLabel() {
         view.addSubview(newHabitLabel)
         newHabitLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             newHabitLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                constant: 24),
@@ -399,7 +396,6 @@ extension CreateTrackerViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             buttonStack.addArrangedSubview($0)
         }
-        
         NSLayoutConstraint.activate([
             buttonStack.heightAnchor.constraint(equalToConstant: 60),
             buttonStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -414,11 +410,9 @@ extension CreateTrackerViewController {
     func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         let scrollTopAnchor = updateTrackerDelegate == nil ?
         newHabitLabel.bottomAnchor :
         countСompletedTrackers.bottomAnchor
-        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: scrollTopAnchor,
                                             constant: 24),
@@ -436,7 +430,6 @@ extension CreateTrackerViewController {
             contentStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -459,8 +452,7 @@ extension CreateTrackerViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell
-    {
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "\(CreateTrackerTableViewCell.self)") as?
                 CreateTrackerTableViewCell,
               let viewModel = viewModel as? EditTrackerViewModel
@@ -476,28 +468,23 @@ extension CreateTrackerViewController: UITableViewDataSource {
             cell.configCell(choice: listSettings)
             cell.configSecondaryLableShedule(secondaryText: secondarySchedulText)
         }
-        
         if viewModel.isSchedul {
             cell.layer.cornerRadius = ConstantsCreateVc.cornerRadius
         }
-
         if !viewModel.isSchedul && indexPath.row == 0 {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
                                    maskedCorners: [.layerMinXMinYCorner,
                                                    .layerMaxXMinYCorner])
         }
-
         if !viewModel.isSchedul && indexPath.row == 1 {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateVc.cornerRadius,
                                    maskedCorners: [.layerMinXMaxYCorner,
                                                    .layerMaxXMaxYCorner])
         }
-        
         if indexPath.row == 0 {
                     tableView.separatorInset = ConstantsCreateVc.insertSeparatorTableView
                     tableView.separatorStyle = viewModel.isSchedul ? .none : .singleLine
         }
-        
         if indexPath.row == 1 {
                         tableView.separatorInset = UIEdgeInsets(top: 0,
                                                                 left: view.bounds.width,
@@ -511,9 +498,8 @@ extension CreateTrackerViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 extension CreateTrackerViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView,
-                   heightForRowAt indexPath: IndexPath) -> CGFloat {
-        75
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        ConstantsCreateVc.heightRowTableView
     }
     
     func tableView(_ tableView: UITableView,
@@ -552,6 +538,7 @@ extension CreateTrackerViewController: UICollectionViewDataSource {
         case .emoji:
             count = DataSource.emojies.count
         }
+        
         return count
     }
     
@@ -577,6 +564,7 @@ extension CreateTrackerViewController: UICollectionViewDataSource {
             cell.configEmoji(emoji: emoji)
             returnCell = cell
         }
+        
         return returnCell
     }
 }

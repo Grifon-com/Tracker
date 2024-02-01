@@ -6,5 +6,5 @@
 //
 
 enum Screen: String {
-    case Main
+    case main
 }

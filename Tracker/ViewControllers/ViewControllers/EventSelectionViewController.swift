@@ -116,7 +116,6 @@ private extension EventSelectionViewController {
     
     func setupLableGreate() {
         view.addSubview(labelCreate)
-        
         NSLayoutConstraint.activate([
             labelCreate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             labelCreate.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
@@ -130,7 +129,6 @@ private extension EventSelectionViewController {
         [habitButton, irregularEventButton].forEach {
             stackView.addArrangedSubview($0)
         }
-        
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                constant: 20),

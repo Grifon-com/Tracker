@@ -43,7 +43,7 @@ final class ScheduleViewController: UIViewController {
         weekDayTableView.allowsSelection = false
         weekDayTableView.backgroundColor = .clear
         weekDayTableView.separatorInset = ConstantsShedulVc.separatorInsetTableView
-        weekDayTableView.separatorColor = .separatorColor
+        weekDayTableView.separatorColor = .grayDay
         weekDayTableView.register(WeekDayTableViewCell.self,
                                   forCellReuseIdentifier: "\(WeekDayTableViewCell.self)")
         
@@ -127,7 +127,6 @@ private extension ScheduleViewController {
             contentStackView.addArrangedSubview($0)
         }
         contentStackView.setCustomSpacing(38, after: scheduleLable)
-        
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                   constant: 16),

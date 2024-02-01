@@ -61,19 +61,15 @@ private extension TrackerStore {
             assertionFailure("not found ID")
             throw StoreErrors.TrackrerStoreError.decodingErrorInvalidId
         }
-        
         guard let name = trackerCoreData.name else {
             throw  StoreErrors.TrackrerStoreError.decodingErrorInvalidName
         }
-        
         guard let emoji = trackerCoreData.emoji else {
             throw StoreErrors.TrackrerStoreError.decodingErrorInvalidEmoji
         }
-        
         guard let color = trackerCoreData.colorHex else {
             throw StoreErrors.TrackrerStoreError.decodingErrorInvalidColor
         }
-        
         guard let schedul = trackerCoreData.schedule as? [WeekDay] else {
             throw StoreErrors.TrackrerStoreError.decodingErrorInvalidSchedul
         }

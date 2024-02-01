@@ -79,7 +79,6 @@ extension CustomTableViewCell {
         nameCategoriLableView.translatesAutoresizingMaskIntoConstraints = false
         nameCategoriLableView.backgroundColor = .clear
         contentView.addSubview(nameCategoriLableView)
-        
         NSLayoutConstraint.activate([
             nameCategoriLableView.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameCategoriLableView.leadingAnchor.constraint(equalTo: leadingAnchor,
@@ -90,7 +89,6 @@ extension CustomTableViewCell {
     private func setupSelectedImage() {
         contentView.addSubview(selectedImage)
         selectedImage.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             selectedImage.centerYAnchor.constraint(equalTo: centerYAnchor),
             selectedImage.trailingAnchor.constraint(equalTo: trailingAnchor,

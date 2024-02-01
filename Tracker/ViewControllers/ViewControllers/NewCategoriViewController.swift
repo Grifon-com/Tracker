@@ -18,7 +18,7 @@ protocol UpdateCategoriViewControllerDelegate: AnyObject {
 }
 
 //MARK: - NewCategoriViewController
-class NewCategoriViewController: UIViewController {
+final class NewCategoriViewController: UIViewController {
     private struct ConstantsNewCatVc {
         static let cornerRadius = CGFloat(16)
         static let leftIndentTextField = CGFloat(12)
@@ -52,7 +52,7 @@ class NewCategoriViewController: UIViewController {
         readyButton.layer.cornerRadius = ConstantsNewCatVc.cornerRadius
         readyButton.layer.masksToBounds = true
         readyButton.translatesAutoresizingMaskIntoConstraints = false
-        readyButton.addTarget(self, action: #selector(didTapNewСategoriButton), for: .touchUpInside)
+        readyButton.addTarget(self, action: #selector(didTapNewСategoryButton), for: .touchUpInside)
         
         return readyButton
     }()
@@ -108,7 +108,7 @@ private extension NewCategoriViewController {
     
     //MARK: - Обработка событий
     @objc
-    func didTapNewСategoriButton() {
+    func didTapNewСategoryButton() {
         guard let viewModel else { return }
         if let createCategorydelegate {
             createCategorydelegate.didNewCategoryName(self,

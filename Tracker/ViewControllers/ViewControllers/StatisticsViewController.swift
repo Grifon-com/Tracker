@@ -107,13 +107,11 @@ private extension StatisticsViewController {
         views.forEach {
             $0.layer.cornerRadius = cornerRadius
             $0.clipsToBounds = true
-            
             let gradient = CAGradientLayer()
             gradient.frame = $0.bounds
             gradient.colors = colors
             gradient.startPoint = startPoint
             gradient.endPoint = endPoint
-            
             let shape = CAShapeLayer()
             shape.lineWidth = borderWidth
             let path = UIBezierPath(roundedRect: $0.bounds,
@@ -147,7 +145,7 @@ private extension StatisticsViewController {
         view.addSubview(labelHeader)
         NSLayoutConstraint.activate([
             labelHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            labelHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44)
+            labelHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
@@ -161,7 +159,6 @@ private extension StatisticsViewController {
         NSLayoutConstraint.activate([
             imageViewStab.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             imageViewStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
             lableTextStab.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor, constant: 10)
         ])

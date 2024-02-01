@@ -40,7 +40,6 @@ extension HeaderReusableView {
     private func setupLable() {
         addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: leadingAnchor,
                                            constant: 12),

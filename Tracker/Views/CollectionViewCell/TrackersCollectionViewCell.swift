@@ -23,6 +23,7 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         
         static let cornerRadiusColorView = CGFloat(16)
         static let borderWidthColorView = CGFloat(1)
+        static let alphaComponentDoneButton = CGFloat(0.3)
         
         static let fontLabelEmoji = UIFont.systemFont(ofSize: 16, weight: .medium)
         static let fontTextLable = UIFont.systemFont(ofSize: 12, weight: .medium)
@@ -34,7 +35,6 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
     }
     
     weak var delegate: TrackersCollectionViewCellDelegate?
-    private var isSelectedAddButton: Bool = false
     private let colors = Colors()
     
     private lazy var colorView: UIView = {
@@ -95,17 +95,6 @@ final class TrackersCollectionViewCell: UICollectionViewCell {
         return addButton
     }()
     
-    private lazy var backgroundAddButtonView: UIView = {
-        let backgroundAddButtonView = UIView()
-        backgroundAddButtonView.isHidden = true
-        backgroundAddButtonView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundAddButtonView.layer.cornerRadius = ConstantsTrackerCell.sizeAddButton.width / 2
-        backgroundAddButtonView.layer.masksToBounds = true
-        backgroundAddButtonView.backgroundColor = .grayOpacity30
-        
-        return backgroundAddButtonView
-    }()
-    
     private lazy var horisontalStack: UIStackView = {
         let horisontalStack = UIStackView()
         horisontalStack.axis = .horizontal
@@ -153,14 +142,14 @@ extension TrackersCollectionViewCell {
         case true:
             let image = UIImage(named: ConstantsTrackerCell.adButttonImageDone)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
+            addButton.backgroundColor = updateModel.color.withAlphaComponent(
+                ConstantsTrackerCell.alphaComponentDoneButton)
+            addButton.tintColor = .textEventColor
         case false:
             let image = UIImage(named: ConstantsTrackerCell.addButtonImageAdd)?.withRenderingMode(.alwaysTemplate)
             addButton.setImage(image, for: .normal)
+            addButton.tintColor = .textEventColor
         }
-    }
-    
-    func updateBackgraundAddButton(isHidden: Bool) {
-        backgroundAddButtonView.isHidden = isHidden
     }
     
     func setPinned(flag: Bool) {
@@ -169,10 +158,6 @@ extension TrackersCollectionViewCell {
     
     func isEnableAddButton(flag: Bool) {
         addButton.isEnabled = flag
-    }
-    
-    private func setIsSelectedAddButton(flag: Bool) {
-        isSelectedAddButton = flag
     }
     
     func config(tracker: Tracker) {
@@ -191,7 +176,6 @@ extension TrackersCollectionViewCell {
         setupColorView()
         setupVerticallStack()
         setupHorisontalStack()
-        setupBackgroundAddButtonView()
     }
     
     private func setupVerticallStack() {
@@ -200,7 +184,6 @@ extension TrackersCollectionViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             verticalStack.addArrangedSubview($0)
         }
-        
         NSLayoutConstraint.activate([
             verticalStack.topAnchor.constraint(equalTo: contentView.topAnchor),
             verticalStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
@@ -214,7 +197,6 @@ extension TrackersCollectionViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             horisontalStack.addArrangedSubview($0)
         }
-        
         NSLayoutConstraint.activate([
             dayCounterLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                      constant: 12),
@@ -230,25 +212,12 @@ extension TrackersCollectionViewCell {
         ])
     }
     
-    private func setupBackgroundAddButtonView() {
-        addButton.addSubview(backgroundAddButtonView)
-        
-        NSLayoutConstraint.activate([
-            backgroundAddButtonView.centerXAnchor.constraint(equalTo: addButton.centerXAnchor),
-            backgroundAddButtonView.centerYAnchor.constraint(equalTo: addButton.centerYAnchor),
-            backgroundAddButtonView.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.height),
-            backgroundAddButtonView.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeAddButton.width)
-        ])
-    }
-    
     private func setupColorView() {
         [emojiLable, nameTrackerLabel, isPinnedImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             colorView.addSubview($0)
         }
-        
         let indentation = CGFloat(12)
-        
         NSLayoutConstraint.activate([
             emojiLable.topAnchor.constraint(equalTo: colorView.topAnchor,
                                             constant: indentation),
@@ -256,14 +225,12 @@ extension TrackersCollectionViewCell {
                                                 constant: indentation),
             emojiLable.heightAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.height),
             emojiLable.widthAnchor.constraint(equalToConstant: ConstantsTrackerCell.sizeLableView.width),
-            
             nameTrackerLabel.leadingAnchor.constraint(equalTo: colorView.leadingAnchor,
                                                       constant: indentation),
             nameTrackerLabel.trailingAnchor.constraint(equalTo: colorView.trailingAnchor,
                                                        constant: -indentation),
             nameTrackerLabel.bottomAnchor.constraint(equalTo: colorView.bottomAnchor,
                                                      constant: -indentation),
-            
             isPinnedImageView.topAnchor.constraint(equalTo: colorView.topAnchor,
                                                    constant: indentation),
             isPinnedImageView.trailingAnchor.constraint(equalTo: colorView.trailingAnchor,

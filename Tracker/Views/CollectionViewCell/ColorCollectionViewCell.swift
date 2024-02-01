@@ -60,7 +60,6 @@ extension ColorCollectionViewCell {
     private func setupColorView() {
         addSubview(contentColorView)
         contentColorView.addSubview(colorView)
-        
         NSLayoutConstraint.activate([
             contentColorView.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentColorView.centerYAnchor.constraint(equalTo: centerYAnchor),

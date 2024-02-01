@@ -4493,8 +4493,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "addNewTracker(_:nameCategory:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -4853,8 +4853,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "addPinnedCategory(_:pinnedCategory:)"
             landmarkType = "7">
             <Locations>
@@ -5550,8 +5550,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
             <Locations>
@@ -5598,8 +5598,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "searchTracker(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -5738,8 +5738,8 @@
             filePath = "Tracker/Domain/Store/TrackerStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "controllerDidChangeContent(_:)"
             landmarkType = "7">
             <Locations>

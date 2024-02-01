@@ -51,7 +51,6 @@ extension EmojiCollectionViewCell {
     //MARK: - SetupUI
     private func setupColorView() {
         addSubview(emojiView)
-        
         NSLayoutConstraint.activate([
             emojiView.centerXAnchor.constraint(equalTo: centerXAnchor),
             emojiView.centerYAnchor.constraint(equalTo: centerYAnchor),

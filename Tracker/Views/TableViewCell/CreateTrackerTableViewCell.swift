@@ -8,7 +8,7 @@
 import UIKit
 
 //MARK: - CreateTrackerTableViewCell
-class CreateTrackerTableViewCell: UITableViewCell {
+final class CreateTrackerTableViewCell: UITableViewCell {
     private struct ConstantsCreateCell {
         static let iconButton = "IconButtonCell"
         static let lableFont = UIFont.systemFont(ofSize: 17, weight: .regular)
@@ -76,7 +76,6 @@ extension CreateTrackerTableViewCell {
         clickImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(clickImage)
         clickImage.backgroundColor = .clear
-        
         NSLayoutConstraint.activate([
             clickImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
                                                  constant: -12),
@@ -93,7 +92,6 @@ extension CreateTrackerTableViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             lableStackView.addArrangedSubview($0)
         }
-        
         NSLayoutConstraint.activate([
             lableStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                     constant: 12),

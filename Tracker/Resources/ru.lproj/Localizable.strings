@@ -28,7 +28,7 @@
 
 //MARK: - TrackersViewController
 "headerText" = "Трекеры";
-"labelStabText" = "Что будем отслеживать?";
+"trackerLabelStabText" = "Что будем отслеживать?";
 "labelNothingFoundText" = "Ничего не найдено";
 "placeholderSearch" = "Поиск";
 "textCancel" = "Отменить";

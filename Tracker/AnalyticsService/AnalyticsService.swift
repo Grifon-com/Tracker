@@ -17,7 +17,6 @@ struct AnalyticsService: AnalyticsServiceProtocol {
         YMMYandexMetrica.reportEvent(field.event.rawValue,
                                      parameters: field.params,
                                      onFailure: { error in
-            print("REPORT ERROR: %@", error.localizedDescription)
-        })
+            print("REPORT ERROR: %@", error.localizedDescription)})
     }
 }

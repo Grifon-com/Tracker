@@ -13,30 +13,23 @@ protocol TrackerViewModelProtocol {
     var visibleCategory: Result<[TrackerCategory], Error> { get }
     func getCategory() -> Result<[TrackerCategory], Error>
     func addCategory(nameCategory: String) -> Result<Void, Error>
-    
     func getCountTrackerCompleted(id: UUID) -> Result<Int, Error>
     func deleteTrackersRecord(id: UUID) -> Result<Void, Error>
-    
     func addNewTracker(_ tracker: Tracker, nameCategory: String) -> Result<Void, Error>
     func updateTracker(tracker: Tracker, nameCategory: String?) -> Result<Void, Error>
     func deleteTracker(id: UUID) -> Result<Void, Error>
-    
     func getShowListTrackersForDay(date: Date)
     func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory])
     func filterListTrackersName(word: String) -> Result<[TrackerCategory], Error>
-    
     func addPinnedCategory(id: UUID, nameCategory: String)  -> Result<Void, Error>
     func editPinnedCategory(_ id: UUID, newPinnedCat: String) -> Result<Void, Error>
     func getPinnedCategory(_ id: UUID) -> Result<String?, Error>
     func deleteAndGetPinnedCategory(id: UUID) -> Result<String?, Error>
-    
     func allTrackersByDate(date: Date)
     func getNotCompleted(date: Date, flag: Bool)
     func getCompleted(date: Date, flag: Bool)
-    
     func setFilterState(state: FiltersState)
     func getFilterState() -> FiltersState
-    
     func getIsCategoryForDay() -> Bool?
 }
 
@@ -44,25 +37,18 @@ protocol TrackerViewModelProtocol {
 final class TrackerViewModel {
     @Observable<Result<[TrackerCategory], Error>>
     private(set) var category: Result<[TrackerCategory], Error>
-    
     @Observable<Result<[TrackerCategory], Error>>
     private(set) var visibleCategory: Result<[TrackerCategory], Error>
-    
     @Observable<Bool?> private(set) var isfilterListTrackersWeekDay: Bool?
     @Observable<IndexPath> private(set) var indexPath: IndexPath
     @Observable<FiltersState>private(set) var filterState: FiltersState
-    
     @UserDefaultsBacked<String>(key: UserDefaultKeys.selectNameCategory.rawValue)
     private var selectNameCategory: String?
-    
     @UserDefaultsBacked<String>(key: UserDefaultKeys.selectFilter.rawValue)
     private var selectFilter: String?
-    
     @UserDefaultsBacked<Bool>(key: UserDefaultKeys.isTracker.rawValue)
     private(set) var isTracker: Bool?
-    
     private(set) var completedTrackers: Result<Set<TrackerRecord>, Error>
-    
     private let trackerCategoryStore: TrackerCategoryStoreProtocol
     private let trackerRecordStore: TrackerRecordStoreProtocol
     private let trackerStore: TrackerStoreProtocol
@@ -162,24 +148,21 @@ private extension TrackerViewModel {
                                    date: Date) -> [TrackerCategory] {
         let calendar = Calendar.current
         let filter = calendar.component(.weekday, from: date)
-        
         let listCategories: [TrackerCategory] = trackerCategory.compactMap { cat in
             let trackers = cat.arrayTrackers.filter { tracker in
                 tracker.schedule.contains { weekDay in
                     weekDay.rawValue + 1 == filter
                 }
             }
-            
             if trackers.isEmpty {
                 return nil
             }
-            
             return TrackerCategory(nameCategory: cat.nameCategory,
                                    arrayTrackers: trackers,
                                    isPinned: cat.isPinned)
         }
-        
         isfilterListTrackersWeekDay = !listCategories.isEmpty
+        
         return listCategories
     }
     
@@ -288,7 +271,7 @@ extension TrackerViewModel: TrackerViewModelProtocol
     }
     
     func updateCompletedTrackers(tracker: Tracker, date: Date) -> Result<Void, Error> {
-        return deleteOrCreateTrackerRecord(id: tracker.id, date: date)
+        deleteOrCreateTrackerRecord(id: tracker.id, date: date)
     }
     
     func getShowListTrackerSearchForName(_ searchCategory: [TrackerCategory]) {

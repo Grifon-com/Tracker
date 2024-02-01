@@ -24,16 +24,13 @@ final class TabBarController: UITabBarController {
         tabBar.clipsToBounds = true
         let trackerViewController = TrackersViewController(viewModel: TrackerViewModel())
         let statisticsViewController = StatisticsViewController()
-        
         let trackerNavigationController = UINavigationController(rootViewController: trackerViewController)
         let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        
         viewControllers = [
             generateViewController(vc: trackerNavigationController,
                                    imageName: ConstantsTabBar.tabBarImageTrecker,
                                    title: Translate.tabBarTitleTrecker,
                                    insert: ConstantsTabBar.insertImage),
-            
             generateViewController(vc: statisticsNavigationController,
                                    imageName: ConstantsTabBar.tabBarImageStatistic,
                                    title: Translate.tabBarTitleStatistic,
@@ -47,7 +44,7 @@ final class TabBarController: UITabBarController {
            // Проверяем только изменение цветовой схемы
            traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             if traitCollection.userInterfaceStyle == .dark {
-                tabBar.layer.borderColor = UIColor.black.cgColor
+                tabBar.layer.borderColor = UIColor.blackDay.cgColor
             } else {
                 tabBar.layer.borderColor = UIColor.grayDay.cgColor
             }
@@ -56,7 +53,8 @@ final class TabBarController: UITabBarController {
     
     deinit {
         AnalyticsService.reportEvent(field: MetricEvent(event: .close,
-                                                        params: [EventAnalytics.screen.rawValue: Screen.Main.rawValue]))
+                                                        params: [EventAnalytics.screen.rawValue:
+                                                                    Screen.main.rawValue]))
     }
 }
 

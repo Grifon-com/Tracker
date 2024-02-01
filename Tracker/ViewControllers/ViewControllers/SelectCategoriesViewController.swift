@@ -82,7 +82,7 @@ final class SelectCategoriesViewController: UIViewController {
         selectionCategoryTableView.delegate = self
         selectionCategoryTableView.backgroundColor = .clear
         selectionCategoryTableView.separatorStyle = .singleLine
-        selectionCategoryTableView.separatorColor = .separatorColor
+        selectionCategoryTableView.separatorColor = .grayDay
         selectionCategoryTableView.register(CustomTableViewCell.self,
                                             forCellReuseIdentifier: "\(CustomTableViewCell.self)")
         selectionCategoryTableView.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
@@ -216,7 +216,6 @@ extension SelectCategoriesViewController {
     
     private func setupCategoryButton() {
         view.addSubview(createCategoryButton)
-        
         NSLayoutConstraint.activate([
             createCategoryButton.heightAnchor.constraint(equalToConstant: 60),
             createCategoryButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
@@ -228,7 +227,6 @@ extension SelectCategoriesViewController {
     private func setupCategoryLabel() {
         view.addSubview(categoryLabel)
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             categoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                                constant: 24),
@@ -239,7 +237,6 @@ extension SelectCategoriesViewController {
     private func setupTableView() {
         view.addSubview(selectionCategoryTableView)
         selectionCategoryTableView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             selectionCategoryTableView.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor,
                                                             constant: 24),
@@ -258,14 +255,11 @@ extension SelectCategoriesViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.backgroundColor = .clear
         }
-        
         NSLayoutConstraint.activate([
             conteinerStabView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             conteinerStabView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
             imageViewStab.centerYAnchor.constraint(equalTo: conteinerStabView.centerYAnchor),
             imageViewStab.centerXAnchor.constraint(equalTo: conteinerStabView.centerXAnchor),
-            
             lableTextStab.widthAnchor.constraint(equalToConstant: 200),
             lableTextStab.centerXAnchor.constraint(equalTo: conteinerStabView.centerXAnchor),
             lableTextStab.topAnchor.constraint(equalTo: imageViewStab.bottomAnchor,
@@ -294,11 +288,9 @@ extension SelectCategoriesViewController: UITableViewDataSource {
         cell.showSelectedImage(flag: isSelected)
         let model = CustomCellModel(text: text, color: .backgroundNight)
         cell.config(model: model)
-        
         if category.count > ConstantsCreateCatVc.one {
             cell.separatorInset = ConstantsCreateCatVc.insertSeparatorTableView
         }
-        
         if indexPath.row == .zero && category.count == ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: nil)
@@ -307,13 +299,11 @@ extension SelectCategoriesViewController: UITableViewDataSource {
                                                bottom: .zero,
                                                right: .zero)
         }
-        
         if indexPath.row == .zero && category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,
                                    maskedCorners: [.layerMaxXMinYCorner,
                                                    .layerMinXMinYCorner])
         }
-        
         if indexPath.row == category.count - ConstantsCreateCatVc.one &&
             category.count > ConstantsCreateCatVc.one {
             cell.setupCornerRadius(cornerRadius: ConstantsCreateCatVc.cornerRadius,

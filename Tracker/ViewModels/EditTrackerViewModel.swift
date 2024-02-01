@@ -17,7 +17,6 @@ protocol EditTrackerModelProtocol {
     func setListWeekDay(listWeekDay: [WeekDay])
     func getColorRow(color: UIColor) -> Int
     func getEmojiRow(emoji: String) -> Int
-    
     func setSchedule(_ vc: CreateTrackerViewController, schedule: [WeekDay])
     func setColor(_ vc: CreateTrackerViewController, color: UIColor)
     func setNameNewCategory(_ vc: CreateTrackerViewController, nameCategory: String)
@@ -66,7 +65,6 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
             color != nil &&
             !emoji.isEmpty &&
             !nameNewCategory.isEmpty ? true : false
-            
             return flag
         }
         flag = !schedule.isEmpty &&
@@ -90,7 +88,6 @@ extension EditTrackerViewModel: EditTrackerModelProtocol {
         }
         let listDay = schedule.map { $0.briefWordDay }
         stringListDay = listDay.joined(separator: ",")
-        
         return stringListDay
     }
     

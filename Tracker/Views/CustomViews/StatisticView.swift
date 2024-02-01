@@ -49,9 +49,7 @@ extension StatisticsView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
         }
-        
         let indentation = CGFloat(12)
-        
         NSLayoutConstraint.activate([
             lableHeader.topAnchor.constraint(equalTo: topAnchor,
                                              constant: indentation),

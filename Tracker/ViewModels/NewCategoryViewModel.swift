@@ -10,7 +10,6 @@ import Foundation
 protocol NewCategoryViewModelProtocol {
     func setNewNameCategory(text: String)
     func getNewNameCategory() -> String
-    
     func setOldNameCategory(text: String)
     func getOldNameCategory() -> String
 }

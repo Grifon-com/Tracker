@@ -74,7 +74,6 @@ private extension FiltersViewController {
     private func setupCategoryLabel() {
         view.addSubview(filtersLable)
         filtersLable.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             filtersLable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
                                               constant: 24),
@@ -85,7 +84,6 @@ private extension FiltersViewController {
     private func setupTableView() {
         view.addSubview(filterTableView)
         filterTableView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
             filterTableView.topAnchor.constraint(equalTo: filtersLable.bottomAnchor,
                                                  constant: 24),

@@ -41,7 +41,6 @@ private extension OnboardingPageViewController {
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.backgroundColor = .clear
-        
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,

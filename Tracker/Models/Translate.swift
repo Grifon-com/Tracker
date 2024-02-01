@@ -13,6 +13,7 @@ struct Translate {
     static let textLableTwoVC = NSLocalizedString("textLableTwoVC", comment: "")
     static let textButton = NSLocalizedString("textButton", comment: "")
     static let headerText = NSLocalizedString("headerText", comment: "")
+    static let trackerLabelStabText = NSLocalizedString("trackerLabelStabText", comment: "")
     static let labelStabText = NSLocalizedString("labelStabText", comment: "")
     static let labelNothingFoundText = NSLocalizedString("labelNothingFoundText", comment: "")
     static let placeholderSearch = NSLocalizedString("placeholderSearch", comment: "")

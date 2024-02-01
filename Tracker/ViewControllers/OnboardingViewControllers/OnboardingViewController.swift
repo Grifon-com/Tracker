@@ -85,7 +85,6 @@ extension OnboardingViewController {
         startButton.backgroundColor = .blackDay
         startButton.layer.cornerRadius = ConstantsOnboardingViewController.cornerRadiusButton
         startButton.layer.masksToBounds = true
-        
         NSLayoutConstraint.activate([
             startButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             startButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),

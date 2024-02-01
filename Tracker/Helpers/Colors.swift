@@ -33,4 +33,12 @@ final class Colors {
             return UIColor.white
         }
     }
+    
+    lazy var placeholder = UIColor { (traits: UITraitCollection) -> UIColor in
+        if traits.userInterfaceStyle == .light {
+            return UIColor.grayDay
+        } else {
+            return UIColor.placeholder
+        }
+    }
 }

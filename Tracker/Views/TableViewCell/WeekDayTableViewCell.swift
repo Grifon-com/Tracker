@@ -32,6 +32,7 @@ final class WeekDayTableViewCell: UITableViewCell {
         choiceDaySwitch.addTarget(self,
                                   action: #selector(switching),
                                   for: .touchUpInside)
+        choiceDaySwitch.subviews[0].subviews[0].backgroundColor = .switchBgColor
         
         return choiceDaySwitch
     }()
@@ -76,13 +77,10 @@ extension WeekDayTableViewCell {
             contentView.addSubview($0)
             $0.backgroundColor = .clear
         }
-        
         NSLayoutConstraint.activate([
             dayLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                               constant: 12),
             dayLable.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
-            
             choiceDaySwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
                                                       constant: -12),
             choiceDaySwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
