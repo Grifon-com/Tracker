@@ -5,19 +5,17 @@
 //  Created by Григорий Машук on 15.10.23.
 //
 
-import Foundation
-
-enum Header {
+enum Header: String {
     case color
-    case emoji
+    case emoji = "Emoji"
     
     var name: String {
         var name: String
         switch self {
         case .color:
-            name = "Цвет"
+            name = Translate.colorHeader
         case .emoji:
-            name = "Emoji"
+            name = self.rawValue
         }
         return name
     }

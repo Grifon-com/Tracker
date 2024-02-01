@@ -5,8 +5,6 @@
 //  Created by Григорий Машук on 2.10.23.
 //
 
-import Foundation
-
 enum WeekDay: Int {
     case monday = 1
     case tuesday
@@ -20,19 +18,19 @@ enum WeekDay: Int {
         var day: String
         switch self {
         case .monday:
-            day = "Понедельник"
+            day = Translate.monday
         case .tuesday:
-            day = "Вторник"
+            day = Translate.tuesday
         case .wednesday:
-            day = "Среда"
+            day = Translate.wednesday
         case .thursday:
-            day = "Четверг"
+            day = Translate.thursday
         case .friday:
-            day = "Пятница"
+            day = Translate.friday
         case .saturday:
-            day = "Суббота"
+            day = Translate.saturday
         case .sunday:
-            day = "Воскресенье"
+            day = Translate.sunday
         }
         return day
     }
@@ -41,19 +39,19 @@ enum WeekDay: Int {
         var briefWordDay: String
         switch self {
         case .monday:
-            briefWordDay = "Пн"
+            briefWordDay = Translate.briefMonday
         case .tuesday:
-            briefWordDay = "Вт"
+            briefWordDay = Translate.briefTuesday
         case .wednesday:
-            briefWordDay = "Ср"
+            briefWordDay = Translate.briefWednesday
         case .thursday:
-            briefWordDay = "Чт"
+            briefWordDay = Translate.briefThursday
         case .friday:
-            briefWordDay = "Пт"
+            briefWordDay = Translate.briefFriday
         case .saturday:
-            briefWordDay = "Сб"
+            briefWordDay = Translate.briefSaturday
         case .sunday:
-            briefWordDay = "Вс"
+            briefWordDay = Translate.briefSunday
         }
         return briefWordDay
     }

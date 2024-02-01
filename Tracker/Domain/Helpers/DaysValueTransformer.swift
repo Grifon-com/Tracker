@@ -13,7 +13,9 @@ final class DaysValueTransformer: ValueTransformer {
     override class func allowsReverseTransformation() -> Bool { true }
     
     static func register() {
-        ValueTransformer.setValueTransformer(DaysValueTransformer(), forName: NSValueTransformerName(rawValue: String(describing: DaysValueTransformer.self)))
+        ValueTransformer.setValueTransformer(
+            DaysValueTransformer(),
+            forName: NSValueTransformerName(rawValue: String(describing: DaysValueTransformer.self)))
     }
     
     override func transformedValue(_ value: Any?) -> Any? {

@@ -14,7 +14,11 @@ struct Tracker {
     let emoji: String
     let schedule: [WeekDay]
     
-    init(id: UUID = UUID() , name: String, color: UIColor, emoji: String, schedule: [WeekDay]) {
+    init(id: UUID = UUID(),
+         name: String,
+         color: UIColor,
+         emoji: String,
+         schedule: [WeekDay]) {
         self.id = id
         self.name = name
         self.color = color
@@ -23,11 +27,4 @@ struct Tracker {
     }
 }
 
-extension Tracker: Equatable {
-    static func == (lhs: Tracker, rhs: Tracker) -> Bool {
-            lhs.id == rhs.id
-    }
-}
-
-extension Tracker: Hashable {}
 

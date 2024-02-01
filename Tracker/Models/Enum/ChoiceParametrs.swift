@@ -5,9 +5,7 @@
 //  Created by Григорий Машук on 4.10.23.
 //
 
-import Foundation
-
-enum ChoiceParametrs {
+enum ChoiceParametrs: String {
     case category
     case schedule
     
@@ -15,9 +13,9 @@ enum ChoiceParametrs {
         var name: String
         switch self {
         case .category:
-            name = "Категория"
+            name = Translate.category
         case .schedule:
-            name = "Расписание"
+            name = Translate.schedule
         }
         return name
     }

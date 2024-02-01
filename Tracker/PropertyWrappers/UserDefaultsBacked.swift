@@ -19,5 +19,4 @@ struct UserDefaultsBacked<Value> {
             storage.setValue(newValue, forKey: key)
         }
     }
-    
 }
